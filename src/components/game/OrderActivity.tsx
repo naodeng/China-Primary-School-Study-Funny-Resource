@@ -8,8 +8,19 @@ interface OrderActivityProps {
   onSubmit: (answer: string[]) => void;
 }
 
+function createInitialOrder(activity: OrderActivityDefinition): string[] {
+  const order = activity.items.map((item) => item.id);
+  const alreadySolved = order.length === activity.correctOrder.length
+    && order.every((id, index) => id === activity.correctOrder[index]);
+
+  if (alreadySolved && order.length > 1) {
+    return [...order.slice(1), order[0]];
+  }
+  return order;
+}
+
 export default function OrderActivity({ activity, disabled, onSubmit }: OrderActivityProps) {
-  const [order, setOrder] = useState(activity.items.map((item) => item.id));
+  const [order, setOrder] = useState(() => createInitialOrder(activity));
   function move(index: number, direction: -1 | 1) {
     const destination = index + direction;
     if (destination < 0 || destination >= order.length || disabled) return;

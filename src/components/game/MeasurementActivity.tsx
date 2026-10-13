@@ -11,11 +11,13 @@ interface MeasurementActivityProps {
 export default function MeasurementActivity({ activity, disabled, onSubmit }: MeasurementActivityProps) {
   const [value, setValue] = useState(activity.minCm);
   const tickCount = activity.maxCm - activity.minCm + 1;
-  const objectWidth = ((value - activity.minCm) / (activity.maxCm - activity.minCm)) * 100;
+  const objectWidth = activity.maxCm > 0
+    ? Math.min(100, Math.max(0, (activity.targetLengthCm / activity.maxCm) * 100))
+    : 0;
 
   return (
     <div className="measurement-activity">
-      <div className="measurement-object-card" aria-label={`${activity.objectLabel}，当前长度${value}厘米`}>
+      <div className="measurement-object-card" role="img" aria-label={`${activity.objectLabel}的长度示意图`}>
         <span className="measurement-object-label">{activity.objectLabel}</span>
         <span className="measurement-object-shape" style={{ width: `${Math.max(2, objectWidth)}%` }} />
       </div>
