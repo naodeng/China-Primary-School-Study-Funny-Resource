@@ -3,6 +3,7 @@ import type { Curriculum, CurriculumUnit, LearningSession, SubjectId } from '../
 
 export type AppRoute =
   | { kind: 'catalog' }
+  | { kind: 'achievements' }
   | { kind: 'unit'; unitKey: string; unit: CurriculumUnit }
   | { kind: 'session'; unitKey: string; unit: CurriculumUnit; session: LearningSession }
   | { kind: 'comingSoon'; title: string; path: string }
@@ -33,6 +34,7 @@ function findCatalogUnit(instance: Curriculum, key: string) {
 export function resolveRoute(pathname: string, instance: Curriculum = curriculum): AppRoute {
   const normalized = pathname.replace(/\/+$/, '') || '/';
   if (normalized === '/') return { kind: 'catalog' };
+  if (normalized === '/achievements') return { kind: 'achievements' };
 
   const segments = normalized.split('/').filter(Boolean);
   if (segments.length !== 4 && segments.length !== 5) {

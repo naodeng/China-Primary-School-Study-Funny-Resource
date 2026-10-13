@@ -24,7 +24,7 @@ export default function MatchActivity({ activity, disabled, onSubmit }: MatchAct
   return (
     <div className="match-activity">
       <p className="interaction-instruction" aria-live="polite">
-        {selectedLeft ? '现在选择右侧和它对应的词语。' : '先选左侧词语，再选右侧对应项。'}
+        {selectedLeft ? '现在帮它找到右侧的伙伴。' : '选一个左侧词语，再找找它的伙伴。'}
       </p>
       <div className="match-columns">
         <div className="match-column" role="group" aria-label="左侧词语">

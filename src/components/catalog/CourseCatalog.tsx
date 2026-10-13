@@ -2,18 +2,25 @@ import { useState } from 'react';
 import { Button, Card } from 'animal-island-ui';
 import { curriculum } from '../../content/curriculum';
 import type { CatalogUnitEntry, SubjectId } from '../../content/types';
+import type { LearningPosition } from '../../achievements/position';
+import type { ProgressState } from '../../storage/progress';
 import { getUnitPath } from '../../app/router';
 import { COMPANION_IDS, COMPANION_PROFILES } from '../mascots/CompanionAvatar';
 import CompanionAvatar from '../mascots/CompanionAvatar';
 import HeroGuide from '../mascots/HeroGuide';
+import AchievementSummary from '../achievements/AchievementSummary';
+import SettingsDialog from '../settings/SettingsDialog';
 import CourseBreadcrumbs from './CourseBreadcrumbs';
 
 interface CourseCatalogProps {
+  progress: ProgressState;
   onNavigate: (path: string) => void;
+  onApplyLearningStart: (position: LearningPosition) => void;
 }
 
-export default function CourseCatalog({ onNavigate }: CourseCatalogProps) {
+export default function CourseCatalog({ progress, onNavigate, onApplyLearningStart }: CourseCatalogProps) {
   const [subjectId, setSubjectId] = useState<SubjectId>('chinese');
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const grade = curriculum.grades.find((entry) => entry.id === 'grade-2')!;
   const term = grade.terms.find((entry) => entry.id === 'term-1')!;
   const subject = term.subjects.find((entry) => entry.id === subjectId)!;
@@ -26,12 +33,17 @@ export default function CourseCatalog({ onNavigate }: CourseCatalogProps) {
   return (
     <main className="catalog-page">
       <div className="catalog-shell">
-        <CourseBreadcrumbs items={[{ label: '课程目录' }]} onNavigate={onNavigate} />
+        <div className="catalog-topbar">
+          <CourseBreadcrumbs items={[{ label: '课程目录' }]} onNavigate={onNavigate} />
+          <Button type="default" className="catalog-settings-button" onClick={() => setSettingsOpen(true)}>
+            <span aria-hidden="true">⚙</span> 设置
+          </Button>
+        </div>
         <header className="catalog-hero">
           <div className="catalog-hero-copy">
             <p className="eyebrow">二年级 · 上学期 · 人教版</p>
             <h1>星岛学习站</h1>
-            <p className="catalog-lead">选一座知识小岛，和伙伴们一起开启轻松的闯关时间。</p>
+            <p className="catalog-lead">选一座知识小岛，和伙伴们一起闯关。每一次认真尝试，都会让你离新发现更近一步。</p>
             <div className="catalog-meta" aria-label="课程信息">
               <span>每场约20分钟</span>
               <span>随时开始</span>
@@ -58,8 +70,8 @@ export default function CourseCatalog({ onNavigate }: CourseCatalogProps) {
               <h2 id="subject-heading">今天想玩哪门课？</h2>
             </div>
             <div className="subject-switch" role="group" aria-label="选择学科">
-              <Button type={subjectId === 'chinese' ? 'primary' : 'default'} onClick={() => setSubjectId('chinese')}>语文</Button>
-              <Button type={subjectId === 'math' ? 'primary' : 'default'} onClick={() => setSubjectId('math')}>数学</Button>
+              <Button type={subjectId === 'chinese' ? 'primary' : 'default'} aria-pressed={subjectId === 'chinese'} onClick={() => setSubjectId('chinese')}>语文</Button>
+              <Button type={subjectId === 'math' ? 'primary' : 'default'} aria-pressed={subjectId === 'math'} onClick={() => setSubjectId('math')}>数学</Button>
             </div>
           </div>
           <div className="catalog-grade-label">
@@ -96,11 +108,26 @@ export default function CourseCatalog({ onNavigate }: CourseCatalogProps) {
             })}
           </div>
         </section>
+        <AchievementSummary
+          completedSessionIds={progress.completedSessionIds}
+          learningStart={progress.learningStart}
+          onNavigate={onNavigate}
+        />
         <footer className="catalog-footer">
           <span>学习靠好奇心，每次完成一点点就很棒。</span>
           <span className="footer-orbit" aria-hidden="true">✧</span>
         </footer>
       </div>
+      <SettingsDialog
+        open={settingsOpen}
+        progress={progress}
+        onClose={() => setSettingsOpen(false)}
+        onApplyLearningStart={onApplyLearningStart}
+        onNavigate={(path) => {
+          setSettingsOpen(false);
+          onNavigate(path);
+        }}
+      />
     </main>
   );
 }

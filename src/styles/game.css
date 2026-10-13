@@ -123,6 +123,10 @@
 .earned-star { display: grid; place-items: center; width: 70px; height: 70px; margin: 18px auto 4px; border: 3px solid rgba(255,255,255,.9); border-radius: 50%; color: #fff; background: linear-gradient(145deg, #f9d265, #f2a352); box-shadow: 0 8px 22px rgba(189,132,54,.22); font-size: 32px; }
 .finish-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .summary-kindness { margin: 24px 0 0; color: #7a8797; font-size: 13px; line-height: 1.6; }
+.summary-achievement { display: grid; justify-items: center; gap: 7px; width: min(100%, 390px); margin: 18px auto 4px; padding: 16px 20px; border: 1px solid #c6dfbb; border-radius: 20px; color: #53765b; background: linear-gradient(140deg, #f5ffe9, #edf8ef); }
+.summary-achievement > span:first-child { font-size: 11px; font-weight: 900; letter-spacing: .06em; }
+.summary-achievement strong { color: #315e41; font-size: 19px; }
+.summary-achievement p { margin: 0; color: #647b68; font-size: 13px; line-height: 1.6; }
 
 .game-shell > .hero-guide--compact { margin: 14px 0 0; }
 .session-finish-card .hero-guide { box-sizing: border-box; }

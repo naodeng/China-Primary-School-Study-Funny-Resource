@@ -3,6 +3,11 @@
   --island-muted: #65758a;
   --island-paper: #fff9ec;
   --island-card: rgba(255, 255, 255, .92);
+  --island-surface: #fffdf8;
+  --island-surface-soft: #f3f7ef;
+  --island-surface-tint: #eaf4e8;
+  --island-border: rgba(81, 103, 126, .16);
+  --island-highlight: #39785a;
   --island-mint: #79bd92;
   --island-sky: #84b8df;
   --island-sun: #f2bd61;
@@ -11,6 +16,23 @@
   --island-line: rgba(81, 103, 126, .14);
   --island-radius-card: 28px;
   --island-shadow-card: 0 18px 48px rgba(67, 84, 110, .1);
+  --animal-primary-color: #4e9b72;
+  --animal-primary-color-hover: #438b67;
+  --animal-primary-color-active: #39785a;
+  --animal-primary-color-bg: #e4f2e6;
+  --animal-text-color: #27334a;
+  --animal-text-color-secondary: #65758a;
+  --animal-text-color-muted: #728197;
+  --animal-text-color-disabled: #9ca7b1;
+  --animal-border-color: #dce5dc;
+  --animal-border-color-hover: #7aa78b;
+  --animal-border-color-light: #e7ece4;
+  --animal-bg-color: #fffdf8;
+  --animal-bg-color-secondary: #f3f5ed;
+  --animal-bg-color-disabled: #ecefe9;
+  --animal-shadow-sm: 0 2px 5px rgba(48, 73, 62, .08);
+  --animal-shadow-base: 0 5px 16px rgba(48, 73, 62, .1);
+  --animal-shadow-lg: 0 12px 28px rgba(48, 73, 62, .14);
 }
 
 .companion-avatar {
@@ -42,3 +64,300 @@
 .hero-guide--celebrate { justify-content: center; width: min(100%, 390px); margin: 22px auto 0; border-color: #e1efdf; background: linear-gradient(115deg, #f7fff3, #f2f8ff); text-align: left; }
 .hero-guide--compact { width: auto; min-height: 60px; padding: 8px 11px; border-radius: 18px; box-shadow: none; }
 .hero-guide--compact .hero-guide-copy p { font-size: 12px; }
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --island-ink: #edf3e9;
+  --island-muted: #b6c4b8;
+  --island-paper: #1d2923;
+  --island-card: #29382f;
+  --island-surface: #29382f;
+  --island-surface-soft: #304137;
+  --island-surface-tint: #354b3d;
+  --island-border: rgba(198, 220, 198, .18);
+  --island-highlight: #a4dcb3;
+  --island-mint: #8ccea0;
+  --island-sky: #93bde0;
+  --island-sun: #f0c46d;
+  --island-line: rgba(198, 220, 198, .16);
+  --island-shadow-card: 0 18px 48px rgba(0, 0, 0, .24);
+  --animal-primary-color: #84c99b;
+  --animal-primary-color-hover: #9bd9ad;
+  --animal-primary-color-active: #70b887;
+  --animal-primary-color-bg: #314c3b;
+  --animal-success-color: #8bc98f;
+  --animal-success-color-hover: #9dd59f;
+  --animal-warning-color: #e6be66;
+  --animal-warning-color-hover: #f0ce7f;
+  --animal-error-color: #df8880;
+  --animal-error-color-hover: #eba097;
+  --animal-text-color: #edf3e9;
+  --animal-text-color-secondary: #bac8bc;
+  --animal-text-color-muted: #a2b3a6;
+  --animal-text-color-disabled: #839286;
+  --animal-border-color: #506356;
+  --animal-border-color-hover: #91c59d;
+  --animal-border-color-light: #3e5144;
+  --animal-bg-color: #29382f;
+  --animal-bg-color-secondary: #35463a;
+  --animal-bg-color-disabled: #303b33;
+  --animal-shadow-sm: 0 2px 5px rgba(0, 0, 0, .2);
+  --animal-shadow-base: 0 5px 16px rgba(0, 0, 0, .22);
+  --animal-shadow-lg: 0 12px 28px rgba(0, 0, 0, .28);
+}
+
+:root[data-theme='dark'] body { color: var(--island-ink); background: var(--island-paper); }
+:root[data-theme='dark'] .catalog-page,
+:root[data-theme='dark'] .unit-page,
+:root[data-theme='dark'] .route-message-page,
+:root[data-theme='dark'] .game-page {
+  color: var(--island-ink);
+  background: radial-gradient(circle at 12% 6%, rgba(103, 145, 113, .13), transparent 26rem), linear-gradient(145deg, #1d2923 0%, #222f28 58%, #202d39 100%);
+}
+:root[data-theme='dark'] .catalog-hero,
+:root[data-theme='dark'] .unit-hero {
+  border-color: rgba(195, 218, 196, .17);
+  background: linear-gradient(115deg, #2a3930 0%, #303b32 56%, #2b3c3a 100%);
+  box-shadow: var(--island-shadow-card);
+}
+:root[data-theme='dark'] .catalog-hero h1,
+:root[data-theme='dark'] .unit-hero h1,
+:root[data-theme='dark'] .route-message-card h1,
+:root[data-theme='dark'] .catalog-section-heading h2,
+:root[data-theme='dark'] .session-list-heading h2,
+:root[data-theme='dark'] .source-card h2,
+:root[data-theme='dark'] .unit-card h3,
+:root[data-theme='dark'] .session-card h3,
+:root[data-theme='dark'] .achievement-section-heading h2,
+:root[data-theme='dark'] .achievement-unit h3 { color: var(--island-ink); }
+:root[data-theme='dark'] .course-breadcrumbs,
+:root[data-theme='dark'] .course-breadcrumbs a,
+:root[data-theme='dark'] .course-breadcrumbs [aria-current='page'],
+:root[data-theme='dark'] .catalog-lead,
+:root[data-theme='dark'] .catalog-meta span,
+:root[data-theme='dark'] .catalog-grade-label,
+:root[data-theme='dark'] .catalog-subject-name,
+:root[data-theme='dark'] .unit-card p,
+:root[data-theme='dark'] .session-card > p,
+:root[data-theme='dark'] .route-message-card > p:not(.eyebrow),
+:root[data-theme='dark'] .unit-number,
+:root[data-theme='dark'] .session-card-number,
+:root[data-theme='dark'] .source-topic-list,
+:root[data-theme='dark'] .session-card-meta,
+:root[data-theme='dark'] .catalog-footer,
+:root[data-theme='dark'] .companion-roster-member,
+:root[data-theme='dark'] .session-card-guide,
+:root[data-theme='dark'] .achievement-section-heading > div > p:last-child,
+:root[data-theme='dark'] .achievement-badge-description,
+:root[data-theme='dark'] .achievement-unit-subject,
+:root[data-theme='dark'] .achievement-unit-count,
+:root[data-theme='dark'] .achievement-session-state,
+:root[data-theme='dark'] .achievement-kindness { color: var(--island-muted); }
+:root[data-theme='dark'] .achievement-section { border-color: var(--island-border); background: rgba(41, 56, 47, .78); box-shadow: var(--island-shadow-card); }
+:root[data-theme='dark'] .achievement-progress-orbit { border-color: #55785e; color: #c3e3a8; background: #354b38; }
+:root[data-theme='dark'] .achievement-section-heading > div > p:last-child strong { color: #b6e1b3; }
+:root[data-theme='dark'] .achievement-badge strong { color: #deecdc; }
+:root[data-theme='dark'] .achievement-badge-state,
+:root[data-theme='dark'] .achievement-badge-count { color: #b0c8b3; }
+:root[data-theme='dark'] .achievement-badge-symbol { color: #b5dfb8; }
+:root[data-theme='dark'] .achievement-badge.is-current { border-color: #79a87f; background: linear-gradient(150deg, #354d39, #304339); }
+:root[data-theme='dark'] .achievement-badge.is-unlocked { border-color: #536b55; background: #2e4034; }
+:root[data-theme='dark'] .achievement-badge.is-locked { color: #a8b2a9; border-color: #465148; background: #303832; }
+:root[data-theme='dark'] .achievement-badge.is-locked strong,
+:root[data-theme='dark'] .achievement-badge.is-locked .achievement-badge-state { color: #abb6ad; }
+:root[data-theme='dark'] .achievement-unit { border-color: var(--island-border); background: #29382f; }
+:root[data-theme='dark'] .achievement-unit.is-complete { border-color: #5e8062; background: #304538; }
+:root[data-theme='dark'] .achievement-unit.is-pending { background: #29332c; }
+:root[data-theme='dark'] .achievement-unit.is-pending h3 { color: #aab5ab; }
+:root[data-theme='dark'] .achievement-unit-check { color: #b3bdb4; border-color: #58645a; background: #374139; }
+:root[data-theme='dark'] .achievement-unit.is-complete .achievement-unit-check { color: #193222; border-color: #92c39a; background: #92c39a; }
+:root[data-theme='dark'] .achievement-session-list { border-top-color: rgba(198, 220, 198, .16); }
+:root[data-theme='dark'] .achievement-session-list li { color: #a8b4a9; }
+:root[data-theme='dark'] .achievement-session-list li > span:first-child { color: #9eab9f; }
+:root[data-theme='dark'] .achievement-session-list li.is-complete { color: #b8e1bf; }
+:root[data-theme='dark'] .achievement-session-list li.is-complete > span:first-child,
+:root[data-theme='dark'] .achievement-session-list li.is-complete .achievement-session-state { color: #a8ddb2; }
+:root[data-theme='dark'] .achievement-session-state { color: #9eab9f; }
+:root[data-theme='dark'] .eyebrow { color: #a4d5aa; }
+:root[data-theme='dark'] .catalog-meta span { border-color: var(--island-border); background: rgba(48, 65, 55, .78); }
+:root[data-theme='dark'] .unit-card,
+:root[data-theme='dark'] .session-card,
+:root[data-theme='dark'] .source-card,
+:root[data-theme='dark'] .route-message-page .route-message-card,
+:root[data-theme='dark'] .achievement-badge {
+  color: var(--island-ink);
+  border-color: var(--island-border);
+  background: #29382f;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .16);
+}
+:root[data-theme='dark'] .unit-card-soon { background: #253129; }
+:root[data-theme='dark'] .unit-status.is-active { color: #b8e9bf; background: #385844; }
+:root[data-theme='dark'] .unit-status.is-soon { color: #e4d3a5; background: #514631; }
+:root[data-theme='dark'] .unit-progress-orbit { border-color: rgba(164, 196, 167, .32); color: #b4e0bc; background: #304739; box-shadow: 0 12px 34px rgba(0, 0, 0, .22); }
+:root[data-theme='dark'] .unit-progress-orbit strong { color: #b4e0bc; }
+:root[data-theme='dark'] .unit-progress-orbit span,
+:root[data-theme='dark'] .unit-progress-orbit .unit-progress-count span,
+:root[data-theme='dark'] .unit-progress-orbit .unit-progress-total,
+:root[data-theme='dark'] .unit-progress-orbit small { color: #c0d0c3; }
+:root[data-theme='dark'] .hero-guide {
+  color: var(--island-ink);
+  border-color: var(--island-border);
+  background: rgba(48, 65, 55, .88);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .16);
+}
+:root[data-theme='dark'] .hero-guide-name { color: #a8d7b0; }
+:root[data-theme='dark'] .hero-guide-copy p { color: #c5d1c7; }
+:root[data-theme='dark'] .hero-guide--welcome { background: linear-gradient(120deg, #304237, #2c3b42); }
+:root[data-theme='dark'] .hero-guide--hint { border-color: #485d67; background: #2b3a40; }
+:root[data-theme='dark'] .hero-guide--celebrate { border-color: #496448; background: linear-gradient(115deg, #314735, #2e3d48); }
+:root[data-theme='dark'] .companion-avatar { border-color: #d9e8d9; }
+:root[data-theme='dark'] .companion-avatar-spark { border-color: #29382f; }
+:root[data-theme='dark'] .game-duration,
+:root[data-theme='dark'] .game-progress-labels,
+:root[data-theme='dark'] .activity-number,
+:root[data-theme='dark'] .activity-kind-label,
+:root[data-theme='dark'] .activity-prompt-row h2,
+:root[data-theme='dark'] .interaction-instruction,
+:root[data-theme='dark'] .match-count,
+:root[data-theme='dark'] .order-label,
+:root[data-theme='dark'] .categorize-row > strong,
+:root[data-theme='dark'] .activity-feedback p,
+:root[data-theme='dark'] .activity-guidance,
+:root[data-theme='dark'] .feedback-hint,
+:root[data-theme='dark'] .game-navigation-row p,
+:root[data-theme='dark'] .session-finish-card h1,
+:root[data-theme='dark'] .session-finish-card > p:not(.eyebrow),
+:root[data-theme='dark'] .measurement-object-label,
+:root[data-theme='dark'] .ruler-tick,
+:root[data-theme='dark'] .measurement-slider-label,
+:root[data-theme='dark'] .measurement-slider-ends,
+:root[data-theme='dark'] .place-digit-grid small,
+:root[data-theme='dark'] .arithmetic-answer-label,
+:root[data-theme='dark'] .arithmetic-answer-row span,
+:root[data-theme='dark'] .arithmetic-keyboard-hint,
+:root[data-theme='dark'] .summary-kindness { color: var(--island-muted); }
+:root[data-theme='dark'] .session-intro-card,
+:root[data-theme='dark'] .activity-card,
+:root[data-theme='dark'] .session-finish-card {
+  color: var(--island-ink);
+  border-color: var(--island-border);
+  background: #29382f;
+  box-shadow: var(--island-shadow-card);
+}
+:root[data-theme='dark'] .session-intro-card h1 { color: var(--island-ink); }
+:root[data-theme='dark'] .session-intro-card p:last-child { color: var(--island-muted); }
+:root[data-theme='dark'] .game-duration { border-color: var(--island-border); background: #29382f; }
+:root[data-theme='dark'] .game-progress-track { background: #3b4b3f; }
+:root[data-theme='dark'] .activity-kind-label { color: #c1cbd1; background: #3a444a; }
+:root[data-theme='dark'] .choice-option,
+:root[data-theme='dark'] .match-choice,
+:root[data-theme='dark'] .order-row,
+:root[data-theme='dark'] .order-controls button,
+:root[data-theme='dark'] .categorize-row,
+:root[data-theme='dark'] .category-choice,
+:root[data-theme='dark'] .measurement-object-card,
+:root[data-theme='dark'] .arithmetic-expression,
+:root[data-theme='dark'] .place-value-board,
+:root[data-theme='dark'] .place-number,
+:root[data-theme='dark'] .place-digit-grid span,
+:root[data-theme='dark'] .arithmetic-answer-row input,
+:root[data-theme='dark'] .calculation-steps,
+:root[data-theme='dark'] .ruler-face {
+  color: var(--island-ink);
+  border-color: var(--island-border);
+  background: #304137;
+}
+:root[data-theme='dark'] .choice-option:hover:not(:disabled),
+:root[data-theme='dark'] .choice-option.is-selected,
+:root[data-theme='dark'] .match-choice.is-selected,
+:root[data-theme='dark'] .category-choice.is-selected { border-color: #8acb9b; background: #3a5943; }
+:root[data-theme='dark'] .choice-option-letter,
+:root[data-theme='dark'] .order-index { color: #c3e4c8; background: #3a5943; }
+:root[data-theme='dark'] .match-choice:disabled,
+:root[data-theme='dark'] .order-controls button:disabled { color: #9daaa0; background: #303a33; }
+:root[data-theme='dark'] .match-choice small,
+:root[data-theme='dark'] .activity-feedback.is-correct strong,
+:root[data-theme='dark'] .measurement-slider-label strong,
+:root[data-theme='dark'] .calculation-steps strong { color: #aaddb2; }
+:root[data-theme='dark'] .activity-feedback.is-correct { background: #304a39; }
+:root[data-theme='dark'] .activity-feedback.is-incorrect { background: #493e2b; }
+:root[data-theme='dark'] .activity-feedback.is-incorrect strong { color: #efd49b; }
+:root[data-theme='dark'] .order-controls button { color: #bfe0c5; }
+:root[data-theme='dark'] .order-controls button:disabled { border-color: #465249; }
+:root[data-theme='dark'] .activity-symbol { color: #362d1e; }
+:root[data-theme='dark'] .ruler-face { background: linear-gradient(#3c3a30, #39372e); }
+:root[data-theme='dark'] .ruler-tick i { background: #a6ad9a; }
+:root[data-theme='dark'] .ruler-tick i.is-major { background: #d1d6c8; }
+:root[data-theme='dark'] .ruler-unit { color: #cbbd98; }
+:root[data-theme='dark'] .place-value-board { border-color: #607868; }
+:root[data-theme='dark'] .place-number-value,
+:root[data-theme='dark'] .place-digit-grid strong { color: #d4e7d4; }
+:root[data-theme='dark'] .calculation-steps { color: #c5d2c8; }
+:root[data-theme='dark'] .summary-achievement { border-color: #6c925f; background: #354d38; }
+:root[data-theme='dark'] :where(a, button, input):focus-visible { outline-color: #b3e6bb; }
+:root[data-theme='dark'] .theme-switcher {
+  color: var(--island-ink);
+  border-color: var(--island-border);
+  background: rgba(41, 56, 47, .95);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .18);
+}
+:root[data-theme='dark'] .theme-switcher [class*='animal-label'] { color: #d6e2d6; }
+:root[data-theme='dark'] .theme-switcher [class*='animal-checked'] [class*='animal-label'] { color: #f0f5ee; }
+:root[data-theme='dark'] .theme-switcher [class*='animal-radioItem'] { background: #324239; }
+:root[data-theme='dark'] .theme-switcher [class*='animal-radioItem'][class*='animal-checked'] { background: #405c46; }
+:root[data-theme='dark'] .theme-switcher input[type='radio'] { background: #2d3c32; }
+:root[data-theme='dark'] .exploration-map { border-color: var(--island-border); background: linear-gradient(145deg, rgba(47, 66, 52, .9), rgba(43, 59, 66, .84)); }
+:root[data-theme='dark'] .exploration-map-heading h3,
+:root[data-theme='dark'] .achievement-detail-heading h3 { color: var(--island-ink); }
+:root[data-theme='dark'] .exploration-map-heading > div > p:last-child,
+:root[data-theme='dark'] .achievement-detail-heading p { color: var(--island-muted); }
+:root[data-theme='dark'] .exploration-map-count { border-color: var(--island-border); color: #c4dfc6; background: #304239; }
+:root[data-theme='dark'] .exploration-zone { color: #aab6ac; border-color: #46564a; background: #2b352d; }
+:root[data-theme='dark'] .exploration-zone.is-open { border-color: #57785d; color: #c4d8c5; background: linear-gradient(130deg, #2f4433, #293b34 58%, #2b3d46); box-shadow: 0 8px 25px rgba(0, 0, 0, .16); }
+:root[data-theme='dark'] .exploration-zone-symbol { color: #a4b1a6; border-color: #4b594d; background: #354138; }
+:root[data-theme='dark'] .exploration-zone.is-open .exploration-zone-symbol { color: #c5e1b5; border-color: #5d805e; background: #3a5540; }
+:root[data-theme='dark'] .exploration-zone-kicker,
+:root[data-theme='dark'] .exploration-zone-style,
+:root[data-theme='dark'] .exploration-zone-artifact,
+:root[data-theme='dark'] .exploration-zone-note { color: #a8b5aa; }
+:root[data-theme='dark'] .exploration-zone h4 { color: #bec9bf; }
+:root[data-theme='dark'] .exploration-zone.is-open h4 { color: #e1f0de; }
+:root[data-theme='dark'] .exploration-zone-status { color: #b2bdb3; background: #3a453c; }
+:root[data-theme='dark'] .exploration-zone-status.is-open { color: #d1efce; background: #3b5942; }
+:root[data-theme='dark'] .exploration-zone.is-open .exploration-zone-style,
+:root[data-theme='dark'] .exploration-zone.is-open .exploration-zone-artifact,
+:root[data-theme='dark'] .exploration-zone.is-open .exploration-zone-note,
+:root[data-theme='dark'] .exploration-subject-group h5 { color: #c0d4c2; }
+:root[data-theme='dark'] .exploration-subject-group h5::after { background: rgba(189, 218, 192, .19); }
+:root[data-theme='dark'] .exploration-unit-node { color: #b2bcb3; border-color: #465449; background: #303a32; }
+:root[data-theme='dark'] .exploration-node-symbol { color: #aeb9af; background: #3c483e; }
+:root[data-theme='dark'] .exploration-node-title { color: #bac5bb; }
+:root[data-theme='dark'] .exploration-node-state { color: #a5b1a7; }
+:root[data-theme='dark'] .exploration-unit-node.is-complete { color: #d8efda; border-color: #6b9b6b; background: linear-gradient(145deg, #36523a, #33473a); box-shadow: 0 5px 14px rgba(0, 0, 0, .18), inset 0 0 0 1px rgba(194, 226, 190, .08); }
+:root[data-theme='dark'] .exploration-unit-node.is-complete .exploration-node-symbol { color: #203426; background: #9acb8d; }
+:root[data-theme='dark'] .exploration-unit-node.is-complete .exploration-node-title,
+:root[data-theme='dark'] .exploration-unit-node.is-complete .exploration-node-state { color: #d0ead0; }
+:root[data-theme='dark'] .exploration-map-note { color: #c3d1c5; background: rgba(35, 49, 40, .68); }
+:root[data-theme='dark'] .achievement-summary-card { color: var(--island-ink); border-color: var(--island-border); background: linear-gradient(115deg, #2f4433, #2d4035 55%, #2d3e49); box-shadow: 0 12px 28px rgba(0, 0, 0, .17); }
+:root[data-theme='dark'] .achievement-summary-symbol { color: #c5e1b5; border-color: #58745b; background: #3a5540; }
+:root[data-theme='dark'] .achievement-summary-copy h2 { color: #dcebdd; }
+:root[data-theme='dark'] .achievement-summary-copy > p,
+:root[data-theme='dark'] .achievement-summary-next-label,
+:root[data-theme='dark'] .achievement-summary-footnote { color: #b8c8ba; }
+:root[data-theme='dark'] .achievement-summary-copy > p strong { color: #c3e4c3; }
+:root[data-theme='dark'] .achievement-summary-track { background: #405248; }
+:root[data-theme='dark'] .achievement-page-heading h1 { color: var(--island-ink); }
+:root[data-theme='dark'] .achievement-page-heading > p:last-child { color: var(--island-muted); }
+:root[data-theme='dark'] .settings-dialog { color: var(--island-ink); border-color: var(--island-border); background: #25332b; box-shadow: 0 26px 80px rgba(0, 0, 0, .5); }
+:root[data-theme='dark'] .settings-dialog-header { border-color: #3b4b40; }
+:root[data-theme='dark'] .settings-dialog-header h2,
+:root[data-theme='dark'] .settings-section h3 { color: #d9e9da; }
+:root[data-theme='dark'] .settings-section { border-color: #3b4b40; }
+:root[data-theme='dark'] .settings-section > p,
+:root[data-theme='dark'] .settings-achievement-link p,
+:root[data-theme='dark'] .learning-start-note { color: #b4c2b6; }
+:root[data-theme='dark'] .settings-dialog .theme-switcher { background: #2e3d34; }
+:root[data-theme='dark'] .learning-start-fields label { color: #c4d4c6; }
+:root[data-theme='dark'] .learning-start-fields select,
+:root[data-theme='dark'] .learning-start-fields input { color: #e0ebe0; border-color: #536a58; background: #2d3b32; }
+:root[data-theme='dark'] .learning-start-saved { color: #bce3bd; }

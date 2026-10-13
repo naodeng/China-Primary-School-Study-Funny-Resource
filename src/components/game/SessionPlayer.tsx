@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Button, Card } from 'animal-island-ui';
+import type { CosmicRank } from '../../achievements/progress';
 import type { LearningSession, SubjectId } from '../../content/types';
 import HeroGuide from '../mascots/HeroGuide';
 import ActivityRenderer from './ActivityRenderer';
@@ -8,11 +9,12 @@ import SessionSummary from './SessionSummary';
 interface SessionPlayerProps {
   session: LearningSession;
   subject: SubjectId;
+  newlyUnlockedRank: CosmicRank | null;
   onComplete: (sessionId: string) => void;
   onExit: () => void;
 }
 
-export default function SessionPlayer({ session, subject, onComplete, onExit }: SessionPlayerProps) {
+export default function SessionPlayer({ session, subject, newlyUnlockedRank, onComplete, onExit }: SessionPlayerProps) {
   const [activityIndex, setActivityIndex] = useState(0);
   const [solvedActivityIds, setSolvedActivityIds] = useState<string[]>([]);
   const [showSummary, setShowSummary] = useState(false);
@@ -43,6 +45,7 @@ export default function SessionPlayer({ session, subject, onComplete, onExit }: 
       <SessionSummary
         session={session}
         subject={subject}
+        newlyUnlockedRank={newlyUnlockedRank}
         onExit={onExit}
         onReplay={() => {
           setActivityIndex(0);
@@ -87,7 +90,7 @@ export default function SessionPlayer({ session, subject, onComplete, onExit }: 
           <ActivityRenderer key={activity.id} activity={activity} onSolved={handleSolved} />
         </Card>
         <div className="game-navigation-row">
-          <p aria-live="polite">{solved ? '这道挑战完成啦，可以继续。' : '答对后就能进入下一道挑战。'}</p>
+          <p aria-live="polite">{solved ? '挑战完成！你的坚持又积累了一点能量，可以继续啦。' : '不着急，先读题找线索；愿意动脑尝试就很棒。'}</p>
           <Button type="primary" disabled={!solved} onClick={continueSession}>
             {isLast ? '完成本场' : '继续下一题'} <span aria-hidden="true">→</span>
           </Button>

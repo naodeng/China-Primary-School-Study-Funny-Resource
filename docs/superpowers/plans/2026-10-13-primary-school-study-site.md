@@ -164,7 +164,7 @@
 
 **进度接口**
 
-- ProgressState 为包含 schemaVersion: 1 和 completedSessionIds 的对象。
+- ProgressState 使用 schemaVersion: 2，包含 completedSessionIds 和可选学习起点；读取 schemaVersion: 1 时保留旧场次记录并迁移。
 - 提供 loadProgress、saveProgress 和 completeSession；单场完成记录只出现一次。
 
 ## Task 7: 任务七：应用 Animal Island 视觉并制作四个圆形头像
@@ -204,13 +204,60 @@
 4. 重新运行 npm run build 和 git diff --check；本地预览直接访问深层场次路径，手动完成“目录 → 单元 → 场次 → 完成 → 刷新”流程。
 5. 将验证边界写清楚：本机构建和预览不等于已部署到 Cloudflare；没有实际部署时不声称验证线上站点。
 
+## 追加范围：主题切换、全年级成就星图与鼓励反馈
+
+本追加范围对应设计文档中新确认的 12 星区成长路线。实施时沿用现有课程层级、localStorage 进度和 Animal Island 组件，不另建一套账号或奖励数据。
+
+**涉及文件**
+
+- src/theme/ThemeProvider.tsx、src/components/theme/ThemeSwitcher.tsx、index.html、src/styles/theme.css
+- src/achievements/progress.ts、src/achievements/exploration.ts、src/components/achievements/AchievementDashboard.tsx
+- 修改 App、目录、游戏流程、反馈与完成总结相关组件及样式
+
+**步骤**
+
+1. 增加跟随系统、浅色、深色三种主题；默认跟随系统，用户手动选择保存在当前设备并在刷新后保留。
+2. 按设计文档登记一至六年级上下学期共 12 个星区及主题、视觉和单元节点意象。
+3. 由年级、学期和课程目录数据生成对应星区的单元节点；二年级上学期按人教版预留语文 8 个、数学 9 个（含总复习）节点。只开放已有游戏内容的课程，其余节点灰显；未来学期没有核实的教材单元数时不预造节点。
+4. 从单元内所有游戏场次的完成状态计算节点。完成整个单元后打勾并高亮；部分完成、筹备中或未接入内容保持灰显。场次 ID 使用完整层级路径，保证跨学期累计不串号。
+5. 按累计完成的单元数发放“预备宇航员、月球开拓者、火星探险家、银河系舰长、宇宙终极探索官”头衔，升级门槛为 0、1、2、4、8 个单元；提供即时、温和、不比较排名的鼓励反馈。
+6. 手动切换三种主题并刷新确认偏好保留；检查 12 个星区、当前单元数、完成/未完成状态和窄屏布局。完成情况仍只保存在当前设备。
+
 ## 完成标准
 
 - 目录和内容路径完整区分年级、学期、学科、单元和场次。
 - 四个开放单元包含 3、3、2、4 场原创游戏，每场有 3–4 个互动挑战和约 20 分钟建议时长。
 - animal-island-ui 组件实际用于界面；视觉保持小岛风格并加入适量原创科幻元素。
 - 四个用户提供的头像转制后以圆形卡通学习伙伴出现；原图没有进入仓库。
+- 系统主题默认生效；用户可切换浅色/深色并在刷新后保留选择。
+- 成就星图包括设计文档登记的 12 个学期星区；已接入的单元完成后打勾高亮，未完成内容置灰，头衔按 0、1、2、4、8 个单元累计升级。
 - 答题反馈、提示、重试、键盘操作、窄屏交互和本机进度符合设计。
 - 根目录包含 PolyForm Noncommercial License 1.0.0 正式文本；第三方 MIT 许可声明可在仓库和 dist 中找到；README 和过程文档为中文。
 - npm run build 成功；Cloudflare Pages 可按文档配置部署。本地证据与远端部署证据分开陈述。
 - git diff --check 通过；不新增自动化测试。
+
+## 追加范围：首页成就摘要、设置弹窗和学习起点
+
+**涉及文件**
+
+- src/achievements/position.ts、src/achievements/progress.ts、src/achievements/exploration.ts
+- src/storage/progress.ts、src/app/router.ts、src/App.tsx
+- src/components/catalog/CourseCatalog.tsx、src/components/achievements/AchievementSummary.tsx、src/components/achievements/AchievementPage.tsx、src/components/achievements/AchievementDashboard.tsx、src/components/settings/SettingsDialog.tsx
+- src/styles/catalog.css、src/styles/theme.css、README.md、本文设计说明与实施计划
+
+**步骤**
+
+1. 将课程目录页的完整星图替换成当前用户的头衔、已点亮单元数和下一头衔进度摘要；添加 `/achievements` 页面展示详细星区、课程和场次记录。
+2. 在首页顶部课程目录导航右侧添加设置入口。弹窗包含显示主题、成就详情入口，以及年级、学期和起始单元选择。
+3. 将本地进度升级为 schemaVersion 2，保留旧版已完成场次数据，并新增可选学习起点。应用新起点时，重算所选位置之前的已登记课程，清除所选位置及之后的已完成场次。
+4. 把学习起点应用到单元进度、星区节点与累计头衔。未来教材内容按年级、学期、单元位置继承该起点；未知学期不生成猜测的教材单元。
+5. 在设置中说明应用起点会替换本地后续进度，明确数据只保存在当前浏览器。手动检查键盘和 Escape 关闭、主题选择、设置后刷新、成就导航及 390 像素窄屏布局。
+6. 更新中文 README、设计说明、计划和项目 AGENTS.md。
+
+**完成标准**
+
+- 首页只展示当前用户的成就摘要；摘要和设置入口均可进入完整成就详情。
+- 设置弹窗可调整跟随系统、浅色、深色主题，并能按年级、学期、单元应用新的本地学习起点。
+- 起点之前所有已登记节点显示为完成，所选单元及之后重新开始；课程扩展后，新课程按起点自动计算。
+- schemaVersion 1 的本地进度可无损读取；schemaVersion 2 保存主题之外的完成场次与学习起点。
+- `npm run build`、`git diff --check` 通过；手动检查桌面、窄屏、主题、弹窗关闭和导航关键路径。

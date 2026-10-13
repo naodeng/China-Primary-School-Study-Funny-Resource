@@ -3,9 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#fff9ec" />
     <meta name="description" content="二年级人教版语文与数学趣味互动学习" />
     <title>星岛学习站 · 一起闯关</title>
+    <script>
+      (() => {
+        let preference = 'system';
+        try {
+          const saved = window.localStorage.getItem('china-study-theme-v1');
+          if (saved === 'light' || saved === 'dark' || saved === 'system') preference = saved;
+        } catch {
+          // Follow the system when browser storage is unavailable.
+        }
+        const theme = preference === 'system'
+          ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+          : preference;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -77,6 +77,7 @@ export default function ActivityRenderer({ activity, onSolved }: ActivityRendere
       </div>
       {activityControl}
       <ActivityFeedback
+        activityId={activity.id}
         status={status}
         hint={activity.hint}
         explanation={activity.explanation}

@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Button, Card } from 'animal-island-ui';
+import type { CosmicRank } from './achievements/progress';
+import { getNewCosmicRank } from './achievements/progress';
 import { resolveRoute } from './app/router';
 import type { AppRoute } from './app/router';
 import CourseBreadcrumbs from './components/catalog/CourseBreadcrumbs';
 import CourseCatalog from './components/catalog/CourseCatalog';
 import UnitOverview from './components/catalog/UnitOverview';
 import SessionPlayer from './components/game/SessionPlayer';
+import AchievementPage from './components/achievements/AchievementPage';
 import './styles/catalog.css';
 import './styles/game.css';
-import { completeSession, loadProgress } from './storage/progress';
+import { completeSession, loadProgress, setLearningStart } from './storage/progress';
+import ThemeProvider from './theme/ThemeProvider';
+import type { LearningPosition } from './achievements/position';
+import { getEffectiveCompletedSessionIds } from './achievements/position';
 
 export default function App() {
   const [route, setRoute] = useState<AppRoute>(() => resolveRoute(window.location.pathname));
   const [progress, setProgress] = useState(() => loadProgress());
+  const [newlyUnlockedRank, setNewlyUnlockedRank] = useState<CosmicRank | null>(null);
 
   useEffect(() => {
     const handlePopState = () => setRoute(resolveRoute(window.location.pathname));
@@ -23,26 +30,42 @@ export default function App() {
   function navigate(path: string) {
     window.history.pushState({}, '', path);
     setRoute(resolveRoute(window.location.pathname));
+    setNewlyUnlockedRank(null);
     const behavior: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
     window.scrollTo({ top: 0, behavior });
   }
 
-  if (route.kind === 'catalog') return <CourseCatalog onNavigate={navigate} />;
-  if (route.kind === 'unit') {
-    return <UnitOverview unitKey={route.unitKey} unit={route.unit} completedSessionIds={progress.completedSessionIds} onNavigate={navigate} />;
+  function handleSessionComplete(sessionId: string) {
+    const nextProgress = completeSession(progress, sessionId);
+    setNewlyUnlockedRank(getNewCosmicRank(progress.completedSessionIds, nextProgress.completedSessionIds, progress.learningStart));
+    setProgress(nextProgress);
   }
-  if (route.kind === 'session') {
-    return (
+
+  function handleLearningStart(position: LearningPosition) {
+    setProgress(setLearningStart(position));
+    setNewlyUnlockedRank(null);
+  }
+
+  const effectiveCompletedSessionIds = getEffectiveCompletedSessionIds(progress.completedSessionIds, progress.learningStart);
+  let page;
+  if (route.kind === 'catalog') {
+    page = <CourseCatalog progress={progress} onNavigate={navigate} onApplyLearningStart={handleLearningStart} />;
+  } else if (route.kind === 'achievements') {
+    page = <AchievementPage progress={progress} onNavigate={navigate} />;
+  } else if (route.kind === 'unit') {
+    page = <UnitOverview unitKey={route.unitKey} unit={route.unit} completedSessionIds={effectiveCompletedSessionIds} onNavigate={navigate} />;
+  } else if (route.kind === 'session') {
+    page = (
       <SessionPlayer
         session={route.session}
         subject={route.unit.subject}
-        onComplete={(sessionId) => setProgress((current) => completeSession(current, sessionId))}
+        newlyUnlockedRank={newlyUnlockedRank}
+        onComplete={handleSessionComplete}
         onExit={() => navigate(`/${route.unitKey}`)}
       />
     );
-  }
-  if (route.kind === 'comingSoon') {
-    return (
+  } else if (route.kind === 'comingSoon') {
+    page = (
       <main className="route-message-page">
         <div className="catalog-shell">
           <CourseBreadcrumbs items={[{ label: '课程目录', path: '/' }, { label: route.title }]} onNavigate={navigate} />
@@ -55,18 +78,27 @@ export default function App() {
         </div>
       </main>
     );
+  } else {
+    page = (
+      <main className="route-message-page">
+        <div className="catalog-shell">
+          <CourseBreadcrumbs items={[{ label: '课程目录', path: '/' }, { label: '页面未找到' }]} onNavigate={navigate} />
+          <Card className="route-message-card" color="app-red">
+            <p className="eyebrow">路线暂时中断</p>
+            <h1>没有找到这门课程</h1>
+            <p>别担心，从课程目录重新选择一座已经开放的学习岛吧。</p>
+            <Button type="primary" onClick={() => navigate('/')}>回到课程目录</Button>
+          </Card>
+        </div>
+      </main>
+    );
   }
+
   return (
-    <main className="route-message-page">
-      <div className="catalog-shell">
-        <CourseBreadcrumbs items={[{ label: '课程目录', path: '/' }, { label: '页面未找到' }]} onNavigate={navigate} />
-        <Card className="route-message-card" color="app-red">
-          <p className="eyebrow">路线暂时中断</p>
-          <h1>没有找到这门课程</h1>
-          <p>请从课程目录选择已开放的单元。</p>
-          <Button type="primary" onClick={() => navigate('/')}>回到课程目录</Button>
-        </Card>
+    <ThemeProvider>
+      <div className="app-frame">
+        {page}
       </div>
-    </main>
+    </ThemeProvider>
   );
 }
