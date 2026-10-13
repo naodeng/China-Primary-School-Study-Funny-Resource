@@ -71,11 +71,11 @@
 
 ### Task 4：升级路由、目录和任务入口
 
-**文件：** 修改 src/app/router.ts、src/App.tsx、src/components/catalog/CourseCatalog.tsx、src/components/catalog/UnitOverview.tsx、src/components/catalog/CourseBreadcrumbs.tsx、src/styles/catalog.css；创建 src/app/router.test.ts、src/components/catalog/CourseCatalog.test.tsx、src/components/catalog/UnitOverview.test.tsx。
+**文件：** 修改 src/app/router.ts、src/App.tsx、src/components/catalog/CourseCatalog.tsx、src/components/catalog/UnitOverview.tsx、src/components/catalog/CourseBreadcrumbs.tsx、src/styles/catalog.css、src/styles/theme.css；创建 src/app/router.test.ts、src/components/catalog/CourseCatalog.test.tsx、src/components/catalog/UnitOverview.test.tsx。
 
-**接口：** AppRoute 加 task 和含 difficulty/task/session 的 session 路由。getTaskPath(unitKey: string, difficulty: Difficulty, taskId: string): string 与 getSessionPath(unitKey: string, difficulty: Difficulty, taskId: string, sessionId: string): string 使用完整 ID 的末段 slug 生成路径。保留单元 URL，并把旧 /unit/session-NN 映射到基础版第一任务兼容场次。
+**接口：** AppRoute 加 task 和含 difficulty/task/session 的 session 路由。getTaskPath(unitKey: string, difficulty: Difficulty, taskId: string): string 与 getSessionPath(unitKey: string, difficulty: Difficulty, taskId: string, sessionId: string): string 使用完整 ID 的末段 slug 生成路径。保留单元 URL，并把旧 /unit/session-NN 按序号映射到基础版对应场次。
 
-- [ ] 先写 router.test：resolveRoute 解析主页/单元/任务/场次；拒绝未知学科与非法 slug；筹备中和未知分流；旧 session 路径映射基础版首任务；popstate 更新页面。逐例断言 route.kind 与层级 key。
+- [ ] 先写 router.test：resolveRoute 解析主页/单元/任务/场次；拒绝未知学科与非法 slug；筹备中和未知分流；旧 session 路径按序号映射基础版场次；popstate 更新页面。逐例断言 route.kind 与层级 key。
 - [ ] 实现规范化路径、路由解析和浏览器前进/后退。
 - [ ] 单元页展示基础多任务、进阶/高阶单任务、目标、场次和任务级进度。
 - [ ] 验证键盘、窄屏及现有设置入口；运行对应测试和构建后提交。

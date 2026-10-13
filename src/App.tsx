@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Card } from 'animal-island-ui';
 import type { CosmicRank } from './achievements/progress';
 import { getNewCosmicRank } from './achievements/progress';
-import { resolveRoute } from './app/router';
+import { getTaskPath, resolveRoute } from './app/router';
 import type { AppRoute } from './app/router';
 import CourseBreadcrumbs from './components/catalog/CourseBreadcrumbs';
 import CourseCatalog from './components/catalog/CourseCatalog';
@@ -54,6 +54,17 @@ export default function App() {
     page = <AchievementPage progress={progress} onNavigate={navigate} />;
   } else if (route.kind === 'unit') {
     page = <UnitOverview unitKey={route.unitKey} unit={route.unit} completedSessionIds={effectiveCompletedSessionIds} onNavigate={navigate} />;
+  } else if (route.kind === 'task') {
+    page = (
+      <UnitOverview
+        unitKey={route.unitKey}
+        unit={route.unit}
+        selectedDifficulty={route.difficulty}
+        selectedTask={route.task}
+        completedSessionIds={effectiveCompletedSessionIds}
+        onNavigate={navigate}
+      />
+    );
   } else if (route.kind === 'session') {
     page = (
       <SessionPlayer
@@ -61,7 +72,7 @@ export default function App() {
         subject={route.unit.subject}
         newlyUnlockedRank={newlyUnlockedRank}
         onComplete={handleSessionComplete}
-        onExit={() => navigate(`/${route.unitKey}`)}
+        onExit={() => navigate(getTaskPath(route.unitKey, route.difficulty, route.task.id))}
       />
     );
   } else if (route.kind === 'comingSoon') {
@@ -72,7 +83,7 @@ export default function App() {
           <Card className="route-message-card" color="app-yellow">
             <p className="eyebrow">学习小岛正在建设</p>
             <h1>{route.title}</h1>
-            <p>这部分内容还在准备，先来玩已经开放的语文和数学单元吧。</p>
+            <p>我们正在核对教材版本、设计合适的小游戏，准备好后就会开放。</p>
             <Button type="primary" onClick={() => navigate('/')}>回到课程目录</Button>
           </Card>
         </div>

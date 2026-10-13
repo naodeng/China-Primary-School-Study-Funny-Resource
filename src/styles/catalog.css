@@ -29,6 +29,9 @@
 .catalog-section-heading h2, .session-list-heading h2, .source-card h2 { margin: 0; color: #2e3d52; font-size: clamp(22px, 3.5vw, 30px); }
 .subject-switch { display: flex; gap: 10px; }
 .catalog-grade-label { display: flex; align-items: center; gap: 10px; margin: 22px 0 16px; color: #68778c; font-size: 14px; font-weight: 700; }
+.catalog-selector { display: inline-flex; align-items: center; gap: 7px; }
+.catalog-selector select { min-height: 40px; padding: 7px 30px 7px 11px; border: 1px solid rgba(92, 121, 109, .25); border-radius: 13px; color: #40556a; background: rgba(255, 255, 255, .82); font: inherit; font-weight: 800; }
+.catalog-selector select:focus-visible { outline: 3px solid #276b57; outline-offset: 3px; }
 .grade-badge { padding: 7px 12px; border-radius: 999px; color: #fff; background: #5b9a83; }
 .catalog-subject-name { margin-left: auto; color: #324157; font-size: 17px; }
 .unit-grid, .session-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
@@ -55,6 +58,18 @@
 .session-card > p { flex: 1; margin: 0 0 15px; }
 .session-card-meta { justify-content: flex-start; flex-wrap: wrap; margin: 0 0 17px; color: #617188; font-size: 13px; font-weight: 700; }
 .session-complete-label { margin-top: 10px; color: #42795f; font-size: 13px; font-weight: 800; text-align: center; }
+.catalog-empty-note, .task-track-empty { margin: 0; padding: 18px 20px; border: 1px dashed rgba(92, 121, 109, .3); border-radius: 18px; color: #63748a; background: rgba(255, 255, 255, .6); line-height: 1.7; }
+.difficulty-track-list { display: grid; gap: 24px; }
+.difficulty-track { padding: clamp(18px, 3vw, 28px); border: 1px solid rgba(89, 121, 112, .16); border-radius: 26px; background: rgba(255, 255, 255, .38); }
+.difficulty-track-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+.difficulty-track-heading h2 { margin: 0; color: #2e3d52; font-size: clamp(21px, 3vw, 27px); }
+.difficulty-track-heading > div > p:last-child { margin: 8px 0 0; color: #65758a; line-height: 1.6; }
+.difficulty-task-count { flex: none; padding: 8px 12px; border-radius: 999px; color: #416c5b; background: #e4f3e5; font-size: 13px; font-weight: 800; }
+.task-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.task-card { min-height: 220px; display: flex; flex-direction: column; padding: 22px; border: 1px solid rgba(65, 82, 109, .1); border-radius: 22px; }
+.task-card h3 { margin: 13px 0 8px; color: #2b3a50; font-size: 21px; }
+.task-card > p { flex: 1; margin: 0 0 12px; color: #66748a; line-height: 1.65; }
+.task-card .session-card-meta { margin-bottom: 14px; }
 .catalog-footer { position: relative; display: flex; justify-content: center; margin-top: 48px; padding: 24px 12px; color: #8290a2; font-size: 14px; text-align: center; }
 .footer-orbit { position: absolute; right: 7%; top: 4px; color: #f0b74d; font-size: 26px; }
 .route-message-page .route-message-card { max-width: 720px; margin: 60px auto; padding: clamp(28px, 6vw, 56px); border-radius: 30px; }
@@ -69,13 +84,15 @@
   .planet-ring { inset: 24px 0 18px; }
   .catalog-section { margin-top: 36px; }
   .catalog-section-heading, .session-list-heading { align-items: start; flex-direction: column; }
-  .unit-grid, .session-grid, .source-topic-list { grid-template-columns: 1fr; }
+  .unit-grid, .session-grid, .source-topic-list, .task-grid { grid-template-columns: 1fr; }
   .unit-hero { align-items: flex-start; }
   .unit-progress-orbit { flex-basis: 88px; width: 88px; height: 88px; border-width: 7px; }
   .unit-progress-orbit strong { font-size: 28px; }
   .unit-progress-orbit span { margin: 7px 0 0 31px; font-size: 10px; }
   .unit-progress-orbit small { font-size: 11px; }
   .catalog-meta span { font-size: 12px; }
+  .difficulty-track-heading { align-items: flex-start; flex-direction: column; }
+  .difficulty-track { padding: 18px; }
 }
 @media (max-width: 420px) {
   .catalog-hero { align-items: flex-start; }
@@ -84,6 +101,8 @@
   .catalog-lead { max-width: 100%; font-size: 15px; }
   .catalog-grade-label { flex-wrap: wrap; }
   .catalog-subject-name { margin-left: 0; }
+  .catalog-grade-label { align-items: flex-start; }
+  .catalog-selector { align-items: flex-start; flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }

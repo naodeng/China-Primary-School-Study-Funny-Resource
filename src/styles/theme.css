@@ -361,3 +361,16 @@
 :root[data-theme='dark'] .learning-start-fields select,
 :root[data-theme='dark'] .learning-start-fields input { color: #e0ebe0; border-color: #536a58; background: #2d3b32; }
 :root[data-theme='dark'] .learning-start-saved { color: #bce3bd; }
+:root[data-theme='dark'] .catalog-selector { color: #c4d4c6; }
+:root[data-theme='dark'] .catalog-selector select { color: #e0ebe0; border-color: #536a58; background: #2d3b32; }
+:root[data-theme='dark'] .difficulty-track { border-color: var(--island-border); background: rgba(42, 56, 47, .62); }
+:root[data-theme='dark'] .difficulty-track-heading h2,
+:root[data-theme='dark'] .task-card h3 { color: var(--island-ink); }
+:root[data-theme='dark'] .difficulty-track-heading > div > p:last-child,
+:root[data-theme='dark'] .task-card > p,
+:root[data-theme='dark'] .catalog-empty-note,
+:root[data-theme='dark'] .task-track-empty { color: var(--island-muted); }
+:root[data-theme='dark'] .difficulty-task-count { color: #d0e6d0; background: #3b5a43; }
+:root[data-theme='dark'] .task-card { border-color: var(--island-border); background: #2b3930; }
+:root[data-theme='dark'] .catalog-empty-note,
+:root[data-theme='dark'] .task-track-empty { border-color: #526552; background: rgba(40, 53, 44, .8); }

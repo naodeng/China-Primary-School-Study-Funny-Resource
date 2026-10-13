@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -23,5 +23,17 @@ describe('App', () => {
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '显示主题' })).toBeInTheDocument();
+  });
+
+  it('updatesTheCurrentPageWhenBrowserHistoryChanges', () => {
+    render(<App />);
+
+    act(() => {
+      window.history.pushState({}, '', '/grade-2/term-1/chinese/unit-01');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+
+    expect(screen.getByRole('heading', { name: '第一单元 · 阅读' })).toBeInTheDocument();
+    expect(screen.getByText(/正在核对教材版本/)).toBeInTheDocument();
   });
 });
