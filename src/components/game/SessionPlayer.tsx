@@ -2,6 +2,15 @@ import { useRef, useState } from 'react';
 import { Button, Card } from 'animal-island-ui';
 import type { CosmicRank } from '../../achievements/progress';
 import type { LearningSession, SubjectId } from '../../content/types';
+import { selectFeedbackMessage } from '../../learning/feedback';
+import type { FeedbackStatus } from '../../learning/feedback';
+import {
+  advanceSession,
+  createSessionState,
+  getSessionProgress,
+  isCurrentActivitySolved,
+  markCurrentActivitySolved,
+} from '../../learning/session';
 import HeroGuide from '../mascots/HeroGuide';
 import ActivityRenderer from './ActivityRenderer';
 import SessionSummary from './SessionSummary';
@@ -15,32 +24,40 @@ interface SessionPlayerProps {
 }
 
 export default function SessionPlayer({ session, subject, newlyUnlockedRank, onComplete, onExit }: SessionPlayerProps) {
-  const [activityIndex, setActivityIndex] = useState(0);
-  const [solvedActivityIds, setSolvedActivityIds] = useState<string[]>([]);
-  const [showSummary, setShowSummary] = useState(false);
+  const [sessionState, setSessionState] = useState(() => createSessionState(session.activities.map((activity) => activity.id)));
   const nextLock = useRef(false);
-  const activity = session.activities[activityIndex];
-  const solved = solvedActivityIds.includes(activity.id);
-  const isLast = activityIndex === session.activities.length - 1;
-  const progress = (solvedActivityIds.length / session.activities.length) * 100;
+  const previousFeedbackMessages = useRef<Record<FeedbackStatus, string | null>>({ correct: null, incorrect: null });
+  const activity = session.activities[sessionState.currentIndex];
+  const solved = isCurrentActivitySolved(sessionState);
+  const progress = getSessionProgress(sessionState);
 
   function handleSolved(activityId: string) {
-    setSolvedActivityIds((current) => current.includes(activityId) ? current : [...current, activityId]);
+    setSessionState((current) => markCurrentActivitySolved(current, activityId));
+  }
+
+  function getFeedbackMessage(status: FeedbackStatus): string {
+    const message = selectFeedbackMessage(status, previousFeedbackMessages.current[status]);
+    previousFeedbackMessages.current[status] = message;
+    return message;
   }
 
   function continueSession() {
-    if (!solved || nextLock.current) return;
+    if (!solved || nextLock.current || sessionState.completed) return;
     nextLock.current = true;
-    if (isLast) {
-      setShowSummary(true);
+    const nextState = advanceSession(sessionState);
+    if (nextState === sessionState) {
+      nextLock.current = false;
+      return;
+    }
+    setSessionState(nextState);
+    if (nextState.completed) {
       onComplete(session.id);
       return;
     }
-    setActivityIndex((current) => current + 1);
     window.setTimeout(() => { nextLock.current = false; }, 0);
   }
 
-  if (showSummary) {
+  if (sessionState.completed) {
     return (
       <SessionSummary
         session={session}
@@ -48,12 +65,24 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
         newlyUnlockedRank={newlyUnlockedRank}
         onExit={onExit}
         onReplay={() => {
-          setActivityIndex(0);
-          setSolvedActivityIds([]);
-          setShowSummary(false);
+          setSessionState(createSessionState(session.activities.map((item) => item.id)));
           nextLock.current = false;
         }}
       />
+    );
+  }
+
+  if (!activity) {
+    return (
+      <main className="game-page">
+        <div className="game-shell">
+          <Card className="session-intro-card" color="app-yellow">
+            <h1>这场游戏还没有准备好</h1>
+            <p>课程伙伴正在整理题目，我们确认好内容后就会邀请你来挑战。</p>
+            <Button type="primary" onClick={onExit}>返回课程</Button>
+          </Card>
+        </div>
+      </main>
     );
   }
 
@@ -75,8 +104,8 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
         <HeroGuide mood="hint" subject={subject} companionId={session.companionId} compact />
         <section className="game-progress-section" aria-label="挑战进度">
           <div className="game-progress-labels">
-            <span>挑战 {activityIndex + 1} / {session.activities.length}</span>
-            <span>{solvedActivityIds.length} 个挑战已完成</span>
+            <span>挑战 {sessionState.currentIndex + 1} / {session.activities.length}</span>
+            <span>{sessionState.solvedActivityIds.length} 个挑战已完成</span>
           </div>
           <div className="game-progress-track" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100} aria-label="本场完成进度">
             <span style={{ width: `${progress}%` }} />
@@ -84,15 +113,15 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
         </section>
         <Card className="activity-card" color="default">
           <div className="activity-card-heading">
-            <span className="activity-number">挑战 {String(activityIndex + 1).padStart(2, '0')}</span>
+            <span className="activity-number">挑战 {String(sessionState.currentIndex + 1).padStart(2, '0')}</span>
             <span className="activity-kind-label">{activity.kind === 'choice' ? '选择' : activity.kind === 'match' ? '配对' : activity.kind === 'order' ? '排序' : activity.kind === 'categorize' ? '分类' : activity.kind === 'measurement' ? '测量' : '计算'}</span>
           </div>
-          <ActivityRenderer key={activity.id} activity={activity} onSolved={handleSolved} />
+          <ActivityRenderer key={activity.id} activity={activity} onSolved={handleSolved} selectMessage={getFeedbackMessage} />
         </Card>
         <div className="game-navigation-row">
           <p aria-live="polite">{solved ? '挑战完成！你的坚持又积累了一点能量，可以继续啦。' : '不着急，先读题找线索；愿意动脑尝试就很棒。'}</p>
           <Button type="primary" disabled={!solved} onClick={continueSession}>
-            {isLast ? '完成本场' : '继续下一题'} <span aria-hidden="true">→</span>
+            {sessionState.currentIndex === session.activities.length - 1 ? '完成本场' : '继续下一题'} <span aria-hidden="true">→</span>
           </Button>
         </div>
       </div>

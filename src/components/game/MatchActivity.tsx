@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { Button } from 'animal-island-ui';
 import type { MatchActivityDefinition } from '../../content/types';
+import { shuffleMatchAnswers } from '../../learning/matching';
 
 interface MatchActivityProps {
   activity: MatchActivityDefinition;
   disabled: boolean;
   onSubmit: (answer: Record<string, string>) => void;
+  random?: () => number;
 }
 
-export default function MatchActivity({ activity, disabled, onSubmit }: MatchActivityProps) {
+export default function MatchActivity({ activity, disabled, onSubmit, random }: MatchActivityProps) {
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [assignments, setAssignments] = useState<Record<string, string>>({});
+  const [rightAnswers] = useState(() => shuffleMatchAnswers(activity.pairs, random));
   const takenRightIds = Object.entries(assignments)
     .filter(([leftId]) => leftId !== selectedLeft)
     .map(([, rightId]) => rightId);
@@ -43,7 +46,7 @@ export default function MatchActivity({ activity, disabled, onSubmit }: MatchAct
           ))}
         </div>
         <div className="match-column" role="group" aria-label="右侧词语">
-          {activity.pairs.map((pair) => (
+          {rightAnswers.map((pair) => (
             <button
               className={`match-choice ${takenRightIds.includes(pair.id) ? 'is-linked' : ''}`}
               type="button"

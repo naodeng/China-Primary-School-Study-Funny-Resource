@@ -19,7 +19,7 @@ export default function SessionSummary({ session, subject, newlyUnlockedRank, on
           <span className="finish-emblem" aria-hidden="true">✦</span>
           <p className="eyebrow">任务完成</p>
           <h1>太棒了，能量收集完成！</h1>
-          <p>你完成了“{session.title}”，这份认真和坚持值得一枚星章！</p>
+          <p>你完成了“{session.title}”里的 {session.activities.length} 个小挑战，这份认真和坚持值得一枚星章！</p>
           <div className="earned-star" role="img" aria-label="获得一枚星章">⭐</div>
           {newlyUnlockedRank && (
             <div className="summary-achievement" role="status">

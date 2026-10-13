@@ -1,5 +1,8 @@
 import { useRef, useState } from 'react';
 import type { ActivityDefinition } from '../../content/types';
+import { submitAnswer } from '../../learning/answers';
+import { selectFeedbackMessage } from '../../learning/feedback';
+import type { FeedbackStatus } from '../../learning/feedback';
 import ActivityFeedback, { type ActivityFeedbackStatus } from './ActivityFeedback';
 import CategorizeActivity from './CategorizeActivity';
 import ChoiceActivity from './ChoiceActivity';
@@ -11,40 +14,36 @@ import OrderActivity from './OrderActivity';
 interface ActivityRendererProps {
   activity: ActivityDefinition;
   onSolved: (activityId: string) => void;
+  random?: () => number;
+  selectMessage?: (status: FeedbackStatus) => string;
 }
 
-function isCorrect(activity: ActivityDefinition, answer: unknown): boolean {
-  if (activity.kind === 'choice') return answer === activity.correctOptionId;
-  if (activity.kind === 'match') {
-    const submitted = answer as Record<string, string>;
-    return activity.pairs.every((pair) => submitted[pair.id] === pair.id);
-  }
-  if (activity.kind === 'order') {
-    const submitted = answer as string[];
-    return submitted.length === activity.correctOrder.length && submitted.every((id, index) => id === activity.correctOrder[index]);
-  }
-  if (activity.kind === 'categorize') {
-    const submitted = answer as Record<string, string>;
-    return activity.items.every((item) => submitted[item.id] === item.categoryId);
-  }
-  if (activity.kind === 'arithmetic') return Number(answer) === activity.correctAnswer;
-  return Number(answer) === activity.targetLengthCm;
-}
-
-export default function ActivityRenderer({ activity, onSolved }: ActivityRendererProps) {
+export default function ActivityRenderer({ activity, onSolved, random, selectMessage }: ActivityRendererProps) {
   const [status, setStatus] = useState<ActivityFeedbackStatus>('unanswered');
   const [hintVisible, setHintVisible] = useState(false);
   const [attempt, setAttempt] = useState(0);
+  const [message, setMessage] = useState<string | null>(null);
   const solvedRef = useRef(false);
+  const previousMessage = useRef<Record<FeedbackStatus, string | null>>({ correct: null, incorrect: null });
+
+  function chooseMessage(nextStatus: FeedbackStatus): string {
+    const selected = selectMessage
+      ? selectMessage(nextStatus)
+      : selectFeedbackMessage(nextStatus, previousMessage.current[nextStatus], random);
+    previousMessage.current[nextStatus] = selected;
+    return selected;
+  }
 
   function submit(answer: unknown) {
     if (solvedRef.current) return;
-    if (isCorrect(activity, answer)) {
+    if (submitAnswer(activity, answer)) {
       solvedRef.current = true;
       setStatus('correct');
+      setMessage(chooseMessage('correct'));
       onSolved(activity.id);
     } else {
       setStatus('incorrect');
+      setMessage(chooseMessage('incorrect'));
     }
   }
 
@@ -58,7 +57,7 @@ export default function ActivityRenderer({ activity, onSolved }: ActivityRendere
   if (activity.kind === 'choice') {
     activityControl = <ChoiceActivity key={attempt} activity={activity} disabled={status === 'correct'} onSubmit={submit} />;
   } else if (activity.kind === 'match') {
-    activityControl = <MatchActivity key={attempt} activity={activity} disabled={status === 'correct'} onSubmit={submit} />;
+    activityControl = <MatchActivity key={attempt} activity={activity} disabled={status === 'correct'} onSubmit={submit} random={random} />;
   } else if (activity.kind === 'order') {
     activityControl = <OrderActivity key={attempt} activity={activity} disabled={status === 'correct'} onSubmit={submit} />;
   } else if (activity.kind === 'categorize') {
@@ -77,11 +76,11 @@ export default function ActivityRenderer({ activity, onSolved }: ActivityRendere
       </div>
       {activityControl}
       <ActivityFeedback
-        activityId={activity.id}
         status={status}
         hint={activity.hint}
         explanation={activity.explanation}
         hintVisible={hintVisible}
+        message={message}
         onShowHint={() => {
           setHintVisible(true);
           setStatus('hint');
