@@ -1,0 +1,44 @@
+:root {
+  --island-ink: #27334a;
+  --island-muted: #65758a;
+  --island-paper: #fff9ec;
+  --island-card: rgba(255, 255, 255, .92);
+  --island-mint: #79bd92;
+  --island-sky: #84b8df;
+  --island-sun: #f2bd61;
+  --island-coral: #ec927d;
+  --island-lilac: #9e91d0;
+  --island-line: rgba(81, 103, 126, .14);
+  --island-radius-card: 28px;
+  --island-shadow-card: 0 18px 48px rgba(67, 84, 110, .1);
+}
+
+.companion-avatar {
+  position: relative;
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, .96);
+  border-radius: 50%;
+  background: #eaf3ff;
+  box-shadow: 0 5px 14px rgba(48, 73, 105, .16), 0 0 0 1px rgba(83, 116, 146, .11);
+}
+.companion-avatar img { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: cover; object-position: center 42%; }
+.companion-avatar--small { --avatar-size: 44px; border-width: 2px; }
+.companion-avatar--medium { --avatar-size: 60px; }
+.companion-avatar--large { --avatar-size: 94px; border-width: 4px; }
+.companion-avatar-spark { position: absolute; right: 3px; bottom: 2px; display: grid; place-items: center; width: 19px; height: 19px; border: 2px solid white; border-radius: 50%; color: white; background: var(--island-sun); font-size: 10px; line-height: 1; }
+.companion-avatar--small .companion-avatar-spark { right: 0; bottom: 0; width: 14px; height: 14px; border-width: 1px; font-size: 8px; }
+.hero-guide { position: relative; display: flex; align-items: center; gap: 14px; width: min(100%, 360px); padding: 14px 16px; border: 1px solid rgba(255, 255, 255, .88); border-radius: 24px; background: rgba(255, 255, 255, .72); box-shadow: 0 12px 30px rgba(59, 81, 110, .08); }
+.hero-guide-copy { min-width: 0; }
+.hero-guide-name { display: block; margin-bottom: 4px; color: #486b63; font-size: 12px; font-weight: 900; letter-spacing: .03em; }
+.hero-guide-copy p { margin: 0; color: #53657c; font-size: 14px; line-height: 1.55; }
+.hero-guide-spark { margin-left: auto; color: var(--island-sun); font-size: 28px; }
+.hero-guide--welcome { background: linear-gradient(120deg, rgba(255,255,255,.92), rgba(240,250,241,.87)); }
+.hero-guide--hint { border-color: #e2edf7; background: #f6fbff; }
+.hero-guide--celebrate { justify-content: center; width: min(100%, 390px); margin: 22px auto 0; border-color: #e1efdf; background: linear-gradient(115deg, #f7fff3, #f2f8ff); text-align: left; }
+.hero-guide--compact { width: auto; min-height: 60px; padding: 8px 11px; border-radius: 18px; box-shadow: none; }
+.hero-guide--compact .hero-guide-copy p { font-size: 12px; }

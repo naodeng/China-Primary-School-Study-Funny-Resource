@@ -8,12 +8,14 @@
 
 ## 课程来源与范围
 
-以用户指定的 [TapXWorld/ChinaTextbook](https://github.com/TapXWorld/ChinaTextbook) 教材文件为课程依据：
+以用户指定的 [TapXWorld/ChinaTextbook](https://github.com/TapXWorld/ChinaTextbook) 中的教材文件核对课程范围和知识点：
 
-- 语文：小学语文统编版，[二年级上册教材 PDF](https://github.com/TapXWorld/ChinaTextbook/blob/master/%E5%B0%8F%E5%AD%A6/%E8%AF%AD%E6%96%87/%E7%BB%9F%E7%BC%96%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%AF%AD%E6%96%87%E4%BA%8C%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C.pdf)。
+- 语文：人教版（统编教材），[二年级上册教材 PDF](https://github.com/TapXWorld/ChinaTextbook/blob/master/%E5%B0%8F%E5%AD%A6/%E8%AF%AD%E6%96%87/%E7%BB%9F%E7%BC%96%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%AF%AD%E6%96%87%E4%BA%8C%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C.pdf)。
 - 数学：小学数学人教版，[二年级上册教材 PDF](https://github.com/TapXWorld/ChinaTextbook/blob/master/%E5%B0%8F%E5%AD%A6/%E6%95%B0%E5%AD%A6/%E4%BA%BA%E6%95%99%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E7%A7%91%E4%B9%A6%20%C2%B7%20%E6%95%B0%E5%AD%A6%E4%BA%8C%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C.pdf)。
 
-教材 PDF 用于核对单元、课文和知识点。网页练习以原创题目和图形表达为主，不复制整页教材内容或插图。
+教材 PDF 用于核对单元、课文和知识点。网页练习以原创题目和图形表达为主，不在本仓库或网站中复制、托管教材 PDF、封面、整页、插图或大段课文。
+
+截至本次审阅，教材资源仓库根目录未发现 `LICENSE`，其 README 也没有说明教材内容可再利用的具体许可。因此该仓库作为查阅和对齐来源，不视为教材内容的再分发授权；后续若要发布教材原文或图片，须先单独核实权利。
 
 ### MVP 单元和场次
 
@@ -36,6 +38,16 @@
 - 单元页显示场次标题、建议时长和设备上的完成进度。
 - 游戏页保留返回单元和课程导航的路径。
 
+页面与 URL：
+
+| 页面 | 路径 | 说明 |
+| --- | --- | --- |
+| 课程目录 | `/` | 选择年级、学期和学科；MVP 默认二年级上学期 |
+| 单元介绍 | `/grade-2/term-1/chinese/unit-01` | 显示该单元简介、场次和进度 |
+| 游戏场次 | `/grade-2/term-1/chinese/unit-01/session-01` | 显示任务、互动题和完成总结 |
+
+路径中的课程层级与面包屑一致。已知但未开放的目录显示“筹备中”；无效路径显示清晰的未找到页面。
+
 ## 学习体验
 
 1. 孩子从课程目录选择学科、单元和一场游戏。
@@ -48,35 +60,50 @@
 
 ## 视觉方向
 
-- 主题为卡通科幻学习基地，使用深蓝星空背景、明亮能量色、圆润卡片、大字号和适合触屏的大按钮。
-- 设计一组原创科幻英雄伙伴作为提示角色，采用独立的名字、轮廓和标记，不直接使用奥特曼、蜘蛛侠、钢铁侠或绿巨人的原作形象、名称或标志。
-- 语文和数学使用各自的任务场景与视觉提示；角色用于鼓励和引导，不遮挡题目。
+- 按用户指定的 [animal-island-vue](https://github.com/guokaigdg/animal-island-vue) 采用自然可爱的手绘小岛视觉：暖纸色背景、浅色圆角卡片、胶囊按钮、轻量点状图案和明确的交互反馈。基础视觉以其设计规范为准，并控制装饰密度，让课程文字、题目和答案保持醒目。
+- 项目沿用 React 架构，实际使用同一作者的 React 组件库 [animal-island-ui](https://github.com/guokaigdg/animal-island-ui) 中的 Button、Card 等组件，并按其文档导入组件样式。animal-island-vue 的 README 写有“仅限学习使用”，而其 LICENSE 文件是 MIT；为避免把这两种不一致的许可说明带入依赖，网页不直接安装或复制 Vue 版代码。React 版 README 与 LICENSE 均标示 MIT，实施时仍需保留版权和许可声明。
+- 在暖纸色和薄荷绿等小岛视觉上加入原创星球、星轨和能量点缀，保留用户要求的科幻学习氛围；不直接复用第三方装饰图像。
+- 将用户提供的四张头像图处理为四个 1:1 圆形卡通学习伙伴头像，用于课程目录、游戏提示和完成反馈。服装和标志调整为原创科幻设计，不保留可识别的影视角色标志或标志性服装细节；仓库只保存处理后的头像，不保存原始图片。
+- 公开部署前再次确认衍生头像可公开展示；头像用于引导，不显示真实姓名或其他个人资料，也不遮挡题目。
 - 响应式布局支持手机、平板和桌面浏览器。
+- 交互控件提供清晰的键盘焦点样式；支持减少动态效果偏好，确保动画不会成为完成题目的必要条件。
 - 不使用排行榜、惩罚性分数、闪烁或需要赶时间的倒计时。
 
 ## 技术架构
 
 - 使用 Vite、React 和 TypeScript 构建静态单页应用。
+- 使用 `animal-island-ui` React 组件库提供基础按钮和卡片；课程组件、路由和学习流程由本项目实现。按该库的说明导入组件样式，不自行臆造组件属性。
 - 课程元数据和游戏内容分离于可复用的目录组件、游戏流程和题型组件。
-- 内容按年级、学期、学科和单元放置，例如 `src/content/grade-2/term-1/chinese/unit-01/`；场次数据放在对应单元目录中。
+- 内容按年级、学期、学科和单元放置，例如 `src/content/grade-2/term-1/chinese/unit-01/index.ts`；该文件组织单元元数据和场次数据。目录索引用完整层级键 `grade-2/term-1/chinese/unit-01`，避免不同学科的 `unit-01` 键冲突。
 - 以数据定义支持单选、配对、排序、分类、测量和数位运算等题型，由可复用组件渲染。
-- 通过 `localStorage` 保存场次完成状态和星章；不建立账号，不收集个人资料，不依赖服务器。
+- 通过 `localStorage` 保存场次完成状态和星章；不建立账号、不收集访客个人资料、不依赖服务器。静态头像资源不作为访客资料。
 - MVP 不包含教师后台、题库编辑器、排行榜、云端同步或在线生成题目。
+
+## 许可与素材边界
+
+- 用户指定本项目自有代码采用 **PolyForm Noncommercial License 1.0.0**。当前本地 Git 树没有 `LICENSE` 文件；实施计划包含补齐官方许可全文，并在中文 README 中说明许可范围。若项目提供了 `Required Notice:` 文本，须随许可一并保留，不自行编造版权主体或通知内容。
+- PolyForm 许可只覆盖本项目自有代码，不会自动覆盖教材、头像或第三方组件。用户提供的头像、教材资源和 `animal-island-ui` 分别按各自权利与许可处理。
+- MVP 面向非商业学习使用；若未来加入广告、收费或其他商业用途，须先核实 PolyForm 对该用途的授权情况，并取得必要的额外许可。
 
 ## Cloudflare 部署
 
 - 部署目标为 Cloudflare Pages 静态站点，不使用 Pages Functions 或独立 Worker。
 - 构建命令为 `npm run build`，构建目录为 `dist`。
 - Git 集成部署时使用仓库根目录作为项目根目录；提交到连接的分支后由 Pages 构建并发布。
-- 应用使用单页应用路由。Cloudflare Pages 在没有顶层 `404.html` 时默认将未知路径交给 SPA 入口，因此不额外增加 Worker 路由；若后续引入自定义 404 页面，再复核深层链接配置。
+- 应用使用单页应用路由。Cloudflare Pages 在没有顶层 `404.html` 时会把未匹配的路径交给 SPA 入口，因此不增加 Worker 路由；若后续引入自定义 404 页面，再复核深层链接配置。
 - Cloudflare Pages 的构建目录配置和 SPA 默认行为见 [Build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/) 与 [Serving Pages](https://developers.cloudflare.com/pages/configuration/serving-pages/) 官方文档。
+- 本地 `vite preview` 只验证构建产物和客户端路由；没有实际 Cloudflare Pages 部署时，不宣称已验证远端部署或线上深层链接。
 
 ## 验收标准
 
 - 课程目录能清楚区分年级、学期、学科、单元和游戏场次。
 - 二年级上学期语文、数学第一和第二单元均可进入，每单元按设计提供多场游戏。
+- 四个用户提供的头像均以圆形卡通伙伴形式出现在课程或游戏引导中；原图不进入仓库。
+- 页面实际使用 animal-island-ui 的 React 组件，采用 Animal Island 圆润手绘视觉并融合原创科幻装饰；第三方 MIT 声明可在仓库和部署产物中找到。
 - 每场有实际可操作的互动、即时反馈、提示或重试、完成状态和约 20 分钟的建议时长。
 - 刷新页面后，本地完成进度仍能恢复；不需要注册或提交个人资料。
 - 手机、平板和桌面宽度下，课程浏览与核心游戏操作均可用。
+- 键盘焦点可见，减少动态效果偏好生效，且动画不影响题目操作。
 - `npm run build` 成功生成 `dist`，且 Cloudflare Pages 可按文档配置直接部署。
+- 根目录包含 PolyForm Noncommercial License 1.0.0 正式文本；第三方 UI 和用户头像的授权范围没有被误写为项目许可证的一部分。
 - 检查 `git diff --check`；本项目当前没有测试脚手架，MVP 阶段不新增或运行自动化测试。
