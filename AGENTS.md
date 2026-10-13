@@ -7,6 +7,7 @@
 - 面向 7–12 岁学生的静态 React 学习站，当前提供人教版二年级上学期语文、数学第一和第二单元。
 - Node.js 版本见 `.node-version`（当前为 22.16.0），使用 npm。
 - 本地启动：`npm ci`、`npm run dev`；生产构建：`npm run build`；本地预览：`npm run preview`。构建输出为 `dist/`。
+- 测试命令：`npm run test:unit`（Vitest）、`npm run test:coverage`（V8 覆盖率）、`npm run test:e2e`（Playwright Chromium；首次运行前执行 `npx playwright install chromium`）。E2E 使用专用端口 `127.0.0.1:4174`。
 - 网站部署到 Cloudflare Pages，使用 Vite SPA 路由。不要添加顶层 `404.html`，以保留 Pages 的 SPA 回退。
 
 ## 目录与课程内容
