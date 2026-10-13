@@ -62,11 +62,11 @@
 
 **文件：** 修改 src/content/types.ts、src/content/curriculum.ts、src/content/grade-2/term-1/chinese/unit-01/index.ts、unit-02/index.ts、src/content/grade-2/term-1/math/unit-01/index.ts、unit-02/index.ts；创建 src/content/textbooks.ts、src/content/validateCurriculum.ts、src/content/validateCurriculum.test.ts、src/content/curriculum.test.ts。
 
-**接口：** SubjectId 加 english；增加 Difficulty、CatalogEntryType、TextbookEdition（id、subject、grade、term、series、edition、printing、isbn、sourceUrl、checkedAt、tapxCommit）、LearningTask、DifficultyTrack。课程、任务、场次的 canonical ID 均为完整层级 key；URL 使用父级内的末段 slug。CurriculumUnit 含目录类型、正式编号、achievementEligible、版次 ID、sourceTopics 和三档内容。validateCurriculum(curriculum: Curriculum): ValidationIssue[]。LearningSession.activities 必须为 8 道题。
+**接口：** SubjectId 加 english；增加 Difficulty、CatalogEntryType、TextbookEdition（id、subject、grade、term、series、edition、printing、isbn、sourceUrl、checkedAt、tapxCommit、verificationStatus）、LearningTask、DifficultyTrack。目录条目只有在对应校用教材 verificationStatus 为 verified 时才能 active。课程、任务、场次的 canonical ID 均为完整层级 key；URL 使用父级内的末段 slug。CurriculumUnit 含目录类型、正式编号、achievementEligible、版次 ID、sourceTopics 和三档内容。validateCurriculum(curriculum: Curriculum): ValidationIssue[]。LearningSession.activities 必须为 8 道题。
 
-- [ ] 先写并运行失败测试 requiresAllDifficulties、requiresTwoBasicTasks、requiresOneAdvancedAndHighTask、rejectsEmptyTasks、requiresEightQuestions、rejectsDuplicateIds、rejectsInvalidAnswerReferences、validatesAchievementEligibility；断言各自问题路径和稳定错误码。
+- [ ] 先写并运行失败测试 requiresAllDifficulties、requiresTwoBasicTasks、requiresOneAdvancedAndHighTask、rejectsEmptyTasks、requiresEightQuestions、rejectsDuplicateIds、rejectsInvalidAnswerReferences、validatesAchievementEligibility、requiresVerifiedEditionForActiveEntry；断言各自问题路径和稳定错误码。
 - [ ] 实现类型和无静默修正的校验器。
-- [ ] 将现有四个课程文件迁入新结构，使开发/构建不经过临时兼容类型。
+- [ ] 将现有四个课程文件迁入新结构，使开发/构建不经过临时兼容类型；其版次尚未由学校材料核实时，目录标为 comingSoon，不能作为当前校用课程或成就节点。
 - [ ] 测试所有旧开放内容结构，运行 validator、build，修正后提交。
 
 ### Task 4：升级路由、目录和任务入口
