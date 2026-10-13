@@ -1,5 +1,7 @@
 # 小学趣味学习站实施计划
 
+> 本计划只记录首版 MVP，已由 2026-10-13-grade-2-full-curriculum-and-testing.md 取代。当前全量课程、难度、任务和自动化测试范围以新计划及 grade-2-full-curriculum-and-testing-design.md 为准；不得据本文件执行。
+
 > 执行时先阅读 superpowers:executing-plans。本计划已获用户批准，采用 Native 顺序实施。
 >
 > 本计划及后续过程文档使用中文。代码标识符、文件名、命令和库名保留原文。
@@ -26,7 +28,7 @@
 - animal-island-vue 是 Vue 3 库，其 README 中的非商业说明与 LICENSE 文件中的 MIT 文本不一致；本项目沿用 React，并使用同作者的 React 版 animal-island-ui。第三方许可文字需随源码和网站构建产物分发。
 - 将当前对话附带的四张图转制为四个原创风格的 1:1 卡通头像；页面以圆形呈现。仓库只收录衍生图，不收录原图，不显示真实姓名或其他个人资料。公开部署前核实头像的公开展示许可。
 - 项目自有代码采用 PolyForm Noncommercial License 1.0.0。根目录当前没有 LICENSE；实施时加入官方许可全文，不编造版权主体或 Required Notice。
-- 不新增自动化测试框架或自动化测试。通过构建检查和手动操作关键流程验证交付。
+- 自动化测试和覆盖率要求已由扩展设计与实施计划更新；本句以上的 MVP 范围、场次数和验证步骤仅保留为历史记录。
 
 ## 实施前重点检查
 
@@ -234,7 +236,7 @@
 - 答题反馈、提示、重试、键盘操作、窄屏交互和本机进度符合设计。
 - 根目录包含 PolyForm Noncommercial License 1.0.0 正式文本；第三方 MIT 许可声明可在仓库和 dist 中找到；README 和过程文档为中文。
 - npm run build 成功；Cloudflare Pages 可按文档配置部署。本地证据与远端部署证据分开陈述。
-- git diff --check 通过；不新增自动化测试。
+- 本计划已被全量课程扩展计划取代；测试与覆盖率按新计划执行。
 
 ## 追加范围：首页成就摘要、设置弹窗和学习起点
 
