@@ -1,4 +1,5 @@
 import { curriculum } from '../content/curriculum';
+import { getSessionsForDifficulty } from '../content/sessionUtils';
 import { getKnownCurriculumPositions, isBeforeLearningPosition } from './position';
 import type { LearningPosition } from './position';
 import { getLearningUnitProgress } from './progress';
@@ -82,7 +83,7 @@ export function getExplorationZones(completedSessionIds: string[], startAt?: Lea
           subjectTitle: position.subjectTitle,
           state,
           completedSessions: unitProgress?.completedSessionIds.length ?? 0,
-          totalSessions: unitProgress?.unit.sessions.length ?? 0,
+          totalSessions: unitProgress ? getSessionsForDifficulty(unitProgress.unit, 'basic').length : 0,
           grade: position.grade,
           term: position.term,
           unit: position.unit,

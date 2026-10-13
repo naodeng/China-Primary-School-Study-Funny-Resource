@@ -2,9 +2,11 @@ import { unit as chineseUnit01 } from './grade-2/term-1/chinese/unit-01';
 import { unit as chineseUnit02 } from './grade-2/term-1/chinese/unit-02';
 import { unit as mathUnit01 } from './grade-2/term-1/math/unit-01';
 import { unit as mathUnit02 } from './grade-2/term-1/math/unit-02';
+import { textbooks } from './textbooks';
 import type { Curriculum } from './types';
 
 export const curriculum: Curriculum = {
+  textbooks,
   grades: [
     {
       id: 'grade-2',
@@ -21,16 +23,23 @@ export const curriculum: Curriculum = {
                 {
                   id: 'unit-01',
                   title: '第一单元 · 阅读',
-                  status: 'active',
+                  status: 'comingSoon',
+                  type: 'unit',
+                  formalUnitNumber: 1,
+                  achievementEligible: true,
+                  textbookEditionId: 'grade-2/term-1/chinese',
                   curriculumUnitKey: 'grade-2/term-1/chinese/unit-01',
                 },
                 {
                   id: 'unit-02',
                   title: '第二单元 · 识字',
-                  status: 'active',
+                  status: 'comingSoon',
+                  type: 'unit',
+                  formalUnitNumber: 2,
+                  achievementEligible: true,
+                  textbookEditionId: 'grade-2/term-1/chinese',
                   curriculumUnitKey: 'grade-2/term-1/chinese/unit-02',
                 },
-                { id: 'unit-03', title: '第三单元（筹备中）', status: 'comingSoon' },
               ],
             },
             {
@@ -40,16 +49,23 @@ export const curriculum: Curriculum = {
                 {
                   id: 'unit-01',
                   title: '第一单元 · 长度单位',
-                  status: 'active',
+                  status: 'comingSoon',
+                  type: 'unit',
+                  formalUnitNumber: 1,
+                  achievementEligible: true,
+                  textbookEditionId: 'grade-2/term-1/math',
                   curriculumUnitKey: 'grade-2/term-1/math/unit-01',
                 },
                 {
                   id: 'unit-02',
                   title: '第二单元 · 100以内的加法和减法（二）',
-                  status: 'active',
+                  status: 'comingSoon',
+                  type: 'unit',
+                  formalUnitNumber: 2,
+                  achievementEligible: true,
+                  textbookEditionId: 'grade-2/term-1/math',
                   curriculumUnitKey: 'grade-2/term-1/math/unit-02',
                 },
-                { id: 'unit-03', title: '第三单元（筹备中）', status: 'comingSoon' },
               ],
             },
           ],

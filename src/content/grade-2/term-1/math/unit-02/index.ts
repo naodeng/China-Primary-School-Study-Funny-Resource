@@ -1,16 +1,26 @@
 import type { CurriculumUnit } from '../../../../types';
+import { createPendingBasicTasks } from '../../../../sessionUtils';
+
+const unitKey = 'grade-2/term-1/math/unit-02';
 
 export const unit: CurriculumUnit = {
-  id: 'unit-02',
+  id: unitKey,
   subject: 'math',
   title: '第二单元 · 100以内的加法和减法（二）',
+  type: 'unit',
+  formalUnitNumber: 2,
+  achievementEligible: true,
+  textbookEditionId: 'grade-2/term-1/math',
   sourceTopics: [
     '人教版小学数学二年级上册第二单元：100以内的加法和减法（二）',
     '两位数加两位数：不进位加和进位加',
     '两位数减两位数：不退位减和退位减',
     '连加、连减、加减混合、比较关系与解决问题',
   ],
-  sessions: [
+  difficultyTracks: {
+    basic: {
+      difficulty: 'basic',
+      tasks: createPendingBasicTasks(unitKey, [
     {
       id: 'grade-2/term-1/math/unit-02/session-01',
       title: '加法能量站',
@@ -226,5 +236,9 @@ export const unit: CurriculumUnit = {
         },
       ],
     },
-  ],
+  ]),
+    },
+    advanced: { difficulty: 'advanced', tasks: [] },
+    high: { difficulty: 'high', tasks: [] },
+  },
 };

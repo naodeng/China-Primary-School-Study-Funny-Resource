@@ -1,4 +1,5 @@
 import { curriculum } from '../content/curriculum';
+import { getSessionsForDifficulty } from '../content/sessionUtils';
 import type { CurriculumUnit, SubjectId } from '../content/types';
 import { getKnownCurriculumPositions, isBeforeLearningPosition } from './position';
 import type { LearningPosition } from './position';
@@ -44,10 +45,11 @@ export function getLearningUnitProgress(completedSessionIds: string[], startAt?:
           unit: Number(entry.id.slice('unit-'.length)),
         } as const;
         const assumedComplete = Boolean(startAt && isBeforeLearningPosition(position, startAt));
+        const basicSessions = getSessionsForDifficulty(unit, 'basic');
         const sessionIds = assumedComplete
-          ? unit.sessions.map((session) => session.id)
-          : unit.sessions.filter((session) => completedSessionIds.includes(session.id)).map((session) => session.id);
-        const completed = unit.sessions.length > 0 && sessionIds.length === unit.sessions.length;
+          ? basicSessions.map((session) => session.id)
+          : basicSessions.filter((session) => completedSessionIds.includes(session.id)).map((session) => session.id);
+        const completed = basicSessions.length > 0 && sessionIds.length === basicSessions.length;
         return {
           key,
           title: entry.title,
@@ -68,7 +70,8 @@ export function getCompletedUnitCount(completedSessionIds: string[], startAt?: L
     if (startAt && isBeforeLearningPosition(position, startAt)) return true;
     if (!position.curriculumUnitKey) return false;
     const unit = curriculum.units[position.curriculumUnitKey];
-    return Boolean(unit && unit.sessions.length > 0 && unit.sessions.every((session) => completedSessionIds.includes(session.id)));
+    const basicSessions = unit ? getSessionsForDifficulty(unit, 'basic') : [];
+    return basicSessions.length > 0 && basicSessions.every((session) => completedSessionIds.includes(session.id));
   }).length;
 }
 

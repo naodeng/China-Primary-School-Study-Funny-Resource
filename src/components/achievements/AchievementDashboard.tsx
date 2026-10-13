@@ -2,6 +2,7 @@ import { Card } from 'animal-island-ui';
 import { COSMIC_RANKS, getCompletedUnitCount, getCosmicRank, getLearningUnitProgress } from '../../achievements/progress';
 import type { LearningPosition } from '../../achievements/position';
 import { getExplorationZones } from '../../achievements/exploration';
+import { getSessionsForDifficulty } from '../../content/sessionUtils';
 
 interface AchievementDashboardProps {
   completedSessionIds: string[];
@@ -149,6 +150,7 @@ export default function AchievementDashboard({ completedSessionIds, learningStar
 
       <div className="achievement-unit-grid" aria-label="课程完成情况">
         {units.map((entry) => {
+          const basicSessions = getSessionsForDifficulty(entry.unit, 'basic');
           const doneCount = entry.completedSessionIds.length;
           return (
             <article className={`achievement-unit ${entry.completed ? 'is-complete' : 'is-pending'}`} key={entry.key}>
@@ -158,10 +160,10 @@ export default function AchievementDashboard({ completedSessionIds, learningStar
                   <span className="achievement-unit-subject">{entry.gradeTitle} · {entry.termTitle} · {entry.subjectTitle}</span>
                   <h3>{entry.title}</h3>
                 </div>
-                <span className="achievement-unit-count">{doneCount} / {entry.unit.sessions.length}</span>
+                <span className="achievement-unit-count">{doneCount} / {basicSessions.length}</span>
               </header>
               <ul className="achievement-session-list">
-                {entry.unit.sessions.map((session) => {
+                {basicSessions.map((session) => {
                   const complete = entry.completedSessionIds.includes(session.id);
                   return (
                     <li className={complete ? 'is-complete' : 'is-pending'} key={session.id}>

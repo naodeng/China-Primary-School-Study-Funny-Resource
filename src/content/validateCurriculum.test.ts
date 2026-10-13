@@ -1,0 +1,191 @@
+import { describe, expect, it } from 'vitest';
+import { validateCurriculum } from './validateCurriculum';
+import type { Curriculum } from './types';
+
+const unitKey = 'grade-2/term-1/chinese/unit-01';
+const textbookId = 'textbook-grade-2-term-1-chinese';
+
+function createSession(sessionId: string) {
+  return {
+    id: sessionId,
+    title: '字词观察站',
+    durationMinutes: 20 as const,
+    objective: '观察字词并发现规律。',
+    companionId: 'companion-02' as const,
+    activities: Array.from({ length: 8 }, (_, index) => ({
+      id: `question-${String(index + 1).padStart(2, '0')}`,
+      kind: 'choice' as const,
+      prompt: `第 ${index + 1} 题`,
+      hint: '再看看题目中的线索。',
+      explanation: '找到线索就能一步步解答。',
+      options: [
+        { id: 'correct', label: '正确线索' },
+        { id: 'other', label: '另一个选择' },
+      ],
+      correctOptionId: 'correct',
+    })),
+  };
+}
+
+function createTask(difficulty: 'basic' | 'advanced' | 'high', number: number) {
+  const taskId = `${unitKey}/${difficulty}/task-${String(number).padStart(2, '0')}`;
+  return {
+    id: taskId,
+    title: `${difficulty} 任务 ${number}`,
+    objective: '完成一个明确的学习目标。',
+    order: number,
+    sessions: [createSession(`${taskId}/session-01`)],
+  };
+}
+
+function createCurriculum(): Curriculum {
+  const unit = {
+    id: unitKey,
+    subject: 'chinese',
+    title: '第一单元 · 阅读',
+    type: 'unit',
+    formalUnitNumber: 1,
+    achievementEligible: true,
+    textbookEditionId: textbookId,
+    sourceTopics: ['看图理解', '根据线索推断'],
+    difficultyTracks: {
+      basic: { difficulty: 'basic', tasks: [createTask('basic', 1), createTask('basic', 2)] },
+      advanced: { difficulty: 'advanced', tasks: [createTask('advanced', 1)] },
+      high: { difficulty: 'high', tasks: [createTask('high', 1)] },
+    },
+  };
+
+  return {
+    textbooks: {
+      [textbookId]: {
+        id: textbookId,
+        subject: 'chinese',
+        grade: 2,
+        term: 1,
+        series: '人教版统编语文',
+        edition: '2025年修订版',
+        printing: '2025年6月第1次印刷',
+        isbn: '9787100000000',
+        sourceUrl: 'https://www.pep.com.cn/',
+        checkedAt: '2026-10-13',
+        tapxCommit: '5a80345f2043ba6f8db8d7be9cf3db82725ff1f7',
+        verificationStatus: 'verified',
+      },
+    },
+    grades: [{
+      id: 'grade-2',
+      title: '二年级',
+      terms: [{
+        id: 'term-1',
+        title: '上学期',
+        subjects: [{
+          id: 'chinese',
+          title: '语文',
+          units: [{
+            id: 'unit-01',
+            title: '第一单元 · 阅读',
+            status: 'active',
+            type: 'unit',
+            formalUnitNumber: 1,
+            achievementEligible: true,
+            textbookEditionId: textbookId,
+            curriculumUnitKey: unitKey,
+          }],
+        }],
+      }],
+    }],
+    units: { [unitKey]: unit },
+  } as unknown as Curriculum;
+}
+
+describe('validateCurriculum', () => {
+  it('requiresAllDifficulties', () => {
+    const curriculum = createCurriculum() as unknown as { units: Record<string, { difficultyTracks: Record<string, unknown> }> };
+    delete curriculum.units[unitKey].difficultyTracks.advanced;
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'MISSING_DIFFICULTY',
+      path: `units.${unitKey}.difficultyTracks.advanced`,
+    }));
+  });
+
+  it('requiresTwoBasicTasks', () => {
+    const curriculum = createCurriculum() as unknown as { units: Record<string, { difficultyTracks: { basic: { tasks: unknown[] } } }> };
+    curriculum.units[unitKey].difficultyTracks.basic.tasks.pop();
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'BASIC_TASK_MINIMUM',
+      path: `units.${unitKey}.difficultyTracks.basic.tasks`,
+    }));
+  });
+
+  it('requiresOneAdvancedAndHighTask', () => {
+    const curriculum = createCurriculum() as unknown as { units: Record<string, { difficultyTracks: { advanced: { tasks: unknown[] } } }> };
+    curriculum.units[unitKey].difficultyTracks.advanced.tasks.push(createTask('advanced', 2));
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TIER_TASK_COUNT',
+      path: `units.${unitKey}.difficultyTracks.advanced.tasks`,
+    }));
+  });
+
+  it('rejectsEmptyTasks', () => {
+    const curriculum = createCurriculum() as unknown as { units: Record<string, { difficultyTracks: { basic: { tasks: Array<{ sessions: unknown[] }> } } }> };
+    curriculum.units[unitKey].difficultyTracks.basic.tasks[0].sessions = [];
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TASK_REQUIRES_SESSION',
+      path: `units.${unitKey}.difficultyTracks.basic.tasks[0].sessions`,
+    }));
+  });
+
+  it('requiresEightQuestions', () => {
+    const curriculum = createCurriculum() as unknown as { units: Record<string, { difficultyTracks: { basic: { tasks: Array<{ sessions: Array<{ activities: unknown[] }> }> } } }> };
+    curriculum.units[unitKey].difficultyTracks.basic.tasks[0].sessions[0].activities.pop();
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'SESSION_QUESTION_COUNT',
+      path: `units.${unitKey}.difficultyTracks.basic.tasks[0].sessions[0].activities`,
+    }));
+  });
+
+  it('rejectsDuplicateIds', () => {
+    const curriculum = createCurriculum() as unknown as { units: Record<string, { difficultyTracks: { basic: { tasks: Array<{ id: string }> } } }> };
+    curriculum.units[unitKey].difficultyTracks.basic.tasks[1].id = curriculum.units[unitKey].difficultyTracks.basic.tasks[0].id;
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'DUPLICATE_ID',
+      path: `units.${unitKey}.difficultyTracks.basic.tasks[1].id`,
+    }));
+  });
+
+  it('rejectsInvalidAnswerReferences', () => {
+    const curriculum = createCurriculum() as unknown as { units: Record<string, { difficultyTracks: { basic: { tasks: Array<{ sessions: Array<{ activities: Array<{ correctOptionId: string }> }> }> } } }> };
+    curriculum.units[unitKey].difficultyTracks.basic.tasks[0].sessions[0].activities[0].correctOptionId = 'missing';
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'INVALID_ANSWER_REFERENCE',
+      path: `${unitKey}/basic/task-01/session-01.activities[0].correctOptionId`,
+    }));
+  });
+
+  it('validatesAchievementEligibility', () => {
+    const curriculum = createCurriculum() as unknown as { units: Record<string, { achievementEligible: boolean }> };
+    curriculum.units[unitKey].achievementEligible = false;
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'ACHIEVEMENT_ELIGIBILITY_MISMATCH',
+      path: `units.${unitKey}.achievementEligible`,
+    }));
+  });
+
+  it('requiresVerifiedEditionForActiveEntry', () => {
+    const curriculum = createCurriculum() as unknown as { textbooks: Record<string, { verificationStatus: string }> };
+    curriculum.textbooks[textbookId].verificationStatus = 'pending';
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'ACTIVE_ENTRY_REQUIRES_VERIFIED_TEXTBOOK',
+      path: 'grades[0].terms[0].subjects[0].units[0].textbookEditionId',
+    }));
+  });
+});

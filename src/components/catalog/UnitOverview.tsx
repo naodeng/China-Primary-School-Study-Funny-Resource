@@ -1,5 +1,6 @@
 import { Button, Card } from 'animal-island-ui';
 import { getSessionPath } from '../../app/router';
+import { getSessionsForDifficulty } from '../../content/sessionUtils';
 import type { CurriculumUnit } from '../../content/types';
 import CompanionAvatar, { COMPANION_PROFILES } from '../mascots/CompanionAvatar';
 import HeroGuide from '../mascots/HeroGuide';
@@ -13,10 +14,11 @@ interface UnitOverviewProps {
 }
 
 export default function UnitOverview({ unitKey, unit, completedSessionIds, onNavigate }: UnitOverviewProps) {
-  const completedCount = unit.sessions.filter((session) => completedSessionIds.includes(session.id)).length;
-  const subjectTitle = unit.subject === 'chinese' ? '语文' : '数学';
+  const basicSessions = getSessionsForDifficulty(unit, 'basic');
+  const completedCount = basicSessions.filter((session) => completedSessionIds.includes(session.id)).length;
+  const subjectTitle = unit.subject === 'chinese' ? '语文' : unit.subject === 'math' ? '数学' : '英语';
   const unitNumber = unit.id.slice(-2);
-  const guideId = unit.sessions[0]?.companionId;
+  const guideId = basicSessions[0]?.companionId;
 
   return (
     <main className="unit-page">
@@ -37,15 +39,15 @@ export default function UnitOverview({ unitKey, unit, completedSessionIds, onNav
             <h1>{unit.title}</h1>
             <p className="catalog-lead">挑一场小任务，边玩边把知识装进自己的能量包。</p>
             <div className="catalog-meta">
-              <span>{unit.sessions.length}场游戏</span>
+              <span>{basicSessions.length}场游戏</span>
               <span>每场建议20分钟</span>
-              <span>已完成 {completedCount}/{unit.sessions.length}</span>
+              <span>已完成 {completedCount}/{basicSessions.length}</span>
             </div>
           </div>
           <div className="unit-hero-aside">
             {guideId && <HeroGuide mood="welcome" subject={unit.subject} companionId={guideId} compact />}
-            <div className="unit-progress-orbit" aria-label={`已完成${completedCount}场，共${unit.sessions.length}场`}>
-              <span className="unit-progress-total">/ {unit.sessions.length}</span>
+            <div className="unit-progress-orbit" aria-label={`已完成${completedCount}场，共${basicSessions.length}场`}>
+              <span className="unit-progress-total">/ {basicSessions.length}</span>
               <strong>{completedCount}</strong>
               <small>已完成</small>
             </div>
@@ -67,7 +69,7 @@ export default function UnitOverview({ unitKey, unit, completedSessionIds, onNav
             <Button type="default" onClick={() => onNavigate('/')}>返回课程目录</Button>
           </div>
           <div className="session-grid">
-            {unit.sessions.map((session, index) => {
+            {basicSessions.map((session, index) => {
               const complete = completedSessionIds.includes(session.id);
               const companion = COMPANION_PROFILES[session.companionId];
               return (

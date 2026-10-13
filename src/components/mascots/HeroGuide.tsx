@@ -14,14 +14,17 @@ const GUIDE_MESSAGES: Record<GuideMood, Record<SubjectId, string>> = {
   welcome: {
     chinese: '一起发现阅读线索吧，你的每个好奇问题都很棒！',
     math: '一起量一量、算一算，每一步思考都在积累力量！',
+    english: 'Let’s explore new words together. Every curious question is a great start!',
   },
   hint: {
     chinese: '先读清题目，再找找线索；慢慢想，你一定能找到办法。',
     math: '可以先画一画、分步算；每试一步都离答案更近。',
+    english: 'Look for a clue in the words. Take your time—you can figure it out!',
   },
   celebrate: {
     chinese: '这一站完成啦！你的专注和坚持点亮了新的星章。',
     math: '计算能量收集完成！你一步一步想出来了，真棒。',
+    english: 'Mission complete! You found your way through those words. Great work!',
   },
 };
 

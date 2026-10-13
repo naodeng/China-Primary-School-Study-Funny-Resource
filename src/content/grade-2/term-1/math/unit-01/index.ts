@@ -1,15 +1,25 @@
 import type { CurriculumUnit } from '../../../../types';
+import { createPendingBasicTasks } from '../../../../sessionUtils';
+
+const unitKey = 'grade-2/term-1/math/unit-01';
 
 export const unit: CurriculumUnit = {
-  id: 'unit-01',
+  id: unitKey,
   subject: 'math',
   title: '第一单元 · 长度单位',
+  type: 'unit',
+  formalUnitNumber: 1,
+  achievementEligible: true,
+  textbookEditionId: 'grade-2/term-1/math',
   sourceTopics: [
     '人教版小学数学二年级上册第一单元：长度单位',
     '厘米和米的认识及单位选择',
     '长度估测、直尺测量和线段的初步认识',
   ],
-  sessions: [
+  difficultyTracks: {
+    basic: {
+      difficulty: 'basic',
+      tasks: createPendingBasicTasks(unitKey, [
     {
       id: 'grade-2/term-1/math/unit-01/session-01',
       title: '厘米和米探险队',
@@ -133,5 +143,9 @@ export const unit: CurriculumUnit = {
         },
       ],
     },
-  ],
+  ]),
+    },
+    advanced: { difficulty: 'advanced', tasks: [] },
+    high: { difficulty: 'high', tasks: [] },
+  },
 };

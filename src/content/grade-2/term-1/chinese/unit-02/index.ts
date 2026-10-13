@@ -1,9 +1,16 @@
 import type { CurriculumUnit } from '../../../../types';
+import { createPendingBasicTasks } from '../../../../sessionUtils';
+
+const unitKey = 'grade-2/term-1/chinese/unit-02';
 
 export const unit: CurriculumUnit = {
-  id: 'unit-02',
+  id: unitKey,
   subject: 'chinese',
   title: '第二单元 · 识字',
+  type: 'unit',
+  formalUnitNumber: 2,
+  achievementEligible: true,
+  textbookEditionId: 'grade-2/term-1/chinese',
   sourceTopics: [
     '人教版（统编教材）二年级上册第二单元',
     '《场景歌》：场景词语和常用量词',
@@ -11,7 +18,10 @@ export const unit: CurriculumUnit = {
     '《田家四季歌》：四季景象与农事词语',
     '语文园地二：字词积累、分类整理和表达交流',
   ],
-  sessions: [
+  difficultyTracks: {
+    basic: {
+      difficulty: 'basic',
+      tasks: createPendingBasicTasks(unitKey, [
     {
       id: 'grade-2/term-1/chinese/unit-02/session-01',
       title: '场景词语小岛',
@@ -209,5 +219,9 @@ export const unit: CurriculumUnit = {
         },
       ],
     },
-  ],
+  ]),
+    },
+    advanced: { difficulty: 'advanced', tasks: [] },
+    high: { difficulty: 'high', tasks: [] },
+  },
 };

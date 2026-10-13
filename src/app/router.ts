@@ -1,4 +1,5 @@
 import { curriculum } from '../content/curriculum';
+import { getSessionsForDifficulty } from '../content/sessionUtils';
 import type { Curriculum, CurriculumUnit, LearningSession, SubjectId } from '../content/types';
 
 export type AppRoute =
@@ -45,7 +46,7 @@ export function resolveRoute(pathname: string, instance: Curriculum = curriculum
   if (!/^grade-\d+$/.test(gradeId) || !/^term-[12]$/.test(termId) || !/^unit-\d{2}$/.test(unitId)) {
     return { kind: 'notFound', path: normalized };
   }
-  if (subjectId !== 'chinese' && subjectId !== 'math') {
+  if (subjectId !== 'chinese' && subjectId !== 'math' && subjectId !== 'english') {
     return { kind: 'notFound', path: normalized };
   }
 
@@ -61,10 +62,13 @@ export function resolveRoute(pathname: string, instance: Curriculum = curriculum
   if (!sessionId) return { kind: 'unit', unitKey, unit };
 
   if (!/^session-\d{2}$/.test(sessionId)) return { kind: 'notFound', path: normalized };
-  const session = unit.sessions.find((candidate) => candidate.id.endsWith(`/${sessionId}`));
+  const sessionNumber = Number(sessionId.slice('session-'.length)) - 1;
+  const session = getSessionsForDifficulty(unit, 'basic')[sessionNumber];
   return session ? { kind: 'session', unitKey, unit, session } : { kind: 'notFound', path: normalized };
 }
 
 export function getSubjectTitle(subject: SubjectId): string {
-  return subject === 'chinese' ? '语文' : '数学';
+  if (subject === 'chinese') return '语文';
+  if (subject === 'math') return '数学';
+  return '英语';
 }

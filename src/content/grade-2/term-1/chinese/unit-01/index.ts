@@ -1,9 +1,16 @@
 import type { CurriculumUnit } from '../../../../types';
+import { createPendingBasicTasks } from '../../../../sessionUtils';
+
+const unitKey = 'grade-2/term-1/chinese/unit-01';
 
 export const unit: CurriculumUnit = {
-  id: 'unit-01',
+  id: unitKey,
   subject: 'chinese',
   title: '第一单元 · 阅读',
+  type: 'unit',
+  formalUnitNumber: 1,
+  achievementEligible: true,
+  textbookEditionId: 'grade-2/term-1/chinese',
   sourceTopics: [
     '人教版（统编教材）二年级上册第一单元',
     '《小蝌蚪找妈妈》：借助图片梳理成长顺序，依据线索作简单推断',
@@ -11,7 +18,10 @@ export const unit: CurriculumUnit = {
     '《植物妈妈有办法》：认识种子传播方式',
     '语文园地一“有趣的动物”与童话阅读交流',
   ],
-  sessions: [
+  difficultyTracks: {
+    basic: {
+      difficulty: 'basic',
+      tasks: createPendingBasicTasks(unitKey, [
     {
       id: 'grade-2/term-1/chinese/unit-01/session-01',
       title: '小蝌蚪的成长观察站',
@@ -199,5 +209,9 @@ export const unit: CurriculumUnit = {
         },
       ],
     },
-  ],
+  ]),
+    },
+    advanced: { difficulty: 'advanced', tasks: [] },
+    high: { difficulty: 'high', tasks: [] },
+  },
 };

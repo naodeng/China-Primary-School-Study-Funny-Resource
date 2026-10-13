@@ -1,7 +1,27 @@
-export type SubjectId = 'chinese' | 'math';
+export type SubjectId = 'chinese' | 'math' | 'english';
+export type TermNumber = 1 | 2;
+export type TermId = `term-${TermNumber}`;
 export type CatalogStatus = 'active' | 'comingSoon';
+export type CatalogEntryType = 'unit' | 'review' | 'integrated-practice';
+export type Difficulty = 'basic' | 'advanced' | 'high';
+export type TextbookVerificationStatus = 'pending' | 'verified';
 export type CurriculumUnitKey = string;
 export type CompanionId = 'companion-01' | 'companion-02' | 'companion-03' | 'companion-04';
+
+export interface TextbookEdition {
+  id: string;
+  subject: SubjectId;
+  grade: number;
+  term: TermNumber;
+  series: string;
+  edition: string | null;
+  printing: string | null;
+  isbn: string | null;
+  sourceUrl: string;
+  checkedAt: string;
+  tapxCommit: string;
+  verificationStatus: TextbookVerificationStatus;
+}
 
 export interface ActivityBase {
   id: string;
@@ -92,18 +112,39 @@ export interface LearningSession {
   activities: ActivityDefinition[];
 }
 
-export interface CurriculumUnit {
+export interface LearningTask {
   id: string;
+  title: string;
+  objective: string;
+  order: number;
+  sessions: LearningSession[];
+}
+
+export interface DifficultyTrack {
+  difficulty: Difficulty;
+  tasks: LearningTask[];
+}
+
+export interface CurriculumUnit {
+  id: CurriculumUnitKey;
   subject: SubjectId;
   title: string;
+  type: CatalogEntryType;
+  formalUnitNumber: number | null;
+  achievementEligible: boolean;
+  textbookEditionId: string;
   sourceTopics: string[];
-  sessions: LearningSession[];
+  difficultyTracks: Record<Difficulty, DifficultyTrack>;
 }
 
 export interface CatalogUnitEntry {
   id: string;
   title: string;
   status: CatalogStatus;
+  type: CatalogEntryType;
+  formalUnitNumber: number | null;
+  achievementEligible: boolean;
+  textbookEditionId: string;
   curriculumUnitKey?: CurriculumUnitKey;
 }
 
@@ -114,7 +155,7 @@ export interface CatalogSubjectEntry {
 }
 
 export interface CatalogTermEntry {
-  id: 'term-1' | 'term-2';
+  id: TermId;
   title: string;
   subjects: CatalogSubjectEntry[];
 }
@@ -126,6 +167,7 @@ export interface CatalogGradeEntry {
 }
 
 export interface Curriculum {
+  textbooks: Record<string, TextbookEdition>;
   grades: CatalogGradeEntry[];
   units: Record<CurriculumUnitKey, CurriculumUnit>;
 }
