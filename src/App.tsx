@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 import { Button, Card } from 'animal-island-ui';
 import type { CosmicRank } from './achievements/progress';
 import { getNewCosmicRank } from './achievements/progress';
@@ -13,8 +14,25 @@ import './styles/catalog.css';
 import './styles/game.css';
 import { completeSession, loadProgress, setLearningStart } from './storage/progress';
 import ThemeProvider from './theme/ThemeProvider';
+import { SoundProvider, useSound } from './sound/SoundProvider';
 import type { LearningPosition } from './achievements/position';
 import { getEffectiveCompletedSessionIds } from './achievements/position';
+
+function AppFrame({ page }: { page: ReactNode }) {
+  const { playCue } = useSound();
+
+  function playInteractionCue(event: MouseEvent<HTMLDivElement>) {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const control = target.closest<HTMLElement>(
+      'button, a[href], select, input:not([type="hidden"]), textarea, summary, [role="button"], [role="switch"], [role="checkbox"], [role="radio"], [role="tab"]',
+    );
+    if (!control || control.matches(':disabled') || control.closest('[aria-disabled="true"], [data-sound-silent="true"]')) return;
+    playCue('interaction-click');
+  }
+
+  return <div className="app-frame" onClick={playInteractionCue}>{page}</div>;
+}
 
 export default function App() {
   const [route, setRoute] = useState<AppRoute>(() => resolveRoute(window.location.pathname));
@@ -68,6 +86,7 @@ export default function App() {
   } else if (route.kind === 'session') {
     page = (
       <SessionPlayer
+        key={route.session.id}
         session={route.session}
         subject={route.unit.subject}
         newlyUnlockedRank={newlyUnlockedRank}
@@ -106,10 +125,10 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider>
-      <div className="app-frame">
-        {page}
-      </div>
-    </ThemeProvider>
+    <SoundProvider>
+      <ThemeProvider>
+        <AppFrame page={page} />
+      </ThemeProvider>
+    </SoundProvider>
   );
 }

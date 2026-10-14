@@ -4,6 +4,7 @@ import { getRegisteredLearningPositions } from '../../achievements/position';
 import type { LearningPosition } from '../../achievements/position';
 import type { ProgressState } from '../../storage/progress';
 import ThemeSwitcher from '../theme/ThemeSwitcher';
+import { useSound } from '../../sound/SoundProvider';
 
 interface SettingsDialogProps {
   open: boolean;
@@ -23,6 +24,7 @@ function getInitialPosition(progress: ProgressState): LearningPosition {
 }
 
 export default function SettingsDialog({ open, progress, onClose, onApplyLearningStart, onNavigate }: SettingsDialogProps) {
+  const { enabled: soundEnabled, setEnabled: setSoundEnabled } = useSound();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const initialPosition = getInitialPosition(progress);
   const [grade, setGrade] = useState(String(initialPosition.grade));
@@ -113,6 +115,24 @@ export default function SettingsDialog({ open, progress, onClose, onApplyLearnin
           <h3 id="settings-theme-heading">显示主题</h3>
           <p>选择适合现在环境的颜色，也可以跟随设备设置。</p>
           <ThemeSwitcher />
+        </section>
+
+        <section className="settings-section" aria-labelledby="settings-sound-heading" data-sound-silent="true">
+          <h3 id="settings-sound-heading">语音与提示音</h3>
+          <p>答题时听到鼓励，操作页面时也会有轻轻的提示音。</p>
+          <label className="settings-sound-control">
+            <span>
+              <strong>语音提示与交互音效</strong>
+              <span className="settings-sound-state" role="status">{soundEnabled ? '已开启' : '已关闭'}</span>
+            </span>
+            <input
+              type="checkbox"
+              role="switch"
+              aria-label="语音提示与交互音效"
+              checked={soundEnabled}
+              onChange={(event) => setSoundEnabled(event.currentTarget.checked)}
+            />
+          </label>
         </section>
 
         <section className="settings-section settings-achievement-link" aria-labelledby="settings-achievement-heading">

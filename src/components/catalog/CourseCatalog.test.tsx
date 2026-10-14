@@ -3,12 +3,23 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CourseCatalog from './CourseCatalog';
 import ThemeProvider from '../../theme/ThemeProvider';
+import { SoundProvider } from '../../sound/SoundProvider';
 
 const progress = { schemaVersion: 3 as const, completedSessionIds: [], learningStart: null };
 
+function renderCatalog(onNavigate = vi.fn()) {
+  return render(
+    <SoundProvider>
+      <ThemeProvider>
+        <CourseCatalog progress={progress} onNavigate={onNavigate} onApplyLearningStart={vi.fn()} />
+      </ThemeProvider>
+    </SoundProvider>,
+  );
+}
+
 describe('CourseCatalog', () => {
   it('offersRegistryDrivenGradeAndTermControls', () => {
-    render(<ThemeProvider><CourseCatalog progress={progress} onNavigate={vi.fn()} onApplyLearningStart={vi.fn()} /></ThemeProvider>);
+    renderCatalog();
 
     expect(screen.getByRole('combobox', { name: '年级' })).toHaveValue('grade-2');
     expect(screen.getByRole('combobox', { name: '学期' })).toHaveValue('term-1');
@@ -20,7 +31,7 @@ describe('CourseCatalog', () => {
   it('opensVerifiedChineseAndMathUnits', async () => {
     const user = userEvent.setup();
     const onNavigate = vi.fn();
-    render(<ThemeProvider><CourseCatalog progress={progress} onNavigate={onNavigate} onApplyLearningStart={vi.fn()} /></ThemeProvider>);
+    renderCatalog(onNavigate);
 
     expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(8);
     expect(screen.queryByText('筹备中')).not.toBeInTheDocument();
@@ -33,7 +44,7 @@ describe('CourseCatalog', () => {
 
   it('opensAllVerifiedSecondTermMathEntries', async () => {
     const user = userEvent.setup();
-    render(<ThemeProvider><CourseCatalog progress={progress} onNavigate={vi.fn()} onApplyLearningStart={vi.fn()} /></ThemeProvider>);
+    renderCatalog();
 
     await user.selectOptions(screen.getByRole('combobox', { name: '学期' }), 'term-2');
     await user.click(screen.getByRole('button', { name: '数学' }));
@@ -45,7 +56,7 @@ describe('CourseCatalog', () => {
 
   it('showsTheSchoolOfferingNoticeForPreparatoryEnglish', async () => {
     const user = userEvent.setup();
-    render(<ThemeProvider><CourseCatalog progress={progress} onNavigate={vi.fn()} onApplyLearningStart={vi.fn()} /></ThemeProvider>);
+    renderCatalog();
 
     await user.click(screen.getByRole('button', { name: '英语' }));
 
@@ -57,7 +68,7 @@ describe('CourseCatalog', () => {
 
   it('showsSecondTermEnglishWithItsSchoolOfferingNotice', async () => {
     const user = userEvent.setup();
-    render(<ThemeProvider><CourseCatalog progress={progress} onNavigate={vi.fn()} onApplyLearningStart={vi.fn()} /></ThemeProvider>);
+    renderCatalog();
 
     await user.selectOptions(screen.getByRole('combobox', { name: '学期' }), 'term-2');
     await user.click(screen.getByRole('button', { name: '英语' }));

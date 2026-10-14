@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { curriculum } from '../content/curriculum';
 import type { Curriculum } from '../content/types';
-import { getSessionPath, getTaskPath, resolveRoute } from './router';
+import { getSessionPath, getSubjectTitle, getTaskPath, resolveRoute } from './router';
 
 const unitKey = 'grade-2/term-1/chinese/unit-01';
 
@@ -28,6 +28,7 @@ describe('router', () => {
     const sessionPath = `${taskPath}/session-01`;
 
     expect(resolveRoute('/', instance)).toEqual({ kind: 'catalog' });
+    expect(resolveRoute('/achievements', instance)).toEqual({ kind: 'achievements' });
     expect(resolveRoute(`/${unitKey}`, instance)).toMatchObject({ kind: 'unit', unitKey });
     expect(resolveRoute(taskPath, instance)).toMatchObject({
       kind: 'task',
@@ -52,6 +53,38 @@ describe('router', () => {
     expect(resolveRoute(`/${unitKey}/basic/task-one`, instance).kind).toBe('notFound');
     expect(resolveRoute(`/${unitKey}/basic/task-01/session-one`, instance).kind).toBe('notFound');
     expect(resolveRoute('/grade-2/term-1/chinese/unit-99', instance).kind).toBe('notFound');
+  });
+
+  it('rejectsMalformedCoursePathLengthsAndIdentifiers', () => {
+    const instance = createPlayableCurriculum();
+    expect(resolveRoute('/grade-2', instance).kind).toBe('notFound');
+    expect(resolveRoute('/grade-x/term-1/chinese/unit-01', instance).kind).toBe('notFound');
+    expect(resolveRoute('/grade-2/term-x/chinese/unit-01', instance).kind).toBe('notFound');
+    expect(resolveRoute('/grade-2/term-1/chinese/Unit-01', instance).kind).toBe('notFound');
+  });
+
+  it('rejectsMissingCurriculumAndLegacySessionLinks', () => {
+    const instance = createPlayableCurriculum();
+    expect(resolveRoute(`/${unitKey}/invalid`, instance).kind).toBe('notFound');
+    expect(resolveRoute(`/${unitKey}/session-99`, instance).kind).toBe('notFound');
+
+    const entry = instance.grades[0].terms[0].subjects.find((subject) => subject.id === 'chinese')!.units[0];
+    entry.curriculumUnitKey = `${unitKey}/missing`;
+    expect(resolveRoute(`/${unitKey}`, instance).kind).toBe('notFound');
+  });
+
+  it('usesTheUnitKeyFallbackWhenAnEntryDoesNotSetItsCurriculumKey', () => {
+    const instance = createPlayableCurriculum();
+    const entry = instance.grades[0].terms[0].subjects.find((subject) => subject.id === 'chinese')!.units[0];
+    entry.curriculumUnitKey = undefined;
+
+    expect(resolveRoute(`/${unitKey}`, instance).kind).toBe('unit');
+  });
+
+  it('returnsTheLocalizedTitleForEverySubject', () => {
+    expect(getSubjectTitle('chinese')).toBe('语文');
+    expect(getSubjectTitle('math')).toBe('数学');
+    expect(getSubjectTitle('english')).toBe('英语');
   });
 
   it('distinguishesComingSoonFromUnknownCourses', () => {

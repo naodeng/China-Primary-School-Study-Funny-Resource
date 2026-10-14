@@ -4,6 +4,8 @@ import type { CosmicRank } from '../../achievements/progress';
 import type { LearningSession, SubjectId } from '../../content/types';
 import { selectFeedbackMessage } from '../../learning/feedback';
 import type { FeedbackStatus } from '../../learning/feedback';
+import { getAnswerSoundFeedback } from '../../sound/soundCues';
+import { useSound } from '../../sound/SoundProvider';
 import {
   advanceSession,
   createSessionState,
@@ -24,8 +26,10 @@ interface SessionPlayerProps {
 }
 
 export default function SessionPlayer({ session, subject, newlyUnlockedRank, onComplete, onExit }: SessionPlayerProps) {
+  const { playCue } = useSound();
   const [sessionState, setSessionState] = useState(() => createSessionState(session.activities.map((activity) => activity.id)));
   const nextLock = useRef(false);
+  const consecutiveCorrectCount = useRef(0);
   const previousFeedbackMessages = useRef<Record<FeedbackStatus, string | null>>({ correct: null, incorrect: null });
   const activity = session.activities[sessionState.currentIndex];
   const solved = isCurrentActivitySolved(sessionState);
@@ -33,6 +37,16 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
 
   function handleSolved(activityId: string) {
     setSessionState((current) => markCurrentActivitySolved(current, activityId));
+  }
+
+  function handleAnswerResult(status: FeedbackStatus, activityId: string) {
+    const feedback = getAnswerSoundFeedback(
+      status,
+      consecutiveCorrectCount.current,
+      status === 'correct' && activityId === session.activities.at(-1)?.id,
+    );
+    consecutiveCorrectCount.current = feedback.consecutiveCorrectCount;
+    playCue(feedback.cue);
   }
 
   function getFeedbackMessage(status: FeedbackStatus): string {
@@ -67,6 +81,7 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
         onReplay={() => {
           setSessionState(createSessionState(session.activities.map((item) => item.id)));
           nextLock.current = false;
+          consecutiveCorrectCount.current = 0;
         }}
       />
     );
@@ -116,7 +131,13 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
             <span className="activity-number">挑战 {String(sessionState.currentIndex + 1).padStart(2, '0')}</span>
             <span className="activity-kind-label">{activity.kind === 'choice' ? '选择' : activity.kind === 'match' ? '配对' : activity.kind === 'order' ? '排序' : activity.kind === 'categorize' ? '分类' : activity.kind === 'measurement' ? '测量' : '计算'}</span>
           </div>
-          <ActivityRenderer key={activity.id} activity={activity} onSolved={handleSolved} selectMessage={getFeedbackMessage} />
+          <ActivityRenderer
+            key={activity.id}
+            activity={activity}
+            onSolved={handleSolved}
+            onAnswerResult={handleAnswerResult}
+            selectMessage={getFeedbackMessage}
+          />
         </Card>
         <div className="game-navigation-row">
           <p aria-live="polite">{solved ? '挑战完成！你的坚持又积累了一点能量，可以继续啦。' : '不着急，先读题找线索；愿意动脑尝试就很棒。'}</p>

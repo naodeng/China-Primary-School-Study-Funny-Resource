@@ -14,11 +14,12 @@ import OrderActivity from './OrderActivity';
 interface ActivityRendererProps {
   activity: ActivityDefinition;
   onSolved: (activityId: string) => void;
+  onAnswerResult?: (status: FeedbackStatus, activityId: string) => void;
   random?: () => number;
   selectMessage?: (status: FeedbackStatus) => string;
 }
 
-export default function ActivityRenderer({ activity, onSolved, random, selectMessage }: ActivityRendererProps) {
+export default function ActivityRenderer({ activity, onSolved, onAnswerResult, random, selectMessage }: ActivityRendererProps) {
   const [status, setStatus] = useState<ActivityFeedbackStatus>('unanswered');
   const [hintVisible, setHintVisible] = useState(false);
   const [attempt, setAttempt] = useState(0);
@@ -40,10 +41,12 @@ export default function ActivityRenderer({ activity, onSolved, random, selectMes
       solvedRef.current = true;
       setStatus('correct');
       setMessage(chooseMessage('correct'));
+      onAnswerResult?.('correct', activity.id);
       onSolved(activity.id);
     } else {
       setStatus('incorrect');
       setMessage(chooseMessage('incorrect'));
+      onAnswerResult?.('incorrect', activity.id);
     }
   }
 

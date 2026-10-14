@@ -1,8 +1,37 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { LearningSession } from '../../content/types';
+import { SOUND_CUE_ASSETS } from '../../sound/soundCues';
+import { SoundProvider } from '../../sound/SoundProvider';
 import SessionPlayer from './SessionPlayer';
+
+const playedSources: string[] = [];
+
+class SessionTestAudio {
+  currentTime = 0;
+  paused = true;
+  preload = 'auto';
+  play = vi.fn(() => {
+    playedSources.push(this.src);
+    this.paused = false;
+    return Promise.resolve();
+  });
+  pause = vi.fn(() => { this.paused = true; });
+
+  constructor(public src: string) {}
+}
+
+beforeEach(() => {
+  localStorage.clear();
+  playedSources.length = 0;
+  vi.stubGlobal('Audio', SessionTestAudio);
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+  localStorage.clear();
+});
 
 const session: LearningSession = {
   id: 'grade-2/term-1/chinese/unit-01/basic/task-01/session-01',
@@ -25,10 +54,14 @@ const session: LearningSession = {
 };
 
 describe('SessionPlayer', () => {
-  it('keepsProgressAtEightQuestionsAndCompletesOnlyAfterEachCorrectAnswer', async () => {
+  it('keepsEightQuestionProgressAndPlaysPriorityCuesForWrongRetryStreakAndCompletion', async () => {
     const user = userEvent.setup();
     const onComplete = vi.fn();
-    render(<SessionPlayer session={session} subject="chinese" newlyUnlockedRank={null} onComplete={onComplete} onExit={vi.fn()} />);
+    render(
+      <SoundProvider>
+        <SessionPlayer session={session} subject="chinese" newlyUnlockedRank={null} onComplete={onComplete} onExit={vi.fn()} />
+      </SoundProvider>,
+    );
     const progressBar = screen.getByRole('progressbar', { name: '本场完成进度' });
     const nextButton = screen.getByRole('button', { name: /^继续下一题/ });
 
@@ -64,5 +97,16 @@ describe('SessionPlayer', () => {
     expect(onComplete).toHaveBeenCalledWith(session.id);
     expect(screen.getByRole('heading', { name: '太棒了，能量收集完成！' })).toBeInTheDocument();
     expect(screen.getByText(/里的 8 个小挑战/)).toBeInTheDocument();
+    expect(playedSources).toEqual([
+      SOUND_CUE_ASSETS['answer-incorrect'],
+      SOUND_CUE_ASSETS['answer-correct'],
+      ...Array.from({ length: 6 }, () => SOUND_CUE_ASSETS['answer-streak']),
+      SOUND_CUE_ASSETS['session-complete'],
+    ]);
+
+    await user.click(screen.getByRole('button', { name: '再玩一次' }));
+    await user.click(screen.getByRole('button', { name: '正确选项 1' }));
+    await user.click(screen.getByRole('button', { name: '提交答案' }));
+    expect(playedSources.at(-1)).toBe(SOUND_CUE_ASSETS['answer-correct']);
   });
 });

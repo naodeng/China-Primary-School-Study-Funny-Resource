@@ -18,7 +18,10 @@ export interface ValidationIssue {
 const DIFFICULTIES: readonly Difficulty[] = ['basic', 'advanced', 'high'];
 
 function expectedAchievementEligibility(type: CatalogEntryType, formalUnitNumber: number | null): boolean {
-  return type === 'unit' && Number.isSafeInteger(formalUnitNumber) && (formalUnitNumber ?? 0) > 0;
+  return type === 'unit'
+    && formalUnitNumber !== null
+    && Number.isSafeInteger(formalUnitNumber)
+    && formalUnitNumber > 0;
 }
 
 function addIssue(issues: ValidationIssue[], code: string, path: string, message: string): void {
@@ -95,8 +98,8 @@ function validateActivity(activity: ActivityDefinition, path: string, issues: Va
       }
       break;
     default: {
-      const exhaustive: never = activity;
-      return exhaustive;
+      addIssue(issues, 'UNSUPPORTED_ACTIVITY_KIND', `${path}.kind`, '题型暂不支持，请检查课程数据。');
+      break;
     }
   }
 }

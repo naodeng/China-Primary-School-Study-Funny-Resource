@@ -358,6 +358,8 @@
 :root[data-theme='dark'] .settings-achievement-link p,
 :root[data-theme='dark'] .learning-start-note { color: #b4c2b6; }
 :root[data-theme='dark'] .settings-dialog .theme-switcher { background: #2e3d34; }
+:root[data-theme='dark'] .settings-sound-control { color: #d7e5d8; border-color: #475b4c; background: #2e3d34; }
+:root[data-theme='dark'] .settings-sound-state { color: #b1cbb5; }
 :root[data-theme='dark'] .learning-start-fields label { color: #c4d4c6; }
 :root[data-theme='dark'] .learning-start-fields select,
 :root[data-theme='dark'] .learning-start-fields input { color: #e0ebe0; border-color: #536a58; background: #2d3b32; }

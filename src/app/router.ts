@@ -21,7 +21,7 @@ export type AppRoute =
 const DIFFICULTIES: readonly Difficulty[] = ['basic', 'advanced', 'high'];
 
 function lastPathSegment(id: string): string {
-  return id.split('/').at(-1) ?? '';
+  return id.slice(id.lastIndexOf('/') + 1);
 }
 
 export function getUnitPath(unitKey: string): string {

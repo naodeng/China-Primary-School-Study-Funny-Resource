@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { validateCurriculum } from './validateCurriculum';
-import type { Curriculum } from './types';
+import type { ActivityDefinition, Curriculum } from './types';
 
 const unitKey = 'grade-2/term-1/chinese/unit-01';
 const textbookId = 'textbook-grade-2-term-1-chinese';
@@ -101,7 +101,180 @@ function createCurriculum(): Curriculum {
   } as unknown as Curriculum;
 }
 
+function activityBase(id: string) {
+  return {
+    id,
+    prompt: '观察线索并完成挑战。',
+    hint: '慢慢寻找题目里的提示。',
+    explanation: '你找到了对应的线索。',
+  };
+}
+
+function createActivitiesForEveryKind(): ActivityDefinition[] {
+  return [
+    {
+      ...activityBase('choice'), kind: 'choice', options: [{ id: 'yes', label: '正确' }, { id: 'no', label: '再想想' }], correctOptionId: 'yes',
+    },
+    {
+      ...activityBase('match'), kind: 'match', pairs: [{ id: 'first', left: '甲', right: '一' }, { id: 'second', left: '乙', right: '二' }],
+    },
+    {
+      ...activityBase('order'), kind: 'order', items: [{ id: 'first', label: '先' }, { id: 'second', label: '后' }], correctOrder: ['first', 'second'],
+    },
+    {
+      ...activityBase('categorize'), kind: 'categorize',
+      categories: [{ id: 'living', label: '生物' }, { id: 'other', label: '其他' }],
+      items: [{ id: 'plant', label: '花朵', categoryId: 'living' }, { id: 'stone', label: '石头', categoryId: 'other' }],
+    },
+    {
+      ...activityBase('measurement'), kind: 'measurement', objectLabel: '彩带', targetLengthCm: 8, minCm: 7, maxCm: 9,
+    },
+    {
+      ...activityBase('arithmetic'), kind: 'arithmetic', expression: '3 + 4', correctAnswer: 7,
+    },
+  ];
+}
+
 describe('validateCurriculum', () => {
+  it('acceptsEverySupportedActivityKindAndReportsUnknownKinds', () => {
+    const curriculum = createCurriculum();
+    const activities = createActivitiesForEveryKind();
+    const session = curriculum.units[unitKey].difficultyTracks.basic.tasks[0].sessions[0];
+    session.activities.splice(0, activities.length, ...activities);
+    session.activities[6] = { ...activityBase('unknown'), kind: 'unknown' } as unknown as ActivityDefinition;
+
+    expect(validateCurriculum(curriculum)).toContainEqual(expect.objectContaining({
+      code: 'UNSUPPORTED_ACTIVITY_KIND',
+      path: `${session.id}.activities[6].kind`,
+    }));
+  });
+
+  it('rejectsMalformedAnswersAndDuplicateActivityIdsAcrossKinds', () => {
+    const curriculum = createCurriculum();
+    const activities = createActivitiesForEveryKind();
+    const [choice, match, order, categorize, measurement, arithmetic] = activities;
+    if (choice.kind !== 'choice' || match.kind !== 'match' || order.kind !== 'order'
+      || categorize.kind !== 'categorize' || measurement.kind !== 'measurement' || arithmetic.kind !== 'arithmetic') {
+      throw new Error('Activity fixture order is inconsistent.');
+    }
+
+    choice.options[1].id = choice.options[0].id;
+    choice.correctOptionId = 'missing';
+    match.pairs.splice(1, 1);
+    order.items[1].id = order.items[0].id;
+    order.correctOrder = ['missing', 'second'];
+    categorize.categories[1].id = categorize.categories[0].id;
+    categorize.items[1].id = categorize.items[0].id;
+    categorize.items[0].categoryId = 'missing';
+    measurement.targetLengthCm = Number.POSITIVE_INFINITY;
+    arithmetic.correctAnswer = Number.POSITIVE_INFINITY;
+
+    const session = curriculum.units[unitKey].difficultyTracks.basic.tasks[0].sessions[0];
+    session.activities.splice(0, activities.length, ...activities);
+    const issues = validateCurriculum(curriculum);
+
+    expect(issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'DUPLICATE_ID', path: `${session.id}.activities[0].options[1].id` }),
+      expect.objectContaining({ code: 'INVALID_ANSWER_REFERENCE', path: `${session.id}.activities[0].correctOptionId` }),
+      expect.objectContaining({ code: 'INVALID_ANSWER_REFERENCE', path: `${session.id}.activities[1].pairs` }),
+      expect.objectContaining({ code: 'DUPLICATE_ID', path: `${session.id}.activities[2].items[1].id` }),
+      expect.objectContaining({ code: 'INVALID_ANSWER_REFERENCE', path: `${session.id}.activities[2].correctOrder` }),
+      expect.objectContaining({ code: 'DUPLICATE_ID', path: `${session.id}.activities[3].categories[1].id` }),
+      expect.objectContaining({ code: 'DUPLICATE_ID', path: `${session.id}.activities[3].items[1].id` }),
+      expect.objectContaining({ code: 'INVALID_ANSWER_REFERENCE', path: `${session.id}.activities[3].items[0].categoryId` }),
+      expect.objectContaining({ code: 'INVALID_ANSWER_REFERENCE', path: `${session.id}.activities[4].targetLengthCm` }),
+      expect.objectContaining({ code: 'INVALID_ANSWER_REFERENCE', path: `${session.id}.activities[5].correctAnswer` }),
+    ]));
+  });
+
+  it('coversNonUnitAchievementEligibilityWithoutTreatingItAsAnError', () => {
+    const practice = createCurriculum();
+    const entry = practice.grades[0].terms[0].subjects[0].units[0];
+    const unit = practice.units[unitKey];
+    entry.type = 'review';
+    entry.formalUnitNumber = null;
+    entry.achievementEligible = false;
+    unit.type = 'review';
+    unit.formalUnitNumber = null;
+    unit.achievementEligible = false;
+    expect(validateCurriculum(practice)).toEqual([]);
+
+    const unnumbered = createCurriculum();
+    const unnumberedEntry = unnumbered.grades[0].terms[0].subjects[0].units[0];
+    const unnumberedUnit = unnumbered.units[unitKey];
+    unnumberedEntry.formalUnitNumber = null;
+    unnumberedEntry.achievementEligible = false;
+    unnumberedUnit.formalUnitNumber = null;
+    unnumberedUnit.achievementEligible = false;
+    expect(validateCurriculum(unnumbered)).toEqual([]);
+
+    const zeroNumber = createCurriculum();
+    const zeroEntry = zeroNumber.grades[0].terms[0].subjects[0].units[0];
+    const zeroUnit = zeroNumber.units[unitKey];
+    zeroEntry.formalUnitNumber = 0;
+    zeroEntry.achievementEligible = false;
+    zeroUnit.formalUnitNumber = 0;
+    zeroUnit.achievementEligible = false;
+    expect(validateCurriculum(zeroNumber)).toEqual([]);
+  });
+
+  it('checksCatalogReferencesTaskIdsDifficultyAndInactiveContent', () => {
+    const curriculum = createCurriculum() as unknown as {
+      grades: Array<{ terms: Array<{ subjects: Array<{ units: Array<Record<string, unknown>> }> }> }>;
+      units: Record<string, {
+        id: string;
+        difficultyTracks: Record<string, { difficulty: string; tasks: Array<{ id: string; order: number; sessions: Array<{ id: string; activities: unknown[] }> }> }>;
+      }>;
+      textbooks: Record<string, { grade: number }>;
+    };
+    const entry = curriculum.grades[0].terms[0].subjects[0].units[0];
+    const unit = curriculum.units[unitKey];
+    const task = unit.difficultyTracks.basic.tasks[0];
+    const session = task.sessions[0];
+    entry.textbookEditionId = 'missing-book';
+    entry.curriculumUnitKey = `${unitKey}/missing`;
+    entry.achievementEligible = false;
+    entry.formalUnitNumber = null;
+    unit.id = 'wrong-unit-id';
+    unit.difficultyTracks.basic.difficulty = 'advanced';
+    task.id = 'wrong-task-id';
+    task.order = 9;
+    session.id = 'wrong-session-id';
+
+    const issues = validateCurriculum(curriculum as unknown as Curriculum);
+    expect(issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'UNKNOWN_TEXTBOOK_EDITION' }),
+      expect.objectContaining({ code: 'MISSING_CURRICULUM_UNIT' }),
+      expect.objectContaining({ code: 'NON_CANONICAL_ID', path: `units.${unitKey}.id` }),
+      expect.objectContaining({ code: 'DIFFICULTY_KEY_MISMATCH' }),
+      expect.objectContaining({ code: 'NON_CANONICAL_ID', path: `units.${unitKey}.difficultyTracks.basic.tasks[0].id` }),
+      expect.objectContaining({ code: 'TASK_ORDER_MISMATCH' }),
+      expect.objectContaining({ code: 'NON_CANONICAL_ID', path: `units.${unitKey}.difficultyTracks.basic.tasks[0].sessions[0].id` }),
+    ]));
+
+    const inactive = createCurriculum() as unknown as {
+      grades: Array<{ terms: Array<{ subjects: Array<{ units: Array<{ status: string }> }> }> }>;
+      units: Record<string, {
+        difficultyTracks: {
+          basic: {
+            tasks: Array<{ sessions: Array<{ activities: unknown[] }> }>;
+          };
+        };
+      }>;
+    };
+    inactive.grades[0].terms[0].subjects[0].units[0].status = 'comingSoon';
+    inactive.units[unitKey].difficultyTracks.basic.tasks[0].sessions[0].activities.pop();
+    expect(validateCurriculum(inactive as unknown as Curriculum)).not.toContainEqual(expect.objectContaining({ code: 'SESSION_QUESTION_COUNT' }));
+
+    const mismatchedEdition = createCurriculum();
+    mismatchedEdition.textbooks[textbookId].grade = 1;
+    expect(validateCurriculum(mismatchedEdition)).toContainEqual(expect.objectContaining({ code: 'TEXTBOOK_REFERENCE_MISMATCH' }));
+
+    const missingUnitKey = createCurriculum();
+    missingUnitKey.grades[0].terms[0].subjects[0].units[0].curriculumUnitKey = undefined;
+    expect(validateCurriculum(missingUnitKey)).toContainEqual(expect.objectContaining({ code: 'ACTIVE_ENTRY_REQUIRES_CURRICULUM' }));
+  });
+
   it('requiresAllDifficulties', () => {
     const curriculum = createCurriculum() as unknown as { units: Record<string, { difficultyTracks: Record<string, unknown> }> };
     delete curriculum.units[unitKey].difficultyTracks.advanced;

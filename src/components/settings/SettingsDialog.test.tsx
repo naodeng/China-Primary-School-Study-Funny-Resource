@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeProvider from '../../theme/ThemeProvider';
 import ThemeSwitcher from '../theme/ThemeSwitcher';
+import { SoundProvider } from '../../sound/SoundProvider';
 import SettingsDialog from './SettingsDialog';
 
 describe('SettingsDialog', () => {
@@ -13,16 +14,27 @@ describe('SettingsDialog', () => {
     const onApplyLearningStart = vi.fn();
     const onNavigate = vi.fn();
     render(
-      <ThemeProvider>
-        <SettingsDialog
-          open
-          progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: null }}
-          onClose={vi.fn()}
-          onApplyLearningStart={onApplyLearningStart}
-          onNavigate={onNavigate}
-        />
-      </ThemeProvider>,
+      <SoundProvider>
+        <ThemeProvider>
+          <SettingsDialog
+            open
+            progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: null }}
+            onClose={vi.fn()}
+            onApplyLearningStart={onApplyLearningStart}
+            onNavigate={onNavigate}
+          />
+        </ThemeProvider>
+      </SoundProvider>,
     );
+
+    const soundSwitch = screen.getByRole('switch', { name: '语音提示与交互音效' });
+    expect(soundSwitch).toBeChecked();
+    await user.click(soundSwitch);
+    expect(soundSwitch).not.toBeChecked();
+    expect(window.localStorage.getItem('china-study-sound-enabled-v1')).toBe('false');
+    await user.click(soundSwitch);
+    expect(soundSwitch).toBeChecked();
+    expect(window.localStorage.getItem('china-study-sound-enabled-v1')).toBe('true');
 
     await user.click(screen.getByRole('radio', { name: '深色' }));
     expect(document.documentElement.dataset.theme).toBe('dark');
@@ -68,15 +80,17 @@ describe('SettingsDialog', () => {
   it('doesNotApplyAnUnregisteredLearningStart', () => {
     const onApplyLearningStart = vi.fn();
     const { container } = render(
-      <ThemeProvider>
-        <SettingsDialog
-          open
-          progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: null }}
-          onClose={vi.fn()}
-          onApplyLearningStart={onApplyLearningStart}
-          onNavigate={vi.fn()}
-        />
-      </ThemeProvider>,
+      <SoundProvider>
+        <ThemeProvider>
+          <SettingsDialog
+            open
+            progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: null }}
+            onClose={vi.fn()}
+            onApplyLearningStart={onApplyLearningStart}
+            onNavigate={vi.fn()}
+          />
+        </ThemeProvider>
+      </SoundProvider>,
     );
     const unitSelect = screen.getByRole('combobox', { name: '从第几单元开始' });
     fireEvent.change(unitSelect, { target: { value: '99' } });
@@ -86,21 +100,23 @@ describe('SettingsDialog', () => {
 
   it('keepsAnOlderValidStartVisibleUntilItsCourseIsRegistered', () => {
     render(
-      <ThemeProvider>
-        <SettingsDialog
-          open
-          progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: { grade: 3, term: 2, unit: 1 } }}
-          onClose={vi.fn()}
-          onApplyLearningStart={vi.fn()}
-          onNavigate={vi.fn()}
-        />
-      </ThemeProvider>,
+      <SoundProvider>
+        <ThemeProvider>
+          <SettingsDialog
+            open
+            progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: { grade: 3, term: 2, unit: 1 } }}
+            onClose={vi.fn()}
+            onApplyLearningStart={vi.fn()}
+            onNavigate={vi.fn()}
+          />
+        </ThemeProvider>
+      </SoundProvider>,
     );
 
     expect(screen.getByRole('combobox', { name: '年级' })).toHaveValue('3');
     expect(screen.getByRole('combobox', { name: '学期' })).toHaveValue('2');
     expect(screen.getByRole('combobox', { name: '从第几单元开始' })).toHaveValue('1');
-    expect(screen.getByRole('status')).toHaveTextContent(/尚未登记到课程目录/);
+    expect(screen.getByText(/尚未登记到课程目录/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '应用学习起点' })).toBeDisabled();
   });
 });

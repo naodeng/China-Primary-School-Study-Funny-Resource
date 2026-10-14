@@ -1,15 +1,34 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
+
+const playedSources: string[] = [];
+
+class AppTestAudio {
+  currentTime = 0;
+  paused = true;
+  preload = 'auto';
+  play = vi.fn(() => {
+    playedSources.push(this.src);
+    this.paused = false;
+    return Promise.resolve();
+  });
+  pause = vi.fn(() => { this.paused = true; });
+
+  constructor(public src: string) {}
+}
 
 describe('App', () => {
   beforeEach(() => {
     window.localStorage.clear();
     window.history.replaceState({}, '', '/');
+    playedSources.length = 0;
+    vi.stubGlobal('Audio', AppTestAudio);
   });
 
   afterEach(() => {
+    vi.unstubAllGlobals();
     window.localStorage.clear();
     window.history.replaceState({}, '', '/');
   });
@@ -23,6 +42,36 @@ describe('App', () => {
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '显示主题' })).toBeInTheDocument();
+  });
+
+  it('persistsTheSoundSwitchAndKeepsItselfSilentWhenSoundIsDisabled', async () => {
+    const user = userEvent.setup();
+    const view = render(<App />);
+    await user.click(screen.getByRole('button', { name: '设置' }));
+    expect(playedSources).toEqual(['/audio/interaction-click.mp3']);
+
+    const soundSwitch = screen.getByRole('switch', { name: '语音提示与交互音效' });
+    expect(soundSwitch).toBeChecked();
+    await user.click(soundSwitch);
+    expect(soundSwitch).not.toBeChecked();
+    expect(window.localStorage.getItem('china-study-sound-enabled-v1')).toBe('false');
+    expect(playedSources).toHaveLength(1);
+
+    view.unmount();
+    render(<App />);
+    await user.click(screen.getByRole('button', { name: '设置' }));
+    expect(screen.getByRole('switch', { name: '语音提示与交互音效' })).not.toBeChecked();
+    expect(playedSources).toHaveLength(1);
+  });
+
+  it('playsInteractionCueWhenANumberAnswerInputIsClicked', async () => {
+    const user = userEvent.setup();
+    window.history.replaceState({}, '', '/grade-2/term-1/math/unit-02/basic/task-01/session-01');
+    render(<App />);
+
+    await user.click(screen.getByRole('spinbutton', { name: '输入计算结果' }));
+
+    expect(playedSources).toEqual(['/audio/interaction-click.mp3']);
   });
 
   it('updatesTheCurrentPageWhenBrowserHistoryChanges', () => {

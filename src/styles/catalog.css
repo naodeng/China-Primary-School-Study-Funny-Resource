@@ -301,6 +301,12 @@
 .settings-section > p, .settings-achievement-link p { margin: 0; color: #697a70; font-size: 13px; line-height: 1.6; }
 .settings-dialog .theme-switcher { justify-content: flex-start; width: max-content; max-width: 100%; background: #f5f8f2; }
 .settings-dialog .theme-switcher-options { display: flex; flex-wrap: wrap; }
+.settings-sound-control { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 58px; padding: 11px 14px; border: 1px solid #d9e5d5; border-radius: 15px; color: #405649; background: #f5f8f2; cursor: pointer; }
+.settings-sound-control > span { display: grid; gap: 4px; }
+.settings-sound-control strong { font-size: 14px; }
+.settings-sound-state { color: #62806c; font-size: 12px; }
+.settings-sound-control input { flex: 0 0 24px; width: 24px; height: 24px; accent-color: #528760; cursor: pointer; }
+.settings-sound-control input:focus-visible { outline: 3px solid rgba(104, 167, 113, .4); outline-offset: 3px; }
 .settings-achievement-link { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
 .settings-achievement-link > div { display: grid; gap: 5px; }
 .learning-start-form { display: grid; gap: 11px; }
