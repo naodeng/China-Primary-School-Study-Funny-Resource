@@ -66,9 +66,12 @@ function createCurriculum(): Curriculum {
         edition: '2025年修订版',
         printing: '2025年6月第1次印刷',
         isbn: '9787100000000',
+        sourceKind: 'pep-latest',
         sourceUrl: 'https://www.pep.com.cn/',
+        latestPepEvidenceUrl: 'https://www.pep.com.cn/',
+        fallbackReason: null,
         checkedAt: '2026-10-13',
-        tapxCommit: '5a80345f2043ba6f8db8d7be9cf3db82725ff1f7',
+        tapxCommit: null,
         verificationStatus: 'verified',
       },
     },
@@ -186,6 +189,106 @@ describe('validateCurriculum', () => {
     expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
       code: 'ACTIVE_ENTRY_REQUIRES_VERIFIED_TEXTBOOK',
       path: 'grades[0].terms[0].subjects[0].units[0].textbookEditionId',
+    }));
+  });
+
+  it('validatesTapxFallbackMetadata', () => {
+    const curriculum = createCurriculum() as unknown as { textbooks: Record<string, Record<string, unknown>> };
+    const book = curriculum.textbooks[textbookId];
+    book.sourceKind = 'tapx-fallback';
+    book.sourceUrl = 'https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/example.pdf';
+    book.latestPepEvidenceUrl = 'https://www.pep.com.cn/bks/evidence.pdf';
+    book.fallbackReason = '人教社公开资料未提供本册完整新版学生书和目录。';
+    book.tapxCommit = '5a80345f2043ba6f8db8d7be9cf3db82725ff1f7';
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toEqual([]);
+
+    book.sourceUrl = 'https://github.com/TapXWorld/ChinaTextbook/blob/other-commit/%E5%B0%8F%E5%AD%A6/example.pdf';
+    book.fallbackReason = '   ';
+    book.latestPepEvidenceUrl = 'https://example.com/not-pep';
+    const issues = validateCurriculum(curriculum as unknown as Curriculum);
+
+    expect(issues).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'TAPX_SOURCE_COMMIT_MISMATCH', path: `textbooks.${textbookId}.sourceUrl` }),
+      expect.objectContaining({ code: 'TAPX_FALLBACK_REASON_REQUIRED', path: `textbooks.${textbookId}.fallbackReason` }),
+      expect.objectContaining({ code: 'PEP_EVIDENCE_URL_INVALID', path: `textbooks.${textbookId}.latestPepEvidenceUrl` }),
+    ]));
+  });
+
+  it('requiresOfficialPepUrlForPepLatestEdition', () => {
+    const curriculum = createCurriculum() as unknown as { textbooks: Record<string, Record<string, unknown>> };
+    curriculum.textbooks[textbookId].sourceUrl = 'https://example.com/textbook.pdf';
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'PEP_SOURCE_URL_INVALID',
+      path: `textbooks.${textbookId}.sourceUrl`,
+    }));
+  });
+
+  it('rejectsMalformedEvidenceUrls', () => {
+    const curriculum = createCurriculum() as unknown as { textbooks: Record<string, Record<string, unknown>> };
+    curriculum.textbooks[textbookId].latestPepEvidenceUrl = 'not a URL';
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'PEP_EVIDENCE_URL_INVALID',
+      path: `textbooks.${textbookId}.latestPepEvidenceUrl`,
+    }));
+  });
+
+  it('requiresTapxCommitAndRejectsMalformedValues', () => {
+    const curriculum = createCurriculum() as unknown as { textbooks: Record<string, Record<string, unknown>> };
+    const book = curriculum.textbooks[textbookId];
+    book.sourceKind = 'tapx-fallback';
+    book.latestPepEvidenceUrl = 'https://pep.com.cn/evidence';
+    book.fallbackReason = '新版学生书完整目录尚未找到。';
+    book.tapxCommit = null;
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TAPX_COMMIT_REQUIRED',
+      path: `textbooks.${textbookId}.tapxCommit`,
+    }));
+
+    book.tapxCommit = 'not-a-commit';
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TAPX_COMMIT_INVALID',
+      path: `textbooks.${textbookId}.tapxCommit`,
+    }));
+  });
+
+  it('rejectsTapxDirectoryLinksWithoutAPdf', () => {
+    const curriculum = createCurriculum() as unknown as { textbooks: Record<string, Record<string, unknown>> };
+    const book = curriculum.textbooks[textbookId];
+    book.sourceKind = 'tapx-fallback';
+    book.tapxCommit = '5a80345f2043ba6f8db8d7be9cf3db82725ff1f7';
+    book.sourceUrl = 'not a URL';
+    book.latestPepEvidenceUrl = 'https://pep.com.cn/evidence';
+    book.fallbackReason = '新版学生书完整目录尚未找到。';
+
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TAPX_SOURCE_COMMIT_MISMATCH',
+      path: `textbooks.${textbookId}.sourceUrl`,
+    }));
+
+    book.sourceUrl = `https://github.com/TapXWorld/ChinaTextbook/blob/${book.tapxCommit}/directory/`;
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TAPX_SOURCE_COMMIT_MISMATCH',
+      path: `textbooks.${textbookId}.sourceUrl`,
+    }));
+  });
+
+  it('rejectsFallbackFieldsOnPepLatestAndUnknownSourceKinds', () => {
+    const curriculum = createCurriculum() as unknown as { textbooks: Record<string, Record<string, unknown>> };
+    const book = curriculum.textbooks[textbookId];
+    book.tapxCommit = '5a80345f2043ba6f8db8d7be9cf3db82725ff1f7';
+    book.fallbackReason = '旧版本回退';
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'PEP_FALLBACK_METADATA_UNEXPECTED',
+      path: `textbooks.${textbookId}`,
+    }));
+
+    book.sourceKind = 'unknown-source';
+    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TEXTBOOK_SOURCE_KIND_INVALID',
+      path: `textbooks.${textbookId}.sourceKind`,
     }));
   });
 });

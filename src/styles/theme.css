@@ -134,6 +134,7 @@
 :root[data-theme='dark'] .course-breadcrumbs a,
 :root[data-theme='dark'] .course-breadcrumbs [aria-current='page'],
 :root[data-theme='dark'] .catalog-lead,
+:root[data-theme='dark'] .catalog-source-disclosure,
 :root[data-theme='dark'] .catalog-meta span,
 :root[data-theme='dark'] .catalog-grade-label,
 :root[data-theme='dark'] .catalog-subject-name,

@@ -6,6 +6,7 @@ import type {
   CurriculumUnit,
   Difficulty,
   LearningTask,
+  TextbookEdition,
 } from './types';
 
 export interface ValidationIssue {
@@ -138,6 +139,66 @@ function validateEligibility(
   }
 }
 
+function isOfficialPepUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:'
+      && (url.hostname === 'pep.com.cn' || url.hostname.endsWith('.pep.com.cn'));
+  } catch {
+    return false;
+  }
+}
+
+function matchesTapxCommit(sourceUrl: string, commit: string): boolean {
+  try {
+    const url = new URL(sourceUrl);
+    const expectedPrefix = `/TapXWorld/ChinaTextbook/blob/${commit}/`;
+    const filePath = url.pathname.startsWith(expectedPrefix)
+      ? url.pathname.slice(expectedPrefix.length)
+      : '';
+
+    return url.protocol === 'https:'
+      && url.hostname === 'github.com'
+      && filePath.length > 0
+      && !filePath.endsWith('/')
+      && filePath.toLowerCase().endsWith('.pdf');
+  } catch {
+    return false;
+  }
+}
+
+function validateTextbookSource(book: TextbookEdition, path: string, issues: ValidationIssue[]): void {
+  if (!isOfficialPepUrl(book.latestPepEvidenceUrl)) {
+    addIssue(issues, 'PEP_EVIDENCE_URL_INVALID', `${path}.latestPepEvidenceUrl`, '最新版证据链接必须来自人教社官方网站。');
+  }
+
+  if (book.sourceKind === 'tapx-fallback') {
+    if (!book.tapxCommit) {
+      addIssue(issues, 'TAPX_COMMIT_REQUIRED', `${path}.tapxCommit`, 'TapX 回退来源必须记录固定提交号。');
+    } else if (!/^[a-f0-9]{40}$/i.test(book.tapxCommit)) {
+      addIssue(issues, 'TAPX_COMMIT_INVALID', `${path}.tapxCommit`, 'TapX 提交号必须是 40 位 Git SHA。');
+    } else if (!matchesTapxCommit(book.sourceUrl, book.tapxCommit)) {
+      addIssue(issues, 'TAPX_SOURCE_COMMIT_MISMATCH', `${path}.sourceUrl`, 'TapX 文件链接必须指向元数据中记录的固定提交号。');
+    }
+    if (!book.fallbackReason?.trim()) {
+      addIssue(issues, 'TAPX_FALLBACK_REASON_REQUIRED', `${path}.fallbackReason`, 'TapX 回退来源必须说明采用原因。');
+    }
+    return;
+  }
+
+  if (book.sourceKind === 'pep-latest') {
+    if (!isOfficialPepUrl(book.sourceUrl)) {
+      addIssue(issues, 'PEP_SOURCE_URL_INVALID', `${path}.sourceUrl`, '人教社最新版教材来源必须来自人教社官方网站。');
+    }
+    if (book.tapxCommit !== null || book.fallbackReason !== null) {
+      addIssue(issues, 'PEP_FALLBACK_METADATA_UNEXPECTED', path, '人教社最新版来源不能包含 TapX 回退提交号或回退原因。');
+    }
+    return;
+  }
+
+  addIssue(issues, 'TEXTBOOK_SOURCE_KIND_INVALID', `${path}.sourceKind`, '教材来源类型必须是 pep-latest 或 tapx-fallback。');
+}
+
 function validateTask(
   unit: CurriculumUnit,
   task: LearningTask,
@@ -179,6 +240,10 @@ export function validateCurriculum(curriculum: Curriculum): ValidationIssue[] {
   const seenIds = new Map<string, string>();
   const activeUnitKeys = new Set<string>();
   const catalogEntries = flattenCatalogEntries(curriculum);
+
+  Object.entries(curriculum.textbooks).forEach(([textbookId, book]) => {
+    validateTextbookSource(book, `textbooks.${textbookId}`, issues);
+  });
 
   for (const { entry, path, gradeId, termId, subjectId } of catalogEntries) {
     const textbook = curriculum.textbooks[entry.textbookEditionId];

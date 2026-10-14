@@ -3,22 +3,53 @@ import { curriculum } from './curriculum';
 import { validateCurriculum } from './validateCurriculum';
 import { getSessionsForDifficulty } from './sessionUtils';
 import { getKnownCurriculumPositions } from '../achievements/position';
+import { TAPX_TEXTBOOK_COMMIT } from './textbooks';
 
 describe('curriculum registry', () => {
-  it('points each textbook edition to its selected current PEP evidence while keeping unverified books pending', () => {
-    const currentPepEvidence = {
-      'grade-2/term-1/chinese': 'https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf',
-      'grade-2/term-2/chinese': 'https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf',
-      'grade-2/term-1/math': 'https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml',
-      'grade-2/term-2/math': 'https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml',
-      'grade-2/term-1/english': 'https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html',
-      'grade-2/term-2/english': 'https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html',
+  it('records each selected TapX fallback separately from the latest PEP evidence', () => {
+    const selectedSources = {
+      'grade-2/term-1/chinese': {
+        path: '小学/语文/统编版/义务教育教科书·语文二年级上册.pdf',
+        pep: 'https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf',
+      },
+      'grade-2/term-2/chinese': {
+        path: '小学/语文/统编版/义务教育教科书·语文二年级下册.pdf',
+        pep: 'https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf',
+      },
+      'grade-2/term-1/math': {
+        path: '小学/数学/人教版/义务教育教科书 · 数学二年级上册.pdf',
+        pep: 'https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml',
+      },
+      'grade-2/term-2/math': {
+        path: '小学/数学/人教版/义务教育教科书·数学二年级下册.pdf',
+        pep: 'https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml',
+      },
+      'grade-2/term-1/english': {
+        path: '小学/英语/人教版（一年级起点）（主编：吴欣）/义务教育教科书·英语（一年级起点）二年级上册.pdf',
+        pep: 'https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html',
+      },
+      'grade-2/term-2/english': {
+        path: '小学/英语/人教版（一年级起点）（主编：吴欣）/义务教育教科书·英语（一年级起点）二年级下册.pdf',
+        pep: 'https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html',
+      },
     };
 
-    for (const [editionId, sourceUrl] of Object.entries(currentPepEvidence)) {
-      expect(curriculum.textbooks[editionId]?.sourceUrl).toBe(sourceUrl);
-      expect(curriculum.textbooks[editionId]?.verificationStatus).toBe('pending');
+    for (const [editionId, selected] of Object.entries(selectedSources)) {
+      const book = curriculum.textbooks[editionId];
+      const expectedPath = selected.path.split('/').map(encodeURIComponent).join('/');
+      expect(book?.sourceKind).toBe('tapx-fallback');
+      expect(book?.sourceUrl).toBe(`https://github.com/TapXWorld/ChinaTextbook/blob/${TAPX_TEXTBOOK_COMMIT}/${expectedPath}`);
+      expect(book?.latestPepEvidenceUrl).toBe(selected.pep);
+      expect(book?.fallbackReason?.trim().length).toBeGreaterThan(0);
+      expect(book?.tapxCommit).toBe(TAPX_TEXTBOOK_COMMIT);
+      expect(book?.verificationStatus).toBe('pending');
     }
+
+    expect(curriculum.textbooks['grade-2/term-2/chinese']?.isbn).toBe('978-7-107-32383-6');
+    expect(curriculum.textbooks['grade-2/term-1/math']?.isbn).toBe('978-7-107-36923-0');
+    expect(curriculum.textbooks['grade-2/term-2/english']?.isbn).toBe('978-7-107-27396-4');
+    expect(curriculum.textbooks['grade-2/term-1/chinese']?.isbn).toBeNull();
+    expect(curriculum.textbooks['grade-2/term-2/math']?.edition).toBeNull();
   });
 
   it('keeps all six selected textbook editions pending until their contents are verified', () => {

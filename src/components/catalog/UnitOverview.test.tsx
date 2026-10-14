@@ -11,6 +11,8 @@ describe('UnitOverview', () => {
   it('showsThreeDifficultyTracksAndBasicTasks', () => {
     render(<UnitOverview unitKey={unitKey} unit={unit} completedSessionIds={[]} onNavigate={vi.fn()} />);
 
+    expect(screen.getByText(/家长提示：本课程依据 TapXWorld 固定快照/)).toBeInTheDocument();
+    expect(screen.getByText(/可能与人教社后续修订版存在差异/)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '基础版任务' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '进阶版任务' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '高阶版任务' })).toBeInTheDocument();

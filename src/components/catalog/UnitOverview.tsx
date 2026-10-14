@@ -1,5 +1,6 @@
 import { Button, Card } from 'animal-island-ui';
 import { getSessionPath, getSubjectTitle, getTaskPath, getUnitPath } from '../../app/router';
+import { curriculum } from '../../content/curriculum';
 import type { CurriculumUnit, Difficulty, LearningTask } from '../../content/types';
 import { getSessionsForDifficulty } from '../../content/sessionUtils';
 import CompanionAvatar, { COMPANION_PROFILES } from '../mascots/CompanionAvatar';
@@ -51,6 +52,12 @@ export default function UnitOverview({
   const firstSession = selectedTask?.sessions[0] ?? allBasicSessions[0];
   const gradeAndTerm = getPositionLabels(unitKey);
   const difficulties: Difficulty[] = selectedDifficulty ? [selectedDifficulty] : ['basic', 'advanced', 'high'];
+  const textbook = curriculum.textbooks[unit.textbookEditionId];
+  const sourceDisclosure = textbook?.sourceKind === 'tapx-fallback'
+    ? '家长提示：本课程依据 TapXWorld 固定快照中的教材内容设计，可能与人教社后续修订版存在差异。'
+    : textbook?.sourceKind === 'pep-latest'
+      ? '家长提示：本课程依据人教社公开最新版教材内容设计。'
+      : '家长提示：本课程教材来源正在核对中。';
 
   const breadcrumbItems = [
     { label: '课程目录', path: '/' },
@@ -75,6 +82,7 @@ export default function UnitOverview({
               <span>每场建议 20 分钟</span>
               <span>已完成 {completedCount}/{visibleSessions.length}</span>
             </div>
+            <p className="catalog-source-disclosure" role="note">{sourceDisclosure}</p>
           </div>
           <div className="unit-hero-aside">
             {firstSession && <HeroGuide mood="welcome" subject={unit.subject} companionId={firstSession.companionId} compact />}

@@ -4,6 +4,7 @@ export type TermId = `term-${TermNumber}`;
 export type CatalogStatus = 'active' | 'comingSoon';
 export type CatalogEntryType = 'unit' | 'review' | 'integrated-practice';
 export type Difficulty = 'basic' | 'advanced' | 'high';
+export type TextbookSourceKind = 'pep-latest' | 'tapx-fallback';
 export type TextbookVerificationStatus = 'pending' | 'verified';
 export type CurriculumUnitKey = string;
 export type CompanionId = 'companion-01' | 'companion-02' | 'companion-03' | 'companion-04';
@@ -17,9 +18,12 @@ export interface TextbookEdition {
   edition: string | null;
   printing: string | null;
   isbn: string | null;
+  sourceKind: TextbookSourceKind;
   sourceUrl: string;
+  latestPepEvidenceUrl: string;
+  fallbackReason: string | null;
   checkedAt: string;
-  tapxCommit: string;
+  tapxCommit: string | null;
   verificationStatus: TextbookVerificationStatus;
 }
 
