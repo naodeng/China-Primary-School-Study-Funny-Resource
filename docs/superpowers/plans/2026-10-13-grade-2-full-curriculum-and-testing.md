@@ -2,7 +2,7 @@
 
 > **执行要求：** 使用 superpowers:executing-plans Skill，按任务顺序 Native 实施。每项代码任务先写失败测试，再实现、验证并提交；不委派子代理。
 
-**目标：** 将当前二年级上学期语文、数学第一、二单元扩展为校用人教版二年级上下学期语文、数学、英语完整互动课程，并补齐自动化质量保障。
+**目标：** 将当前二年级上学期语文、数学第一、二单元扩展为用户最终裁定版次的二年级上下学期语文、数学和英语（一年级起点预备级）完整互动课程，并补齐自动化质量保障。
 
 **架构：** 保持 React、Vite、TypeScript 静态单页应用。课程按年级、学期、学科、目录条目、难度、任务、场次和题目组织；纯模块承载课程校验、作答、反馈、进度和成就；学习数据只保存在本机，Cloudflare Pages 继续静态托管。
 
@@ -12,7 +12,8 @@
 
 ## 全局约束
 
-- 课程版次以学校实际使用的人教版教材为准；每册记录版次/印次、ISBN（若有）、目录、出版社来源、核对日期和 TapXWorld 提交号。
+- 用户先要求人教社公开最新版，随后确认学校使用 TapXWorld 固定快照所列教材。盘点发现两个来源版本有实质差异；Task 2 记录后须先裁定唯一来源，Tasks 5–10 不得混用。公开最新版目录若无法核实，不用旧目录猜补。
+- 按用户要求纳入人教版英语一年级起点预备级；人教社说明一、二年级预备级供地方课程规划选用。产品包含英语，但没有学校课程材料时不声称特定学校实际开设。
 - 覆盖二年级上下学期语文、数学、英语；正式单元、复习和综合实践均登记，并区分正式编号计数。
 - 每个可玩条目有 basic、advanced、high 三档；基础至少 2 个按知识目标划分的任务，进阶和高阶各 1 个任务。任务可有多场，每场恰好 8 题，建议 20 分钟。
 - 单元只在基础版所有任务的所有场次完成后点亮。进阶/高阶进度独立记录。
@@ -20,14 +21,16 @@
 - 配对答案按稳定 ID 判分；每次尝试打散、单次尝试中保持稳定、重试重新打散。
 - 答对、答错从各自文案池随机选鼓励反馈，避免连续重复；错误不羞辱、不扣分、不误报正确。
 - 旧版少题场次不迁移为新版完成状态；进度、主题和学习起点留在当前设备。
-- 保留十二星区；未核实课程不产生可玩节点或头衔计数。
+- 保留十二星区；裁定来源的版次/目录尚未核实的课程不开放或计入头衔。不得把 TapXWorld 旧快照描述为人教社当前最新版。
 - 全局 lines/statements/functions/branches 覆盖率各至少 60%；指定核心纯逻辑模块四项均 100%，由测试命令和 CI 强制。
 - E2E 用独立上下文和 127.0.0.1:4174 专用端口，禁止连接或清理用户当前 4173/5173 服务。
 - 过程文档中文；保留 PolyForm Noncommercial License 1.0.0、动物岛 UI 第三方声明和现有头像素材边界。
 
 ## Review Focus
 
-- 校用版次/目录证据不足：清单标记未核实，不猜教材目录；需要时索取版权页或目录，或明确采用人教社可核实版本。
+- TapXWorld 与出版社最新版不一致：库存表双列记录证据；由用户确定对齐学校来源还是最新公开版后再进入课程任务。
+- 出版社版次/目录证据不足：清单记录明确缺口，不猜 ISBN、目录或课文；若选择最新版，缺少新版逐项目录的册次不能以 TapXWorld 旧版直接补齐。
+- 人教版英语二年级属于地方课程预备级：按用户要求纳入产品，但将“出版社有此预备级”“用户希望有英语内容”和“学校实际开设”分开记录。
 - 正式单元、总复习、英语 Revision、综合实践的计数边界：校验器和成就测试覆盖计入/不计入。
 - 旧进度产生虚假完成：迁移测试验证旧场次隔离、有效学习起点保留。
 - 配对答案重新渲染时洗牌或仍完全同序：固定随机源测试首次排序、渲染稳定和重试。
@@ -47,22 +50,23 @@
 - [ ] 在 AGENTS.md 增加测试命令；原设计文档标记新规格为当前范围并删除不新增自动化测试的旧约定。
 - [ ] 运行单元、冒烟 E2E 和构建；精确暂存后以 Conventional Commits 提交。
 
-### Task 2：核实校用教材版本并建目录清单
+### Task 2：核对双来源版次并裁定目录清单
 
 **文件：** 创建 docs/curriculum/grade-2-textbook-inventory.md。
 
 **接口：** 本任务只完成来源核对和目录映射；课程元数据类型在 Task 3 统一定义，未知书目信息标为未核实。
 
-- [ ] 核对六册书名、起点、版次、目录与来源；校用教材优先于旧版 TapXWorld 快照。
+- [ ] 分别核对六册 TapXWorld 固定快照文件和人教社后续公开版本，记录用户对学校实际使用文件的确认及版次差异；旧快照与新版不互相替代。
 - [ ] 区分编号单元、review、integrated-practice 并记录课程 key 映射。
-- [ ] 若公开资料和用户材料都不能核实校用版，标出阻塞册次；先做无关工程任务，课程录入前再向用户索取版权页/目录，不编造。
-- [ ] 审核六册完整性和来源可追溯性；运行单元测试与 diff 检查后提交。
+- [ ] 英语保留为用户要求的课程范围，按人教版一年级起点预备级标注；学校是否开设未知。
+- [ ] 在 Tasks 5–10 开始前确定唯一版本规则。若用户选择最新版且公开新版目录不完整，记录缺口、不用 TapXWorld 旧目录补齐；若选择学校 TapXWorld 文件，如实标为对应旧版，不宣称最新版。
+- [ ] 审核双来源资料的完整性和可追溯性；运行单元测试与 diff 检查后提交。
 
 ### Task 3：定义课程层级、元数据和完整性校验
 
 **文件：** 修改 src/content/types.ts、src/content/curriculum.ts、四个现有 unit-01/unit-02 文件，以及 src/app/router.ts、src/achievements/{exploration,position,progress}.ts、src/components/achievements/AchievementDashboard.tsx、src/components/catalog/UnitOverview.tsx 这些旧 session 消费方；创建 src/content/textbooks.ts、src/content/sessionUtils.ts、src/content/sessionUtils.test.ts、src/content/validateCurriculum.ts、src/content/validateCurriculum.test.ts、src/content/curriculum.test.ts。
 
-**接口：** SubjectId 加 english；增加 Difficulty、CatalogEntryType、TextbookEdition（id、subject、grade、term、series、edition、printing、isbn、sourceUrl、checkedAt、tapxCommit、verificationStatus）、LearningTask、DifficultyTrack。目录条目只有在对应校用教材 verificationStatus 为 verified 时才能 active。课程、任务、场次的 canonical ID 均为完整层级 key；URL 使用父级内的末段 slug。CurriculumUnit 含目录类型、正式编号、achievementEligible、版次 ID、sourceTopics 和三档内容。validateCurriculum(curriculum: Curriculum): ValidationIssue[]。LearningSession.activities 必须为 8 道题。
+**接口：** SubjectId 加 english；增加 Difficulty、CatalogEntryType、TextbookEdition（id、subject、grade、term、series、edition、printing、isbn、sourceUrl、checkedAt、tapxCommit、verificationStatus）、LearningTask、DifficultyTrack。目录条目只有在对应所选教材版本 verificationStatus 为 verified 时才能 active。课程、任务、场次的 canonical ID 均为完整层级 key；URL 使用父级内的末段 slug。CurriculumUnit 含目录类型、正式编号、achievementEligible、版次 ID、sourceTopics 和三档内容。validateCurriculum(curriculum: Curriculum): ValidationIssue[]。LearningSession.activities 必须为 8 道题。
 
 - [ ] 先写并运行失败测试 requiresAllDifficulties、requiresTwoBasicTasks、requiresOneAdvancedAndHighTask、rejectsEmptyTasks、requiresEightQuestions、rejectsDuplicateIds、rejectsInvalidAnswerReferences、validatesAchievementEligibility、requiresVerifiedEditionForActiveEntry；断言各自问题路径和稳定错误码。
 - [ ] 实现类型和无静默修正的校验器。
@@ -85,7 +89,7 @@
 **文件：** src/content/grade-2/term-1/chinese/ 下所有单元、review、实践入口；修改 curriculum registry、数据测试和教材清单。
 
 - [ ] 先在 curriculum.test 写 listsAllVerifiedTerm1ChineseEntries，依据教材清单断言每个上册条目均存在且类型/编号正确；运行测试确认缺失条目时失败。
-- [ ] 依据已核实上册逐条录入正式单元、复习、实践并校对目录顺序。
+- [ ] 来源裁定后，依据所选上册逐条录入正式单元、复习、实践并校对目录顺序；若选人教社新版，依据 2025 修订资料更新与 TapXWorld 不一致的课文和学习要素；若选学校文件，保持与实物版一致并注明版本。
 - [ ] 每条基础至少两个知识目标明确的任务，进阶/高阶各一个；场次可拆分且各 8 题。registry 数据测试以 it.each 遍历该册所有条目，断言正式编号顺序、任务数和每场题数。
 - [ ] 原创题目适龄、答案正确，不复制课文原句或插图。
 - [ ] 运行课程结构和目录映射测试后提交。
@@ -95,7 +99,7 @@
 **文件：** src/content/grade-2/term-2/chinese/ 下所有单元、review、实践入口；修改 registry、数据测试和教材清单。
 
 - [ ] 先写 listsAllVerifiedTerm2ChineseEntries 并断言目录清单与 registry 一一对应；运行确认缺失项时失败。
-- [ ] 按已核实下册录入全部目录，不套用旧版或上册条目。
+- [ ] 按最终裁定来源录入下册目录；若选人教社新版，应用官方 2025 修订变化，不套用未核实旧版课文；若选学校文件，保持与对应实物版一致。
 - [ ] 每条符合三档任务结构和每场 8 题；校对语言和答案。目录映射测试断言不存在缺失或多余条目，validator 断言每个任务至少一场。
 - [ ] 运行 validator、语文数据测试后提交。
 
@@ -104,7 +108,7 @@
 **文件：** src/content/grade-2/term-1/math/ 下所有单元、review、实践入口；修改 registry、数据测试和教材清单。
 
 - [ ] 先写 listsAllVerifiedTerm1MathEntries，断言正式编号、总复习及实践类型符合教材清单；运行确认缺项时报错。
-- [ ] 按校用版录入目录并准确区分编号总复习和综合实践。
+- [ ] 按最终裁定的二年级上册数学目录录入，并准确区分编号单元、复习与综合实践；记录 ISBN/版次的实际证据，不据文件名推断。新版完整目录未核实时不按旧快照补齐。
 - [ ] 每条提供基础至少两任务、进阶/高阶各一任务，每场八题；按知识点选用题型。数据测试遍历全部 math 条目，断言任务结构、八题长度、测量范围和算术答案。
 - [ ] 对运算和测量答案增加专项断言；运行测试后提交。
 
@@ -113,16 +117,16 @@
 **文件：** src/content/grade-2/term-2/math/ 下所有条目；修改 registry、数据测试和教材清单。
 
 - [ ] 先写 listsAllVerifiedTerm2MathEntries 并断言清单/registry 一一对应、正式编号连续；运行确认缺项时失败。
-- [ ] 按已核实下册录入全部正式单元、复习和综合实践。
+- [ ] 按最终裁定的二年级下册数学目录录入全部正式单元、复习和综合实践；新版完整目录未核实时不按旧快照补齐。
 - [ ] 满足三档、任务和八题规则，核验运算步骤及答案。新增下册答案检查，逐题断言解释步骤得到 correctAnswer。
 - [ ] 运行全量 validator 和数学测试后提交。
 
-### Task 9：录入二年级上学期英语
+### Task 9：录入二年级上学期英语（一年级起点预备级）
 
 **文件：** src/content/grade-2/term-1/english/ 下全部语言单元和复习入口；修改 registry、数据测试和教材清单。
 
 - [ ] 先写 listsAllVerifiedTerm1EnglishEntries，断言语言单元与 Revision 分类符合教材清单；运行确认缺项时失败。
-- [ ] 按校用人教版英语起点与上册目录录入全部内容。
+- [ ] 按最终裁定的一年级起点预备级上册目录录入全部内容；标注该预备级供地方课程规划选用，不据此声称学校开设。
 - [ ] 正确区分编号单元和未编号 Revision；基础多任务、进阶/高阶各单任务、每场八题。数据测试断言 Revision 的 achievementEligible=false 且不占正式单元编号。
 - [ ] 检查英文词汇、指令、语法和答案适龄准确；运行测试后提交。
 
@@ -131,7 +135,7 @@
 **文件：** src/content/grade-2/term-2/english/ 下全部语言单元、复习和实践入口；修改 registry、数据测试和教材清单。
 
 - [ ] 先写 listsAllVerifiedTerm2EnglishEntries 并断言 registry 与下册清单一一对应；运行确认缺项时失败。
-- [ ] 按校用下册录入完整目录，不用上册主题代替。
+- [ ] 按最终裁定的一年级起点预备级下册目录录入完整内容，不用上册主题代替；新版目录缺少出版社证据时明确记录，不用旧目录伪装成新版。
 - [ ] 满足任务、场次和八题规则，复核英文内容。下册测试同样校验 Revision/实践计数及全部题目引用。
 - [ ] 运行全量课程 validator 和英语数据测试后提交。
 
@@ -172,7 +176,7 @@
 
 ## 完成标准
 
-- 校用版二年级上下学期语文、数学、英语全部条目有来源记录且可进入。
+- 按用户最终裁定的唯一版次完成二年级上下学期语文、数学、英语全部课程；六册来源记录完整，不混用版本。
 - 每条至少 4 个任务（基础至少 2 个，进阶/高阶各 1 个），每任务至少一场；最小课程规模为 4 场、32 题，每场恰好八题。
 - 配对题不泄露答案顺序；答对/答错文案随机变化且保持鼓励性。
 - 基础全部任务完成后才点亮单元；迁移不造成虚假完成。

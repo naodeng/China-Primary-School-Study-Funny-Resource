@@ -193,7 +193,7 @@ export function validateCurriculum(curriculum: Curriculum): ValidationIssue[] {
         addIssue(issues, 'TEXTBOOK_REFERENCE_MISMATCH', `${path}.textbookEditionId`, '教材学科、年级和学期必须与目录位置一致。');
       }
       if (entry.status === 'active' && textbook.verificationStatus !== 'verified') {
-        addIssue(issues, 'ACTIVE_ENTRY_REQUIRES_VERIFIED_TEXTBOOK', `${path}.textbookEditionId`, '校用教材版本未核实的目录项不能开放游玩。');
+        addIssue(issues, 'ACTIVE_ENTRY_REQUIRES_VERIFIED_TEXTBOOK', `${path}.textbookEditionId`, '课程所依据的教材版本和目录未核实，不能开放游玩。');
       }
     }
 
