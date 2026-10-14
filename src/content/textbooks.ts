@@ -36,7 +36,7 @@ export const textbooks: Record<string, TextbookEdition> = {
     fallbackReason: reasons.chinese,
     checkedAt,
     tapxCommit: TAPX_TEXTBOOK_COMMIT,
-    verificationStatus: 'pending',
+    verificationStatus: 'verified',
   },
   'grade-2/term-2/chinese': {
     id: 'grade-2/term-2/chinese',

@@ -33,7 +33,7 @@ describe('App', () => {
       window.dispatchEvent(new PopStateEvent('popstate'));
     });
 
-    expect(screen.getByRole('heading', { name: '第一单元 · 阅读' })).toBeInTheDocument();
-    expect(screen.getByText(/正在核对教材版本/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '第一单元 · 大自然的秘密' })).toBeInTheDocument();
+    expect(screen.getByText(/本课程依据 TapXWorld 固定快照/)).toBeInTheDocument();
   });
 });

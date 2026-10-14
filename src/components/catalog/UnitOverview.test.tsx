@@ -16,7 +16,7 @@ describe('UnitOverview', () => {
     expect(screen.getByRole('heading', { name: '基础版任务' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '进阶版任务' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '高阶版任务' })).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: '查看任务' })).toHaveLength(3);
+    expect(screen.getAllByRole('button', { name: '查看任务' })).toHaveLength(5);
   });
 
   it('opensTaskAndStartsItsNestedSession', async () => {

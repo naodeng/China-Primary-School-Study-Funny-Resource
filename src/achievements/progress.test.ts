@@ -95,7 +95,7 @@ describe('achievement progress', () => {
       { grade: 2, term: 1, unit: 1 },
       { grade: 2, term: 1, unit: 2 },
     ]);
-    expect(getKnownCurriculumPositions()).toEqual([]);
+    expect(getKnownCurriculumPositions().map((position) => position.unit)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
   });
 
   it('unlocksRanksAt1_2_4_8', () => {

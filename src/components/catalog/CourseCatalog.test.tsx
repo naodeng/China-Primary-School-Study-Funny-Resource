@@ -16,15 +16,17 @@ describe('CourseCatalog', () => {
     expect(screen.getByRole('button', { name: '数学' })).toBeInTheDocument();
   });
 
-  it('keepsUnverifiedCourseEntriesUnavailable', async () => {
+  it('opensVerifiedChineseUnitsAndKeepsUnverifiedMathUnavailable', async () => {
     const user = userEvent.setup();
     const onNavigate = vi.fn();
     render(<ThemeProvider><CourseCatalog progress={progress} onNavigate={onNavigate} onApplyLearningStart={vi.fn()} /></ThemeProvider>);
 
-    expect(screen.getAllByText('筹备中').length).toBeGreaterThan(0);
-    expect(screen.queryByRole('button', { name: /进入单元/ })).not.toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(8);
+    expect(screen.queryByText('筹备中')).not.toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '数学' }));
     expect(screen.getByText('数学', { selector: '.catalog-subject-name' })).toBeInTheDocument();
+    expect(screen.getAllByText('筹备中').length).toBeGreaterThan(0);
+    expect(screen.queryByRole('button', { name: /进入单元/ })).not.toBeInTheDocument();
     expect(onNavigate).not.toHaveBeenCalled();
   });
 });
