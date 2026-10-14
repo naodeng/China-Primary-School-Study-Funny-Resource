@@ -1,6 +1,6 @@
 import { curriculum } from '../content/curriculum';
 import { getSessionsForDifficulty } from '../content/sessionUtils';
-import type { CatalogStatus, SubjectId } from '../content/types';
+import type { CatalogStatus, Curriculum, SubjectId } from '../content/types';
 
 export interface LearningPosition {
   grade: number;
@@ -16,27 +16,46 @@ export interface KnownCurriculumPosition extends LearningPosition {
   subjectTitle: string;
   title: string;
   curriculumUnitKey?: string;
-  status: CatalogStatus | 'planned';
+  status: CatalogStatus;
 }
 
-export function getKnownCurriculumPositions(): KnownCurriculumPosition[] {
-  return curriculum.grades.flatMap((grade) => grade.terms.flatMap((term) => term.subjects.flatMap((subject) => {
-    return subject.units
-      .filter((entry) => entry.status === 'active' && entry.curriculumUnitKey)
+export function getRegisteredCurriculumPositions(source: Curriculum = curriculum): KnownCurriculumPosition[] {
+  return source.grades.flatMap((grade) => grade.terms.flatMap((term) => term.subjects.flatMap((subject) => (
+    subject.units
+      .filter((entry) => entry.type === 'unit'
+        && entry.achievementEligible
+        && entry.formalUnitNumber !== null
+        && entry.curriculumUnitKey
+        && source.units[entry.curriculumUnitKey])
       .map((entry) => ({
-      grade: Number(grade.id.slice('grade-'.length)),
-      term: term.id === 'term-1' ? 1 : 2,
-      unit: Number(entry.id.slice('unit-'.length)),
-      key: `${grade.id}/${term.id}/${subject.id}/${entry.id}`,
-      gradeId: grade.id,
-      termId: term.id,
-      subject: subject.id,
-      subjectTitle: subject.title,
-      title: entry.title,
-      curriculumUnitKey: entry.curriculumUnitKey,
-      status: entry.status,
-    } satisfies KnownCurriculumPosition));
-  })));
+        grade: Number(grade.id.slice('grade-'.length)),
+        term: term.id === 'term-1' ? 1 : 2,
+        unit: entry.formalUnitNumber!,
+        key: `${grade.id}/${term.id}/${subject.id}/${entry.id}`,
+        gradeId: grade.id,
+        termId: term.id,
+        subject: subject.id,
+        subjectTitle: subject.title,
+        title: entry.title,
+        curriculumUnitKey: entry.curriculumUnitKey,
+        status: entry.status,
+      } satisfies KnownCurriculumPosition))
+  ))));
+}
+
+export function getRegisteredLearningPositions(source: Curriculum = curriculum): LearningPosition[] {
+  const unique = new Map<string, LearningPosition>();
+  for (const entry of getRegisteredCurriculumPositions(source)) {
+    const { grade, term, unit } = entry;
+    unique.set(`${grade}-${term}-${unit}`, { grade, term, unit });
+  }
+  return [...unique.values()].sort((left, right) => left.grade - right.grade || left.term - right.term || left.unit - right.unit);
+}
+
+export function getKnownCurriculumPositions(source: Curriculum = curriculum): KnownCurriculumPosition[] {
+  return getRegisteredCurriculumPositions(source).filter((position) => position.status === 'active'
+    && position.curriculumUnitKey
+    && source.textbooks[source.units[position.curriculumUnitKey].textbookEditionId]?.verificationStatus === 'verified');
 }
 
 export function isBeforeLearningPosition(position: LearningPosition, startAt: LearningPosition): boolean {
@@ -45,16 +64,16 @@ export function isBeforeLearningPosition(position: LearningPosition, startAt: Le
   return position.unit < startAt.unit;
 }
 
-export function getAssumedCompletedSessionIds(startAt?: LearningPosition | null): string[] {
+export function getAssumedCompletedSessionIds(startAt?: LearningPosition | null, source: Curriculum = curriculum): string[] {
   if (!startAt) return [];
-  return getKnownCurriculumPositions()
-    .filter((position) => position.curriculumUnitKey && isBeforeLearningPosition(position, startAt))
+  return getRegisteredCurriculumPositions(source)
+    .filter((position) => isBeforeLearningPosition(position, startAt))
     .flatMap((position) => {
-      const unit = curriculum.units[position.curriculumUnitKey!];
-      return unit ? getSessionsForDifficulty(unit, 'basic').map((session) => session.id) : [];
+      const unit = source.units[position.curriculumUnitKey!];
+      return getSessionsForDifficulty(unit, 'basic').map((session) => session.id);
     });
 }
 
-export function getEffectiveCompletedSessionIds(completedSessionIds: string[], startAt?: LearningPosition | null): string[] {
-  return [...new Set([...completedSessionIds, ...getAssumedCompletedSessionIds(startAt)])];
+export function getEffectiveCompletedSessionIds(completedSessionIds: string[], startAt?: LearningPosition | null, source: Curriculum = curriculum): string[] {
+  return [...new Set([...completedSessionIds, ...getAssumedCompletedSessionIds(startAt, source)])];
 }

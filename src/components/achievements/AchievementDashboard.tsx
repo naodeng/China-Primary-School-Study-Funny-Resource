@@ -108,7 +108,7 @@ export default function AchievementDashboard({ completedSessionIds, learningStar
                             <li
                               className={`exploration-unit-node is-${unit.state}`}
                               key={unit.id}
-                              aria-label={`${subjectTitle}，${unit.title}，${unit.state === 'complete' ? '已点亮' : unit.state === 'available' ? `已完成${unit.completedSessions}场，共${unit.totalSessions}场` : unit.state === 'comingSoon' ? '正在准备' : '教材接入后开放'}`}
+                              aria-label={`${subjectTitle}，${unit.title}，${unit.state === 'complete' ? '已点亮' : unit.state === 'available' ? `已完成${unit.completedSessions}场，共${unit.totalSessions}场` : '正在准备'}`}
                             >
                               <span className="exploration-node-symbol" aria-hidden="true">
                                 {unit.state === 'complete' ? '✓' : unit.state === 'available' ? '✦' : '◇'}
@@ -119,9 +119,7 @@ export default function AchievementDashboard({ completedSessionIds, learningStar
                                   ? '已点亮'
                                   : unit.state === 'available'
                                     ? `${unit.completedSessions}/${unit.totalSessions} 场`
-                                    : unit.state === 'comingSoon'
-                                      ? '即将开放'
-                                      : '待探索'}
+                                    : '即将开放'}
                               </span>
                             </li>
                           ))}
@@ -138,7 +136,7 @@ export default function AchievementDashboard({ completedSessionIds, learningStar
             );
           })}
         </div>
-        <p className="exploration-map-note">当前开放课程：二年级上学期。其他星区先展示主题，后续会随人教版课程内容接入，按教材单元补齐节点。</p>
+        <p className="exploration-map-note">课程会在核实人教版教材后逐步开放；灰色节点仅作课程预告，暂不计入头衔。</p>
       </section>
 
       <div className="achievement-detail-heading">

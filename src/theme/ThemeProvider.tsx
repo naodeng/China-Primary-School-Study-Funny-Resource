@@ -1,7 +1,13 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import {
+  readThemePreference,
+  resolveThemePreference,
+  THEME_STORAGE_KEY,
+  writeThemePreference,
+} from './themePreferences';
+import type { ResolvedTheme, ThemePreference } from './themePreferences';
 
-export type ThemePreference = 'system' | 'light' | 'dark';
-export type ResolvedTheme = Exclude<ThemePreference, 'system'>;
+export type { ResolvedTheme, ThemePreference } from './themePreferences';
 
 interface ThemeContextValue {
   preference: ThemePreference;
@@ -9,30 +15,32 @@ interface ThemeContextValue {
   setPreference: (preference: ThemePreference) => void;
 }
 
-const STORAGE_KEY = 'china-study-theme-v1';
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function readPreference(): ThemePreference {
-  try {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (saved === 'light' || saved === 'dark' || saved === 'system') return saved;
-  } catch {
-    // Keep system preference when browser storage is unavailable.
-  }
-  return 'system';
+  return readThemePreference(() => window.localStorage.getItem(THEME_STORAGE_KEY));
 }
 
 function readSystemTheme(): ResolvedTheme {
-  return typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  try {
+    return typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  } catch {
+    return 'light';
+  }
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [preference, setPreferenceState] = useState<ThemePreference>(readPreference);
   const [systemTheme, setSystemTheme] = useState<ResolvedTheme>(readSystemTheme);
-  const resolvedTheme = preference === 'system' ? systemTheme : preference;
+  const resolvedTheme = resolveThemePreference(preference, systemTheme);
 
   useEffect(() => {
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    let media: MediaQueryList;
+    try {
+      media = window.matchMedia('(prefers-color-scheme: dark)');
+    } catch {
+      return undefined;
+    }
     const updateSystemTheme = (event: MediaQueryListEvent) => setSystemTheme(event.matches ? 'dark' : 'light');
     media.addEventListener('change', updateSystemTheme);
     return () => media.removeEventListener('change', updateSystemTheme);
@@ -47,11 +55,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   function setPreference(nextPreference: ThemePreference) {
     setPreferenceState(nextPreference);
-    try {
-      window.localStorage.setItem(STORAGE_KEY, nextPreference);
-    } catch {
-      // The selection still applies for the current page when storage is unavailable.
-    }
+    writeThemePreference(nextPreference, (value) => window.localStorage.setItem(THEME_STORAGE_KEY, value));
   }
 
   const value = useMemo(() => ({ preference, resolvedTheme, setPreference }), [preference, resolvedTheme]);

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import CourseCatalog from './CourseCatalog';
 import ThemeProvider from '../../theme/ThemeProvider';
 
-const progress = { schemaVersion: 2 as const, completedSessionIds: [], learningStart: null };
+const progress = { schemaVersion: 3 as const, completedSessionIds: [], learningStart: null };
 
 describe('CourseCatalog', () => {
   it('offersRegistryDrivenGradeAndTermControls', () => {

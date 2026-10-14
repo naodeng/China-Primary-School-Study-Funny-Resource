@@ -1,6 +1,6 @@
 import { curriculum } from '../content/curriculum';
 import { getSessionsForDifficulty } from '../content/sessionUtils';
-import type { CurriculumUnit, SubjectId } from '../content/types';
+import type { Curriculum, CurriculumUnit, LearningTask, SubjectId } from '../content/types';
 import { getKnownCurriculumPositions, isBeforeLearningPosition } from './position';
 import type { LearningPosition } from './position';
 
@@ -32,46 +32,58 @@ export const COSMIC_RANKS: CosmicRank[] = [
   { id: 'ultimate-explorer', title: '宇宙终极探索官', description: '累计探索八座知识岛', unitsRequired: 8, symbol: '🛸' },
 ];
 
-export function getLearningUnitProgress(completedSessionIds: string[], startAt?: LearningPosition | null): LearningUnitProgress[] {
-  return curriculum.grades.flatMap((grade) => grade.terms.flatMap((term) => term.subjects.flatMap((subject) => (
-    subject.units
-      .filter((entry) => entry.status === 'active' && entry.curriculumUnitKey)
-      .map((entry) => {
-        const key = entry.curriculumUnitKey!;
-        const unit = curriculum.units[key];
-        const position = {
-          grade: Number(grade.id.slice('grade-'.length)),
-          term: term.id === 'term-1' ? 1 : 2,
-          unit: Number(entry.id.slice('unit-'.length)),
-        } as const;
-        const assumedComplete = Boolean(startAt && isBeforeLearningPosition(position, startAt));
-        const basicSessions = getSessionsForDifficulty(unit, 'basic');
-        const sessionIds = assumedComplete
-          ? basicSessions.map((session) => session.id)
-          : basicSessions.filter((session) => completedSessionIds.includes(session.id)).map((session) => session.id);
-        const completed = basicSessions.length > 0 && sessionIds.length === basicSessions.length;
-        return {
-          key,
-          title: entry.title,
-          subject: subject.id,
-          subjectTitle: subject.title,
-          gradeTitle: grade.title,
-          termTitle: term.title,
-          unit,
-          completedSessionIds: sessionIds,
-          completed,
-        };
-      })
-  ))));
+export interface TaskProgress {
+  completedSessionCount: number;
+  totalSessionCount: number;
+  completed: boolean;
 }
 
-export function getCompletedUnitCount(completedSessionIds: string[], startAt?: LearningPosition | null): number {
-  return getKnownCurriculumPositions().filter((position) => {
+export function getTaskProgress(task: LearningTask, completedSessionIds: readonly string[]): TaskProgress {
+  const totalSessionCount = task.sessions.length;
+  const completedSessionCount = task.sessions.filter((session) => completedSessionIds.includes(session.id)).length;
+  return {
+    completedSessionCount,
+    totalSessionCount,
+    completed: totalSessionCount > 0 && completedSessionCount === totalSessionCount,
+  };
+}
+
+export function isCurriculumUnitComplete(unit: CurriculumUnit, completedSessionIds: readonly string[]): boolean {
+  if (unit.type !== 'unit' || unit.formalUnitNumber === null || !unit.achievementEligible) return false;
+  const basicTasks = unit.difficultyTracks.basic.tasks;
+  return basicTasks.length > 0 && basicTasks.every((task) => getTaskProgress(task, completedSessionIds).completed);
+}
+
+export function getLearningUnitProgress(completedSessionIds: string[], startAt?: LearningPosition | null, source: Curriculum = curriculum): LearningUnitProgress[] {
+  return getKnownCurriculumPositions(source).map((position) => {
+    const key = position.curriculumUnitKey!;
+    const unit = source.units[key];
+    const grade = source.grades.find((entry) => entry.id === position.gradeId)!;
+    const term = grade.terms.find((entry) => entry.id === position.termId)!;
+    const assumedComplete = Boolean(startAt && isBeforeLearningPosition(position, startAt));
+    const basicSessions = getSessionsForDifficulty(unit, 'basic');
+    const sessionIds = assumedComplete
+      ? basicSessions.map((session) => session.id)
+      : basicSessions.filter((session) => completedSessionIds.includes(session.id)).map((session) => session.id);
+    return {
+      key,
+      title: position.title,
+      subject: position.subject,
+      subjectTitle: position.subjectTitle,
+      gradeTitle: grade.title,
+      termTitle: term.title,
+      unit,
+      completedSessionIds: sessionIds,
+      completed: isCurriculumUnitComplete(unit, sessionIds),
+    };
+  });
+}
+
+export function getCompletedUnitCount(completedSessionIds: string[], startAt?: LearningPosition | null, source: Curriculum = curriculum): number {
+  return getKnownCurriculumPositions(source).filter((position) => {
     if (startAt && isBeforeLearningPosition(position, startAt)) return true;
-    if (!position.curriculumUnitKey) return false;
-    const unit = curriculum.units[position.curriculumUnitKey];
-    const basicSessions = unit ? getSessionsForDifficulty(unit, 'basic') : [];
-    return basicSessions.length > 0 && basicSessions.every((session) => completedSessionIds.includes(session.id));
+    const unit = source.units[position.curriculumUnitKey!];
+    return isCurriculumUnitComplete(unit, completedSessionIds);
   }).length;
 }
 
@@ -79,8 +91,8 @@ export function getCosmicRank(completedUnitCount: number): CosmicRank {
   return [...COSMIC_RANKS].reverse().find((rank) => completedUnitCount >= rank.unitsRequired) ?? COSMIC_RANKS[0];
 }
 
-export function getNewCosmicRank(previousIds: string[], nextIds: string[], startAt?: LearningPosition | null): CosmicRank | null {
-  const previousCount = getCompletedUnitCount(previousIds, startAt);
-  const nextCount = getCompletedUnitCount(nextIds, startAt);
+export function getNewCosmicRank(previousIds: string[], nextIds: string[], startAt?: LearningPosition | null, source: Curriculum = curriculum): CosmicRank | null {
+  const previousCount = getCompletedUnitCount(previousIds, startAt, source);
+  const nextCount = getCompletedUnitCount(nextIds, startAt, source);
   return COSMIC_RANKS.find((rank) => rank.unitsRequired > 0 && previousCount < rank.unitsRequired && nextCount >= rank.unitsRequired) ?? null;
 }

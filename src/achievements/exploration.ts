@@ -1,6 +1,7 @@
 import { curriculum } from '../content/curriculum';
 import { getSessionsForDifficulty } from '../content/sessionUtils';
-import { getKnownCurriculumPositions, isBeforeLearningPosition } from './position';
+import type { Curriculum } from '../content/types';
+import { getRegisteredCurriculumPositions } from './position';
 import type { LearningPosition } from './position';
 import { getLearningUnitProgress } from './progress';
 
@@ -8,7 +9,7 @@ export interface ExplorationUnitNode {
   id: string;
   title: string;
   subjectTitle: string;
-  state: 'complete' | 'available' | 'comingSoon' | 'planned';
+  state: 'complete' | 'available' | 'comingSoon';
   completedSessions: number;
   totalSessions: number;
   grade: number;
@@ -51,32 +52,23 @@ const ZONE_DESIGNS = [
   { grade: 6, term: 2, title: '宇宙终点', symbol: '🛸', visualStyle: '终极荣耀、黄金圣殿', unitArtifact: '神级文明进化阶梯' },
 ] as const;
 
-export function getExplorationZones(completedSessionIds: string[], startAt?: LearningPosition | null): ExplorationZone[] {
-  const progress = getLearningUnitProgress(completedSessionIds, startAt);
-  const knownPositions = getKnownCurriculumPositions();
+export function getExplorationZones(completedSessionIds: string[], startAt?: LearningPosition | null, source: Curriculum = curriculum): ExplorationZone[] {
+  const progress = getLearningUnitProgress(completedSessionIds, startAt, source);
+  const registeredPositions = getRegisteredCurriculumPositions(source);
 
   return ZONE_DESIGNS.map((design, index) => {
     const gradeId = `grade-${design.grade}`;
     const termId = `term-${design.term}`;
-    const grade = curriculum.grades.find((entry) => entry.id === gradeId);
+    const grade = source.grades.find((entry) => entry.id === gradeId);
     const term = grade?.terms.find((entry) => entry.id === termId);
     const gradeTitle = grade?.title ?? `${design.grade}年级`;
     const termTitle = term?.title ?? (design.term === 1 ? '上学期' : '下学期');
     const isStartZone = startAt?.grade === design.grade && startAt.term === design.term;
-    const units = knownPositions
+    const units = registeredPositions
       .filter((position) => position.grade === design.grade && position.term === design.term)
       .map((position) => {
-        const unitProgress = position.curriculumUnitKey
-          ? progress.find((candidate) => candidate.key === position.curriculumUnitKey)
-          : undefined;
-        const completed = (startAt && isBeforeLearningPosition(position, startAt)) || unitProgress?.completed;
-        const state = completed
-          ? 'complete'
-          : position.status === 'active' && unitProgress
-            ? 'available'
-            : position.status === 'comingSoon'
-              ? 'comingSoon'
-              : 'planned';
+        const unitProgress = progress.find((candidate) => candidate.key === position.curriculumUnitKey);
+        const state = unitProgress ? (unitProgress.completed ? 'complete' : 'available') : 'comingSoon';
         return {
           id: `${position.subject}-${position.gradeId}-${position.termId}-unit-${String(position.unit).padStart(2, '0')}`,
           title: position.title,
