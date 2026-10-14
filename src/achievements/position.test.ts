@@ -40,7 +40,7 @@ describe('curriculum positions', () => {
       { id: 'unit-93', title: '无课程内容', status: 'comingSoon', type: 'unit', formalUnitNumber: 93, achievementEligible: true, textbookEditionId: 'grade-2/term-1/chinese', curriculumUnitKey: 'missing/unit' },
     );
 
-    expect(getRegisteredCurriculumPositions(source)).toHaveLength(41);
+    expect(getRegisteredCurriculumPositions(source)).toHaveLength(47);
   });
 
   it('comparesGradeTermAndUnitOrdering', () => {

@@ -126,14 +126,14 @@ export function makeTask(
     objective,
     companionId,
     questions: q8([
-      choose(`单词 “${first.word}” 的意思是什么？`, [first.meaning, second.meaning, third.meaning], 0, '先慢慢读一读单词开头和结尾的字母。', `“${first.word}”表示“${first.meaning}”。`),
+      choose(`单词或词组 “${first.word}” 的意思是什么？`, [first.meaning, second.meaning, third.meaning], 0, '先读一读英文词卡，再回想它的中文意思。', `“${first.word}”表示“${first.meaning}”。`),
       choose(`哪个英文单词表示“${second.meaning}”？`, [first.word, second.word, third.word], 1, '在词卡中找到对应的中文意思。', `“${second.meaning}”对应单词 “${second.word}”。`),
       pair('把英文词卡和中文意思连起来。', profile.words.map(({ word, meaning }) => [word, meaning] as const), '先认出熟悉的词，再逐个配对。', '对照词义检查每一组是否匹配。'),
       choose(`“${fourth.word}”表示什么？`, [first.meaning, fourth.meaning, second.meaning], 1, '看看这个词是否出现在本次的目标词卡里。', `“${fourth.word}”表示“${fourth.meaning}”。`),
       choose(profile.phraseQuestions[0].prompt, profile.phraseQuestions[0].options, profile.phraseQuestions[0].correctOptionIndex, profile.phraseQuestions[0].hint, profile.phraseQuestions[0].explanation),
       choose(profile.phraseQuestions[1].prompt, profile.phraseQuestions[1].options, profile.phraseQuestions[1].correctOptionIndex, profile.phraseQuestions[1].hint, profile.phraseQuestions[1].explanation),
-      sortInto('把词卡放进合适的词语小队。', profile.categories, profile.categorizedWords, '看看每个词表示人物、地点、事物，还是描述。', '按词义分类，再读一遍每个词确认。'),
-      arrange(profile.orderedSentence.prompt, profile.orderedSentence.items, profile.orderedSentence.correctOrderIndices, '先找大写开头的词，再找结尾标点或最后一个词。', '把词卡排成自然、完整的英文表达。'),
+      sortInto('把词卡放进合适的词语小队。', profile.categories, profile.categorizedWords, '先读懂每张词卡，再按小队名称分类。', '逐项对照词义完成分类，再检查一次。'),
+      arrange(profile.orderedSentence.prompt, profile.orderedSentence.items, profile.orderedSentence.correctOrderIndices, '先找句子的开头，再看结尾标点或末尾的词。', '把词卡排成自然、完整的英文表达。'),
     ]),
   };
 }

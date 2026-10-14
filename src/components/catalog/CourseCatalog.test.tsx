@@ -54,4 +54,17 @@ describe('CourseCatalog', () => {
     expect(screen.getAllByText('复习站')).toHaveLength(2);
     expect(screen.queryByText('UNIT w-1')).not.toBeInTheDocument();
   });
+
+  it('showsSecondTermEnglishWithItsSchoolOfferingNotice', async () => {
+    const user = userEvent.setup();
+    render(<ThemeProvider><CourseCatalog progress={progress} onNavigate={vi.fn()} onApplyLearningStart={vi.fn()} /></ThemeProvider>);
+
+    await user.selectOptions(screen.getByRole('combobox', { name: '学期' }), 'term-2');
+    await user.click(screen.getByRole('button', { name: '英语' }));
+
+    expect(screen.getByText('英语预备级是否属于学校本学期实际开设课程，请以学校安排为准。')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(8);
+    expect(screen.getAllByText('复习站')).toHaveLength(2);
+    expect(screen.getByText('第一单元 · Playtime')).toBeInTheDocument();
+  });
 });

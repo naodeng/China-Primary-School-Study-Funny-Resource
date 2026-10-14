@@ -122,6 +122,7 @@ export const textbooks: Record<string, TextbookEdition> = {
     fallbackReason: reasons.english,
     checkedAt,
     tapxCommit: TAPX_TEXTBOOK_COMMIT,
-    verificationStatus: 'pending',
+    verificationStatus: 'verified',
+    schoolOfferingStatus: 'unconfirmed',
   },
 };

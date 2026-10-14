@@ -65,6 +65,8 @@ describe('router', () => {
     expect(resolveRoute('/grade-2/term-2/math/unit-01').kind).toBe('unit');
     expect(resolveRoute('/grade-2/term-2/math/unit-10').kind).toBe('unit');
     expect(resolveRoute('/grade-2/term-2/math/integrated-practice-01').kind).toBe('unit');
+    expect(resolveRoute('/grade-2/term-2/english/unit-01').kind).toBe('unit');
+    expect(resolveRoute('/grade-2/term-2/english/review-01').kind).toBe('unit');
   });
 
   it('doesNotOpenAnActiveCatalogEntryWithAnUnverifiedEdition', () => {

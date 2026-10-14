@@ -137,10 +137,10 @@
 
 **文件：** src/content/grade-2/term-2/english/ 下全部语言单元、复习和实践入口；修改 registry、数据测试和教材清单。
 
-- [ ] 先写 listsAllVerifiedTerm2EnglishEntries 并断言 registry 与下册清单一一对应；运行确认缺项时失败。
-- [ ] 人教社公开新体系说明未提供本册完整学生书目录，按用户授权依据 TapX 固定快照的一年级起点旧学生书录入；登记 6 个 Unit 与 2 个 Revision，标注回退版及校内开课状态待确认。
-- [ ] 满足任务、场次和八题规则，复核英文内容。下册测试同样校验 Revision/实践计数及全部题目引用。
-- [ ] 运行全量课程 validator 和英语数据测试后提交。
+- [x] 先写 listsAllVerifiedTerm2EnglishEntries 并断言 registry 与下册清单一一对应；运行确认缺项时失败。
+- [x] 人教社公开新体系说明未提供本册完整学生书目录，按用户授权依据 TapX 固定快照的一年级起点旧学生书录入；登记 6 个 Unit 与 2 个 Revision，标注回退版及校内开课状态待确认。
+- [x] 满足任务、场次和八题规则，复核英文内容。下册测试同样校验 Revision/实践计数及全部题目引用。
+- [x] 运行全量课程 validator 和英语数据测试后提交。
 
 ### Task 11：实现判题、配对打散和随机鼓励反馈
 
