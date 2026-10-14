@@ -14,7 +14,7 @@
 
 - 页面与交互：`src/components/`；路由：`src/app/`；进度存储：`src/storage/`；课程类型和索引：`src/content/`。
 - 新课程按 `src/content/年级/学期/学科/单元/` 存放，先更新 `src/content/curriculum.ts` 和类型，再实现必要的活动。
-- 课程知识以人教版教材为准，可用 `TapXWorld/ChinaTextbook` 核对目录；不要复制或托管教材 PDF、扫描页、插图或大段受版权保护的课文。练习题、讲解和配图应为原创。
+- 课程知识优先以可完整核实的人教社公开最新版为准；找不到完整新版学生书或目录时，按用户裁定使用 `TapXWorld/ChinaTextbook` 固定快照，并在课程元数据标明 `tapx-fallback`、精确来源和已知差异。一个册次不得混用版次，TapX 回退版不得称为最新版。不要复制或托管教材 PDF、扫描页、插图或大段受版权保护的课文；练习题、讲解和配图应为原创。
 - 新增年级或学期时，确保课程 ID（尤其场次 ID）全局唯一；学习星图和宇宙头衔按当前课程目录中的完整单元累计，不因切换学期而重置。
 - 12 个星区主题和教材单元映射维护在 `src/achievements/exploration.ts`、`src/achievements/position.ts`；只根据已核实的人教版目录登记节点，不推测未来学期的单元数量。宇宙头衔门槛维护在 `src/achievements/progress.ts`；正常学习时，单元全部场次完成后才算点亮。
 - `src/storage/progress.ts` 同时保存完成场次与可选学习起点。学习起点之前已登记单元按完成计算，起点及之后按真实场次进度计算；设置新起点会替换其后的本地进度，并需在界面上明确说明。
