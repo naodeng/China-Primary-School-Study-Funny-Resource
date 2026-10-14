@@ -6,6 +6,7 @@ export type CatalogEntryType = 'unit' | 'review' | 'integrated-practice';
 export type Difficulty = 'basic' | 'advanced' | 'high';
 export type TextbookSourceKind = 'pep-latest' | 'tapx-fallback';
 export type TextbookVerificationStatus = 'pending' | 'verified';
+export type SchoolOfferingStatus = 'confirmed' | 'unconfirmed';
 export type CurriculumUnitKey = string;
 export type CompanionId = 'companion-01' | 'companion-02' | 'companion-03' | 'companion-04';
 
@@ -25,6 +26,7 @@ export interface TextbookEdition {
   checkedAt: string;
   tapxCommit: string | null;
   verificationStatus: TextbookVerificationStatus;
+  schoolOfferingStatus?: SchoolOfferingStatus;
 }
 
 export interface ActivityBase {

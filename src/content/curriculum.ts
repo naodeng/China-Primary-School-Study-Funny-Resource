@@ -35,6 +35,14 @@ import { unit as mathTerm2Unit08 } from './grade-2/term-2/math/unit-08';
 import { unit as mathTerm2Unit09 } from './grade-2/term-2/math/unit-09';
 import { unit as mathTerm2Unit10 } from './grade-2/term-2/math/unit-10';
 import { unit as mathTerm2IntegratedPractice01 } from './grade-2/term-2/math/integrated-practice-01';
+import { unit as englishTerm1Unit01 } from './grade-2/term-1/english/unit-01';
+import { unit as englishTerm1Unit02 } from './grade-2/term-1/english/unit-02';
+import { unit as englishTerm1Unit03 } from './grade-2/term-1/english/unit-03';
+import { unit as englishTerm1Review01 } from './grade-2/term-1/english/review-01';
+import { unit as englishTerm1Unit04 } from './grade-2/term-1/english/unit-04';
+import { unit as englishTerm1Unit05 } from './grade-2/term-1/english/unit-05';
+import { unit as englishTerm1Unit06 } from './grade-2/term-1/english/unit-06';
+import { unit as englishTerm1Review02 } from './grade-2/term-1/english/review-02';
 import { textbooks } from './textbooks';
 import type { Curriculum } from './types';
 
@@ -77,6 +85,20 @@ export const curriculum: Curriculum = {
                 { id: 'unit-08', title: mathUnit08.title, status: 'active', type: 'unit', formalUnitNumber: 8, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit08.id },
                 { id: 'unit-09', title: mathUnit09.title, status: 'active', type: 'unit', formalUnitNumber: 9, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit09.id },
                 { id: 'integrated-practice-01', title: mathIntegratedPractice01.title, status: 'active', type: 'integrated-practice', formalUnitNumber: null, achievementEligible: false, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathIntegratedPractice01.id },
+              ],
+            },
+            {
+              id: 'english',
+              title: '英语',
+              units: [
+                { id: 'unit-01', title: englishTerm1Unit01.title, status: 'active', type: 'unit', formalUnitNumber: 1, achievementEligible: true, textbookEditionId: 'grade-2/term-1/english', curriculumUnitKey: englishTerm1Unit01.id },
+                { id: 'unit-02', title: englishTerm1Unit02.title, status: 'active', type: 'unit', formalUnitNumber: 2, achievementEligible: true, textbookEditionId: 'grade-2/term-1/english', curriculumUnitKey: englishTerm1Unit02.id },
+                { id: 'unit-03', title: englishTerm1Unit03.title, status: 'active', type: 'unit', formalUnitNumber: 3, achievementEligible: true, textbookEditionId: 'grade-2/term-1/english', curriculumUnitKey: englishTerm1Unit03.id },
+                { id: 'review-01', title: englishTerm1Review01.title, status: 'active', type: 'review', formalUnitNumber: null, achievementEligible: false, textbookEditionId: 'grade-2/term-1/english', curriculumUnitKey: englishTerm1Review01.id },
+                { id: 'unit-04', title: englishTerm1Unit04.title, status: 'active', type: 'unit', formalUnitNumber: 4, achievementEligible: true, textbookEditionId: 'grade-2/term-1/english', curriculumUnitKey: englishTerm1Unit04.id },
+                { id: 'unit-05', title: englishTerm1Unit05.title, status: 'active', type: 'unit', formalUnitNumber: 5, achievementEligible: true, textbookEditionId: 'grade-2/term-1/english', curriculumUnitKey: englishTerm1Unit05.id },
+                { id: 'unit-06', title: englishTerm1Unit06.title, status: 'active', type: 'unit', formalUnitNumber: 6, achievementEligible: true, textbookEditionId: 'grade-2/term-1/english', curriculumUnitKey: englishTerm1Unit06.id },
+                { id: 'review-02', title: englishTerm1Review02.title, status: 'active', type: 'review', formalUnitNumber: null, achievementEligible: false, textbookEditionId: 'grade-2/term-1/english', curriculumUnitKey: englishTerm1Review02.id },
               ],
             },
           ],
@@ -159,5 +181,13 @@ export const curriculum: Curriculum = {
     'grade-2/term-2/math/unit-09': mathTerm2Unit09,
     'grade-2/term-2/math/unit-10': mathTerm2Unit10,
     'grade-2/term-2/math/integrated-practice-01': mathTerm2IntegratedPractice01,
+    'grade-2/term-1/english/unit-01': englishTerm1Unit01,
+    'grade-2/term-1/english/unit-02': englishTerm1Unit02,
+    'grade-2/term-1/english/unit-03': englishTerm1Unit03,
+    'grade-2/term-1/english/review-01': englishTerm1Review01,
+    'grade-2/term-1/english/unit-04': englishTerm1Unit04,
+    'grade-2/term-1/english/unit-05': englishTerm1Unit05,
+    'grade-2/term-1/english/unit-06': englishTerm1Unit06,
+    'grade-2/term-1/english/review-02': englishTerm1Review02,
   },
 };

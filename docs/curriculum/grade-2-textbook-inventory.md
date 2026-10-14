@@ -21,7 +21,7 @@
 
 ## 目录映射
 
-**实施状态（2026-10-14）：** 语文上下册均已依据本表所列 TapXWorld 固定 PDF 的目录页完成 U1–U8 映射，并为十六个单元录入原创任务；两册标记为 `verified` 仅表示课程与各自选定的回退快照已完成核对，不表示已对齐人教社 2025 修订版。其余四册仍为 `pending`，不能开放或计入成就。
+**实施状态（2026-10-14）：** 语文上下册、数学上下册和英语上册均已依据本表所列 TapXWorld 固定 PDF 的目录完成核对并录入原创任务；对应五册标记为 `verified` 仅表示课程与各自选定的回退快照已完成核对，不表示已对齐人教社公开新版。英语上册含 6 个 Unit 和 2 个 Revision，校内是否开课仍待确认；英语下册尚未完成录入，保持 `pending`，不能开放。
 
 目录名称作为定位信息使用；课程题目、讲解和反馈全部原创，不复刻课文、插图、歌曲或整段教材语言。编号总复习属于有编号正式单元；英语 Revision 与数学未编号综合实践单独登记，不计入正式单元成就数。
 
@@ -58,6 +58,6 @@
 
 - 课程知识范围按本清单实际选定的单册教材核对；教学题目、提示、解释、反馈和视觉素材原创，不复制教材扫描页、插图或大段原文。
 - 每册课程完成来源、目录、数据结构和内容核对后，才能标记 `verificationStatus: verified` 并开放；否则保持 `pending`、`comingSoon`，不计成就。
-- `TextbookEdition` 记录 `sourceKind`、`sourceUrl`、`latestPepEvidenceUrl`、`fallbackReason`、固定提交号和有证据的 edition/printing/isbn。当前六册的 `sourceKind` 均为 `tapx-fallback`。
+- `TextbookEdition` 记录 `sourceKind`、`sourceUrl`、`latestPepEvidenceUrl`、`fallbackReason`、固定提交号和有证据的 edition/printing/isbn。`schoolOfferingStatus` 单独记录学校是否确认开课；英语上册当前为 `unconfirmed`。当前六册的 `sourceKind` 均为 `tapx-fallback`。
 - 英语按产品范围录入；没有学校课表材料时，不宣称学校实际开设英语。
 - 目录正式编号单元计入宇宙头衔；未编号英语 Revision 和数学实践可完成并单独显示，不计入头衔单元数。

@@ -14,6 +14,7 @@ describe('CourseCatalog', () => {
     expect(screen.getByRole('combobox', { name: '学期' })).toHaveValue('term-1');
     expect(screen.getByRole('button', { name: '语文' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '数学' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '英语' })).toBeInTheDocument();
   });
 
   it('opensVerifiedChineseAndMathUnits', async () => {
@@ -40,5 +41,17 @@ describe('CourseCatalog', () => {
     expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(11);
     expect(screen.getByText('第十单元 · 总复习')).toBeInTheDocument();
     expect(screen.getByText('综合实践 · 小小设计师')).toBeInTheDocument();
+  });
+
+  it('showsTheSchoolOfferingNoticeForPreparatoryEnglish', async () => {
+    const user = userEvent.setup();
+    render(<ThemeProvider><CourseCatalog progress={progress} onNavigate={vi.fn()} onApplyLearningStart={vi.fn()} /></ThemeProvider>);
+
+    await user.click(screen.getByRole('button', { name: '英语' }));
+
+    expect(screen.getByText('英语预备级是否属于学校本学期实际开设课程，请以学校安排为准。')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(8);
+    expect(screen.getAllByText('复习站')).toHaveLength(2);
+    expect(screen.queryByText('UNIT w-1')).not.toBeInTheDocument();
   });
 });

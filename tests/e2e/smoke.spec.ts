@@ -4,6 +4,12 @@ test('loads catalog and refreshes a nested unit', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: '星岛学习站' })).toBeVisible();
 
+  await page.goto('/grade-2/term-1/english/unit-01');
+  await expect(page.getByRole('heading', { name: '第一单元 · My Family' })).toBeVisible();
+
+  await page.goto('/grade-2/term-1/english/review-01');
+  await expect(page.getByRole('heading', { name: '复习一 · Units 1–3' })).toBeVisible();
+
   await page.goto('/grade-2/term-1/math/unit-01');
   await expect(page.getByRole('heading', { name: '第一单元 · 长度单位' })).toBeVisible();
 

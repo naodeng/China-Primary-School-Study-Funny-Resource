@@ -26,6 +26,9 @@ export default function CourseCatalog({ progress, onNavigate, onApplyLearningSta
   const grade = curriculum.grades.find((entry) => entry.id === gradeId) ?? curriculum.grades[0];
   const term = grade?.terms.find((entry) => entry.id === termId) ?? grade?.terms[0];
   const subject = term?.subjects.find((entry) => entry.id === subjectId) ?? term?.subjects[0];
+  const subjectTextbook = subject?.units[0]
+    ? curriculum.textbooks[subject.units[0].textbookEditionId]
+    : undefined;
   const guideId = subject?.id === 'chinese' ? 'companion-02' : subject?.id === 'english' ? 'companion-03' : 'companion-01';
 
   if (!grade || !term || !subject) {
@@ -129,6 +132,11 @@ export default function CourseCatalog({ progress, onNavigate, onApplyLearningSta
             </label>
             <span className="catalog-subject-name">{subject.title}</span>
           </div>
+          {subject.id === 'english' && subjectTextbook?.schoolOfferingStatus === 'unconfirmed' ? (
+            <p className="catalog-source-disclosure" role="note">
+              英语预备级是否属于学校本学期实际开设课程，请以学校安排为准。
+            </p>
+          ) : null}
           <div className="unit-grid">
             {subject.units.map((unit, index) => {
               const active = unit.status === 'active'
@@ -142,7 +150,11 @@ export default function CourseCatalog({ progress, onNavigate, onApplyLearningSta
                   aria-label={`${unit.title}${active ? '' : '，筹备中'}`}
                 >
                   <div className="unit-card-topline">
-                    <span className="unit-number">UNIT {unit.id.slice(-2)}</span>
+                    <span className="unit-number">
+                      {unit.formalUnitNumber !== null
+                        ? `UNIT ${String(unit.formalUnitNumber).padStart(2, '0')}`
+                        : unit.type === 'review' ? '复习站' : '实践站'}
+                    </span>
                     <span className={`unit-status ${active ? 'is-active' : 'is-soon'}`}>{active ? '可以出发' : '筹备中'}</span>
                   </div>
                   <h3>{unit.title}</h3>

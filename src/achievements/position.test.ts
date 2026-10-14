@@ -11,6 +11,7 @@ describe('curriculum positions', () => {
     ]);
     expect(getRegisteredCurriculumPositions().filter((position) => position.subject === 'chinese').every((position) => position.status === 'active')).toBe(true);
     expect(getRegisteredCurriculumPositions().filter((position) => position.subject === 'math').every((position) => position.status === 'active')).toBe(true);
+    expect(getRegisteredCurriculumPositions().filter((position) => position.subject === 'english').every((position) => position.status === 'active')).toBe(true);
   });
 
   it('mapsSecondTermPositionsWhenTheyAreRegistered', () => {
@@ -24,6 +25,7 @@ describe('curriculum positions', () => {
     expect(getRegisteredCurriculumPositions(source).filter((position) => position.term === 2).map((position) => position.unit)).toEqual([
       1, 2, 3, 4, 5, 6, 7, 8,
       1, 2, 3, 4, 5, 6, 7, 8, 9,
+      1, 2, 3, 4, 5, 6,
     ]);
     expect(getRegisteredLearningPositions(source)).toContainEqual({ grade: 2, term: 2, unit: 1 });
   });
@@ -38,7 +40,7 @@ describe('curriculum positions', () => {
       { id: 'unit-93', title: '无课程内容', status: 'comingSoon', type: 'unit', formalUnitNumber: 93, achievementEligible: true, textbookEditionId: 'grade-2/term-1/chinese', curriculumUnitKey: 'missing/unit' },
     );
 
-    expect(getRegisteredCurriculumPositions(source)).toHaveLength(35);
+    expect(getRegisteredCurriculumPositions(source)).toHaveLength(41);
   });
 
   it('comparesGradeTermAndUnitOrdering', () => {
@@ -55,6 +57,7 @@ describe('curriculum positions', () => {
     const earlier = [
       ...getSessionsForDifficulty(curriculum.units['grade-2/term-1/chinese/unit-01'], 'basic'),
       ...getSessionsForDifficulty(curriculum.units['grade-2/term-1/math/unit-01'], 'basic'),
+      ...getSessionsForDifficulty(curriculum.units['grade-2/term-1/english/unit-01'], 'basic'),
     ].map((session) => session.id);
     const effective = getEffectiveCompletedSessionIds([earlier[0], 'manual-session'], start);
 

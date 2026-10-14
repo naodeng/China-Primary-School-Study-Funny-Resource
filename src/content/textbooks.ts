@@ -17,7 +17,7 @@ function tapxPdfUrl(path: string): string {
 const reasons = {
   chinese: '人教社公开了 2025 年语文修订说明，但未找到本册完整新版学生用书和目录；按用户授权采用学校使用的 TapXWorld 固定快照。',
   math: '人教社公开了新课标数学教材资源信息，但未找到本册完整新版学生用书和目录；按用户授权采用学校使用的 TapXWorld 固定快照。',
-  english: '人教社公开说明设有一、二年级英语预备级，但未找到本册完整新版学生用书和目录；按用户授权采用 TapXWorld 固定快照。',
+  english: '人教社公开说明设有一、二年级英语预备级，但未找到本册完整新版学生用书和目录；按用户授权采用 TapXWorld 固定快照。学校是否开设尚未确认。',
 };
 
 export const textbooks: Record<string, TextbookEdition> = {
@@ -104,7 +104,8 @@ export const textbooks: Record<string, TextbookEdition> = {
     fallbackReason: reasons.english,
     checkedAt,
     tapxCommit: TAPX_TEXTBOOK_COMMIT,
-    verificationStatus: 'pending',
+    verificationStatus: 'verified',
+    schoolOfferingStatus: 'unconfirmed',
   },
   'grade-2/term-2/english': {
     id: 'grade-2/term-2/english',
