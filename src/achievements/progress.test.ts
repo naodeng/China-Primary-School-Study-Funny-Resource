@@ -87,17 +87,18 @@ describe('achievement progress', () => {
   it('mapsOnlyVerifiedCurriculum', () => {
     const source = createVerifiedCurriculum(1);
     source.textbooks['grade-2/term-1/chinese'].verificationStatus = 'pending';
+    source.textbooks['grade-2/term-1/math'].verificationStatus = 'pending';
     expect(getKnownCurriculumPositions(source)).toEqual([]);
     source.textbooks['grade-2/term-1/chinese'].verificationStatus = 'verified';
     expect(getKnownCurriculumPositions(source).map((position) => position.curriculumUnitKey)).toEqual([
       'grade-2/term-1/chinese/unit-01',
     ]);
     expect(getRegisteredLearningPositions(source)).toEqual([
-      { grade: 2, term: 1, unit: 1 },
-      { grade: 2, term: 1, unit: 2 },
+      ...Array.from({ length: 9 }, (_, index) => ({ grade: 2, term: 1 as const, unit: index + 1 })),
     ]);
     expect(getKnownCurriculumPositions().map((position) => position.curriculumUnitKey)).toEqual([
       ...Array.from({ length: 8 }, (_, index) => `grade-2/term-1/chinese/unit-${String(index + 1).padStart(2, '0')}`),
+      ...Array.from({ length: 9 }, (_, index) => `grade-2/term-1/math/unit-${String(index + 1).padStart(2, '0')}`),
       ...Array.from({ length: 8 }, (_, index) => `grade-2/term-2/chinese/unit-${String(index + 1).padStart(2, '0')}`),
     ]);
   });
@@ -131,9 +132,9 @@ describe('achievement progress', () => {
     const source = createVerifiedCurriculum(1);
     const assumedProgress = getLearningUnitProgress([], { grade: 2, term: 1, unit: 2 }, source);
 
-    expect(assumedProgress).toHaveLength(1);
+    expect(assumedProgress).toHaveLength(10);
     expect(assumedProgress[0].completed).toBe(true);
-    expect(getCompletedUnitCount([], { grade: 2, term: 1, unit: 2 }, source)).toBe(1);
+    expect(getCompletedUnitCount([], { grade: 2, term: 1, unit: 2 }, source)).toBe(2);
   });
 
   it('reportsOnlyActuallyCompletedSessionsBeforeTheLearningStart', () => {

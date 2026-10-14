@@ -16,6 +16,14 @@ import { unit as chineseTerm2Unit07 } from './grade-2/term-2/chinese/unit-07';
 import { unit as chineseTerm2Unit08 } from './grade-2/term-2/chinese/unit-08';
 import { unit as mathUnit01 } from './grade-2/term-1/math/unit-01';
 import { unit as mathUnit02 } from './grade-2/term-1/math/unit-02';
+import { unit as mathUnit03 } from './grade-2/term-1/math/unit-03';
+import { unit as mathUnit04 } from './grade-2/term-1/math/unit-04';
+import { unit as mathUnit05 } from './grade-2/term-1/math/unit-05';
+import { unit as mathUnit06 } from './grade-2/term-1/math/unit-06';
+import { unit as mathUnit07 } from './grade-2/term-1/math/unit-07';
+import { unit as mathUnit08 } from './grade-2/term-1/math/unit-08';
+import { unit as mathUnit09 } from './grade-2/term-1/math/unit-09';
+import { unit as mathIntegratedPractice01 } from './grade-2/term-1/math/integrated-practice-01';
 import { textbooks } from './textbooks';
 import type { Curriculum } from './types';
 
@@ -48,26 +56,16 @@ export const curriculum: Curriculum = {
               id: 'math',
               title: '数学',
               units: [
-                {
-                  id: 'unit-01',
-                  title: '第一单元 · 长度单位',
-                  status: 'comingSoon',
-                  type: 'unit',
-                  formalUnitNumber: 1,
-                  achievementEligible: true,
-                  textbookEditionId: 'grade-2/term-1/math',
-                  curriculumUnitKey: 'grade-2/term-1/math/unit-01',
-                },
-                {
-                  id: 'unit-02',
-                  title: '第二单元 · 100以内的加法和减法（二）',
-                  status: 'comingSoon',
-                  type: 'unit',
-                  formalUnitNumber: 2,
-                  achievementEligible: true,
-                  textbookEditionId: 'grade-2/term-1/math',
-                  curriculumUnitKey: 'grade-2/term-1/math/unit-02',
-                },
+                { id: 'unit-01', title: mathUnit01.title, status: 'active', type: 'unit', formalUnitNumber: 1, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit01.id },
+                { id: 'unit-02', title: mathUnit02.title, status: 'active', type: 'unit', formalUnitNumber: 2, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit02.id },
+                { id: 'unit-03', title: mathUnit03.title, status: 'active', type: 'unit', formalUnitNumber: 3, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit03.id },
+                { id: 'unit-04', title: mathUnit04.title, status: 'active', type: 'unit', formalUnitNumber: 4, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit04.id },
+                { id: 'unit-05', title: mathUnit05.title, status: 'active', type: 'unit', formalUnitNumber: 5, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit05.id },
+                { id: 'unit-06', title: mathUnit06.title, status: 'active', type: 'unit', formalUnitNumber: 6, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit06.id },
+                { id: 'unit-07', title: mathUnit07.title, status: 'active', type: 'unit', formalUnitNumber: 7, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit07.id },
+                { id: 'unit-08', title: mathUnit08.title, status: 'active', type: 'unit', formalUnitNumber: 8, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit08.id },
+                { id: 'unit-09', title: mathUnit09.title, status: 'active', type: 'unit', formalUnitNumber: 9, achievementEligible: true, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathUnit09.id },
+                { id: 'integrated-practice-01', title: mathIntegratedPractice01.title, status: 'active', type: 'integrated-practice', formalUnitNumber: null, achievementEligible: false, textbookEditionId: 'grade-2/term-1/math', curriculumUnitKey: mathIntegratedPractice01.id },
               ],
             },
           ],
@@ -114,5 +112,13 @@ export const curriculum: Curriculum = {
     'grade-2/term-2/chinese/unit-08': chineseTerm2Unit08,
     'grade-2/term-1/math/unit-01': mathUnit01,
     'grade-2/term-1/math/unit-02': mathUnit02,
+    'grade-2/term-1/math/unit-03': mathUnit03,
+    'grade-2/term-1/math/unit-04': mathUnit04,
+    'grade-2/term-1/math/unit-05': mathUnit05,
+    'grade-2/term-1/math/unit-06': mathUnit06,
+    'grade-2/term-1/math/unit-07': mathUnit07,
+    'grade-2/term-1/math/unit-08': mathUnit08,
+    'grade-2/term-1/math/unit-09': mathUnit09,
+    'grade-2/term-1/math/integrated-practice-01': mathIntegratedPractice01,
   },
 };

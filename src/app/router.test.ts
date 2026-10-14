@@ -55,7 +55,9 @@ describe('router', () => {
   });
 
   it('distinguishesComingSoonFromUnknownCourses', () => {
-    expect(resolveRoute('/grade-2/term-1/math/unit-01').kind).toBe('comingSoon');
+    expect(resolveRoute('/grade-2/term-1/math/unit-01').kind).toBe('unit');
+    expect(resolveRoute('/grade-2/term-1/math/unit-99').kind).toBe('notFound');
+    expect(resolveRoute('/grade-2/term-1/math/integrated-practice-01').kind).toBe('unit');
     expect(resolveRoute('/grade-2/term-2/chinese/unit-01').kind).toBe('unit');
     expect(resolveRoute('/grade-2/term-2/chinese/unit-99').kind).toBe('notFound');
   });
@@ -64,6 +66,7 @@ describe('router', () => {
     const copy = structuredClone(curriculum);
     const entry = copy.grades[0].terms[0].subjects.find((subject) => subject.id === 'math')!.units[0];
     entry.status = 'active';
+    copy.textbooks[entry.textbookEditionId].verificationStatus = 'pending';
 
     expect(resolveRoute('/grade-2/term-1/math/unit-01', copy).kind).toBe('comingSoon');
   });

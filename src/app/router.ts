@@ -81,7 +81,7 @@ export function resolveRoute(pathname: string, instance: Curriculum = curriculum
   }
 
   const [gradeId, termId, subjectId, unitId] = segments;
-  if (!/^grade-\d+$/.test(gradeId) || !/^term-[12]$/.test(termId) || !/^unit-\d{2}$/.test(unitId)) {
+  if (!/^grade-\d+$/.test(gradeId) || !/^term-\d+$/.test(termId) || !/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(unitId)) {
     return { kind: 'notFound', path: normalized };
   }
   if (subjectId !== 'chinese' && subjectId !== 'math' && subjectId !== 'english') {

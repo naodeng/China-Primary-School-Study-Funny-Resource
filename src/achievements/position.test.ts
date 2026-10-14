@@ -6,11 +6,11 @@ import { getEffectiveCompletedSessionIds, getRegisteredCurriculumPositions, getR
 describe('curriculum positions', () => {
   it('registersFormalUnitPositionsWithoutInventingMissingGrades', () => {
     expect(getRegisteredLearningPositions()).toEqual([
-      ...Array.from({ length: 8 }, (_, index) => ({ grade: 2, term: 1 as const, unit: index + 1 })),
+      ...Array.from({ length: 9 }, (_, index) => ({ grade: 2, term: 1 as const, unit: index + 1 })),
       ...Array.from({ length: 8 }, (_, index) => ({ grade: 2, term: 2 as const, unit: index + 1 })),
     ]);
     expect(getRegisteredCurriculumPositions().filter((position) => position.subject === 'chinese').every((position) => position.status === 'active')).toBe(true);
-    expect(getRegisteredCurriculumPositions().filter((position) => position.subject === 'math').every((position) => position.status === 'comingSoon')).toBe(true);
+    expect(getRegisteredCurriculumPositions().filter((position) => position.subject === 'math').every((position) => position.status === 'active')).toBe(true);
   });
 
   it('mapsSecondTermPositionsWhenTheyAreRegistered', () => {
@@ -21,7 +21,10 @@ describe('curriculum positions', () => {
     term2.title = '下学期';
     source.grades[0].terms.push(term2);
 
-    expect(getRegisteredCurriculumPositions(source).filter((position) => position.term === 2).map((position) => position.unit)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 1, 2]);
+    expect(getRegisteredCurriculumPositions(source).filter((position) => position.term === 2).map((position) => position.unit)).toEqual([
+      1, 2, 3, 4, 5, 6, 7, 8,
+      1, 2, 3, 4, 5, 6, 7, 8, 9,
+    ]);
     expect(getRegisteredLearningPositions(source)).toContainEqual({ grade: 2, term: 2, unit: 1 });
   });
 
@@ -35,7 +38,7 @@ describe('curriculum positions', () => {
       { id: 'unit-93', title: '无课程内容', status: 'comingSoon', type: 'unit', formalUnitNumber: 93, achievementEligible: true, textbookEditionId: 'grade-2/term-1/chinese', curriculumUnitKey: 'missing/unit' },
     );
 
-    expect(getRegisteredCurriculumPositions(source)).toHaveLength(18);
+    expect(getRegisteredCurriculumPositions(source)).toHaveLength(25);
   });
 
   it('comparesGradeTermAndUnitOrdering', () => {

@@ -4,7 +4,7 @@
 
 ## 项目概况
 
-- 面向 7–12 岁学生的静态 React 学习站，当前提供人教版二年级上学期语文、数学第一和第二单元。
+- 面向 7–12 岁学生的静态 React 学习站，按人教版年级、学期和学科组织课程；当前开放范围以课程注册表和教材清单为准。
 - Node.js 版本见 `.node-version`（当前为 22.16.0），使用 npm。
 - 本地启动：`npm ci`、`npm run dev`；生产构建：`npm run build`；本地预览：`npm run preview`。构建输出为 `dist/`。
 - 测试命令：`npm run test:unit`（Vitest）、`npm run test:coverage`（V8 覆盖率）、`npm run test:e2e`（Playwright Chromium；首次运行前执行 `npx playwright install chromium`）。E2E 使用专用端口 `127.0.0.1:4174`。

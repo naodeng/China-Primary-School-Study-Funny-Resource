@@ -1,151 +1,62 @@
-import type { CurriculumUnit } from '../../../../types';
-import { createPendingBasicTasks } from '../../../../sessionUtils';
+import { buildMathUnit } from '../buildMathUnit';
+import { arrange, calculate, choose, chooseNumber, makeTask, measure, pair, q8, sortInto } from '../questionAuthoring';
 
-const unitKey = 'grade-2/term-1/math/unit-01';
-
-export const unit: CurriculumUnit = {
-  id: unitKey,
-  subject: 'math',
-  title: '第一单元 · 长度单位',
-  type: 'unit',
+export const unit = buildMathUnit({
   formalUnitNumber: 1,
-  achievementEligible: true,
-  textbookEditionId: 'grade-2/term-1/math',
-  sourceTopics: [
-    '人教版小学数学二年级上册第一单元：长度单位',
-    '厘米和米的认识及单位选择',
-    '长度估测、直尺测量和线段的初步认识',
+  title: '第一单元 · 长度单位',
+  sourceTopics: ['厘米和米的认识及单位选择', '长度估测、直尺测量和线段的初步认识'],
+  basicTasks: [
+    makeTask('厘米和米探险队', '为常见物体选择厘米或米，并认识1米等于100厘米。', 'companion-01', q8([
+      choose('测量一支铅笔，哪个单位更方便？', ['厘米', '米', '千米'], 0, '铅笔是比较短的物体。', '比较短的物体通常用厘米测量。'),
+      choose('教室门的高度更适合用什么单位表示？', ['毫米', '厘米', '米'], 2, '门比一把直尺长得多。', '较高或较长的物体常用米作单位。'),
+      sortInto('把物品分到更合适的测量单位。', ['厘米', '米'], [
+        { label: '橡皮的长边', categoryIndex: 0 }, { label: '课桌的高度', categoryIndex: 1 },
+        { label: '数学书的宽', categoryIndex: 0 }, { label: '走廊的长度', categoryIndex: 1 },
+      ], '先估一估物品有多长。', '较短的物品适合用厘米，较长的距离适合用米。'),
+      measure('把直尺上的虚拟铅笔量到合适长度。', '虚拟铅笔', 8, 12, '从尺子的0刻度开始量。', '物体一端对准0，另一端对应的刻度就是长度。'),
+      choose('下面哪个物体的长度可能接近1米？', ['一张课桌的高度', '一颗米粒的长度', '一块橡皮的厚度'], 0, '想想什么东西大约和一把长尺差不多。', '课桌高度可能接近1米，米粒和橡皮都短得多。'),
+      pair('把物品和适合使用的单位配起来。', [['橡皮长度', '厘米'], ['操场一圈', '米'], ['书本宽度', '厘米']], '短长度和较长距离可以选不同单位。', '厘米适合较短长度，米适合较长距离。'),
+      chooseNumber('1米等于多少厘米？', 100, [10, 1000], '1米可以分成100个1厘米。', '1米等于100厘米。'),
+      measure('把直尺上的虚拟书签量到合适长度。', '虚拟书签', 5, 10, '先找0刻度，再看终点。', '从0刻度开始测量，才能读出书签长度。'),
+    ])),
+    makeTask('直尺与线段观察站', '练习对准0刻度测量，辨认线段并比较长度。', 'companion-04', q8([
+      choose('用直尺量物体时，通常把物体一端对准哪里？', ['0刻度', '尺子的中间', '尺子的最后一个刻度'], 0, '测量要从统一的起点开始。', '把一端对准0刻度，另一端的刻度就是长度。'),
+      measure('调节尺子读出虚拟线段的长度。', '蓝色线段', 6, 10, '观察线段的起点和终点。', '对准0刻度后，线段终点的刻度是6厘米。'),
+      choose('线段有什么特点？', ['直直的，有两个端点', '弯弯的，没有端点', '可以一直向两边延长'], 0, '看看它的两头是否都停在固定位置。', '线段是直的，有两个端点，可以测量长度。'),
+      arrange('把测量步骤排好。', ['读出另一端对应的刻度', '把尺子的0刻度对准一端', '确认物体摆直并看清刻度'], [2, 1, 0], '先对准起点，再读终点。', '摆正物体、对准0刻度、读出终点，测量会更准确。'),
+      pair('把尺子读数和线段长度配起来。', [['终点在刻度4', '4厘米'], ['终点在刻度7', '7厘米'], ['终点在刻度9', '9厘米']], '从0刻度开始读数。', '起点在0时，终点的数字就是线段长度。'),
+      arrange('按从短到长排好虚拟线段。', ['8厘米', '3厘米', '10厘米', '5厘米'], [1, 3, 0, 2], '比较数字大小即可。', '从短到长是3、5、8、10厘米。'),
+      sortInto('把做法分进“测量更准确”或“容易量错”。', ['测量更准确', '容易量错'], [
+        { label: '从0刻度开始', categoryIndex: 0 }, { label: '物体斜着放', categoryIndex: 1 },
+        { label: '眼睛正对刻度读数', categoryIndex: 0 }, { label: '从尺子的边缘随便开始', categoryIndex: 1 },
+      ], '想想起点、摆放和读数位置。', '统一起点、摆正物体并正对刻度读数能减少误差。'),
+      chooseNumber('一根线段长5厘米，另一根长8厘米，第二根长多少厘米？', 8, [3, 13], '直接读题目给出的第二根长度。', '第二根线段的长度是8厘米。'),
+    ])),
   ],
-  difficultyTracks: {
-    basic: {
-      difficulty: 'basic',
-      tasks: createPendingBasicTasks(unitKey, [
-    {
-      id: 'grade-2/term-1/math/unit-01/session-01',
-      title: '厘米和米探险队',
-      durationMinutes: 20,
-      objective: '感受厘米和米的长度，能为常见物品选择合适的单位。',
-      companionId: 'companion-01',
-      activities: [
-        {
-          id: 'choose-unit',
-          kind: 'choice',
-          prompt: '测量一支铅笔的长度，用哪个单位更方便？',
-          hint: '铅笔通常不会有一米那么长。',
-          explanation: '较短的物体通常用厘米来量。',
-          options: [
-            { id: 'cm', label: '厘米（cm）' },
-            { id: 'm', label: '米（m）' },
-            { id: 'km', label: '千米（km）' },
-          ],
-          correctOptionId: 'cm',
-        },
-        {
-          id: 'unit-sort',
-          kind: 'categorize',
-          prompt: '把物品放进更合适的测量单位组。',
-          hint: '较小的东西用厘米，较长或较高的地方用米。',
-          explanation: '选单位时先估一估物体大小，再选择更方便的单位。',
-          categories: [
-            { id: 'cm', label: '适合用厘米' },
-            { id: 'm', label: '适合用米' },
-          ],
-          items: [
-            { id: 'eraser', label: '橡皮的长边', categoryId: 'cm' },
-            { id: 'book', label: '数学书的宽', categoryId: 'cm' },
-            { id: 'door', label: '教室门的高度', categoryId: 'm' },
-            { id: 'hall', label: '走廊的长度', categoryId: 'm' },
-          ],
-        },
-        {
-          id: 'meters-centimeters',
-          kind: 'choice',
-          prompt: '1米里面有多少个1厘米？',
-          hint: '把1米想成100个一样长的小格子。',
-          explanation: '1米等于100厘米。',
-          options: [
-            { id: '100', label: '100个' },
-            { id: '10', label: '10个' },
-            { id: '2', label: '2个' },
-          ],
-          correctOptionId: '100',
-        },
-        {
-          id: 'pencil-measure',
-          kind: 'measurement',
-          prompt: '小尺子上有一支虚拟铅笔，请把尺子的终点调到合适位置。',
-          hint: '从0刻度开始读，看看铅笔大约有多长。',
-          explanation: '测量物体时，要把一端对准0刻度，再读另一端对应的刻度。',
-          objectLabel: '虚拟铅笔',
-          targetLengthCm: 8,
-          minCm: 0,
-          maxCm: 12,
-        },
-      ],
-    },
-    {
-      id: 'grade-2/term-1/math/unit-01/session-02',
-      title: '直尺和线段任务站',
-      durationMinutes: 20,
-      objective: '练习从0刻度测量长度，理解线段有两个端点并能比较长短。',
-      companionId: 'companion-04',
-      activities: [
-        {
-          id: 'measure-line',
-          kind: 'measurement',
-          prompt: '把直尺上的虚拟线段量一量，调出它的长度。',
-          hint: '找准0刻度和线段终点之间的距离。',
-          explanation: '线段两端都有端点，长度可以用直尺从0刻度量出来。',
-          objectLabel: '蓝色线段',
-          targetLengthCm: 6,
-          minCm: 0,
-          maxCm: 10,
-        },
-        {
-          id: 'segment-feature',
-          kind: 'choice',
-          prompt: '下面哪句话说出了线段的重要特点？',
-          hint: '线段是直直的，而且两头都能找到端点。',
-          explanation: '线段是直的，有两个端点，可以测量长度。',
-          options: [
-            { id: 'endpoints', label: '直直的，有两个端点' },
-            { id: 'curve', label: '弯弯的，没有端点' },
-            { id: 'infinite', label: '可以一直向两边延长' },
-          ],
-          correctOptionId: 'endpoints',
-        },
-        {
-          id: 'line-order',
-          kind: 'order',
-          prompt: '按从短到长排好这几段虚拟线段。',
-          hint: '比较每段标出的厘米数。',
-          explanation: '比较长度时，可以把单位统一后再从小到大排列。',
-          items: [
-            { id: 'line-3', label: '3厘米' },
-            { id: 'line-5', label: '5厘米' },
-            { id: 'line-8', label: '8厘米' },
-            { id: 'line-11', label: '11厘米' },
-          ],
-          correctOrder: ['line-3', 'line-5', 'line-8', 'line-11'],
-        },
-        {
-          id: 'estimate-pencil',
-          kind: 'choice',
-          prompt: '桌面宽约60厘米，下面哪种估测更合理？',
-          hint: '桌面大约比一把短直尺宽一些。',
-          explanation: '先用熟悉的物体作参照，再估测不熟悉的长度。',
-          options: [
-            { id: 'sixty', label: '大约60厘米' },
-            { id: 'six', label: '大约6厘米' },
-            { id: 'six-hundred', label: '大约600米' },
-          ],
-          correctOptionId: 'sixty',
-        },
-      ],
-    },
-  ]),
-    },
-    advanced: { difficulty: 'advanced', tasks: [] },
-    high: { difficulty: 'high', tasks: [] },
-  },
-};
+  advancedTask: makeTask('长度估测与换算挑战', '结合米和厘米的关系估测、测量并比较长度。', 'companion-02', q8([
+    calculate('把1米35厘米换成厘米再计算。', '100 + 35', 135, '先把1米换成100厘米。', '100厘米加35厘米等于135厘米。'),
+    calculate('1米比50厘米长多少厘米？', '100 - 50', 50, '先把1米换成厘米。', '1米是100厘米，100减50等于50厘米。'),
+    chooseNumber('2米等于多少厘米？', 200, [20, 102], '1米等于100厘米。', '2个100厘米合起来是200厘米。'),
+    measure('测量虚拟丝带并记录结果。', '虚拟丝带', 14, 20, '确认起点对准0刻度。', '丝带终点对应14厘米。'),
+    pair('把长度记录和换算结果配起来。', [['1米', '100厘米'], ['1米20厘米', '120厘米'], ['2米5厘米', '205厘米']], '每1米换成100厘米。', '把米换成厘米后再加上剩余厘米数。'),
+    arrange('按从短到长排列长度。', ['105厘米', '90厘米', '1米', '130厘米'], [2, 1, 0, 3], '先把米统一换成厘米。', '100、90、105、130厘米从短到长排列。'),
+    choose('桌面估测结果是60厘米，哪种记录最清楚？', ['约60厘米', '肯定刚好60厘米', '大约60米'], 0, '估测要保留“大约”这样的词。', '估测不是精确测量，用“约”表达更准确。'),
+    sortInto('把记录分到“直接测量”或“估测”。', ['直接测量', '估测'], [
+      { label: '尺子读出书签是12厘米', categoryIndex: 0 }, { label: '看着桌面约有60厘米', categoryIndex: 1 },
+      { label: '量出线段是7厘米', categoryIndex: 0 }, { label: '估计门高接近2米', categoryIndex: 1 },
+    ], '看一看有没有使用尺子读出刻度。', '读刻度是测量，凭熟悉物体作比较是估测。'),
+  ])),
+  highTask: makeTask('校园长度规划师', '设计一条安全测量路线，用统一单位记录并比较校园物品。', 'companion-03', q8([
+    choose('设计校园测量活动前，哪件事要先做？', ['确认活动范围和成人安排', '独自跑到校外测量', '不看路线就开始'], 0, '活动要先考虑安全。', '儿童在校园内活动也要听从老师安排并留在指定区域。'),
+    measure('测量虚拟花圃边长。', '花圃边', 18, 25, '把线段的一端对齐0。', '花圃边在虚拟尺上长18厘米。'),
+    calculate('两段测量记录分别是34厘米和26厘米，合起来多少厘米？', '34 + 26', 60, '把两段长度相加。', '34加26等于60厘米。'),
+    calculate('绳子长90厘米，剪去35厘米后还剩多少厘米？', '90 - 35', 55, '用原长减去剪掉的长度。', '90减35等于55厘米。'),
+    pair('把测量任务和合适记录配起来。', [['教室门高度', '约2米'], ['彩纸短边', '厘米数'], ['操场边长度', '米数']], '根据物体大小选择单位。', '短边记录厘米，较长距离常用米。'),
+    arrange('整理小组测量记录流程。', ['比较各组结果并说说差异', '选择安全的测量对象', '统一单位和测量起点', '记录结果并注明对象'], [1, 2, 3, 0], '先选对象，再统一方法。', '对象、方法、记录和比较构成完整的测量活动。'),
+    sortInto('把记录放进“长度事实”或“需要复测”。', ['长度事实', '需要复测'], [
+      { label: '直尺从0量到12厘米', categoryIndex: 0 }, { label: '尺子斜放后读到约8厘米', categoryIndex: 1 },
+      { label: '写明测量对象和单位', categoryIndex: 0 }, { label: '只写了一个数字没有单位', categoryIndex: 1 },
+    ], '看记录是否有清楚对象、起点和单位。', '方法明确并带单位的记录更可信，方法不清要复测。'),
+    chooseNumber('1米长的绳子用去40厘米，还剩多少厘米？', 60, [50, 140], '先把1米换成100厘米。', '100减40等于60厘米。'),
+  ])),
+});

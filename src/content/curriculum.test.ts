@@ -27,7 +27,60 @@ const term2ChineseUnits = [
   ['grade-2/term-2/chinese/unit-08', '第八单元 · 远古故事'],
 ] as const;
 
+const term1MathEntries = [
+  ['grade-2/term-1/math/unit-01', '第一单元 · 长度单位', 'unit', 1, true],
+  ['grade-2/term-1/math/unit-02', '第二单元 · 100以内的加法和减法（二）', 'unit', 2, true],
+  ['grade-2/term-1/math/unit-03', '第三单元 · 角的初步认识', 'unit', 3, true],
+  ['grade-2/term-1/math/unit-04', '第四单元 · 表内乘法（一）', 'unit', 4, true],
+  ['grade-2/term-1/math/unit-05', '第五单元 · 观察物体（一）', 'unit', 5, true],
+  ['grade-2/term-1/math/unit-06', '第六单元 · 表内乘法（二）', 'unit', 6, true],
+  ['grade-2/term-1/math/unit-07', '第七单元 · 认识时间', 'unit', 7, true],
+  ['grade-2/term-1/math/unit-08', '第八单元 · 数学广角——搭配（一）', 'unit', 8, true],
+  ['grade-2/term-1/math/unit-09', '第九单元 · 总复习', 'unit', 9, true],
+  ['grade-2/term-1/math/integrated-practice-01', '综合实践 · 量一量，比一比', 'integrated-practice', null, false],
+] as const;
+
 describe('curriculum registry', () => {
+  it('listsAllVerifiedTerm1MathEntries', () => {
+    const subject = curriculum.grades[0]?.terms[0]?.subjects.find(({ id }) => id === 'math');
+    expect(subject?.units.map(({ id }) => id)).toEqual(term1MathEntries.map(([key]) => key.split('/').at(-1)));
+    expect(curriculum.textbooks['grade-2/term-1/math']?.verificationStatus).toBe('verified');
+
+    term1MathEntries.forEach(([unitKey, title, type, formalUnitNumber, achievementEligible], index) => {
+      expect(subject?.units[index]).toMatchObject({
+        title,
+        status: 'active',
+        type,
+        formalUnitNumber,
+        achievementEligible,
+        textbookEditionId: 'grade-2/term-1/math',
+        curriculumUnitKey: unitKey,
+      });
+      expect(curriculum.units[unitKey]).toMatchObject({
+        id: unitKey,
+        subject: 'math',
+        type,
+        formalUnitNumber,
+        achievementEligible,
+        textbookEditionId: 'grade-2/term-1/math',
+      });
+    });
+  });
+
+  it.each(term1MathEntries.map(([unitKey]) => unitKey))(
+    'gives %s three difficulty tracks, basic practice, and eight questions per session',
+    (unitKey) => {
+      const unit = curriculum.units[unitKey];
+      expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      Object.values(unit.difficultyTracks).forEach(({ tasks }) => tasks.forEach((task) => {
+        expect(task.sessions.length).toBeGreaterThan(0);
+        task.sessions.forEach((session) => expect(session.activities).toHaveLength(8));
+      }));
+    },
+  );
+
   it('listsAllVerifiedTerm1ChineseEntries', () => {
     const subject = curriculum.grades[0]?.terms[0]?.subjects.find(({ id }) => id === 'chinese');
     expect(subject?.units.map(({ id }) => id)).toEqual(term1ChineseUnits.map(([key]) => key.split('/').at(-1)));
@@ -133,7 +186,9 @@ describe('curriculum registry', () => {
       expect(book?.fallbackReason?.trim().length).toBeGreaterThan(0);
       expect(book?.tapxCommit).toBe(TAPX_TEXTBOOK_COMMIT);
       expect(book?.verificationStatus).toBe(
-        editionId === 'grade-2/term-1/chinese' || editionId === 'grade-2/term-2/chinese' ? 'verified' : 'pending',
+        editionId === 'grade-2/term-1/chinese' || editionId === 'grade-2/term-2/chinese' || editionId === 'grade-2/term-1/math'
+          ? 'verified'
+          : 'pending',
       );
     }
 
@@ -144,11 +199,12 @@ describe('curriculum registry', () => {
     expect(curriculum.textbooks['grade-2/term-2/math']?.edition).toBeNull();
   });
 
-  it('marks only the fully checked Chinese fallback books as verified', () => {
+  it('marks only the fully checked fallback books as verified', () => {
     expect(Object.keys(curriculum.textbooks)).toHaveLength(6);
     expect(curriculum.textbooks['grade-2/term-1/chinese']?.verificationStatus).toBe('verified');
     expect(curriculum.textbooks['grade-2/term-2/chinese']?.verificationStatus).toBe('verified');
-    expect(Object.entries(curriculum.textbooks).filter(([id]) => !id.endsWith('/chinese'))
+    expect(curriculum.textbooks['grade-2/term-1/math']?.verificationStatus).toBe('verified');
+    expect(Object.entries(curriculum.textbooks).filter(([id]) => !id.endsWith('/chinese') && id !== 'grade-2/term-1/math')
       .every(([, book]) => book.verificationStatus === 'pending')).toBe(true);
   });
 
@@ -170,9 +226,13 @@ describe('curriculum registry', () => {
     }
   });
 
-  it('creates achievement positions for both verified Chinese terms', () => {
+  it('creates achievement positions for both verified Chinese terms and upper math units', () => {
     expect(getKnownCurriculumPositions().map(({ key }) => key)).toEqual(
-      [...term1ChineseUnits, ...term2ChineseUnits].map(([unitKey]) => unitKey),
+      [
+        ...term1ChineseUnits,
+        ...term1MathEntries.filter(([, , type]) => type === 'unit'),
+        ...term2ChineseUnits,
+      ].map(([unitKey]) => unitKey),
     );
   });
 
@@ -181,7 +241,7 @@ describe('curriculum registry', () => {
       'grade-2/term-1/chinese/unit-01': 3,
       'grade-2/term-1/chinese/unit-02': 3,
       'grade-2/term-1/math/unit-01': 2,
-      'grade-2/term-1/math/unit-02': 4,
+      'grade-2/term-1/math/unit-02': 2,
     };
 
     for (const [unitKey, expectedTaskCount] of Object.entries(originalCounts)) {
