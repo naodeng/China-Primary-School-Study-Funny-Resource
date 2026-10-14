@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test('loads catalog and refreshes a nested unit', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: '星岛学习站' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '星岛学园 · Starry Island' })).toBeVisible();
 
   await page.goto('/grade-2/term-1/english/unit-01');
   await expect(page.getByRole('heading', { name: '第一单元 · My Family' })).toBeVisible();

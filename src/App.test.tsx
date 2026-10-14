@@ -37,7 +37,7 @@ describe('App', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    expect(screen.getByRole('heading', { name: '星岛学习站' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '星岛学园 · Starry Island' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '设置' }));
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();

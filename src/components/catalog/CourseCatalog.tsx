@@ -58,8 +58,17 @@ export default function CourseCatalog({ progress, onNavigate, onApplyLearningSta
         <header className="catalog-hero">
           <div className="catalog-hero-copy">
             <p className="eyebrow">{grade.title} · {term.title} · 人教版</p>
-            <h1>星岛学习站</h1>
-            <p className="catalog-lead">先选年级、学期和学科，再沿着自己的学习路线探索。每一次认真尝试，都会让你离新发现更近一步。</p>
+            <h1 className="catalog-brand-heading">
+              <img
+                className="catalog-brand-logo"
+                src="/assets/brand/starry-island-logo-512.png"
+                alt="星岛学园 · Starry Island"
+                width="512"
+                height="512"
+                fetchPriority="high"
+              />
+            </h1>
+            <p className="catalog-lead">在星岛上快乐学习，探索知识宇宙。先选好课程，一起沿着自己的路线开启探索；每一次认真尝试，都会带来新的发现。</p>
             <div className="catalog-meta" aria-label="课程信息">
               <span>每场约20分钟</span>
               <span>随时开始</span>
