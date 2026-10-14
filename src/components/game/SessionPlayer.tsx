@@ -139,7 +139,7 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
             selectMessage={getFeedbackMessage}
           />
         </Card>
-        <div className="game-navigation-row">
+        <div className={`game-navigation-row ${solved ? 'is-solved' : ''}`}>
           <p aria-live="polite">{solved ? '挑战完成！你的坚持又积累了一点能量，可以继续啦。' : '不着急，先读题找线索；愿意动脑尝试就很棒。'}</p>
           <Button type="primary" disabled={!solved} onClick={continueSession}>
             {sessionState.currentIndex === session.activities.length - 1 ? '完成本场' : '继续下一题'} <span aria-hidden="true">→</span>

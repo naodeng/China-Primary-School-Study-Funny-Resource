@@ -125,7 +125,7 @@ export default function UnitOverview({
                       <span className="difficulty-task-count">{track.tasks.length} 个任务</span>
                     </header>
                     {track.tasks.length ? (
-                      <div className="task-grid">
+                      <div className={`task-grid ${track.tasks.length === 1 ? 'is-single' : ''}`}>
                         {track.tasks.map((task) => {
                           const doneCount = task.sessions.filter((session) => completedSessionIds.includes(session.id)).length;
                           return (
@@ -161,7 +161,7 @@ export default function UnitOverview({
               </div>
               <Button type="default" onClick={() => onNavigate(getUnitPath(unitKey))}>返回单元任务</Button>
             </div>
-            <div className="session-grid">
+            <div className={`session-grid ${selectedTask.sessions.length === 1 ? 'is-single' : ''}`}>
               {selectedTask.sessions.map((session, index) => {
                 const complete = completedSessionIds.includes(session.id);
                 const companion = COMPANION_PROFILES[session.companionId];

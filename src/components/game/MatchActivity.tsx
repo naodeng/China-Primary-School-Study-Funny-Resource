@@ -41,7 +41,7 @@ export default function MatchActivity({ activity, disabled, onSubmit, random }: 
               onClick={() => setSelectedLeft(pair.id)}
             >
               <span>{pair.left}</span>
-              {assignments[pair.id] && <small>已配对</small>}
+              {assignments[pair.id] ? <small>已配对</small> : selectedLeft === pair.id ? <small>已选中</small> : null}
             </button>
           ))}
         </div>
@@ -55,7 +55,8 @@ export default function MatchActivity({ activity, disabled, onSubmit, random }: 
               disabled={disabled || !selectedLeft || takenRightIds.includes(pair.id)}
               onClick={() => selectRight(pair.id)}
             >
-              {pair.right}
+              <span>{pair.right}</span>
+              {takenRightIds.includes(pair.id) && <small>已配对</small>}
             </button>
           ))}
         </div>

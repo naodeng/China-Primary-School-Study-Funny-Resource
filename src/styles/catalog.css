@@ -344,3 +344,44 @@
   .settings-dialog .theme-switcher { align-items: flex-start; flex-direction: column; width: 100%; }
   .settings-dialog .theme-switcher-options { width: 100%; }
 }
+
+/* Tablet portrait keeps the unit title full-width before its companion and progress row. */
+@media (min-width: 701px) and (max-width: 900px) {
+  .unit-hero { align-items: stretch; flex-direction: column; gap: 18px; }
+  .unit-hero > div:first-child { max-width: none; }
+  .unit-hero-aside { grid-template-columns: minmax(0, 1fr) 140px; align-items: center; justify-items: stretch; flex-basis: auto; width: 100%; }
+  .unit-hero-aside .unit-progress-orbit { justify-self: end; }
+}
+
+/* Touch controls use a consistent 44px minimum target on phones and tablets. */
+@media (max-width: 1024px) {
+  .animal-button,
+  .catalog-selector select,
+  .learning-start-fields select,
+  .category-choice { min-height: 44px; }
+  .order-controls button { width: 44px; height: 44px; }
+  .measurement-slider { min-height: 44px; }
+  .settings-dialog .theme-switcher-options [class*='animal-radioItem'] { min-height: 44px; }
+}
+
+@media (max-width: 700px) {
+  .catalog-page, .unit-page, .route-message-page {
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+    padding-bottom: max(42px, calc(24px + env(safe-area-inset-bottom)));
+  }
+  .subject-switch { display: grid; align-self: stretch; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+  .subject-switch > .animal-button { width: 100%; min-width: 0; }
+  .catalog-grade-label { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; gap: 10px; }
+  .catalog-selector { display: grid; min-width: 0; gap: 6px; }
+  .catalog-selector select { width: 100%; }
+  .catalog-subject-name { grid-column: 1 / -1; margin-left: 0; }
+  .learning-start-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .learning-start-fields label:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 420px) {
+  .catalog-settings-button { min-height: 44px; }
+  .settings-dialog .theme-switcher { align-items: stretch; }
+  .settings-dialog .theme-switcher-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
