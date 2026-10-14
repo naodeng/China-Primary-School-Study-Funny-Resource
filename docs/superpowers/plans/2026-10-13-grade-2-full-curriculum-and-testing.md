@@ -128,10 +128,10 @@
 
 **文件：** src/content/grade-2/term-1/english/ 下全部语言单元和复习入口；修改 registry、数据测试和教材清单。
 
-- [ ] 先写 listsAllVerifiedTerm1EnglishEntries，断言语言单元与 Revision 分类符合教材清单；运行确认缺项时失败。
-- [ ] 人教社公开新体系说明未提供本册完整学生书目录，按用户授权依据 TapX 固定快照的一年级起点旧学生书录入；登记 6 个 Unit 与 2 个 Revision，标注回退版及校内开课状态待确认。
-- [ ] 正确区分编号单元和未编号 Revision；基础多任务、进阶/高阶各单任务、每场八题。数据测试断言 Revision 的 achievementEligible=false 且不占正式单元编号。
-- [ ] 检查英文词汇、指令、语法和答案适龄准确；运行测试后提交。
+- [x] 先写 listsAllVerifiedTerm1EnglishEntries，断言语言单元与 Revision 分类符合教材清单；运行确认缺项时失败。
+- [x] 人教社公开新体系说明未提供本册完整学生书目录，按用户授权依据 TapX 固定快照的一年级起点旧学生书录入；登记 6 个 Unit 与 2 个 Revision，标注回退版及校内开课状态待确认。
+- [x] 正确区分编号单元和未编号 Revision；基础多任务、进阶/高阶各单任务、每场八题。数据测试断言 Revision 的 achievementEligible=false 且不占正式单元编号。
+- [x] 检查英文词汇、指令、语法和答案适龄准确；运行测试后提交。
 
 ### Task 10：录入二年级下学期英语
 
