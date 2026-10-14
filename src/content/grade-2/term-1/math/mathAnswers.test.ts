@@ -1,33 +1,81 @@
 import { describe, expect, it } from 'vitest';
 import { curriculum } from '../../../curriculum';
+import type { CurriculumUnit } from '../../../types';
 
 const mathUnitKeys = [
   ...Array.from({ length: 9 }, (_, index) => `grade-2/term-1/math/unit-${String(index + 1).padStart(2, '0')}`),
   'grade-2/term-1/math/integrated-practice-01',
+  ...Array.from({ length: 10 }, (_, index) => `grade-2/term-2/math/unit-${String(index + 1).padStart(2, '0')}`),
+  'grade-2/term-2/math/integrated-practice-01',
 ];
 
-describe('grade 2 term 1 math answers', () => {
+function evaluateArithmeticExpression(expression: string): number {
+  const normalized = expression.replace(/\s+/g, '');
+  const tokens = normalized.match(/\d+|[()+\-×÷]/g) ?? [];
+  if (tokens.join('') !== normalized) throw new Error(`不支持的算式：${expression}`);
+  let cursor = 0;
+
+  const factor = (): number => {
+    const token = tokens[cursor++];
+    if (token === '(') {
+      const value = sum();
+      if (tokens[cursor++] !== ')') throw new Error(`括号不成对：${expression}`);
+      return value;
+    }
+    const value = Number(token);
+    if (!Number.isFinite(value)) throw new Error(`缺少数值：${expression}`);
+    return value;
+  };
+
+  const product = (): number => {
+    let value = factor();
+    while (tokens[cursor] === '×' || tokens[cursor] === '÷') {
+      const operator = tokens[cursor++];
+      const right = factor();
+      value = operator === '×' ? value * right : value / right;
+    }
+    return value;
+  };
+
+  const sum = (): number => {
+    let value = product();
+    while (tokens[cursor] === '+' || tokens[cursor] === '-') {
+      const operator = tokens[cursor++];
+      const right = product();
+      value = operator === '+' ? value + right : value - right;
+    }
+    return value;
+  };
+
+  const answer = sum();
+  if (cursor !== tokens.length) throw new Error(`算式未完整读取：${expression}`);
+  return answer;
+}
+
+function registeredMathUnits(): Array<[string, CurriculumUnit]> {
+  return mathUnitKeys.flatMap((key) => {
+    const unit = curriculum.units[key];
+    expect(unit, `缺少课程数据：${key}`).toBeDefined();
+    return unit ? [[key, unit]] : [];
+  });
+}
+
+describe('grade 2 math answers', () => {
   it('computes every arithmetic answer from its written expression', () => {
-    const activities = mathUnitKeys.flatMap((key) => Object.values(curriculum.units[key].difficultyTracks)
+    const activities = registeredMathUnits().flatMap(([, unit]) => Object.values(unit.difficultyTracks)
       .flatMap(({ tasks }) => tasks.flatMap(({ sessions }) => sessions.flatMap(({ activities: sessionActivities }) => sessionActivities))))
       .filter((activity) => activity.kind === 'arithmetic');
 
     expect(activities.length).toBeGreaterThan(0);
     for (const activity of activities) {
       if (activity.kind !== 'arithmetic') continue;
-      const match = activity.expression.match(/^\s*(\d+)\s*([+\-×])\s*(\d+)\s*$/);
-      expect(match, activity.expression).not.toBeNull();
-      const left = Number(match?.[1]);
-      const operator = match?.[2];
-      const right = Number(match?.[3]);
-      const answer = operator === '+' ? left + right : operator === '-' ? left - right : left * right;
-      expect(activity.correctAnswer, activity.expression).toBe(answer);
+      expect(activity.correctAnswer, activity.expression).toBe(evaluateArithmeticExpression(activity.expression));
     }
   });
 
   it('keeps every ruler target within the visible measurement range', () => {
-    for (const key of mathUnitKeys) {
-      for (const { tasks } of Object.values(curriculum.units[key].difficultyTracks)) {
+    for (const [, unit] of registeredMathUnits()) {
+      for (const { tasks } of Object.values(unit.difficultyTracks)) {
         for (const { sessions } of tasks) {
           for (const { activities } of sessions) {
             for (const activity of activities) {

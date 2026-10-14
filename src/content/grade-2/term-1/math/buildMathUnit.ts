@@ -2,6 +2,7 @@ import type { ActivityDefinition, CurriculumUnit, Difficulty, LearningSession, L
 import type { MathQuestionSpec, MathTaskSpec } from './questionAuthoring';
 
 export interface MathUnitSpec {
+  term?: 1 | 2;
   formalUnitNumber: number | null;
   entryId?: string;
   type?: 'unit' | 'integrated-practice';
@@ -79,9 +80,11 @@ function createTrack(unitId: string, difficulty: Difficulty, tasks: readonly Mat
 }
 
 export function buildMathUnit(spec: MathUnitSpec): CurriculumUnit {
+  const term = spec.term ?? 1;
   const type = spec.type ?? 'unit';
   const entryId = spec.entryId ?? `unit-${numberId(spec.formalUnitNumber ?? 0)}`;
-  const id = `grade-2/term-1/math/${entryId}`;
+  const textbookEditionId = `grade-2/term-${term}/math`;
+  const id = `${textbookEditionId}/${entryId}`;
   return {
     id,
     subject: 'math',
@@ -89,7 +92,7 @@ export function buildMathUnit(spec: MathUnitSpec): CurriculumUnit {
     type,
     formalUnitNumber: spec.formalUnitNumber,
     achievementEligible: type === 'unit' && spec.formalUnitNumber !== null,
-    textbookEditionId: 'grade-2/term-1/math',
+    textbookEditionId,
     sourceTopics: [...spec.sourceTopics],
     difficultyTracks: {
       basic: createTrack(id, 'basic', spec.basicTasks),

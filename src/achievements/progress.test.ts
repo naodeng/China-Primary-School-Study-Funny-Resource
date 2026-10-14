@@ -100,6 +100,7 @@ describe('achievement progress', () => {
       ...Array.from({ length: 8 }, (_, index) => `grade-2/term-1/chinese/unit-${String(index + 1).padStart(2, '0')}`),
       ...Array.from({ length: 9 }, (_, index) => `grade-2/term-1/math/unit-${String(index + 1).padStart(2, '0')}`),
       ...Array.from({ length: 8 }, (_, index) => `grade-2/term-2/chinese/unit-${String(index + 1).padStart(2, '0')}`),
+      ...Array.from({ length: 10 }, (_, index) => `grade-2/term-2/math/unit-${String(index + 1).padStart(2, '0')}`),
     ]);
   });
 

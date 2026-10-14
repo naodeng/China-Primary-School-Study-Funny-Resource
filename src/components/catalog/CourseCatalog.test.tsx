@@ -29,4 +29,16 @@ describe('CourseCatalog', () => {
     expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(10);
     expect(onNavigate).not.toHaveBeenCalled();
   });
+
+  it('opensAllVerifiedSecondTermMathEntries', async () => {
+    const user = userEvent.setup();
+    render(<ThemeProvider><CourseCatalog progress={progress} onNavigate={vi.fn()} onApplyLearningStart={vi.fn()} /></ThemeProvider>);
+
+    await user.selectOptions(screen.getByRole('combobox', { name: '学期' }), 'term-2');
+    await user.click(screen.getByRole('button', { name: '数学' }));
+
+    expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(11);
+    expect(screen.getByText('第十单元 · 总复习')).toBeInTheDocument();
+    expect(screen.getByText('综合实践 · 小小设计师')).toBeInTheDocument();
+  });
 });
