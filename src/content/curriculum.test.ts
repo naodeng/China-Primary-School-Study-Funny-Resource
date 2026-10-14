@@ -5,7 +5,23 @@ import { getSessionsForDifficulty } from './sessionUtils';
 import { getKnownCurriculumPositions } from '../achievements/position';
 
 describe('curriculum registry', () => {
-  it('keeps all six school textbook editions pending until their contents are verified', () => {
+  it('points each textbook edition to its selected current PEP evidence while keeping unverified books pending', () => {
+    const currentPepEvidence = {
+      'grade-2/term-1/chinese': 'https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf',
+      'grade-2/term-2/chinese': 'https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf',
+      'grade-2/term-1/math': 'https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml',
+      'grade-2/term-2/math': 'https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml',
+      'grade-2/term-1/english': 'https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html',
+      'grade-2/term-2/english': 'https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html',
+    };
+
+    for (const [editionId, sourceUrl] of Object.entries(currentPepEvidence)) {
+      expect(curriculum.textbooks[editionId]?.sourceUrl).toBe(sourceUrl);
+      expect(curriculum.textbooks[editionId]?.verificationStatus).toBe('pending');
+    }
+  });
+
+  it('keeps all six selected textbook editions pending until their contents are verified', () => {
     expect(Object.keys(curriculum.textbooks)).toHaveLength(6);
     expect(Object.values(curriculum.textbooks).every((book) => book.verificationStatus === 'pending')).toBe(true);
   });

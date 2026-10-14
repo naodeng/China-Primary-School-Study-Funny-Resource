@@ -2,7 +2,7 @@ import type { TextbookEdition } from './types';
 
 export const TAPX_TEXTBOOK_COMMIT = '5a80345f2043ba6f8db8d7be9cf3db82725ff1f7';
 
-const checkedAt = '2026-10-13';
+const checkedAt = '2026-10-14';
 
 export const textbooks: Record<string, TextbookEdition> = {
   'grade-2/term-1/chinese': {
@@ -10,7 +10,7 @@ export const textbooks: Record<string, TextbookEdition> = {
     subject: 'chinese',
     grade: 2,
     term: 1,
-    series: '人教版统编语文',
+    series: '人教版统编语文（2025年修订）',
     edition: null,
     printing: null,
     isbn: null,
@@ -24,7 +24,7 @@ export const textbooks: Record<string, TextbookEdition> = {
     subject: 'chinese',
     grade: 2,
     term: 2,
-    series: '人教版统编语文',
+    series: '人教版统编语文（2025年修订）',
     edition: null,
     printing: null,
     isbn: null,
@@ -42,7 +42,7 @@ export const textbooks: Record<string, TextbookEdition> = {
     edition: null,
     printing: null,
     isbn: null,
-    sourceUrl: 'https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995566.html',
+    sourceUrl: 'https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml',
     checkedAt,
     tapxCommit: TAPX_TEXTBOOK_COMMIT,
     verificationStatus: 'pending',
@@ -56,7 +56,7 @@ export const textbooks: Record<string, TextbookEdition> = {
     edition: null,
     printing: null,
     isbn: null,
-    sourceUrl: 'https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995566.html',
+    sourceUrl: 'https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml',
     checkedAt,
     tapxCommit: TAPX_TEXTBOOK_COMMIT,
     verificationStatus: 'pending',
@@ -66,7 +66,7 @@ export const textbooks: Record<string, TextbookEdition> = {
     subject: 'english',
     grade: 2,
     term: 1,
-    series: '人教版英语（一、二年级预备级，校用状态待确认）',
+    series: '人教版英语（一年级起点预备级，二年级新版目录待核）',
     edition: null,
     printing: null,
     isbn: null,
@@ -80,7 +80,7 @@ export const textbooks: Record<string, TextbookEdition> = {
     subject: 'english',
     grade: 2,
     term: 2,
-    series: '人教版英语（一、二年级预备级，校用状态待确认）',
+    series: '人教版英语（一年级起点预备级，二年级新版目录待核）',
     edition: null,
     printing: null,
     isbn: null,
