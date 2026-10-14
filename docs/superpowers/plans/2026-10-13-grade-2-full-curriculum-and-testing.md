@@ -20,6 +20,7 @@
 - 题目、提示、解释、反馈和配图原创；不复制教材 PDF、封面、扫描页、插图或大段原文。
 - 配对答案按稳定 ID 判分；每次尝试打散、单次尝试中保持稳定、重试重新打散。
 - 答对、答错从各自文案池随机选鼓励反馈，避免连续重复；错误不羞辱、不扣分、不误报正确。
+- 用户提供的五段 MP3 作为本地素材；语音默认开启并记住设备偏好，关闭后答题语音与点击音全部停止/静音。普通答对、连续答对、答错、第 8 题全对和普通交互分别播放对应素材；最终全对音优先于该题连续答对音，播放失败不影响学习。
 - 旧版少题场次不迁移为新版完成状态；进度、主题和学习起点留在当前设备。
 - 保留十二星区；所选来源、目录和原创课程尚未核实的课程不开放或计入头衔。不得把 TapXWorld 回退快照描述为人教社当前最新版。
 - 全局 lines/statements/functions/branches 覆盖率各至少 60%；指定核心纯逻辑模块四项均 100%，由测试命令和 CI 强制。
@@ -35,6 +36,7 @@
 - 旧进度产生虚假完成：迁移测试验证旧场次隔离、有效学习起点保留。
 - 配对答案重新渲染时洗牌或仍完全同序：固定随机源测试首次排序、渲染稳定和重试。
 - 答错使用答对文案或连续责备：纯函数和组件测试验证状态隔离、文案变化和重试。
+- 答题语音状态错配或静音开关遗漏：纯函数、设置组件和 E2E 验证正确、连续正确、答错、本场全对、点击和关闭后的静音行为。
 
 ---
 
@@ -142,18 +144,21 @@
 
 ### Task 11：实现判题、配对打散和随机鼓励反馈
 
-**文件：** 创建 src/learning/answers.ts、matching.ts、feedback.ts、session.ts 及同名 .test.ts；修改 src/components/game/ActivityFeedback.tsx、ActivityRenderer.tsx、MatchActivity.tsx、SessionPlayer.tsx、SessionSummary.tsx；创建 ActivityFeedback.test.tsx、MatchActivity.test.tsx、SessionPlayer.test.tsx。
+**文件：** 创建 src/learning/answers.ts、matching.ts、feedback.ts、session.ts 及同名 .test.ts；创建 src/sound/soundPreferences.ts、soundCues.ts 及测试、SoundProvider.tsx；将五段用户提供 MP3 放入 public/audio/ 并按规格表命名；修改 src/components/game/ActivityFeedback.tsx、ActivityRenderer.tsx、MatchActivity.tsx、SessionPlayer.tsx、SessionSummary.tsx；创建 ActivityFeedback.test.tsx、MatchActivity.test.tsx、SessionPlayer.test.tsx。
 
-**接口：** FeedbackStatus = correct | incorrect；selectFeedbackMessage(status: FeedbackStatus, previousMessage: string | null, random: () => number = Math.random): string；shuffleMatchAnswers(pairs: readonly MatchPair[], random: () => number = Math.random): MatchPair[]；submitAnswer(activity: ActivityDefinition, answer: unknown): boolean。至少两组配对时保证右侧首轮不与左列完全同序。
+**接口：** FeedbackStatus = correct | incorrect；selectFeedbackMessage(status: FeedbackStatus, previousMessage: string | null, random: () => number = Math.random): string；shuffleMatchAnswers(pairs: readonly MatchPair[], random: () => number = Math.random): MatchPair[]；submitAnswer(activity: ActivityDefinition, answer: unknown): boolean。至少两组配对时保证右侧首轮不与左列完全同序。`getAnswerSoundFeedback(status, previousConsecutiveCorrectCount, sessionComplete): { cue: SoundCue, consecutiveCorrectCount: number }` 负责将错误后的连击数清零、将正确答题连击数加一，并让全场完成音优先于连击音；`SoundProvider` 提供 `{ enabled, setEnabled, playCue }`，默认开启并记住本机偏好。
 
 - [ ] 在 answers.test、feedback.test、matching.test、session.test 中写 tests: handlesCorrectAndIncorrectAnswerForEachKind、selectsOnlyStatusMessages、avoidsPreviousMessage、shufflesMatchAnswers、fallsBackFromIdentityOrder、completesOnlyAfterLastCorrectAnswer；为六种题型逐一断言正确与错误答案，固定 random=0 和接近 1 验证选择边界。
 - [ ] 实现纯函数，组件中不散落 Math.random 和判题分支。
 - [ ] 每次尝试只洗牌一次，重试重洗；答错允许提示和重试，不允许误报或跳题。
+- [ ] 在 soundCues.test 写 `usesCorrectCueAtStart`、`usesStreakCueAfterConsecutiveAnswers`、`resetsStreakAfterIncorrectAnswer`、`choosesSessionCompleteCueBeforeStreakCue`；在 soundPreferences.test 写 `defaultsSoundToEnabled`、`persistsSoundChoice`、`keepsSoundEnabledWhenStorageUnavailable`，覆盖纯逻辑分支。
+- [ ] 以纯函数覆盖声音状态优先级：错误重置答对连击；第 8 题完成音覆盖普通/连击音；默认开启、存储失败回退开启；Provider 以独立语音/点击通道播放本地资源并吞掉浏览器播放拒绝，不影响答题状态。
+- [ ] SessionPlayer 用第 8 题完成状态决定全对音，用连续正确计数决定普通/连击音；ActivityRenderer 将正确与错误结果回报给场次，答错后正确重试重新开始连击计数；重玩场次时连击计数归零。
 - [ ] 八题进度、最后一题完成、重复点击保护和鼓励反馈写组件测试；核心学习模块达到四项 100% 后提交。
 
 ### Task 12：升级进度、成就、学习起点和主题
 
-**文件：** 修改 src/storage/progress.ts、src/achievements/position.ts、src/achievements/progress.ts、src/achievements/exploration.ts、src/theme/ThemeProvider.tsx、src/App.tsx、src/components/settings/SettingsDialog.tsx、src/components/catalog/CourseCatalog.tsx、src/components/achievements/AchievementSummary.tsx、AchievementPage.tsx、AchievementDashboard.tsx；创建 progress/achievement/theme 模块测试及相应组件测试。
+**文件：** 修改 src/storage/progress.ts、src/achievements/position.ts、src/achievements/progress.ts、src/achievements/exploration.ts、src/theme/ThemeProvider.tsx、src/App.tsx、src/main.tsx、src/components/settings/SettingsDialog.tsx、src/components/catalog/CourseCatalog.tsx、src/components/achievements/AchievementSummary.tsx、AchievementPage.tsx、AchievementDashboard.tsx；创建 progress/achievement/theme 模块测试及相应组件测试。
 
 **接口：** ProgressState 使用 schemaVersion: 3，隔离旧版完成 ID 并保留有效 learningStart。src/achievements/progress.ts 导出 isCurriculumUnitComplete(unit: CurriculumUnit, ids: readonly string[]): boolean，仅在基础全部任务/场次完成时返回 true；getTaskProgress(task: LearningTask, ids: readonly string[]): { completedSessionCount: number; totalSessionCount: number; completed: boolean }。学习起点按正式单元位置计算，不计 review/practice。
 
@@ -162,14 +167,16 @@
 - [ ] 实现新 schema 和成就纯函数；只根据校验过的课程目录生成节点，不虚构其他年级单元。
 - [ ] 主题解析提取纯函数；测试首次 system、手动 light/dark、恢复系统和存储不可用。
 - [ ] 更新设置页仅允许登记位置，说明替换影响；组件测试验证进度与主题交互；核心模块覆盖率达标后提交。
+- [ ] 设置弹窗增加“语音提示与交互音效”开关，默认开启；关闭时通过统一音频 Provider 静音所有答题和点击提示，并立即停止播放。App 捕获可操作控件点击并播放提示音，原生 disabled、aria-disabled 和语音开关本身除外。组件测试覆盖开关、localStorage 持久化及关闭后的零播放、点击音和播放 Promise 拒绝。
 
 ### Task 13：完成 E2E、覆盖率门槛、CI 和 PR 交付
 
 **文件：** 修改 vitest.config.ts、package.json、README.md、AGENTS.md 和 UI 样式；创建 tests/e2e/catalog.spec.ts、learning-flow.spec.ts、settings-achievements.spec.ts、.github/workflows/quality.yml。
 
-- [ ] 配置 coverage 显式纳入所有 src TS/TSX；全局四项至少 60%。下列每个文件分别设置 lines/statements/functions/branches=100%：src/app/router.ts、src/content/curriculum.ts、src/content/validateCurriculum.ts、src/learning/answers.ts、src/learning/matching.ts、src/learning/feedback.ts、src/learning/session.ts、src/storage/progress.ts、src/achievements/position.ts、src/achievements/progress.ts、src/achievements/exploration.ts、src/theme/themePreferences.ts。
+- [ ] 配置 coverage 显式纳入所有 src TS/TSX；全局四项至少 60%。下列每个文件分别设置 lines/statements/functions/branches=100%：src/app/router.ts、src/content/curriculum.ts、src/content/validateCurriculum.ts、src/learning/answers.ts、src/learning/matching.ts、src/learning/feedback.ts、src/learning/session.ts、src/storage/progress.ts、src/achievements/position.ts、src/achievements/progress.ts、src/achievements/exploration.ts、src/theme/themePreferences.ts、src/sound/soundPreferences.ts、src/sound/soundCues.ts。
 - [ ] 在 catalog.spec 写rendersEveryVerifiedCourseEntry、opensEachTermAndSubject、refreshesNestedCourseRoutes；在 learning-flow.spec 写completesTwoBasicTasksAndOneTaskPerHigherTier、showsEightQuestionProgress、shufflesMatchOptionsAfterRetry、showsStateSpecificEncouragement；在 settings-achievements.spec 写persistsThemeAndStartPosition、updatesAchievementAfterBasicCompletion。断言标题、题数、状态和持久化值。
 - [ ] E2E 覆盖所有题型代表流程、错误/提示/重试/正确反馈、配对排序、进度刷新、成就门槛、主题、学习起点、键盘、窄屏、reduced motion、未知和筹备中页面；用 page.addInitScript 控制随机源，断言呈现文案属于对应状态池。
+- [ ] E2E 通过 Audio spy（不播放真实扬声器）验证声音开关默认开启且刷新持久化；普通正确、连续正确、错误、当前场次第 8 题全部完成及控件点击映射到正确本地 MP3；关闭开关后断言 Audio.play 未调用且正在播放被暂停；播放 Promise reject 不阻断答题。
 - [ ] 建立 GitHub Actions：Node 22.16.0、npm ci、build、coverage、Playwright；失败时上传报告。
 - [ ] 更新中文 README、AGENTS.md 和初始设计文档，说明课程版次依据、命令、隐私、许可和 Cloudflare Pages 配置。
 - [ ] 运行 npm run test:unit、npm run test:coverage、npm run test:e2e、npm run build、git diff --check，并手动查看桌面/窄屏、浅/深色、键盘焦点和减少动态效果。
