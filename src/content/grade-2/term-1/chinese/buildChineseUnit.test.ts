@@ -18,6 +18,23 @@ function task(title: string, goal: number): ChineseTaskSpec {
 }
 
 describe('buildChineseUnit', () => {
+  it('buildsCanonicalUnitIdsForTheSecondTerm', () => {
+    const unit = buildChineseUnit({
+      term: 2,
+      formalUnitNumber: 1,
+      title: '第一单元 · 春天来了',
+      sourceTopics: ['春天观察'],
+      basicTasks: [task('发现春天', 1), task('介绍春天', 2)],
+      advancedTask: task('连接线索', 1),
+      highTask: task('创意表达', 1),
+    });
+
+    expect(unit.id).toBe('grade-2/term-2/chinese/unit-01');
+    expect(unit.textbookEditionId).toBe('grade-2/term-2/chinese');
+    expect(unit.difficultyTracks.basic.tasks[0]?.sessions[0]?.id)
+      .toBe('grade-2/term-2/chinese/unit-01/basic/task-01/session-01');
+  });
+
   it('buildsCanonicalThreeTierTasksWithEightTypedActivities', () => {
     const unit = buildChineseUnit({
       formalUnitNumber: 3,

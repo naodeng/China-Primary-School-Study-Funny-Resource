@@ -56,7 +56,8 @@ describe('router', () => {
 
   it('distinguishesComingSoonFromUnknownCourses', () => {
     expect(resolveRoute('/grade-2/term-1/math/unit-01').kind).toBe('comingSoon');
-    expect(resolveRoute('/grade-2/term-2/chinese/unit-01').kind).toBe('notFound');
+    expect(resolveRoute('/grade-2/term-2/chinese/unit-01').kind).toBe('unit');
+    expect(resolveRoute('/grade-2/term-2/chinese/unit-99').kind).toBe('notFound');
   });
 
   it('doesNotOpenAnActiveCatalogEntryWithAnUnverifiedEdition', () => {

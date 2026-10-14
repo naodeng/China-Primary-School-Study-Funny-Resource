@@ -16,6 +16,17 @@ const term1ChineseUnits = [
   ['grade-2/term-1/chinese/unit-08', '第八单元 · 童话与成长'],
 ] as const;
 
+const term2ChineseUnits = [
+  ['grade-2/term-2/chinese/unit-01', '第一单元 · 春天来了'],
+  ['grade-2/term-2/chinese/unit-02', '第二单元 · 关爱与劳动'],
+  ['grade-2/term-2/chinese/unit-03', '第三单元 · 传统文化'],
+  ['grade-2/term-2/chinese/unit-04', '第四单元 · 童心与想象'],
+  ['grade-2/term-2/chinese/unit-05', '第五单元 · 寓言与思考'],
+  ['grade-2/term-2/chinese/unit-06', '第六单元 · 自然观察'],
+  ['grade-2/term-2/chinese/unit-07', '第七单元 · 动物与成长'],
+  ['grade-2/term-2/chinese/unit-08', '第八单元 · 远古故事'],
+] as const;
+
 describe('curriculum registry', () => {
   it('listsAllVerifiedTerm1ChineseEntries', () => {
     const subject = curriculum.grades[0]?.terms[0]?.subjects.find(({ id }) => id === 'chinese');
@@ -35,6 +46,38 @@ describe('curriculum registry', () => {
       });
     });
   });
+
+  it('listsAllVerifiedTerm2ChineseEntries', () => {
+    const subject = curriculum.grades[0]?.terms.find(({ id }) => id === 'term-2')?.subjects.find(({ id }) => id === 'chinese');
+    expect(subject?.units.map(({ id }) => id)).toEqual(term2ChineseUnits.map(([key]) => key.split('/').at(-1)));
+    expect(curriculum.textbooks['grade-2/term-2/chinese']?.verificationStatus).toBe('verified');
+
+    term2ChineseUnits.forEach(([unitKey, title], index) => {
+      expect(subject?.units[index]).toMatchObject({
+        title,
+        status: 'active',
+        type: 'unit',
+        formalUnitNumber: index + 1,
+        achievementEligible: true,
+        textbookEditionId: 'grade-2/term-2/chinese',
+        curriculumUnitKey: unitKey,
+      });
+    });
+  });
+
+  it.each(term2ChineseUnits.map(([unitKey]) => unitKey))(
+    'gives %s two basic tasks and one task at each higher tier with eight questions per session',
+    (unitKey) => {
+      const unit = curriculum.units[unitKey];
+      expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      Object.values(unit.difficultyTracks).forEach(({ tasks }) => tasks.forEach((task) => {
+        expect(task.sessions.length).toBeGreaterThan(0);
+        task.sessions.forEach((session) => expect(session.activities).toHaveLength(8));
+      }));
+    },
+  );
 
   it.each(term1ChineseUnits.map(([unitKey]) => unitKey))(
     'gives %s two basic tasks and one task at each higher tier with eight questions per session',
@@ -89,7 +132,9 @@ describe('curriculum registry', () => {
       expect(book?.latestPepEvidenceUrl).toBe(selected.pep);
       expect(book?.fallbackReason?.trim().length).toBeGreaterThan(0);
       expect(book?.tapxCommit).toBe(TAPX_TEXTBOOK_COMMIT);
-      expect(book?.verificationStatus).toBe(editionId === 'grade-2/term-1/chinese' ? 'verified' : 'pending');
+      expect(book?.verificationStatus).toBe(
+        editionId === 'grade-2/term-1/chinese' || editionId === 'grade-2/term-2/chinese' ? 'verified' : 'pending',
+      );
     }
 
     expect(curriculum.textbooks['grade-2/term-2/chinese']?.isbn).toBe('978-7-107-32383-6');
@@ -99,10 +144,11 @@ describe('curriculum registry', () => {
     expect(curriculum.textbooks['grade-2/term-2/math']?.edition).toBeNull();
   });
 
-  it('marks only the fully checked term-1 Chinese fallback as verified', () => {
+  it('marks only the fully checked Chinese fallback books as verified', () => {
     expect(Object.keys(curriculum.textbooks)).toHaveLength(6);
     expect(curriculum.textbooks['grade-2/term-1/chinese']?.verificationStatus).toBe('verified');
-    expect(Object.entries(curriculum.textbooks).filter(([id]) => id !== 'grade-2/term-1/chinese')
+    expect(curriculum.textbooks['grade-2/term-2/chinese']?.verificationStatus).toBe('verified');
+    expect(Object.entries(curriculum.textbooks).filter(([id]) => !id.endsWith('/chinese'))
       .every(([, book]) => book.verificationStatus === 'pending')).toBe(true);
   });
 
@@ -124,9 +170,9 @@ describe('curriculum registry', () => {
     }
   });
 
-  it('creates achievement positions only for the eight verified term-1 Chinese units', () => {
+  it('creates achievement positions for both verified Chinese terms', () => {
     expect(getKnownCurriculumPositions().map(({ key }) => key)).toEqual(
-      term1ChineseUnits.map(([unitKey]) => unitKey),
+      [...term1ChineseUnits, ...term2ChineseUnits].map(([unitKey]) => unitKey),
     );
   });
 

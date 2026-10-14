@@ -28,6 +28,7 @@ export interface ChineseTaskSpec {
 }
 
 export interface ChineseUnitSpec {
+  term?: 1 | 2;
   formalUnitNumber: number;
   title: string;
   sourceTopics: readonly string[];
@@ -124,7 +125,9 @@ function createTrack(unitId: string, difficulty: Difficulty, specs: readonly Chi
 }
 
 export function buildChineseUnit(spec: ChineseUnitSpec): CurriculumUnit {
-  const id = `grade-2/term-1/chinese/unit-${numberId(spec.formalUnitNumber)}`;
+  const term = spec.term ?? 1;
+  const textbookEditionId = `grade-2/term-${term}/chinese`;
+  const id = `${textbookEditionId}/unit-${numberId(spec.formalUnitNumber)}`;
   return {
     id,
     subject: 'chinese',
@@ -132,7 +135,7 @@ export function buildChineseUnit(spec: ChineseUnitSpec): CurriculumUnit {
     type: 'unit',
     formalUnitNumber: spec.formalUnitNumber,
     achievementEligible: true,
-    textbookEditionId: 'grade-2/term-1/chinese',
+    textbookEditionId,
     sourceTopics: [...spec.sourceTopics],
     difficultyTracks: {
       basic: createTrack(id, 'basic', spec.basicTasks),

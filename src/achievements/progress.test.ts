@@ -17,6 +17,7 @@ const basicSessions = getSessionsForDifficulty(unit, 'basic');
 
 function createVerifiedCurriculum(unitCount: number): Curriculum {
   const source = structuredClone(curriculum);
+  source.grades[0].terms = [source.grades[0].terms[0]];
   const subject = source.grades.find((grade) => grade.id === 'grade-2')!.terms[0].subjects.find((entry) => entry.id === 'chinese')!;
   const textbookId = 'grade-2/term-1/chinese';
   source.textbooks[textbookId].verificationStatus = 'verified';
@@ -95,7 +96,10 @@ describe('achievement progress', () => {
       { grade: 2, term: 1, unit: 1 },
       { grade: 2, term: 1, unit: 2 },
     ]);
-    expect(getKnownCurriculumPositions().map((position) => position.unit)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+    expect(getKnownCurriculumPositions().map((position) => position.curriculumUnitKey)).toEqual([
+      ...Array.from({ length: 8 }, (_, index) => `grade-2/term-1/chinese/unit-${String(index + 1).padStart(2, '0')}`),
+      ...Array.from({ length: 8 }, (_, index) => `grade-2/term-2/chinese/unit-${String(index + 1).padStart(2, '0')}`),
+    ]);
   });
 
   it('unlocksRanksAt1_2_4_8', () => {

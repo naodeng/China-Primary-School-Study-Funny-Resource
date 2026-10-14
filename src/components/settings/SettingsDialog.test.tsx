@@ -89,7 +89,7 @@ describe('SettingsDialog', () => {
       <ThemeProvider>
         <SettingsDialog
           open
-          progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: { grade: 2, term: 2, unit: 1 } }}
+          progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: { grade: 3, term: 2, unit: 1 } }}
           onClose={vi.fn()}
           onApplyLearningStart={vi.fn()}
           onNavigate={vi.fn()}
@@ -97,7 +97,7 @@ describe('SettingsDialog', () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByRole('combobox', { name: '年级' })).toHaveValue('2');
+    expect(screen.getByRole('combobox', { name: '年级' })).toHaveValue('3');
     expect(screen.getByRole('combobox', { name: '学期' })).toHaveValue('2');
     expect(screen.getByRole('combobox', { name: '从第几单元开始' })).toHaveValue('1');
     expect(screen.getByRole('status')).toHaveTextContent(/尚未登记到课程目录/);
