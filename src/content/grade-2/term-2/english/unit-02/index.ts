@@ -77,6 +77,44 @@ const weatherReporter = lessonProfile(
   { prompt: '把词卡排成“北京今天多云”。', items: ['cloudy', "It's", 'today', 'Beijing', '.', 'in'], correctOrderIndices: [1, 0, 5, 3, 2, 4] },
 );
 
+const weatherClueLab = lessonProfile(
+  [
+    { word: 'sunny', meaning: '晴朗的' },
+    { word: 'rainy', meaning: '下雨的' },
+    { word: 'windy', meaning: '有风的' },
+    { word: 'cloudy', meaning: '多云的' },
+  ],
+  [
+    phraseQuestion('天空被云遮住了，哪句天气报告合适？', ["It's cloudy.", "It's sunny.", "It's rainy."], 0, 'cloudy 表示多云的。'),
+    phraseQuestion('树叶被风吹动，哪句描述最准确？', ["It's windy.", "It's cloudy.", "It's sunny."], 0, 'windy 表示有风的。'),
+  ],
+  ['天气词', '完整天气句子'],
+  [
+    { label: 'sunny', categoryIndex: 0 }, { label: 'rainy', categoryIndex: 0 },
+    { label: "It's windy.", categoryIndex: 1 }, { label: "It's cloudy.", categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“今天天气晴朗”。', items: ['today', 'sunny', '.', "It's"], correctOrderIndices: [3, 1, 0, 2] },
+);
+
+const forecastCheck = lessonProfile(
+  [
+    { word: 'cloudy', meaning: '多云的' },
+    { word: 'rainy', meaning: '下雨的' },
+    { word: 'sunny', meaning: '晴朗的' },
+    { word: 'windy', meaning: '有风的' },
+  ],
+  [
+    phraseQuestion('想问“今天天气怎么样？”，哪句合适？', ["What's the weather like today?", 'What day is it today?', 'What time is it today?'], 0, '询问天气可以用 What’s the weather like…?'),
+    phraseQuestion('天气预报写着“有雨”，哪句报告匹配？', ["It's rainy today.", "It's sunny today.", "It's windy today."], 0, 'rainy 表示下雨的。'),
+  ],
+  ['天气问题', '天气报告'],
+  [
+    { label: "What's the weather like today?", categoryIndex: 0 }, { label: "What's the weather like?", categoryIndex: 0 },
+    { label: "It's sunny today.", categoryIndex: 1 }, { label: "It's cloudy today.", categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“今天天气怎么样？”', items: ['today', '?', 'weather', "What's", 'like', 'the'], correctOrderIndices: [3, 5, 2, 4, 0, 1] },
+);
+
 export const unit = buildEnglishUnit({
   term: 2,
   formalUnitNumber: 2,
@@ -87,6 +125,12 @@ export const unit = buildEnglishUnit({
     makeTask('天气词卡观测站', '认读常见天气词汇，练习描述今天的天气。', 'companion-02', weatherWords),
     makeTask('天气小播报练习', '从生活线索判断天气，选择准确的描述词。', 'companion-01', weatherReports),
   ],
-  advancedTask: makeTask('天气线索挑战', '根据天空和风雨线索判断天气，并说出完整句子。', 'companion-03', chooseForWeather),
-  highTask: makeTask('小小天气播报员', '把地点与天气信息连起来，完成清楚的简短天气报告。', 'companion-04', weatherReporter),
+  advancedTasks: [
+    makeTask('天气线索挑战', '根据天空和风雨线索判断天气，并说出完整句子。', 'companion-03', chooseForWeather),
+    makeTask('天气线索实验室', '从天空和周围现象判断天气词，并把词语放进完整句子。', 'companion-01', weatherClueLab),
+  ],
+  highTasks: [
+    makeTask('小小天气播报员', '把地点与天气信息连起来，完成清楚的简短天气报告。', 'companion-04', weatherReporter),
+    makeTask('天气预报校对站', '核对天气问句、天气词和报告句是否彼此匹配。', 'companion-02', forecastCheck),
+  ],
 });

@@ -77,6 +77,44 @@ const weeklyPlanner = lessonProfile(
   { prompt: '把词卡排成“我们星期日去踢足球”。', items: ['football', 'on Sunday', 'play', '.', "Let's"], correctOrderIndices: [4, 2, 0, 1, 3] },
 );
 
+const weekdaySequence = lessonProfile(
+  [
+    { word: 'Monday', meaning: '星期一' },
+    { word: 'Tuesday', meaning: '星期二' },
+    { word: 'Thursday', meaning: '星期四' },
+    { word: 'Saturday', meaning: '星期六' },
+  ],
+  [
+    phraseQuestion('星期二的下一天是星期几？', ['Wednesday', 'Monday', 'Saturday'], 0, 'Tuesday 后面是 Wednesday。'),
+    phraseQuestion('想询问今天是星期几，哪句合适？', ['What day is it today?', 'What time is it?', 'What is the weather like today?'], 0, '用 What day is it today? 询问星期。'),
+  ],
+  ['星期名称', '星期表达句'],
+  [
+    { label: 'Monday', categoryIndex: 0 }, { label: 'Saturday', categoryIndex: 0 },
+    { label: "It's Tuesday today.", categoryIndex: 1 }, { label: 'What day is it today?', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“今天是星期四”。', items: ['Thursday', "It's", 'today', '.'], correctOrderIndices: [1, 0, 2, 3] },
+);
+
+const weekendPlanCheck = lessonProfile(
+  [
+    { word: 'Saturday', meaning: '星期六' },
+    { word: 'Sunday', meaning: '星期日' },
+    { word: 'Monday', meaning: '星期一' },
+    { word: 'Wednesday', meaning: '星期三' },
+  ],
+  [
+    phraseQuestion('小队计划星期日踢足球，哪句正确？', ["Let's play football on Sunday.", "Let's play football at Sunday.", "Let's Sunday play a football."], 0, '星期名称前用 on 表示在星期几。'),
+    phraseQuestion('星期一的下一天是星期几？', ['Tuesday', 'Thursday', 'Sunday'], 0, 'Tuesday 接在 Monday 后面。'),
+  ],
+  ['工作日', '周末'],
+  [
+    { label: 'Monday', categoryIndex: 0 }, { label: 'Wednesday', categoryIndex: 0 },
+    { label: 'Saturday', categoryIndex: 1 }, { label: 'Sunday', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“我们星期六踢足球”。', items: ['on Saturday', 'football', '.', 'play', "Let's"], correctOrderIndices: [4, 3, 1, 0, 2] },
+);
+
 export const unit = buildEnglishUnit({
   term: 2,
   formalUnitNumber: 6,
@@ -87,6 +125,12 @@ export const unit = buildEnglishUnit({
     makeTask('星期词卡星历', '认读常见星期名称，区分工作日和周末。', 'companion-03', weekDays),
     makeTask('一周顺序练习站', '回顾星期名称和相邻日期的先后顺序。', 'companion-01', weekdayNames),
   ],
-  advancedTask: makeTask('今天星期几挑战', '根据日历线索提问和回答今天是星期几。', 'companion-02', dayQuestions),
-  highTask: makeTask('一周活动规划师', '按星期安排活动，练习使用 on 加星期名称。', 'companion-04', weeklyPlanner),
+  advancedTasks: [
+    makeTask('今天星期几挑战', '根据日历线索提问和回答今天是星期几。', 'companion-02', dayQuestions),
+    makeTask('星期顺序解码站', '辨认星期名称，利用相邻日期线索完成问答。', 'companion-01', weekdaySequence),
+  ],
+  highTasks: [
+    makeTask('一周活动规划师', '按星期安排活动，练习使用 on 加星期名称。', 'companion-04', weeklyPlanner),
+    makeTask('周末活动计划校对', '区分工作日和周末，并检查活动安排中的星期表达。', 'companion-03', weekendPlanCheck),
+  ],
 });

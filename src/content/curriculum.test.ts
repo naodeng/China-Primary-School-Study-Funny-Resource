@@ -168,14 +168,16 @@ describe('curriculum registry', () => {
   });
 
   it.each(term2EnglishEntries.map(([unitKey]) => unitKey))(
-    'gives %s two basic tasks, one task per higher tier, and eight questions per session',
+    'gives %s two basic tasks and two tasks per higher tier with eight questions per session',
     (unitKey) => {
       const unit = curriculum.units[unitKey];
       expect(unit, `missing curriculum entry: ${unitKey}`).toBeDefined();
       if (!unit) return;
       expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
-      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
-      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.advanced.tasks.map(({ objective }) => objective)).size).toBe(2);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.high.tasks.map(({ objective }) => objective)).size).toBe(2);
       Object.values(unit.difficultyTracks).forEach(({ tasks }) => tasks.forEach((task) => {
         expect(task.sessions.length).toBeGreaterThan(0);
         task.sessions.forEach((session) => {

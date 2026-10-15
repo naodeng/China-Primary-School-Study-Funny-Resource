@@ -77,6 +77,44 @@ const weekPlanner = lessonProfile(
   { prompt: '把词卡排成“我们星期二一起玩”。', items: ['on Tuesday', '.', "Let's", 'play'], correctOrderIndices: [2, 3, 0, 1] },
 );
 
+const timeAndDayReview = lessonProfile(
+  [
+    { word: '7:40', meaning: '七点四十分' },
+    { word: '11:30', meaning: '十一点三十分' },
+    { word: 'Monday', meaning: '星期一' },
+    { word: 'Sunday', meaning: '星期日' },
+  ],
+  [
+    phraseQuestion('钟面显示 7:40，哪句报告准确？', ["It's 7:40.", "It's 11:30.", "It's 2:50."], 0, '把钟面数字和句子中的时间对照。'),
+    phraseQuestion('想询问今天是星期几，哪句正确？', ['What day is it today?', 'What time is it?', 'What is the weather like?'], 0, 'day 在这里表示星期几。'),
+  ],
+  ['星期词', '时间数字'],
+  [
+    { label: 'Monday', categoryIndex: 0 }, { label: 'Sunday', categoryIndex: 0 },
+    { label: '7:40', categoryIndex: 1 }, { label: '11:30', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“现在是十一点三十分”。', items: ['11:30', "It's", '.'], correctOrderIndices: [1, 0, 2] },
+);
+
+const weeklyRoutineReview = lessonProfile(
+  [
+    { word: 'Saturday', meaning: '星期六' },
+    { word: 'Sunday', meaning: '星期日' },
+    { word: 'get up', meaning: '起床' },
+    { word: 'eat breakfast', meaning: '吃早餐' },
+  ],
+  [
+    phraseQuestion('“我星期六七点四十起床。”哪句正确？', ['I get up at 7:40 on Saturday.', 'I get up Saturday at 7:40?', 'I Saturday get 7:40 up.'], 0, 'at 放在时间前，on 放在星期名称前。'),
+    phraseQuestion('想问朋友每天什么时候吃早餐，哪句合适？', ['When do you eat breakfast every day?', 'What day do you eat breakfast every day?', 'Where do you eat breakfast every day?'], 0, 'When 用来询问日常活动时间。'),
+  ],
+  ['星期活动表达', '日常时间表达'],
+  [
+    { label: "Let's play football on Sunday.", categoryIndex: 0 }, { label: "Let's play football on Saturday.", categoryIndex: 0 },
+    { label: 'I get up at 6:30.', categoryIndex: 1 }, { label: 'I eat breakfast at 7:00.', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“我们星期日踢足球”。', items: ['football', 'on Sunday', '.', "Let's", 'play'], correctOrderIndices: [3, 4, 0, 1, 2] },
+);
+
 export const unit = buildEnglishUnit({
   term: 2,
   formalUnitNumber: null,
@@ -88,6 +126,12 @@ export const unit = buildEnglishUnit({
     makeTask('星期与时间复习站', '回顾数字时间和星期名称，练习读出日历提示。', 'companion-02', timeAndWeek),
     makeTask('日常时间表复习', '回顾一天中的活动词组和简单时间表达。', 'companion-01', routinesAndTimes),
   ],
-  advancedTask: makeTask('我的一天线索挑战', '综合星期和日常活动，为一周中的一天安排计划。', 'companion-03', planTheDay),
-  highTask: makeTask('时间与星期综合规划', '根据日期、时刻和活动信息安排一周小队计划。', 'companion-04', weekPlanner),
+  advancedTasks: [
+    makeTask('我的一天线索挑战', '综合星期和日常活动，为一周中的一天安排计划。', 'companion-03', planTheDay),
+    makeTask('时间星期复习卡', '辨认数字时间和星期名称，完成问句与报告句的匹配。', 'companion-01', timeAndDayReview),
+  ],
+  highTasks: [
+    makeTask('时间与星期综合规划', '根据日期、时刻和活动信息安排一周小队计划。', 'companion-04', weekPlanner),
+    makeTask('一周作息任务核对', '把星期、日常活动与时间表达组合起来，核对计划是否清楚。', 'companion-02', weeklyRoutineReview),
+  ],
 });

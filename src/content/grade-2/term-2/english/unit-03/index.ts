@@ -77,6 +77,44 @@ const seasonGuide = lessonProfile(
   { prompt: '把词卡排成“夏天很热”。', items: ['hot', 'Summer', '.', 'is'], correctOrderIndices: [1, 3, 0, 2] },
 );
 
+const seasonPreference = lessonProfile(
+  [
+    { word: 'spring', meaning: '春天' },
+    { word: 'summer', meaning: '夏天' },
+    { word: 'autumn', meaning: '秋天' },
+    { word: 'winter', meaning: '冬天' },
+  ],
+  [
+    phraseQuestion('想问朋友最喜欢哪个季节，哪句合适？', ['Which season do you like best?', 'What season is it today?', 'What time is it?'], 0, '用 Which season…? 询问最喜欢的季节。'),
+    phraseQuestion('“我最喜欢秋天。”可以怎样说？', ['I like autumn best.', 'I like winter best.', 'I like summer best.'], 0, 'autumn 表示秋天，best 表示最喜欢。'),
+  ],
+  ['季节名称', '喜好表达'],
+  [
+    { label: 'spring', categoryIndex: 0 }, { label: 'winter', categoryIndex: 0 },
+    { label: 'I like summer best.', categoryIndex: 1 }, { label: 'I like autumn best.', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“我最喜欢春天”。', items: ['spring', 'best', '.', 'I', 'like'], correctOrderIndices: [3, 4, 0, 1, 2] },
+);
+
+const seasonalWeatherCheck = lessonProfile(
+  [
+    { word: 'winter', meaning: '冬天' },
+    { word: 'spring', meaning: '春天' },
+    { word: 'summer', meaning: '夏天' },
+    { word: 'autumn', meaning: '秋天' },
+  ],
+  [
+    phraseQuestion('天气寒冷，哪个季节描述更合适？', ['It is cold in winter.', 'It is hot in winter.', 'It is summer in winter.'], 0, 'cold 表示冷的，winter 表示冬天。'),
+    phraseQuestion('“春天暖和。”对应哪句？', ['Spring is warm.', 'Spring is cold.', 'Winter is spring.'], 0, 'warm 表示暖和的。'),
+  ],
+  ['季节名称', '季节天气句子'],
+  [
+    { label: 'spring', categoryIndex: 0 }, { label: 'autumn', categoryIndex: 0 },
+    { label: 'Winter is cold.', categoryIndex: 1 }, { label: 'Summer is hot.', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“夏天很热”。', items: ['hot', 'Summer', 'is', '.'], correctOrderIndices: [1, 2, 0, 3] },
+);
+
 export const unit = buildEnglishUnit({
   term: 2,
   formalUnitNumber: 3,
@@ -87,6 +125,12 @@ export const unit = buildEnglishUnit({
     makeTask('四季词卡收藏册', '认读四季名称，练习说出自己喜欢的季节。', 'companion-03', seasons),
     makeTask('季节天气观察站', '把常见天气特点与季节联系起来，用简单句描述。', 'companion-02', seasonWeather),
   ],
-  advancedTask: makeTask('最喜欢的季节挑战', '根据喜好选择季节，练习 favourite 与季节表达。', 'companion-04', chooseASeason),
-  highTask: makeTask('四季小向导', '综合使用四季词汇和天气描述，为伙伴介绍季节特点。', 'companion-01', seasonGuide),
+  advancedTasks: [
+    makeTask('最喜欢的季节挑战', '根据喜好选择季节，练习 favourite 与季节表达。', 'companion-04', chooseASeason),
+    makeTask('季节喜好问答站', '听懂关于季节喜好的问句，并说出自己最喜欢的季节。', 'companion-02', seasonPreference),
+  ],
+  highTasks: [
+    makeTask('四季小向导', '综合使用四季词汇和天气描述，为伙伴介绍季节特点。', 'companion-01', seasonGuide),
+    makeTask('季节天气核对站', '根据天气线索匹配季节，并检查季节描述是否通顺。', 'companion-03', seasonalWeatherCheck),
+  ],
 });
