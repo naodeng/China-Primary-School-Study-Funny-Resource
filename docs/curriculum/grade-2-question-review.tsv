@@ -1,11 +1,11 @@
-课程 ID	题目总数	已审数量	答案正确性	题目清晰度	年龄适配	教材主题对齐	难度归属	修复记录	状态
-grade-2/term-1/chinese/unit-01	56	56	完成	完成	完成	完成	完成	basic/task-01/session-01/question-06：修正步骤顺序为提问、观察、记录、整理；high/task-01/session-01/question-03：明确在同一地点不同时段记录影子位置	完成
+课程ID	题目总数	已审数量	答案正确性	题目清晰度	年龄适配	教材主题对齐	难度归属	修复记录	状态
+grade-2/term-1/chinese/unit-01	56	56	完成	完成	完成	完成	完成	grade-2/term-1/chinese/unit-01/basic/task-01/session-01/question-06：修正观察步骤顺序为提问、观察、记录、整理；grade-2/term-1/chinese/unit-01/high/task-01/session-01/question-03：明确在同一地点的不同时段记录影子位置	完成
 grade-2/term-1/chinese/unit-02	56	56	完成	完成	完成	完成	完成	无	完成
-grade-2/term-1/chinese/unit-03	48	48	完成	完成	完成	完成	完成	advanced/task-01/session-01/question-04：将“先比较两种办法”改为真正的原因线索	完成
+grade-2/term-1/chinese/unit-03	48	48	完成	完成	完成	完成	完成	grade-2/term-1/chinese/unit-03/advanced/task-01/session-01/question-04：用原因线索替换不充分的比较办法	完成
 grade-2/term-1/chinese/unit-04	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/chinese/unit-05	48	48	完成	完成	完成	完成	完成	无	完成
-grade-2/term-1/chinese/unit-06	48	48	完成	完成	完成	完成	完成	高阶倡议题 question-06：将不清楚的“回顾小伙伴”改为“回顾员”	完成
-grade-2/term-1/chinese/unit-07	48	48	完成	完成	完成	完成	完成	basic/task-01/session-01/question-04：将含义不明的“空气很冷”明确为“我觉得空气很冷”以表示个人感受	完成
+grade-2/term-1/chinese/unit-06	48	48	完成	完成	完成	完成	完成	grade-2/term-1/chinese/unit-06/high/task-01/session-01/question-06：把不清楚的“回顾小伙伴”改为“回顾员”	完成
+grade-2/term-1/chinese/unit-07	48	48	完成	完成	完成	完成	完成	grade-2/term-1/chinese/unit-07/basic/task-01/session-01/question-04：明确“空气很冷”是个人感受	完成
 grade-2/term-1/chinese/unit-08	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/math/unit-01	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/math/unit-02	48	48	完成	完成	完成	完成	完成	无	完成
@@ -15,40 +15,40 @@ grade-2/term-1/math/unit-05	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/math/unit-06	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/math/unit-07	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/math/unit-08	48	48	完成	完成	完成	完成	完成	无	完成
-grade-2/term-1/math/unit-09	48	48	完成	完成	完成	完成	完成	advanced/task-01/session-01/question-01：将三类物品搭配改为本单元范围内的两类物品搭配	完成
+grade-2/term-1/math/unit-09	48	48	完成	完成	完成	完成	完成	grade-2/term-1/math/unit-09/advanced/task-01/session-01/question-01：将三类物品搭配改为本单元范围内的两类搭配	完成
 grade-2/term-1/math/integrated-practice-01	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/english/unit-01	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/english/unit-02	48	48	完成	完成	完成	完成	完成	无	完成
-grade-2/term-1/english/unit-03	48	48	完成	完成	完成	完成	完成	将 short 释义和身高问题改为中性、明确的描述	完成
+grade-2/term-1/english/unit-03	48	48	完成	完成	完成	完成	完成	grade-2/term-1/english/unit-03/basic/task-01/session-01/question-02：明确 short 描述身高时指身材较矮；grade-2/term-1/english/unit-03/basic/task-01/session-01/question-03：同步修正 short 的词义配对；grade-2/term-1/english/unit-03/basic/task-01/session-01/question-06：将身高提问改为中性、明确的描述；grade-2/term-1/english/unit-03/advanced/task-01/session-01/question-03：同步修正 short 的词义配对；grade-2/term-1/english/unit-03/high/task-01/session-01/question-03：同步修正 short 的词义配对；grade-2/term-1/english/unit-03/high/task-01/session-01/question-05：将身高提问改为中性、明确的描述	完成
 grade-2/term-1/english/review-01	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/english/unit-04	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-1/english/unit-05	48	48	完成	完成	完成	完成	完成	无	完成
-grade-2/term-1/english/unit-06	48	48	完成	完成	完成	完成	完成	澄清新年祝福场景，并修正感谢与礼貌回应的分类标签	完成
+grade-2/term-1/english/unit-06	48	48	完成	完成	完成	完成	完成	grade-2/term-1/english/unit-06/high/task-01/session-01/question-07：将感谢与礼貌回应归入清楚的分类标签	完成
 grade-2/term-1/english/review-02	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-2/chinese/unit-01	48	48	完成	完成	完成	完成	完成	无	完成
 grade-2/term-2/chinese/unit-02	48	48	完成	完成	完成	完成	完成	无	完成
-grade-2/term-2/chinese/unit-03	48	48	完成	完成	完成	完成	完成	high/task-01/session-01/question-05：将图片使用权限表述改为检查图片内容是否与节日主题相关	完成
+grade-2/term-2/chinese/unit-03	48	48	完成	完成	完成	完成	完成	grade-2/term-2/chinese/unit-03/high/task-01/session-01/question-05：将图片使用权限表述改为检查图片内容是否与节日主题相关	完成
 grade-2/term-2/chinese/unit-04	48	48	完成	完成	完成	完成	完成	无	完成
-grade-2/term-2/chinese/unit-05	48	48	完成	完成	完成	完成	完成	advanced/task-02/session-01/question-05：改为与《揠苗助长》故事结尾一致的禾苗结果	完成
-grade-2/term-2/chinese/unit-06	48	48	完成	完成	完成	完成	完成	high/task-01：将指南、资料来源和可执行性等抽象用语改为适合二年级的观察卡与安全提醒	完成
+grade-2/term-2/chinese/unit-05	48	48	完成	完成	完成	完成	完成	grade-2/term-2/chinese/unit-05/advanced/task-02/session-01/question-05：改为与《揠苗助长》故事结尾一致的禾苗结果	完成
+grade-2/term-2/chinese/unit-06	48	48	完成	完成	完成	完成	完成	grade-2/term-2/chinese/unit-06/high/task-01/session-01/question-01：把抽象指南目标改为安全的自然观察卡；grade-2/term-2/chinese/unit-06/high/task-01/session-01/question-02：用观察、猜想和安全提醒替换抽象分类词；grade-2/term-2/chinese/unit-06/high/task-01/session-01/question-03：把资料来源流程改为短句、图画和同伴检查；grade-2/term-2/chinese/unit-06/high/task-01/session-01/question-07：将准确性与可执行性改为具体的信息依据和行动提醒	完成
 grade-2/term-2/chinese/unit-07	48	48	完成	完成	完成	完成	完成	无	完成
-grade-2/term-2/chinese/unit-08	48	48	完成	完成	完成	完成	完成	调整进阶和高阶题目中过难的资料核实术语，改为课文线索、故事想象与个人感受	完成
-grade-2/term-2/math/unit-01	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核数据合计、比较、调查范围与结论依据	完成
-grade-2/term-2/math/unit-02	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核平均分、包含分、商的含义及乘法验算	完成
-grade-2/term-2/math/unit-03	48	48	完成	完成	完成	完成	完成	basic/task-01/session-01/question-04：明确对称需同时检查两侧形状和位置；新增进阶与高阶第二场并复核图形运动定义	完成
-grade-2/term-2/math/unit-04	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核7、8、9乘法口诀求商及单位表达	完成
-grade-2/term-2/math/unit-05	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核括号优先、乘除先算、同级从左到右和情境列式	完成
-grade-2/term-2/math/unit-06	48	48	完成	完成	完成	完成	完成	basic/task-01/session-01/question-06：更正简体字；advanced/task-01/session-01/question-02：明确询问坐满车辆和剩余人数	完成
-grade-2/term-2/math/unit-07	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核数位组成、0占位、读写、大小比较与万以内加减	完成
-grade-2/term-2/math/unit-08	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核克千克换算、质量比较和单位表达	完成
-grade-2/term-2/math/unit-09	48	48	完成	完成	完成	完成	完成	basic/task-01/session-01/question-02：补全三种水果选项；basic/task-01/session-01/question-03：补全门牌范围；advanced/task-01/session-01/question-04：补明队列范围与“可能”结论	完成
-grade-2/term-2/math/unit-10	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核学期知识综合题的计算、单位与数据依据	完成
-grade-2/term-2/math/integrated-practice-01	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核长度换算、质量换算、图形和统计情境	完成
-grade-2/term-2/english/unit-01	48	48	完成	完成	完成	完成	完成	修正基本任务的活动分类边界，并移除词汇范围外的 yet；新增进阶与高阶第二场	完成
-grade-2/term-2/english/unit-02	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核天气词义、天气问句和报告句	完成
-grade-2/term-2/english/unit-03	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核季节词、喜好句和天气搭配	完成
-grade-2/term-2/english/review-01	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核 Units 1–3 活动、天气与四季内容	完成
-grade-2/term-2/english/unit-04	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核时间数字、时间问句和报告句排序	完成
-grade-2/term-2/english/unit-05	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核日常活动词组、When 问句和 at 时间表达	完成
-grade-2/term-2/english/unit-06	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核星期顺序、周末分类及 on 星期表达	完成
-grade-2/term-2/english/review-02	48	48	完成	完成	完成	完成	完成	新增进阶与高阶第二场；复核 Units 4–6 时间、作息和星期表达	完成
+grade-2/term-2/chinese/unit-08	48	48	完成	完成	完成	完成	完成	grade-2/term-2/chinese/unit-08/advanced/task-01/session-01/question-01：将资料核实术语改为欣赏故事并向成人了解自然问题；grade-2/term-2/chinese/unit-08/advanced/task-01/session-01/question-02：用阅读、请教和表达感受区分问题处理方式；grade-2/term-2/chinese/unit-08/advanced/task-01/session-01/question-03：将查证读书卡改为故事画面、人物困难和行动；grade-2/term-2/chinese/unit-08/advanced/task-01/session-01/question-05：将证据强度术语改为适龄的“也许”表达；grade-2/term-2/chinese/unit-08/advanced/task-01/session-01/question-08：将比较资料标准改为向成人请教；grade-2/term-2/chinese/unit-08/high/task-01/session-01/question-02：改用课文线索、故事想象和个人感受作标记；grade-2/term-2/chinese/unit-08/high/task-01/session-01/question-03：将知识注释作品改为简单故事创作卡；grade-2/term-2/chinese/unit-08/high/task-01/session-01/question-04：用“可以在书中找到”替换抽象的资料事实标签；grade-2/term-2/chinese/unit-08/high/task-01/session-01/question-05：把资料核实改为识别和标记故事想象；grade-2/term-2/chinese/unit-08/high/task-01/session-01/question-06：用人物困难线索替换资料来源判断；grade-2/term-2/chinese/unit-08/high/task-01/session-01/question-07：把资料依据说明改为区分故事想象和真实内容；grade-2/term-2/chinese/unit-08/high/task-01/session-01/question-08：将资料依据检查改为故事、标记和伙伴分享	完成
+grade-2/term-2/math/unit-01	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/math/unit-02	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/math/unit-03	48	48	完成	完成	完成	完成	完成	grade-2/term-2/math/unit-03/basic/task-01/session-01/question-04：明确对称需同时检查两侧形状和位置	完成
+grade-2/term-2/math/unit-04	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/math/unit-05	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/math/unit-06	48	48	完成	完成	完成	完成	完成	grade-2/term-2/math/unit-06/basic/task-01/session-01/question-06：更正简体字；grade-2/term-2/math/unit-06/advanced/task-01/session-01/question-02：明确询问坐满车辆和剩余人数	完成
+grade-2/term-2/math/unit-07	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/math/unit-08	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/math/unit-09	48	48	完成	完成	完成	完成	完成	grade-2/term-2/math/unit-09/basic/task-01/session-01/question-02：补全三种水果选项；grade-2/term-2/math/unit-09/basic/task-01/session-01/question-03：补全门牌范围；grade-2/term-2/math/unit-09/advanced/task-01/session-01/question-04：补明队列范围与“可能”结论	完成
+grade-2/term-2/math/unit-10	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/math/integrated-practice-01	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/english/unit-01	48	48	完成	完成	完成	完成	完成	grade-2/term-2/english/unit-01/basic/task-01/session-01/question-06：将游泳从其他户外活动改归其他活动；grade-2/term-2/english/unit-01/basic/task-02/session-01/question-05：移除尚未学习的 yet；grade-2/term-2/english/unit-01/basic/task-02/session-01/question-06：移除尚未学习的 yet 词组	完成
+grade-2/term-2/english/unit-02	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/english/unit-03	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/english/review-01	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/english/unit-04	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/english/unit-05	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/english/unit-06	48	48	完成	完成	完成	完成	完成	无	完成
+grade-2/term-2/english/review-02	48	48	完成	完成	完成	完成	完成	无	完成
