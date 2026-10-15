@@ -1,10 +1,8 @@
-import { readdirSync } from 'node:fs';
-import { relative, resolve, sep } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { curriculum } from './curriculum';
 
-const contentRoot = resolve(process.cwd(), 'src/content');
 const canonicalEntryPattern = /^grade-\d+\/term-[12]\/(?:chinese|math|english)\/(?:unit|review|integrated-practice)-\d{2}$/;
+const courseEntryModules = import.meta.glob('./grade-*/term-*/**/index.ts');
 
 interface RegisteredEntry {
   id: string;
@@ -32,18 +30,6 @@ function getPlayableEntries(): RegisteredEntry[] {
   );
 }
 
-function findEntryDirectories(directory: string): string[] {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const fullPath = resolve(directory, entry.name);
-    if (entry.isDirectory()) return findEntryDirectories(fullPath);
-    if (entry.isFile() && entry.name === 'index.ts') {
-      const relativeParts = relative(contentRoot, fullPath).split(sep);
-      if (/^grade-\d+$/.test(relativeParts[0])) return [relativeParts.slice(0, -1).join('/')];
-    }
-    return [];
-  });
-}
-
 function inspectLayout(expectedDirectories: string[], actualDirectories: string[]): LayoutReport {
   const expected = new Set(expectedDirectories);
   const actual = new Set(actualDirectories);
@@ -59,7 +45,7 @@ describe('curriculum directory layout', () => {
   it('matchesEveryPlayableRegistryEntryToOneCanonicalDirectory', () => {
     const entries = getPlayableEntries();
     const expectedDirectories = entries.map((entry) => entry.curriculumUnitKey);
-    const actualDirectories = findEntryDirectories(contentRoot);
+    const actualDirectories = Object.keys(courseEntryModules).map((path) => path.replace(/^\.\//, '').replace(/\/index\.ts$/, ''));
 
     expect(entries).toHaveLength(53);
     expect(entries.filter((entry) => entry.subjectId === 'chinese')).toHaveLength(16);
