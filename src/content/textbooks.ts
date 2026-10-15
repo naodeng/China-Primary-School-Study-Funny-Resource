@@ -1,0 +1,128 @@
+import type { TextbookEdition } from './types';
+
+export const TAPX_TEXTBOOK_COMMIT = '5a80345f2043ba6f8db8d7be9cf3db82725ff1f7';
+
+const checkedAt = '2026-10-14';
+const pepEvidence = {
+  chinese: 'https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf',
+  math: 'https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml',
+  english: 'https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html',
+};
+
+function tapxPdfUrl(path: string): string {
+  const encodedPath = path.split('/').map(encodeURIComponent).join('/');
+  return `https://github.com/TapXWorld/ChinaTextbook/blob/${TAPX_TEXTBOOK_COMMIT}/${encodedPath}`;
+}
+
+const reasons = {
+  chinese: '人教社公开了 2025 年语文修订说明，但未找到本册完整新版学生用书和目录；按用户授权采用学校使用的 TapXWorld 固定快照。',
+  math: '人教社公开了新课标数学教材资源信息，但未找到本册完整新版学生用书和目录；按用户授权采用学校使用的 TapXWorld 固定快照。',
+  english: '人教社公开说明设有一、二年级英语预备级，但未找到本册完整新版学生用书和目录；按用户授权采用 TapXWorld 固定快照。学校是否开设尚未确认。',
+};
+
+export const textbooks: Record<string, TextbookEdition> = {
+  'grade-2/term-1/chinese': {
+    id: 'grade-2/term-1/chinese',
+    subject: 'chinese',
+    grade: 2,
+    term: 1,
+    series: '义务教育教科书·语文（二年级上册）',
+    edition: null,
+    printing: null,
+    isbn: null,
+    sourceKind: 'tapx-fallback',
+    sourceUrl: tapxPdfUrl('小学/语文/统编版/义务教育教科书·语文二年级上册.pdf'),
+    latestPepEvidenceUrl: pepEvidence.chinese,
+    fallbackReason: reasons.chinese,
+    checkedAt,
+    tapxCommit: TAPX_TEXTBOOK_COMMIT,
+    verificationStatus: 'verified',
+  },
+  'grade-2/term-2/chinese': {
+    id: 'grade-2/term-2/chinese',
+    subject: 'chinese',
+    grade: 2,
+    term: 2,
+    series: '义务教育教科书·语文（二年级下册）',
+    edition: '2017年12月第1版',
+    printing: null,
+    isbn: '978-7-107-32383-6',
+    sourceKind: 'tapx-fallback',
+    sourceUrl: tapxPdfUrl('小学/语文/统编版/义务教育教科书·语文二年级下册.pdf'),
+    latestPepEvidenceUrl: pepEvidence.chinese,
+    fallbackReason: reasons.chinese,
+    checkedAt,
+    tapxCommit: TAPX_TEXTBOOK_COMMIT,
+    verificationStatus: 'verified',
+  },
+  'grade-2/term-1/math': {
+    id: 'grade-2/term-1/math',
+    subject: 'math',
+    grade: 2,
+    term: 1,
+    series: '义务教育教科书·数学（二年级上册）',
+    edition: '2022年8月第2版',
+    printing: null,
+    isbn: '978-7-107-36923-0',
+    sourceKind: 'tapx-fallback',
+    sourceUrl: tapxPdfUrl('小学/数学/人教版/义务教育教科书 · 数学二年级上册.pdf'),
+    latestPepEvidenceUrl: pepEvidence.math,
+    fallbackReason: reasons.math,
+    checkedAt,
+    tapxCommit: TAPX_TEXTBOOK_COMMIT,
+    verificationStatus: 'verified',
+  },
+  'grade-2/term-2/math': {
+    id: 'grade-2/term-2/math',
+    subject: 'math',
+    grade: 2,
+    term: 2,
+    series: '义务教育教科书·数学（二年级下册）',
+    edition: null,
+    printing: null,
+    isbn: null,
+    sourceKind: 'tapx-fallback',
+    sourceUrl: tapxPdfUrl('小学/数学/人教版/义务教育教科书·数学二年级下册.pdf'),
+    latestPepEvidenceUrl: pepEvidence.math,
+    fallbackReason: reasons.math,
+    checkedAt,
+    tapxCommit: TAPX_TEXTBOOK_COMMIT,
+    verificationStatus: 'verified',
+  },
+  'grade-2/term-1/english': {
+    id: 'grade-2/term-1/english',
+    subject: 'english',
+    grade: 2,
+    term: 1,
+    series: '义务教育教科书·英语（一年级起点，二年级上册）',
+    edition: null,
+    printing: null,
+    isbn: null,
+    sourceKind: 'tapx-fallback',
+    sourceUrl: tapxPdfUrl('小学/英语/人教版（一年级起点）（主编：吴欣）/义务教育教科书·英语（一年级起点）二年级上册.pdf'),
+    latestPepEvidenceUrl: pepEvidence.english,
+    fallbackReason: reasons.english,
+    checkedAt,
+    tapxCommit: TAPX_TEXTBOOK_COMMIT,
+    verificationStatus: 'verified',
+    schoolOfferingStatus: 'unconfirmed',
+  },
+  'grade-2/term-2/english': {
+    id: 'grade-2/term-2/english',
+    subject: 'english',
+    grade: 2,
+    term: 2,
+    series: '义务教育教科书·英语（一年级起点，二年级下册）',
+    edition: '2013年10月第1版',
+    printing: null,
+    isbn: '978-7-107-27396-4',
+    sourceKind: 'tapx-fallback',
+    sourceUrl: tapxPdfUrl('小学/英语/人教版（一年级起点）（主编：吴欣）/义务教育教科书·英语（一年级起点）二年级下册.pdf'),
+    latestPepEvidenceUrl: pepEvidence.english,
+    fallbackReason: reasons.english,
+    checkedAt,
+    tapxCommit: TAPX_TEXTBOOK_COMMIT,
+    verificationStatus: 'verified',
+    schoolOfferingStatus: 'unconfirmed',
+  },
+};
