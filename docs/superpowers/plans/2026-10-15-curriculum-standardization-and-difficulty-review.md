@@ -188,6 +188,7 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 **文件：**
 
 - 修改：`src/content/grade-2/term-1/chinese/buildChineseUnit.ts`、`src/content/grade-2/term-1/math/buildMathUnit.ts`、`src/content/grade-2/term-1/english/buildEnglishUnit.ts`
+- 修改：`src/content/grade-2/term-2/chinese/unit-06/index.ts`（删除与 `advancedTasks` 首项重复的旧 `advancedTask` 字段）
 - 修改：`src/content/validateCurriculum.ts`、`src/content/validateCurriculum.test.ts`、`src/content/curriculum.test.ts`
 
 **接口：** `ChineseUnitSpec`、`MathUnitSpec`、`EnglishUnitSpec` 必需 `advancedTasks`、`highTasks` 两元素 tuple；移除旧的单值 `advancedTask`、`highTask`。可玩条目进阶/高阶计数不为 2 时返回既有稳定错误码 `TIER_TASK_COUNT`，错误 path 定位对应 difficulty track。
@@ -196,7 +197,7 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 - [ ] **Step 2：运行 `npx vitest run src/content/validateCurriculum.test.ts`**，确认 1 和 3 的任务数边界测试失败。
 - [ ] **Step 3：更新校验器提示、三个 spec 类型和 builder 测试**，删除迁移期单任务后备字段；更新全部课程清单断言为 `toHaveLength(2)`。
 - [ ] **Step 4：运行 `npx vitest run src/content/validateCurriculum.test.ts src/content/curriculum.test.ts src/content/grade-2/term-1/chinese/buildChineseUnit.test.ts src/content/grade-2/term-1/math/buildMathUnit.test.ts src/content/grade-2/term-1/english/buildEnglishUnit.test.ts`**，再运行 `npm run build`。
-- [ ] **Step 5：提交**：暂存三个明确的 `build*Unit.ts` 与对应 builder 测试、`src/content/validateCurriculum.ts`、`src/content/validateCurriculum.test.ts`、`src/content/curriculum.test.ts`；使用 `feat: require two tasks in advanced curriculum tiers` 提交。
+- [ ] **Step 5：提交**：暂存三个明确的 `build*Unit.ts` 与对应 builder 测试、`src/content/grade-2/term-2/chinese/unit-06/index.ts`、`src/content/validateCurriculum.ts`、`src/content/validateCurriculum.test.ts`、`src/content/curriculum.test.ts`；使用 `feat: require two tasks in advanced curriculum tiers` 提交。
 
 ### Task 11：校验逐题审校台账覆盖完整
 

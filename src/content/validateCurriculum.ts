@@ -311,8 +311,8 @@ export function validateCurriculum(curriculum: Curriculum): ValidationIssue[] {
       if (active && difficulty === 'basic' && track.tasks.length < 2) {
         addIssue(issues, 'BASIC_TASK_MINIMUM', `${trackPath}.tasks`, '基础版至少需要两个知识目标明确的任务。');
       }
-      if (active && difficulty !== 'basic' && track.tasks.length !== 1) {
-        addIssue(issues, 'TIER_TASK_COUNT', `${trackPath}.tasks`, '进阶版和高阶版各需要一个任务。');
+      if (active && difficulty !== 'basic' && track.tasks.length !== 2) {
+        addIssue(issues, 'TIER_TASK_COUNT', `${trackPath}.tasks`, '进阶版和高阶版都必须恰好包含两个任务。');
       }
 
       track.tasks.forEach((task, taskIndex) => {

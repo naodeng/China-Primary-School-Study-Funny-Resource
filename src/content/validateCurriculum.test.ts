@@ -50,8 +50,8 @@ function createCurriculum(): Curriculum {
     sourceTopics: ['看图理解', '根据线索推断'],
     difficultyTracks: {
       basic: { difficulty: 'basic', tasks: [createTask('basic', 1), createTask('basic', 2)] },
-      advanced: { difficulty: 'advanced', tasks: [createTask('advanced', 1)] },
-      high: { difficulty: 'high', tasks: [createTask('high', 1)] },
+      advanced: { difficulty: 'advanced', tasks: [createTask('advanced', 1), createTask('advanced', 2)] },
+      high: { difficulty: 'high', tasks: [createTask('high', 1), createTask('high', 2)] },
     },
   };
 
@@ -99,6 +99,11 @@ function createCurriculum(): Curriculum {
     }],
     units: { [unitKey]: unit },
   } as unknown as Curriculum;
+}
+
+function setTierTaskCount(curriculum: Curriculum, difficulty: 'advanced' | 'high', count: number) {
+  const tasks = curriculum.units[unitKey].difficultyTracks[difficulty].tasks;
+  tasks.splice(0, tasks.length, ...Array.from({ length: count }, (_, index) => createTask(difficulty, index + 1)));
 }
 
 function activityBase(id: string) {
@@ -295,13 +300,67 @@ describe('validateCurriculum', () => {
     }));
   });
 
-  it('requiresOneAdvancedAndHighTask', () => {
-    const curriculum = createCurriculum() as unknown as { units: Record<string, { difficultyTracks: { advanced: { tasks: unknown[] } } }> };
-    curriculum.units[unitKey].difficultyTracks.advanced.tasks.push(createTask('advanced', 2));
+  it('requiresExactlyTwoAdvancedTasks', () => {
+    const curriculum = createCurriculum();
+    setTierTaskCount(curriculum, 'advanced', 2);
 
-    expect(validateCurriculum(curriculum as unknown as Curriculum)).toContainEqual(expect.objectContaining({
+    expect(validateCurriculum(curriculum)).not.toContainEqual(expect.objectContaining({
       code: 'TIER_TASK_COUNT',
       path: `units.${unitKey}.difficultyTracks.advanced.tasks`,
+    }));
+  });
+
+  it('rejectsOneAdvancedTask', () => {
+    const curriculum = createCurriculum();
+    setTierTaskCount(curriculum, 'advanced', 1);
+
+    expect(validateCurriculum(curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TIER_TASK_COUNT',
+      path: `units.${unitKey}.difficultyTracks.advanced.tasks`,
+      message: '进阶版和高阶版都必须恰好包含两个任务。',
+    }));
+  });
+
+  it('rejectsThreeAdvancedTasks', () => {
+    const curriculum = createCurriculum();
+    setTierTaskCount(curriculum, 'advanced', 3);
+
+    expect(validateCurriculum(curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TIER_TASK_COUNT',
+      path: `units.${unitKey}.difficultyTracks.advanced.tasks`,
+      message: '进阶版和高阶版都必须恰好包含两个任务。',
+    }));
+  });
+
+  it('requiresExactlyTwoHighTasks', () => {
+    const curriculum = createCurriculum();
+    setTierTaskCount(curriculum, 'high', 2);
+
+    expect(validateCurriculum(curriculum)).not.toContainEqual(expect.objectContaining({
+      code: 'TIER_TASK_COUNT',
+      path: `units.${unitKey}.difficultyTracks.high.tasks`,
+    }));
+  });
+
+  it('rejectsOneHighTask', () => {
+    const curriculum = createCurriculum();
+    setTierTaskCount(curriculum, 'high', 1);
+
+    expect(validateCurriculum(curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TIER_TASK_COUNT',
+      path: `units.${unitKey}.difficultyTracks.high.tasks`,
+      message: '进阶版和高阶版都必须恰好包含两个任务。',
+    }));
+  });
+
+  it('rejectsThreeHighTasks', () => {
+    const curriculum = createCurriculum();
+    setTierTaskCount(curriculum, 'high', 3);
+
+    expect(validateCurriculum(curriculum)).toContainEqual(expect.objectContaining({
+      code: 'TIER_TASK_COUNT',
+      path: `units.${unitKey}.difficultyTracks.high.tasks`,
+      message: '进阶版和高阶版都必须恰好包含两个任务。',
     }));
   });
 
