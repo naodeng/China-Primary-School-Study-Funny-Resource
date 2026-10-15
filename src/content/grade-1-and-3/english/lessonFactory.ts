@@ -43,11 +43,14 @@ function profile(
 
 const profiles: Record<string, EnglishProfile> = {
   school: profile(
-    [['teacher', '老师'], ['book', '书'], ['bag', '书包'], ['desk', '课桌']], ['人物', '校园物品'],
-    [{ label: 'teacher', categoryIndex: 0 }, { label: 'book', categoryIndex: 1 }, { label: 'bag', categoryIndex: 1 }, { label: 'desk', categoryIndex: 1 }],
+    [['book', '书'], ['ruler', '尺子'], ['pencil', '铅笔'], ['schoolbag', '书包']], ['课堂人物', '学习用品'],
     [
-      phrase('想介绍一本书，应该选哪句话？', ['This is a book.', 'This is a teacher.', 'This is a bag.'], 0, 'book 表示“书”。', 'This is a book. 的意思是“这是一本书”。', ['book', 'a', 'This', 'is', '.'], [2, 3, 1, 0, 4]),
-      phrase('老师说“Open your book.”，应该做什么？', ['打开你的书。', '背上你的书包。', '坐到课桌下面。'], 0, 'book 是“书”，open 是“打开”。', 'Open your book. 是“打开你的书”。', ['your', 'Open', '.', 'book'], [1, 0, 3, 2]),
+      { label: 'teacher', categoryIndex: 0 }, { label: 'book', categoryIndex: 1 }, { label: 'ruler', categoryIndex: 1 },
+      { label: 'pencil', categoryIndex: 1 }, { label: 'schoolbag', categoryIndex: 1 },
+    ],
+    [
+      phrase('想说“我有一把尺子”，应该选哪句话？', ['I have a ruler.', 'I have a book.', 'I have a pencil.'], 0, 'ruler 表示“尺子”。', 'I have a ruler. 的意思是“我有一把尺子”。', ['a', 'ruler', 'I', '.', 'have'], [2, 4, 0, 1, 3]),
+      phrase('想说“我有一个书包”，应该选哪句话？', ['I have a schoolbag.', 'I have a ruler.', 'I have a book.'], 0, 'schoolbag 表示“书包”。', 'I have a schoolbag. 的意思是“我有一个书包”。', ['schoolbag', 'I', 'have', 'a', '.'], [1, 2, 3, 0, 4]),
     ],
   ),
   face: profile(
@@ -59,8 +62,11 @@ const profiles: Record<string, EnglishProfile> = {
     ],
   ),
   animals: profile(
-    [['cat', '猫'], ['dog', '狗'], ['bird', '鸟'], ['fish', '鱼']], ['猫、狗或鸟', '鱼类'],
-    [{ label: 'cat', categoryIndex: 0 }, { label: 'dog', categoryIndex: 0 }, { label: 'bird', categoryIndex: 0 }, { label: 'fish', categoryIndex: 1 }],
+    [['cat', '猫'], ['dog', '狗'], ['bird', '鸟'], ['tiger', '老虎']], ['鸟类', '其他动物'],
+    [
+      { label: 'cat', categoryIndex: 1 }, { label: 'dog', categoryIndex: 1 }, { label: 'bird', categoryIndex: 0 },
+      { label: 'tiger', categoryIndex: 1 }, { label: 'monkey', categoryIndex: 1 },
+    ],
     [
       phrase('“I like cats.” 表示什么？', ['我喜欢猫。', '我有一条鱼。', '这是一只鸟。'], 0, 'I like… 表示“我喜欢……”。', 'I like cats. 的意思是“我喜欢猫”。', ['cats', 'like', 'I', '.'], [2, 1, 0, 3]),
       phrase('看到一只狗，哪句话合适？', ['It is a dog.', 'It is a fish.', 'It is a book.'], 0, 'dog 表示“狗”。', 'It is a dog. 的意思是“它是一只狗”。', ['a', 'dog', 'It', 'is', '.'], [2, 3, 0, 1, 4]),
@@ -96,56 +102,101 @@ const profiles: Record<string, EnglishProfile> = {
     ],
   ),
   classroom: profile(
-    [['pencil', '铅笔'], ['ruler', '尺子'], ['eraser', '橡皮'], ['book', '书']], ['文具', '学习材料'],
-    [{ label: 'pencil', categoryIndex: 0 }, { label: 'ruler', categoryIndex: 0 }, { label: 'eraser', categoryIndex: 0 }, { label: 'book', categoryIndex: 1 }],
+    [['chair', '椅子'], ['desk', '书桌'], ['blackboard', '黑板'], ['under', '在……下面']], ['教室物品', '位置词'],
     [
-      phrase('老师说“Show me your ruler.”，应该做什么？', ['把尺子给老师看。', '把橡皮放进书里。', '拿出一只玩具。'], 0, 'ruler 表示“尺子”。', 'Show me your ruler. 是“把你的尺子给我看”。', ['your', 'Show', 'ruler', 'me', '.'], [1, 3, 0, 2, 4]),
-      phrase('“This is my pencil.” 表示什么？', ['这是我的铅笔。', '这是我的尺子。', '这是我的书。'], 0, 'pencil 表示“铅笔”。', 'This is my pencil. 的意思是“这是我的铅笔”。', ['pencil', 'my', 'This', '.', 'is'], [2, 4, 1, 0, 3]),
+      { label: 'chair', categoryIndex: 0 }, { label: 'desk', categoryIndex: 0 }, { label: 'blackboard', categoryIndex: 0 },
+      { label: 'on', categoryIndex: 1 }, { label: 'under', categoryIndex: 1 }, { label: 'in', categoryIndex: 1 },
+    ],
+    [
+      phrase('想说“椅子在桌子下面”，应该选哪句话？', ['The chair is under the desk.', 'The chair is on the desk.', 'The chair is in the desk.'], 0, 'under 表示“在……下面”。', 'The chair is under the desk. 的意思是“椅子在桌子下面”。', ['desk', 'The', 'under', 'chair', 'the', 'is', '.'], [1, 3, 5, 2, 4, 0, 6]),
+      phrase('“Where is the desk?” 是在问什么？', ['桌子在哪里？', '桌子是什么颜色？', '桌子有几本？'], 0, 'where 用来询问地点。', 'Where is the desk? 是在询问桌子的位置。', ['desk', 'Where', 'the', '?', 'is'], [1, 4, 2, 0, 3]),
     ],
   ),
   room: profile(
-    [['bed', '床'], ['desk', '书桌'], ['chair', '椅子'], ['door', '门']], ['家具', '房间部位'],
-    [{ label: 'bed', categoryIndex: 0 }, { label: 'desk', categoryIndex: 0 }, { label: 'chair', categoryIndex: 0 }, { label: 'door', categoryIndex: 1 }],
+    [['light', '灯'], ['bed', '床'], ['door', '门'], ['box', '盒子']], ['房间物品', '位置词'],
     [
-      phrase('“Where is the chair?” 是在问什么？', ['椅子在哪里？', '椅子是什么颜色？', '椅子有几本？'], 0, 'where 用来询问地点。', 'Where is the chair? 是在询问椅子的位置。', ['the', 'Where', 'chair', 'is', '?'], [1, 3, 0, 2, 4]),
-      phrase('想说“床在房间里”，应该选哪句？', ['The bed is in the room.', 'The chair is on the desk.', 'The door is blue.'], 0, 'bed 是“床”，room 是“房间”。', 'The bed is in the room. 表示“床在房间里”。', ['in', 'The', 'room', 'bed', 'the', 'is', '.'], [1, 3, 5, 0, 4, 2, 6]),
+      { label: 'light', categoryIndex: 0 }, { label: 'bed', categoryIndex: 0 }, { label: 'door', categoryIndex: 0 },
+      { label: 'box', categoryIndex: 0 }, { label: 'near', categoryIndex: 1 }, { label: 'behind', categoryIndex: 1 },
+    ],
+    [
+      phrase('想说“盒子在床旁边”，应该选哪句话？', ['The box is near the bed.', 'The box is behind the bed.', 'The light is near the bed.'], 0, 'near 表示“靠近”。', 'The box is near the bed. 的意思是“盒子在床旁边”。', ['bed', 'The', 'box', 'near', 'the', 'is', '.'], [1, 2, 5, 3, 4, 0, 6]),
+      phrase('想说“盒子在门后面”，应该选哪句话？', ['The box is behind the door.', 'The box is near the bed.', 'The bed is behind the door.'], 0, 'behind 表示“在……后面”。', 'The box is behind the door. 的意思是“盒子在门后面”。', ['behind', 'the', 'The', 'door', 'is', 'box', '.'], [2, 5, 4, 0, 1, 3, 6]),
     ],
   ),
   toys: profile(
-    [['ball', '球'], ['kite', '风筝'], ['doll', '玩偶'], ['car', '小汽车']], ['球类或飞行玩具', '其他玩具'],
-    [{ label: 'ball', categoryIndex: 0 }, { label: 'kite', categoryIndex: 0 }, { label: 'doll', categoryIndex: 1 }, { label: 'car', categoryIndex: 1 }],
+    [['ball', '球'], ['doll', '玩偶'], ['train', '火车'], ['plane', '飞机']], ['球或玩偶', '交通工具玩具'],
     [
-      phrase('“I have a ball.” 表示什么？', ['我有一个球。', '我喜欢一只猫。', '我有一把尺子。'], 0, 'have 表示“有”。', 'I have a ball. 的意思是“我有一个球”。', ['a', 'ball', 'I', '.', 'have'], [2, 4, 0, 1, 3]),
-      phrase('想询问“这是风筝吗？”，应该选哪句？', ['Is this a kite?', 'Is this a book?', 'Is this a doll?'], 0, 'kite 表示“风筝”。', 'Is this a kite? 是“这是风筝吗？”', ['a', 'this', 'Is', 'kite', '?'], [2, 1, 0, 3, 4]),
+      { label: 'ball', categoryIndex: 0 }, { label: 'doll', categoryIndex: 0 }, { label: 'bear', categoryIndex: 0 },
+      { label: 'train', categoryIndex: 1 }, { label: 'car', categoryIndex: 1 }, { label: 'plane', categoryIndex: 1 },
+    ],
+    [
+      phrase('“This is a ball.” 表示什么？', ['这是一个球。', '这是一列火车。', '这是一只玩具熊。'], 0, 'ball 表示“球”。', 'This is a ball. 的意思是“这是一个球”。', ['ball', 'a', 'This', '.', 'is'], [2, 4, 1, 0, 3]),
+      phrase('想说“它是一架飞机”，应该选哪句话？', ['It is a plane.', 'It is a train.', 'It is a car.'], 0, 'plane 表示“飞机”。', 'It is a plane. 的意思是“它是一架飞机”。', ['a', 'It', 'plane', 'is', '.'], [1, 3, 0, 2, 4]),
     ],
   ),
-  food: profile(
-    [['rice', '米饭'], ['bread', '面包'], ['egg', '鸡蛋'], ['fish', '鱼肉']], ['主食', '其他食物'],
-    [{ label: 'rice', categoryIndex: 0 }, { label: 'bread', categoryIndex: 0 }, { label: 'egg', categoryIndex: 1 }, { label: 'fish', categoryIndex: 1 }],
+  'food-g1': profile(
+    [['rice', '米饭'], ['noodles', '面条'], ['chicken', '鸡肉'], ['egg', '鸡蛋']], ['米饭或面条', '其他食物'],
     [
-      phrase('“I like rice.” 表示什么？', ['我喜欢米饭。', '我有一杯牛奶。', '这是一个鸡蛋。'], 0, 'rice 表示“米饭”。', 'I like rice. 的意思是“我喜欢米饭”。', ['rice', 'I', 'like', '.'], [1, 2, 0, 3]),
-      phrase('想礼貌地问“你喜欢鸡蛋吗？”，应该选哪句？', ['Do you like eggs?', 'Where is the bread?', 'How many books?'], 0, 'Do you like…? 可以询问喜好。', 'Do you like eggs? 是在询问是否喜欢鸡蛋。', ['eggs', 'Do', 'like', 'you', '?'], [1, 3, 2, 0, 4]),
+      { label: 'rice', categoryIndex: 0 }, { label: 'noodles', categoryIndex: 0 }, { label: 'vegetable', categoryIndex: 1 },
+      { label: 'fish', categoryIndex: 1 }, { label: 'chicken', categoryIndex: 1 }, { label: 'egg', categoryIndex: 1 },
+    ],
+    [
+      phrase('“Do you like noodles?” 是在问什么？', ['你喜欢面条吗？', '你喜欢茶吗？', '你喜欢玩具吗？'], 0, 'Do you like…? 可以询问喜好，noodles 表示“面条”。', 'Do you like noodles? 是在询问是否喜欢面条。', ['noodles', 'Do', 'you', 'like', '?'], [1, 2, 3, 0, 4]),
+      phrase('想回答“是的，我喜欢面条”，哪句话合适？', ['Yes, yes, I do.', 'No, no, I don’t.', 'Thank you.'], 0, 'Yes, yes, I do. 用来肯定回答 Do you like…?。', 'Yes, yes, I do. 的意思是“是的，我喜欢”。', ['do.', 'Yes,', 'I', 'yes,'], [1, 3, 2, 0]),
+    ],
+  ),
+  'food-g3': profile(
+    [['bread', '面包'], ['cake', '蛋糕'], ['potato', '土豆'], ['tomato', '西红柿']], ['食物', '饮品'],
+    [
+      { label: 'bread', categoryIndex: 0 }, { label: 'cake', categoryIndex: 0 }, { label: 'fruit', categoryIndex: 0 },
+      { label: 'ice cream', categoryIndex: 0 }, { label: 'potato', categoryIndex: 0 }, { label: 'tomato', categoryIndex: 0 },
+      { label: 'meat', categoryIndex: 0 }, { label: 'rice', categoryIndex: 0 }, { label: 'noodles', categoryIndex: 0 },
+      { label: 'vegetables', categoryIndex: 0 }, { label: 'fish', categoryIndex: 0 }, { label: 'chicken', categoryIndex: 0 },
+      { label: 'egg', categoryIndex: 0 }, { label: 'cola', categoryIndex: 1 },
+    ],
+    [
+      phrase('想说“我想要面包”，应该选哪句话？', ['I want bread.', 'I want a potato.', 'I want cola.'], 0, 'bread 表示“面包”。', 'I want bread. 的意思是“我想要面包”。', ['bread', 'I', 'want', '.'], [1, 2, 0, 3]),
+      phrase('想说“我想要蛋糕”，应该选哪句话？', ['I want cake.', 'I want tomato.', 'I want fish.'], 0, 'cake 表示“蛋糕”。', 'I want cake. 的意思是“我想要蛋糕”。', ['cake', '.', 'I', 'want'], [2, 3, 0, 1]),
     ],
   ),
   drink: profile(
-    [['water', '水'], ['milk', '牛奶'], ['juice', '果汁'], ['tea', '茶']], ['含字母 e', '不含字母 e'],
+    [['water', '水'], ['juice', '果汁'], ['milk', '牛奶'], ['tea', '茶']], ['有字母 e', '没有字母 e'],
     [{ label: 'water', categoryIndex: 0 }, { label: 'milk', categoryIndex: 1 }, { label: 'juice', categoryIndex: 0 }, { label: 'tea', categoryIndex: 0 }],
     [
-      phrase('想说“我想要水”，应该选哪句？', ['I want water.', 'I want a book.', 'I like a chair.'], 0, 'water 表示“水”。', 'I want water. 的意思是“我想要水”。', ['water', '.', 'I', 'want'], [2, 3, 0, 1]),
-      phrase('别人递来果汁时，哪句可以表达感谢？', ['Thank you.', 'Good night.', 'How many?'], 0, '接受帮助或物品后可以表示感谢。', 'Thank you. 的意思是“谢谢你”。', ['you', 'Thank', '.'], [1, 0, 2]),
+      phrase('想礼貌地要水喝，应该选哪句话？', ['Can I have water?', 'Can I have a book?', 'Can I have a ruler?'], 0, 'water 表示“水”，Can I have…? 可以礼貌地提出请求。', 'Can I have water? 的意思是“我可以喝点水吗？”', ['water', 'I', '?', 'Can', 'have'], [3, 1, 4, 0, 2]),
+      phrase('想礼貌地要茶喝，应该选哪句话？', ['Can I have tea?', 'Can I have a chair?', 'Can I have a pencil?'], 0, 'tea 表示“茶”。', 'Can I have tea? 的意思是“我可以喝点茶吗？”', ['tea', 'Can', 'have', '?', 'I'], [1, 4, 2, 0, 3]),
     ],
   ),
-  clothes: profile(
-    [['shirt', '衬衫'], ['coat', '外套'], ['shoes', '鞋子'], ['hat', '帽子']], ['上身或头部衣物', '鞋类'],
-    [{ label: 'shirt', categoryIndex: 0 }, { label: 'coat', categoryIndex: 0 }, { label: 'hat', categoryIndex: 0 }, { label: 'shoes', categoryIndex: 1 }],
+  'clothes-g1': profile(
+    [['shirt', '衬衫'], ['T-shirt', 'T恤衫'], ['skirt', '裙子'], ['dress', '连衣裙']], ['上衣', '其他衣物'],
     [
-      phrase('想说“我的外套是红色的”，应该选哪句？', ['My coat is red.', 'My shoes are a book.', 'My hat is a ruler.'], 0, 'coat 表示“外套”。', 'My coat is red. 的意思是“我的外套是红色的”。', ['red', 'coat', 'My', 'is', '.'], [2, 1, 3, 0, 4]),
-      phrase('天气冷时，哪件衣物通常更适合穿在外面？', ['a coat', 'a pencil', 'a pear'], 0, 'coat 是外套。', '外套可以穿在衣服外面保暖。', ['a', 'coat', 'This', 'is', '.'], [2, 3, 0, 1, 4]),
+      { label: 'shirt', categoryIndex: 0 }, { label: 'T-shirt', categoryIndex: 0 }, { label: 'skirt', categoryIndex: 1 },
+      { label: 'dress', categoryIndex: 1 }, { label: 'socks', categoryIndex: 1 }, { label: 'shorts', categoryIndex: 1 },
+    ],
+    [
+      phrase('想说“这是我的衬衫”，应该选哪句话？', ['This is my shirt.', 'This is my skirt.', 'This is my dress.'], 0, 'shirt 表示“衬衫”。', 'This is my shirt. 的意思是“这是我的衬衫”。', ['my', 'This', 'shirt', '.', 'is'], [1, 4, 0, 2, 3]),
+      phrase('想说“这是我的 T 恤衫”，应该选哪句话？', ['This is my T-shirt.', 'This is my skirt.', 'This is my dress.'], 0, 'T-shirt 表示“T 恤衫”。', 'This is my T-shirt. 的意思是“这是我的 T 恤衫”。', ['T-shirt', 'This', 'my', 'is', '.'], [1, 3, 2, 0, 4]),
+    ],
+  ),
+  'clothes-g3': profile(
+    [['sweater', '毛衣'], ['jacket', '夹克'], ['cap', '帽子'], ['shoes', '鞋子']], ['上身、头部或手部衣物', '下身衣物和鞋'],
+    [
+      { label: 'cap', categoryIndex: 0 }, { label: 'coat', categoryIndex: 0 }, { label: 'sweater', categoryIndex: 0 },
+      { label: 'jacket', categoryIndex: 0 }, { label: 'gloves', categoryIndex: 0 }, { label: 'shoes', categoryIndex: 1 },
+      { label: 'trousers', categoryIndex: 1 },
+    ],
+    [
+      phrase('想说“这是我的夹克”，应该选哪句话？', ['This is my jacket.', 'This is my sweater.', 'This is my cap.'], 0, 'jacket 表示“夹克”。', 'This is my jacket. 的意思是“这是我的夹克”。', ['jacket', 'This', 'my', '.', 'is'], [1, 4, 2, 0, 3]),
+      phrase('想说“我有一顶帽子”，应该选哪句话？', ['I have a cap.', 'I have some shoes.', 'I have a jacket.'], 0, 'cap 表示“帽子”。', 'I have a cap. 的意思是“我有一顶帽子”。', ['cap', 'I', 'have', 'a', '.'], [1, 2, 3, 0, 4]),
     ],
   ),
   myself: profile(
-    [['name', '名字'], ['age', '年龄'], ['I', '我'], ['friend', '朋友']], ['自我信息', '人际关系'],
-    [{ label: 'name', categoryIndex: 0 }, { label: 'age', categoryIndex: 0 }, { label: 'I', categoryIndex: 0 }, { label: 'friend', categoryIndex: 1 }],
+    [['my', '我的'], ['name', '名字'], ['age', '年龄'], ['class', '班级']], ['姓名与称呼', '年龄与班级'],
+    [
+      { label: 'my', categoryIndex: 0 }, { label: 'your', categoryIndex: 0 }, { label: 'name', categoryIndex: 0 },
+      { label: 'dear', categoryIndex: 0 }, { label: 'age', categoryIndex: 1 }, { label: 'old', categoryIndex: 1 },
+      { label: 'year', categoryIndex: 1 }, { label: 'class', categoryIndex: 1 }, { label: 'grade', categoryIndex: 1 },
+    ],
     [
       phrase('“My name is Amy.” 表示什么？', ['我的名字叫 Amy。', '我有一个苹果。', '我喜欢蓝色。'], 0, 'name 表示“名字”。', 'My name is Amy. 是自我介绍姓名的表达。', ['Amy', 'name', 'is', 'My', '.'], [3, 1, 2, 0, 4]),
       phrase('别人问 “How old are you?”，是在问什么？', ['你几岁？', '你叫什么？', '你喜欢什么？'], 0, 'old 在这里和年龄有关。', 'How old are you? 是在询问年龄。', ['old', 'How', 'you', 'are', '?'], [1, 0, 3, 2, 4]),
@@ -168,59 +219,90 @@ const profiles: Record<string, EnglishProfile> = {
     ],
   ),
   birthdays: profile(
-    [['birthday', '生日'], ['cake', '蛋糕'], ['gift', '礼物'], ['happy', '快乐的']], ['庆祝活动', '祝福词'],
-    [{ label: 'cake', categoryIndex: 0 }, { label: 'gift', categoryIndex: 0 }, { label: 'birthday', categoryIndex: 0 }, { label: 'happy', categoryIndex: 1 }],
+    [['January', '一月'], ['June', '六月'], ['July', '七月'], ['December', '十二月']], ['一月至六月', '七月至十二月'],
     [
-      phrase('生日时想送上祝福，哪句话合适？', ['Happy birthday!', 'Good morning!', 'Open your book!'], 0, 'birthday 表示“生日”。', 'Happy birthday! 是“生日快乐！”', ['birthday', 'Happy', '!'], [1, 0, 2]),
-      phrase('“This is a gift.” 表示什么？', ['这是一份礼物。', '这是一个蛋糕。', '这是我的生日。'], 0, 'gift 表示“礼物”。', 'This is a gift. 的意思是“这是一份礼物”。', ['gift', 'a', 'This', 'is', '.'], [2, 3, 1, 0, 4]),
+      { label: 'January', categoryIndex: 0 }, { label: 'February', categoryIndex: 0 }, { label: 'March', categoryIndex: 0 },
+      { label: 'April', categoryIndex: 0 }, { label: 'May', categoryIndex: 0 }, { label: 'June', categoryIndex: 0 },
+      { label: 'July', categoryIndex: 1 }, { label: 'August', categoryIndex: 1 }, { label: 'September', categoryIndex: 1 },
+      { label: 'October', categoryIndex: 1 }, { label: 'November', categoryIndex: 1 }, { label: 'December', categoryIndex: 1 },
+    ],
+    [
+      phrase('“Which month comes after January?” 是在问什么？', ['一月之后是哪个月？', '一月之前是哪个月？', '六月之后是哪个月？'], 0, '按月份顺序接着往后数。', 'January 之后的月份是 February。', ['after', 'Which', 'January', 'month', '?', 'comes'], [1, 3, 5, 0, 2, 4]),
+      phrase('想说“我的生日在六月”，应该选哪句话？', ['My birthday is in June.', 'My birthday is in January.', 'My birthday is in July.'], 0, 'June 表示“六月”。', 'My birthday is in June. 的意思是“我的生日在六月”。', ['June', 'My', 'is', 'birthday', 'in', '.'], [1, 3, 2, 4, 0, 5]),
     ],
   ),
   'school-subjects': profile(
-    [['English', '英语'], ['math', '数学'], ['music', '音乐'], ['art', '美术']], ['语言和数学学科', '艺术学科'],
-    [{ label: 'English', categoryIndex: 0 }, { label: 'math', categoryIndex: 0 }, { label: 'music', categoryIndex: 1 }, { label: 'art', categoryIndex: 1 }],
+    [['English', '英语'], ['maths', '数学'], ['music', '音乐'], ['art', '美术']], ['语言课', '其他课程'],
+    [
+      { label: 'Chinese', categoryIndex: 0 }, { label: 'English', categoryIndex: 0 }, { label: 'maths', categoryIndex: 1 },
+      { label: 'science', categoryIndex: 1 }, { label: 'PE', categoryIndex: 1 }, { label: 'music', categoryIndex: 1 },
+      { label: 'art', categoryIndex: 1 }, { label: 'computer class', categoryIndex: 1 },
+    ],
     [
       phrase('“I like music.” 表示什么？', ['我喜欢音乐。', '我有一本数学书。', '我在美术教室。'], 0, 'music 表示“音乐”。', 'I like music. 的意思是“我喜欢音乐”。', ['music', 'like', 'I', '.'], [2, 1, 0, 3]),
       phrase('想询问“你喜欢哪门课？”，应该选哪句？', ['What subject do you like?', 'Where is my book?', 'How old are you?'], 0, 'subject 表示“学科”。', 'What subject do you like? 是在询问喜欢的学科。', ['subject', 'do', 'What', 'you', 'like', '?'], [2, 0, 1, 3, 4, 5]),
     ],
   ),
   'my-school': profile(
-    [['school', '学校'], ['library', '图书馆'], ['classroom', '教室'], ['playground', '操场']], ['学校、教室或图书馆', '操场'],
-    [{ label: 'library', categoryIndex: 0 }, { label: 'classroom', categoryIndex: 0 }, { label: 'school', categoryIndex: 0 }, { label: 'playground', categoryIndex: 1 }],
+    [['toilet', '厕所'], ['library', '图书馆'], ['classroom', '教室'], ['playground', '操场']], ['楼内地点或楼层', '室外活动地点'],
     [
-      phrase('想说“图书馆在学校里”，应该选哪句？', ['The library is in the school.', 'The school is a pencil.', 'The classroom is a cake.'], 0, 'library 表示“图书馆”。', 'The library is in the school. 表示“图书馆在学校里”。', ['school', 'The', 'in', 'library', 'is', 'the', '.'], [1, 3, 4, 2, 5, 0, 6]),
-      phrase('“Where is the playground?” 是在问什么？', ['操场在哪里？', '你喜欢哪门课？', '你几岁？'], 0, 'where 用来询问地点。', 'Where is the playground? 是在询问操场的位置。', ['the', 'Where', 'playground', 'is', '?'], [1, 3, 0, 2, 4]),
+      { label: 'library', categoryIndex: 0 }, { label: 'classroom', categoryIndex: 0 }, { label: 'toilet', categoryIndex: 0 },
+      { label: 'first floor', categoryIndex: 0 }, { label: 'second floor', categoryIndex: 0 }, { label: 'third floor', categoryIndex: 0 },
+      { label: 'playground', categoryIndex: 1 },
+    ],
+    [
+      phrase('“Where is the toilet?” 是在问什么？', ['厕所在哪里？', '你喜欢哪门课？', '你几岁？'], 0, 'where 用来询问地点。', 'Where is the toilet? 是在询问厕所的位置。', ['the', 'Where', 'toilet', 'is', '?'], [1, 3, 0, 2, 4]),
+      phrase('想说“图书馆在一楼”，应该选哪句话？', ['The library is on the first floor.', 'The library is on the second floor.', 'The playground is in the library.'], 0, 'first floor 表示“一楼”。', 'The library is on the first floor. 的意思是“图书馆在一楼”。', ['first', 'The', 'floor', 'library', 'is', 'on', 'the', '.'], [1, 3, 4, 5, 6, 0, 2, 7]),
     ],
   ),
   'after-school': profile(
-    [['read', '阅读'], ['draw', '画画'], ['sing', '唱歌'], ['play', '玩耍或参加游戏']], ['安静活动', '表演或游戏活动'],
-    [{ label: 'read', categoryIndex: 0 }, { label: 'draw', categoryIndex: 0 }, { label: 'sing', categoryIndex: 1 }, { label: 'play', categoryIndex: 1 }],
+    [['read books', '读书'], ['draw pictures', '画画'], ['sing songs', '唱歌'], ['play chess', '下棋']], ['安静或桌面活动', '唱跳或运动'],
     [
-      phrase('“I read after school.” 表示什么？', ['我放学后阅读。', '我在学校里睡觉。', '我正在吃一个书包。'], 0, 'after school 表示“放学后”。', 'I read after school. 的意思是“我放学后阅读”。', ['school', 'after', 'read', 'I', '.'], [3, 2, 1, 0, 4]),
-      phrase('想询问朋友放学后喜欢什么活动，哪句合适？', ['What do you like after school?', 'What colour is your bag?', 'How many apples?'], 0, 'like 表示“喜欢”，after school 表示“放学后”。', 'What do you like after school? 是在询问放学后喜欢什么。', ['after', 'What', 'do', 'school', 'you', 'like', '?'], [1, 2, 4, 5, 0, 3, 6]),
+      { label: 'read books', categoryIndex: 0 }, { label: 'draw pictures', categoryIndex: 0 }, { label: 'play chess', categoryIndex: 0 },
+      { label: 'dance', categoryIndex: 1 }, { label: 'sing songs', categoryIndex: 1 }, { label: 'play sports', categoryIndex: 1 },
+      { label: 'play football', categoryIndex: 1 }, { label: 'fly a kite', categoryIndex: 1 }, { label: 'ride a bike', categoryIndex: 1 },
+      { label: 'swim', categoryIndex: 1 },
+    ],
+    [
+      phrase('“I read books after school.” 表示什么？', ['我放学后读书。', '我放学后游泳。', '我放学后踢足球。'], 0, 'read books 表示“读书”，after school 表示“放学后”。', 'I read books after school. 的意思是“我放学后读书”。', ['school', 'books', 'I', 'after', 'read', '.'], [2, 4, 1, 3, 0, 5]),
+      phrase('想说“我放学后下棋”，应该选哪句话？', ['I play chess after school.', 'I draw pictures after school.', 'I sing songs after school.'], 0, 'play chess 表示“下棋”。', 'I play chess after school. 的意思是“我放学后下棋”。', ['after', 'I', 'chess', 'school', 'play', '.'], [1, 4, 2, 0, 3, 5]),
     ],
   ),
   family: profile(
-    [['mother', '妈妈'], ['father', '爸爸'], ['sister', '姐姐或妹妹'], ['brother', '哥哥或弟弟']], ['女性家人称呼', '男性家人称呼'],
-    [{ label: 'mother', categoryIndex: 0 }, { label: 'sister', categoryIndex: 0 }, { label: 'father', categoryIndex: 1 }, { label: 'brother', categoryIndex: 1 }],
+    [['uncle', '叔叔或舅舅'], ['aunt', '阿姨或姑姑'], ['cousin', '堂或表兄弟姐妹'], ['family', '家庭']], ['家庭整体称呼', '亲属称呼'],
     [
-      phrase('想介绍爸爸，哪句话正确？', ['This is my father.', 'This is my mother.', 'This is my sister.'], 0, 'father 表示“爸爸”。', 'This is my father. 的意思是“这是我的爸爸”。', ['father', 'my', 'This', 'is', '.'], [2, 3, 1, 0, 4]),
-      phrase('“She is my sister.” 表示什么？', ['她是我的姐姐或妹妹。', '他是我的哥哥或弟弟。', '她是我的妈妈。'], 0, 'sister 表示姐姐或妹妹。', 'She is my sister. 是“她是我的姐姐或妹妹”。', ['my', 'sister', 'She', '.', 'is'], [2, 4, 0, 1, 3]),
+      { label: 'family', categoryIndex: 0 }, { label: 'uncle', categoryIndex: 1 }, { label: 'aunt', categoryIndex: 1 },
+      { label: 'cousin', categoryIndex: 1 },
+    ],
+    [
+      phrase('想介绍阿姨，哪句话正确？', ['This is my aunt.', 'This is my uncle.', 'This is my cousin.'], 0, 'aunt 表示“阿姨、姑姑或舅妈”。', 'This is my aunt. 的意思是“这是我的阿姨”。', ['aunt', 'This', 'my', '.', 'is'], [1, 4, 2, 0, 3]),
+      phrase('“He is my uncle.” 表示什么？', ['他是我的叔叔或舅舅。', '她是我的阿姨。', '他是我的表兄弟姐妹。'], 0, 'uncle 表示“叔叔或舅舅”。', 'He is my uncle. 的意思是“他是我的叔叔或舅舅”。', ['uncle', 'He', 'is', 'my', '.'], [1, 2, 3, 0, 4]),
     ],
   ),
   'family-activities': profile(
-    [['cook', '做饭'], ['clean', '打扫'], ['read', '阅读'], ['walk', '散步']], ['家务活动', '休闲活动'],
-    [{ label: 'cook', categoryIndex: 0 }, { label: 'clean', categoryIndex: 0 }, { label: 'read', categoryIndex: 1 }, { label: 'walk', categoryIndex: 1 }],
+    [['cooking dinner', '做晚饭'], ['walking the dog', '遛狗'], ['watering the plants', '给植物浇水'], ['cleaning the room', '打扫房间']], ['家务或照料活动', '休闲活动'],
     [
-      phrase('“We clean the room.” 表示什么？', ['我们打扫房间。', '我们在房间里游泳。', '我们有一辆汽车。'], 0, 'clean 表示“打扫”。', 'We clean the room. 的意思是“我们打扫房间”。', ['room', 'the', 'We', 'clean', '.'], [2, 3, 1, 0, 4]),
-      phrase('想说“我们一起散步”，哪句合适？', ['We walk together.', 'We drink a chair.', 'We read a shoe.'], 0, 'walk 表示“散步或走路”。', 'We walk together. 表示“我们一起散步”。', ['together', 'We', 'walk', '.'], [1, 2, 0, 3]),
+      { label: 'cooking dinner', categoryIndex: 0 }, { label: 'walking the dog', categoryIndex: 0 },
+      { label: 'watering the plants', categoryIndex: 0 }, { label: 'cleaning the room', categoryIndex: 0 },
+      { label: 'feeding the fish', categoryIndex: 0 }, { label: 'listening to music', categoryIndex: 1 },
+      { label: 'watching TV', categoryIndex: 1 },
+    ],
+    [
+      phrase('“She is cooking dinner.” 表示什么？', ['她正在做晚饭。', '她正在给植物浇水。', '她正在听音乐。'], 0, 'cooking dinner 表示“做晚饭”。', 'She is cooking dinner. 的意思是“她正在做晚饭”。', ['dinner', 'is', 'She', 'cooking', '.'], [2, 1, 3, 0, 4]),
+      phrase('想说“他正在遛狗”，应该选哪句话？', ['He is walking the dog.', 'He is cleaning the room.', 'He is watching TV.'], 0, 'walking the dog 表示“遛狗”。', 'He is walking the dog. 的意思是“他正在遛狗”。', ['the', 'He', 'dog', 'is', 'walking', '.'], [1, 3, 4, 0, 2, 5]),
     ],
   ),
   'my-home': profile(
-    [['bedroom', '卧室'], ['kitchen', '厨房'], ['living room', '客厅'], ['bathroom', '浴室']], ['休息或起居的房间', '其他房间'],
-    [{ label: 'bedroom', categoryIndex: 0 }, { label: 'living room', categoryIndex: 0 }, { label: 'kitchen', categoryIndex: 1 }, { label: 'bathroom', categoryIndex: 1 }],
+    [['bedroom', '卧室'], ['kitchen', '厨房'], ['dining room', '餐厅'], ['study', '书房']], ['房间名称', '家具或用品'],
+    [
+      { label: 'home', categoryIndex: 0 }, { label: 'bedroom', categoryIndex: 0 }, { label: 'living room', categoryIndex: 0 },
+      { label: 'bathroom', categoryIndex: 0 }, { label: 'dining room', categoryIndex: 0 }, { label: 'study', categoryIndex: 0 },
+      { label: 'kitchen', categoryIndex: 0 }, { label: 'sofa', categoryIndex: 1 }, { label: 'light', categoryIndex: 1 },
+      { label: 'bed', categoryIndex: 1 }, { label: 'door', categoryIndex: 1 }, { label: 'box', categoryIndex: 1 },
+    ],
     [
       phrase('“This is the kitchen.” 表示什么？', ['这是厨房。', '这是卧室。', '这是操场。'], 0, 'kitchen 表示“厨房”。', 'This is the kitchen. 的意思是“这是厨房”。', ['the', 'kitchen', 'This', 'is', '.'], [2, 3, 0, 1, 4]),
-      phrase('想询问客厅在哪里，应该选哪句？', ['Where is the living room?', 'What is your name?', 'How many books?'], 0, 'where 用来询问地点。', 'Where is the living room? 是在询问客厅的位置。', ['living', 'Where', 'room', 'is', 'the', '?'], [1, 3, 4, 0, 2, 5]),
+      phrase('想询问书房在哪里，应该选哪句话？', ['Where is the study?', 'Where is the kitchen?', 'Where is the bedroom?'], 0, 'study 表示“书房”。', 'Where is the study? 是在询问书房的位置。', ['study', 'Where', 'the', 'is', '?'], [1, 3, 2, 0, 4]),
     ],
   ),
   'review-school-face-animals': profile(
@@ -240,16 +322,29 @@ const profiles: Record<string, EnglishProfile> = {
     ],
   ),
   'review-classroom-room-toys': profile(
-    [['pencil', '铅笔'], ['chair', '椅子'], ['ball', '球'], ['bed', '床']], ['学习用品', '家具或玩具'],
-    [{ label: 'pencil', categoryIndex: 0 }, { label: 'chair', categoryIndex: 1 }, { label: 'ball', categoryIndex: 1 }, { label: 'bed', categoryIndex: 1 }],
+    [['chair', '椅子'], ['light', '灯'], ['doll', '玩偶'], ['train', '火车']], ['课堂或房间物品', '玩具'],
     [
-      phrase('想介绍一支铅笔，哪句正确？', ['This is a pencil.', 'This is a bed.', 'This is a ball.'], 0, 'pencil 表示“铅笔”。', 'This is a pencil. 的意思是“这是一支铅笔”。', ['a', 'This', 'pencil', 'is', '.'], [1, 3, 0, 2, 4]),
+      { label: 'chair', categoryIndex: 0 }, { label: 'desk', categoryIndex: 0 }, { label: 'blackboard', categoryIndex: 0 },
+      { label: 'light', categoryIndex: 0 }, { label: 'bed', categoryIndex: 0 }, { label: 'door', categoryIndex: 0 },
+      { label: 'box', categoryIndex: 0 }, { label: 'doll', categoryIndex: 1 }, { label: 'train', categoryIndex: 1 },
+      { label: 'car', categoryIndex: 1 }, { label: 'bear', categoryIndex: 1 }, { label: 'plane', categoryIndex: 1 },
+      { label: 'ball', categoryIndex: 1 },
+    ],
+    [
+      phrase('想介绍一把椅子，哪句话正确？', ['This is a chair.', 'This is a bed.', 'This is a ball.'], 0, 'chair 表示“椅子”。', 'This is a chair. 的意思是“这是一把椅子”。', ['a', 'This', 'chair', 'is', '.'], [1, 3, 0, 2, 4]),
       phrase('“Where is the ball?” 是在问什么？', ['球在哪里？', '球是什么颜色？', '球有几本？'], 0, 'where 用来询问地点。', 'Where is the ball? 是在询问球的位置。', ['the', 'ball', 'Where', 'is', '?'], [2, 3, 0, 1, 4]),
     ],
   ),
   'review-food-drink-clothes': profile(
-    [['bread', '面包'], ['water', '水'], ['shirt', '衬衫'], ['milk', '牛奶']], ['食物或饮品', '衣物'],
-    [{ label: 'bread', categoryIndex: 0 }, { label: 'water', categoryIndex: 0 }, { label: 'milk', categoryIndex: 0 }, { label: 'shirt', categoryIndex: 1 }],
+    [['noodles', '面条'], ['water', '水'], ['shirt', '衬衫'], ['milk', '牛奶']], ['食物或饮品', '衣物'],
+    [
+      { label: 'rice', categoryIndex: 0 }, { label: 'noodles', categoryIndex: 0 }, { label: 'vegetable', categoryIndex: 0 },
+      { label: 'fish', categoryIndex: 0 }, { label: 'chicken', categoryIndex: 0 }, { label: 'egg', categoryIndex: 0 },
+      { label: 'water', categoryIndex: 0 }, { label: 'juice', categoryIndex: 0 }, { label: 'milk', categoryIndex: 0 },
+      { label: 'tea', categoryIndex: 0 }, { label: 'shirt', categoryIndex: 1 }, { label: 'T-shirt', categoryIndex: 1 },
+      { label: 'skirt', categoryIndex: 1 }, { label: 'dress', categoryIndex: 1 }, { label: 'socks', categoryIndex: 1 },
+      { label: 'shorts', categoryIndex: 1 },
+    ],
     [
       phrase('“I want milk.” 表示什么？', ['我想要牛奶。', '我有一件衬衫。', '我喜欢面包。'], 0, 'milk 表示“牛奶”。', 'I want milk. 的意思是“我想要牛奶”。', ['milk', 'I', 'want', '.'], [1, 2, 0, 3]),
       phrase('想说“这是我的衬衫”，应该选哪句？', ['This is my shirt.', 'This is my bread.', 'This is my water.'], 0, 'shirt 表示“衬衫”。', 'This is my shirt. 表示“这是我的衬衫”。', ['my', 'shirt', 'This', '.', 'is'], [2, 4, 0, 1, 3]),
@@ -264,27 +359,58 @@ const profiles: Record<string, EnglishProfile> = {
     ],
   ),
   'review-pets-clothes-birthdays': profile(
-    [['rabbit', '兔子'], ['coat', '外套'], ['cake', '蛋糕'], ['gift', '礼物']], ['动物或衣物', '生日物品'],
-    [{ label: 'rabbit', categoryIndex: 0 }, { label: 'coat', categoryIndex: 0 }, { label: 'cake', categoryIndex: 1 }, { label: 'gift', categoryIndex: 1 }],
+    [['rabbit', '兔子'], ['jacket', '夹克'], ['January', '一月'], ['June', '六月']], ['动物或衣物', '月份'],
     [
-      phrase('生日时收到礼物，可以说什么？', ['Thank you.', 'Where is the rabbit?', 'Open your coat.'], 0, '收到礼物后可以礼貌地表示感谢。', 'Thank you. 的意思是“谢谢你”。', ['you', 'Thank', '.'], [1, 0, 2]),
-      phrase('“This is my coat.” 表示什么？', ['这是我的外套。', '这是我的兔子。', '这是一个蛋糕。'], 0, 'coat 表示“外套”。', 'This is my coat. 的意思是“这是我的外套”。', ['coat', 'This', '.', 'is', 'my'], [1, 3, 4, 0, 2]),
+      { label: 'rabbit', categoryIndex: 0 }, { label: 'duck', categoryIndex: 0 }, { label: 'turtle', categoryIndex: 0 },
+      { label: 'cap', categoryIndex: 0 }, { label: 'coat', categoryIndex: 0 }, { label: 'shoes', categoryIndex: 0 },
+      { label: 'sweater', categoryIndex: 0 }, { label: 'jacket', categoryIndex: 0 }, { label: 'gloves', categoryIndex: 0 },
+      { label: 'trousers', categoryIndex: 0 }, { label: 'January', categoryIndex: 1 }, { label: 'February', categoryIndex: 1 },
+      { label: 'March', categoryIndex: 1 }, { label: 'April', categoryIndex: 1 }, { label: 'May', categoryIndex: 1 },
+      { label: 'June', categoryIndex: 1 }, { label: 'July', categoryIndex: 1 }, { label: 'August', categoryIndex: 1 },
+      { label: 'September', categoryIndex: 1 }, { label: 'October', categoryIndex: 1 }, { label: 'November', categoryIndex: 1 },
+      { label: 'December', categoryIndex: 1 },
+    ],
+    [
+      phrase('“I have a rabbit.” 表示什么？', ['我有一只兔子。', '我有一件夹克。', '我有一个生日。'], 0, 'rabbit 表示“兔子”。', 'I have a rabbit. 的意思是“我有一只兔子”。', ['rabbit', 'I', 'a', '.', 'have'], [1, 4, 2, 0, 3]),
+      phrase('想说“我的生日在六月”，应该选哪句话？', ['My birthday is in June.', 'My birthday is in January.', 'My birthday is in July.'], 0, 'June 表示“六月”。', 'My birthday is in June. 的意思是“我的生日在六月”。', ['June', 'My', 'is', 'birthday', 'in', '.'], [1, 3, 2, 4, 0, 5]),
     ],
   ),
   'review-subjects-school-activities': profile(
-    [['math', '数学'], ['school', '学校'], ['read', '阅读'], ['music', '音乐']], ['学科或学校', '课后活动'],
-    [{ label: 'math', categoryIndex: 0 }, { label: 'music', categoryIndex: 0 }, { label: 'school', categoryIndex: 0 }, { label: 'read', categoryIndex: 1 }],
+    [['maths', '数学'], ['toilet', '厕所'], ['read books', '读书'], ['play chess', '下棋']], ['学科或校园地点', '课后活动'],
     [
-      phrase('“I read after school.” 表示什么？', ['我放学后阅读。', '我喜欢数学。', '我在音乐教室。'], 0, 'read 表示“阅读”。', 'I read after school. 的意思是“我放学后阅读”。', ['after', 'I', 'school', 'read', '.'], [1, 3, 0, 2, 4]),
-      phrase('想说“我喜欢数学”，哪句合适？', ['I like math.', 'I like a school.', 'I like a ruler.'], 0, 'math 表示“数学”。', 'I like math. 表示“我喜欢数学”。', ['math', 'like', 'I', '.'], [2, 1, 0, 3]),
+      { label: 'Chinese', categoryIndex: 0 }, { label: 'English', categoryIndex: 0 }, { label: 'maths', categoryIndex: 0 },
+      { label: 'science', categoryIndex: 0 }, { label: 'PE', categoryIndex: 0 }, { label: 'music', categoryIndex: 0 },
+      { label: 'art', categoryIndex: 0 }, { label: 'computer class', categoryIndex: 0 }, { label: 'classroom', categoryIndex: 0 },
+      { label: 'library', categoryIndex: 0 }, { label: 'toilet', categoryIndex: 0 }, { label: 'playground', categoryIndex: 0 },
+      { label: 'first floor', categoryIndex: 0 }, { label: 'second floor', categoryIndex: 0 }, { label: 'third floor', categoryIndex: 0 },
+      { label: 'read books', categoryIndex: 1 }, { label: 'draw pictures', categoryIndex: 1 }, { label: 'play chess', categoryIndex: 1 },
+      { label: 'dance', categoryIndex: 1 }, { label: 'sing songs', categoryIndex: 1 }, { label: 'play sports', categoryIndex: 1 },
+      { label: 'play football', categoryIndex: 1 }, { label: 'fly a kite', categoryIndex: 1 }, { label: 'ride a bike', categoryIndex: 1 },
+      { label: 'swim', categoryIndex: 1 },
+    ],
+    [
+      phrase('“I read books after school.” 表示什么？', ['我放学后读书。', '我放学后游泳。', '我放学后踢足球。'], 0, 'read books 表示“读书”。', 'I read books after school. 的意思是“我放学后读书”。', ['after', 'I', 'school', 'books', 'read', '.'], [1, 4, 3, 0, 2, 5]),
+      phrase('想说“我喜欢数学”，哪句话合适？', ['I like maths.', 'I like English.', 'I like music.'], 0, 'maths 表示“数学”。', 'I like maths. 的意思是“我喜欢数学”。', ['maths', 'like', 'I', '.'], [2, 1, 0, 3]),
     ],
   ),
   'review-family-activities-home': profile(
-    [['mother', '妈妈'], ['cook', '做饭'], ['bedroom', '卧室'], ['walk', '散步']], ['家人称呼', '家庭活动或房间'],
-    [{ label: 'mother', categoryIndex: 0 }, { label: 'cook', categoryIndex: 1 }, { label: 'bedroom', categoryIndex: 1 }, { label: 'walk', categoryIndex: 1 }],
+    [['aunt', '阿姨或姑姑'], ['cooking dinner', '做晚饭'], ['study', '书房'], ['walking the dog', '遛狗']], ['家庭成员', '活动或房间'],
     [
-      phrase('“My mother can cook.” 表示什么？', ['我的妈妈会做饭。', '我的卧室会走路。', '我的书在厨房。'], 0, 'mother 表示“妈妈”，cook 表示“做饭”。', 'My mother can cook. 的意思是“我的妈妈会做饭”。', ['cook', 'My', 'can', 'mother', '.'], [1, 3, 2, 0, 4]),
-      phrase('“Where is the bedroom?” 是在问什么？', ['卧室在哪里？', '妈妈几岁？', '你喜欢散步吗？'], 0, 'where 用来询问地点。', 'Where is the bedroom? 是在询问卧室的位置。', ['bedroom', 'Where', 'the', 'is', '?'], [1, 3, 2, 0, 4]),
+      { label: 'family', categoryIndex: 0 }, { label: 'aunt', categoryIndex: 0 }, { label: 'mother', categoryIndex: 0 },
+      { label: 'sister', categoryIndex: 0 }, { label: 'cousin', categoryIndex: 0 },
+      { label: 'grandmother', categoryIndex: 0 }, { label: 'uncle', categoryIndex: 0 }, { label: 'father', categoryIndex: 0 },
+      { label: 'brother', categoryIndex: 0 }, { label: 'grandfather', categoryIndex: 0 }, { label: 'cooking dinner', categoryIndex: 1 },
+      { label: 'walking the dog', categoryIndex: 1 }, { label: 'watering the plants', categoryIndex: 1 },
+      { label: 'cleaning the room', categoryIndex: 1 }, { label: 'listening to music', categoryIndex: 1 },
+      { label: 'watching TV', categoryIndex: 1 }, { label: 'feeding the fish', categoryIndex: 1 }, { label: 'home', categoryIndex: 1 },
+      { label: 'bedroom', categoryIndex: 1 }, { label: 'living room', categoryIndex: 1 }, { label: 'bathroom', categoryIndex: 1 },
+      { label: 'dining room', categoryIndex: 1 }, { label: 'study', categoryIndex: 1 }, { label: 'kitchen', categoryIndex: 1 },
+      { label: 'sofa', categoryIndex: 1 }, { label: 'light', categoryIndex: 1 }, { label: 'bed', categoryIndex: 1 },
+      { label: 'door', categoryIndex: 1 }, { label: 'box', categoryIndex: 1 },
+    ],
+    [
+      phrase('“My aunt is cooking dinner.” 表示什么？', ['我的阿姨正在做晚饭。', '我的书房正在遛狗。', '我的叔叔正在看电视。'], 0, 'aunt 表示“阿姨、姑姑或舅妈”，cooking dinner 表示“做晚饭”。', 'My aunt is cooking dinner. 的意思是“我的阿姨正在做晚饭”。', ['dinner', 'My', 'cooking', 'is', 'aunt', '.'], [1, 4, 3, 2, 0, 5]),
+      phrase('“Where is the study?” 是在问什么？', ['书房在哪里？', '阿姨在做什么？', '你喜欢什么课？'], 0, 'study 表示“书房”。', 'Where is the study? 是在询问书房的位置。', ['study', 'Where', 'the', 'is', '?'], [1, 3, 2, 0, 4]),
     ],
   ),
 };
