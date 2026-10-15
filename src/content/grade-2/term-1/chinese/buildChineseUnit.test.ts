@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { buildChineseUnit } from './buildChineseUnit';
 import type { ChineseQuestionSpec, ChineseTaskSpec } from './buildChineseUnit';
+import type { Difficulty, LearningTask } from '../../../types';
 
 const questions: ChineseQuestionSpec[] = [
   { kind: 'choice', prompt: '选择正确线索。', options: ['甲', '乙', '丙'], correctOptionIndex: 2, hint: '再看一看。', explanation: '这是正确线索。' },
@@ -17,6 +18,22 @@ function task(title: string, goal: number): ChineseTaskSpec {
   return { title, objective: `完成第 ${goal} 个学习目标。`, companionId: 'companion-01', questions };
 }
 
+function expectTwoTasks(tasks: LearningTask[], unitId: string, difficulty: Difficulty, titles: string[]) {
+  expect(tasks).toHaveLength(2);
+  expect(tasks.map((item) => item.title)).toEqual(titles);
+  expect(tasks.map((item) => item.order)).toEqual([1, 2]);
+  expect(tasks.map((item) => item.objective)).toEqual(['完成第 1 个学习目标。', '完成第 2 个学习目标。']);
+  const allIds = tasks.flatMap((item, index) => {
+    const session = item.sessions[0];
+    expect(item.id).toBe(`${unitId}/${difficulty}/task-${String(index + 1).padStart(2, '0')}`);
+    expect(session?.id).toBe(`${item.id}/session-01`);
+    expect(session?.durationMinutes).toBe(20);
+    expect(session?.activities).toHaveLength(8);
+    return [item.id, ...(session ? [session.id, ...session.activities.map((activity) => activity.id)] : [])];
+  });
+  expect(new Set(allIds).size).toBe(allIds.length);
+}
+
 describe('buildChineseUnit', () => {
   it('buildsCanonicalUnitIdsForTheSecondTerm', () => {
     const unit = buildChineseUnit({
@@ -25,8 +42,8 @@ describe('buildChineseUnit', () => {
       title: '第一单元 · 春天来了',
       sourceTopics: ['春天观察'],
       basicTasks: [task('发现春天', 1), task('介绍春天', 2)],
-      advancedTask: task('连接线索', 1),
-      highTask: task('创意表达', 1),
+      advancedTasks: [task('连接线索', 1), task('比较证据', 2)],
+      highTasks: [task('创意表达', 1), task('说明推测', 2)],
     });
 
     expect(unit.id).toBe('grade-2/term-2/chinese/unit-01');
@@ -41,15 +58,15 @@ describe('buildChineseUnit', () => {
       title: '第三单元 · 学习与成长',
       sourceTopics: ['故事线索', '观察人物'],
       basicTasks: [task('故事线索', 1), task('人物心情', 2)],
-      advancedTask: task('连接线索', 1),
-      highTask: task('创意表达', 1),
+      advancedTasks: [task('连接线索', 1), task('比较证据', 2)],
+      highTasks: [task('创意表达', 1), task('说明推测', 2)],
     });
 
     expect(unit.id).toBe('grade-2/term-1/chinese/unit-03');
     expect(unit.textbookEditionId).toBe('grade-2/term-1/chinese');
     expect(unit.difficultyTracks.basic.tasks).toHaveLength(2);
-    expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
-    expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+    expectTwoTasks(unit.difficultyTracks.advanced.tasks, unit.id, 'advanced', ['连接线索', '比较证据']);
+    expectTwoTasks(unit.difficultyTracks.high.tasks, unit.id, 'high', ['创意表达', '说明推测']);
     const session = unit.difficultyTracks.basic.tasks[0]?.sessions[0];
     expect(session?.id).toBe(`${unit.id}/basic/task-01/session-01`);
     expect(session?.activities).toHaveLength(8);

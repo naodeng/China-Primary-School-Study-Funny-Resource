@@ -33,8 +33,10 @@ export interface ChineseUnitSpec {
   title: string;
   sourceTopics: readonly string[];
   basicTasks: readonly [ChineseTaskSpec, ChineseTaskSpec, ...ChineseTaskSpec[]];
-  advancedTask: ChineseTaskSpec;
-  highTask: ChineseTaskSpec;
+  advancedTasks?: readonly [ChineseTaskSpec, ChineseTaskSpec];
+  highTasks?: readonly [ChineseTaskSpec, ChineseTaskSpec];
+  advancedTask?: ChineseTaskSpec;
+  highTask?: ChineseTaskSpec;
 }
 
 function numberId(value: number): string {
@@ -139,8 +141,8 @@ export function buildChineseUnit(spec: ChineseUnitSpec): CurriculumUnit {
     sourceTopics: [...spec.sourceTopics],
     difficultyTracks: {
       basic: createTrack(id, 'basic', spec.basicTasks),
-      advanced: createTrack(id, 'advanced', [spec.advancedTask]),
-      high: createTrack(id, 'high', [spec.highTask]),
+      advanced: createTrack(id, 'advanced', spec.advancedTasks ?? (spec.advancedTask ? [spec.advancedTask] : [])),
+      high: createTrack(id, 'high', spec.highTasks ?? (spec.highTask ? [spec.highTask] : [])),
     },
   };
 }

@@ -9,8 +9,10 @@ export interface MathUnitSpec {
   title: string;
   sourceTopics: readonly string[];
   basicTasks: readonly [MathTaskSpec, MathTaskSpec, ...MathTaskSpec[]];
-  advancedTask: MathTaskSpec;
-  highTask: MathTaskSpec;
+  advancedTasks?: readonly [MathTaskSpec, MathTaskSpec];
+  highTasks?: readonly [MathTaskSpec, MathTaskSpec];
+  advancedTask?: MathTaskSpec;
+  highTask?: MathTaskSpec;
 }
 
 function numberId(value: number): string {
@@ -96,8 +98,8 @@ export function buildMathUnit(spec: MathUnitSpec): CurriculumUnit {
     sourceTopics: [...spec.sourceTopics],
     difficultyTracks: {
       basic: createTrack(id, 'basic', spec.basicTasks),
-      advanced: createTrack(id, 'advanced', [spec.advancedTask]),
-      high: createTrack(id, 'high', [spec.highTask]),
+      advanced: createTrack(id, 'advanced', spec.advancedTasks ?? (spec.advancedTask ? [spec.advancedTask] : [])),
+      high: createTrack(id, 'high', spec.highTasks ?? (spec.highTask ? [spec.highTask] : [])),
     },
   };
 }
