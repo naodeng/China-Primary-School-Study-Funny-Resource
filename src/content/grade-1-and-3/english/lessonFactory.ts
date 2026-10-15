@@ -124,7 +124,7 @@ const profiles: Record<string, EnglishProfile> = {
     ],
   ),
   toys: profile(
-    [['ball', '球'], ['doll', '玩偶'], ['train', '火车'], ['plane', '飞机']], ['球或玩偶', '交通工具玩具'],
+    [['ball', '球'], ['doll', '玩偶'], ['train', '火车'], ['plane', '飞机']], ['球、玩偶或动物玩具', '交通工具玩具'],
     [
       { label: 'ball', categoryIndex: 0 }, { label: 'doll', categoryIndex: 0 }, { label: 'bear', categoryIndex: 0 },
       { label: 'train', categoryIndex: 1 }, { label: 'car', categoryIndex: 1 }, { label: 'plane', categoryIndex: 1 },
@@ -293,7 +293,7 @@ const profiles: Record<string, EnglishProfile> = {
     ],
   ),
   'my-home': profile(
-    [['bedroom', '卧室'], ['kitchen', '厨房'], ['dining room', '餐厅'], ['study', '书房']], ['房间名称', '家具或用品'],
+    [['bedroom', '卧室'], ['kitchen', '厨房'], ['dining room', '餐厅'], ['study', '书房']], ['家或房间名称', '家具或家中用品'],
     [
       { label: 'home', categoryIndex: 0 }, { label: 'bedroom', categoryIndex: 0 }, { label: 'living room', categoryIndex: 0 },
       { label: 'bathroom', categoryIndex: 0 }, { label: 'dining room', categoryIndex: 0 }, { label: 'study', categoryIndex: 0 },
@@ -394,7 +394,7 @@ const profiles: Record<string, EnglishProfile> = {
     ],
   ),
   'review-family-activities-home': profile(
-    [['aunt', '阿姨或姑姑'], ['cooking dinner', '做晚饭'], ['study', '书房'], ['walking the dog', '遛狗']], ['家庭成员', '活动或房间'],
+    [['aunt', '阿姨或姑姑'], ['cooking dinner', '做晚饭'], ['study', '书房'], ['walking the dog', '遛狗']], ['家庭与亲属称呼', '家庭活动或居家词汇'],
     [
       { label: 'family', categoryIndex: 0 }, { label: 'aunt', categoryIndex: 0 }, { label: 'mother', categoryIndex: 0 },
       { label: 'sister', categoryIndex: 0 }, { label: 'cousin', categoryIndex: 0 },
