@@ -282,6 +282,28 @@ test('playsInteractionCuesForArithmeticAndMeasurementInputs', async ({ page }) =
   await expect(page.locator('.activity-feedback')).toContainText(/答对了|真棒|太好了|成功啦/);
 });
 
+test('showsCorrectPlaceValuesAndAcceptsAThreeDigitArithmeticAnswer', async ({ page }) => {
+  await installAudioSpy(page);
+  await page.goto('/grade-2/term-2/math/unit-08/basic/task-02/session-01');
+
+  await solveChoice(page, '3000');
+  await continueToNext(page);
+  await solveChoice(page, '2');
+  await continueToNext(page);
+
+  const operands = page.locator('.place-number');
+  await expect(operands.nth(0)).toContainText('百位');
+  await expect(operands.nth(0)).toContainText('6');
+  await expect(operands.nth(1)).toContainText('百位');
+  await expect(operands.nth(1)).toContainText('3');
+
+  const answer = page.getByRole('spinbutton', { name: '输入计算结果' });
+  await expect(answer).toHaveAttribute('max', '999');
+  await answer.fill('900');
+  await page.getByRole('button', { name: '检查答案' }).click();
+  await expect(page.locator('.activity-feedback')).toContainText(/成功|答对|真棒|太好了/);
+});
+
 test('completesTwoBasicTasksAndOneTaskPerHigherTier', async ({ page }) => {
   await installAudioSpy(page);
   const unit = curriculum.units['grade-2/term-1/math/unit-02'];
