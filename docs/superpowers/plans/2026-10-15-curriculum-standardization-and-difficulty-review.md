@@ -222,13 +222,15 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 
 - 修改：`tests/e2e/catalog.spec.ts`
 - 修改：`tests/e2e/learning-flow.spec.ts`
+- 更新：`src/content/curriculum-manifest.json`，让本机进度存储识别新增场次 ID
+- 修改：`src/content/questionReviewLedger.test.ts`，避免 Node 文件 API 进入生产 TypeScript 编译
 - 如测试暴露缺陷，再修改对应路由/任务组件与单测
 
-- [ ] **Step 1：先写失败 E2E**，确认代表性中文、数学、英语单元页展示第二个进阶/高阶任务入口；点击后页面显示对应第二任务标题，直接打开 `/advanced/task-02`、`/high/task-02` 并刷新也可恢复。
-- [ ] **Step 2：将 `completesTwoBasicTasksAndOneTaskPerHigherTier` 改名为 `completesTwoBasicTasksAndTwoTasksPerHigherTier`**，完成两个基础任务、两个进阶任务和两个高阶任务；断言 6 个完成场次及现有正式单元成就边界不变。
-- [ ] **Step 3：运行 `npm run test:e2e -- --grep 'TwoTasksPerHigherTier|second advanced and high tasks'`**，先确认新增断言暴露缺口，再修复最小的路由或测试选择器问题。
-- [ ] **Step 4：重跑相关 E2E**，检查第二任务路由、题目 8/8、完成反馈、刷新和本机进度写入。
-- [ ] **Step 5：提交**：暂存 `tests/e2e/catalog.spec.ts`、`tests/e2e/learning-flow.spec.ts` 和经检查确认属于此修复的单个源文件路径；提交信息使用 `test: cover second advanced and high learning tasks`。不得整体暂存 `src/app` 或 `src/components`。
+- [x] **Step 1：先写失败 E2E**，确认代表性中文、数学、英语单元页展示第二个进阶/高阶任务入口；点击后页面显示对应第二任务标题，直接打开 `/advanced/task-02`、`/high/task-02` 并刷新也可恢复。
+- [x] **Step 2：将 `completesTwoBasicTasksAndOneTaskPerHigherTier` 改名为 `completesTwoBasicTasksAndTwoTasksPerHigherTier`**，完成两个基础任务、两个进阶任务和两个高阶任务；断言 6 个完成场次及现有正式单元成就边界不变。
+- [x] **Step 3：运行 `npm run test:e2e -- --grep 'TwoTasksPerHigherTier|second advanced and high tasks'`**，先确认新增断言暴露缺口，再修复最小的路由或测试选择器问题。新增任务 ID 也必须进入静态课程进度清单，否则进度校验会将完成记录过滤掉。
+- [x] **Step 4：重跑相关 E2E 和课程 manifest 一致性测试**，检查第二任务路由、题目 8/8、完成反馈、刷新和本机进度写入。
+- [x] **Step 5：提交**：仅暂存 `docs/superpowers/plans/2026-10-15-curriculum-standardization-and-difficulty-review.md`、`src/content/curriculum-manifest.json`、`src/content/questionReviewLedger.test.ts`、`tests/e2e/catalog.spec.ts` 和 `tests/e2e/learning-flow.spec.ts`；提交信息使用 `test: cover second advanced and high learning tasks`。
 
 ### Task 13：全量回归、覆盖率和交付检查
 

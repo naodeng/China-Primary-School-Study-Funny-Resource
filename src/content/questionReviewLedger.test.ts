@@ -1,15 +1,13 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import ledgerText from '../../docs/curriculum/grade-2-question-review.tsv?raw';
 import { curriculum } from './curriculum';
 
 type ReviewRow = Record<string, string>;
 
-const ledgerPath = resolve(process.cwd(), 'docs/curriculum/grade-2-question-review.tsv');
 const questionIdPattern = /grade-2\/term-[12]\/chinese\/(?:unit-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}|grade-2\/term-[12]\/math\/(?:unit-\d{2}|integrated-practice-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}|grade-2\/term-[12]\/english\/(?:unit-\d{2}|review-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}/;
 
 function readRows(): ReviewRow[] {
-  const [headerLine, ...dataLines] = readFileSync(ledgerPath, 'utf8').trim().split(/\r?\n/);
+  const [headerLine, ...dataLines] = ledgerText.trim().split(/\r?\n/);
   if (!headerLine) return [];
   const headers = headerLine.replace(/^\uFEFF/, '').split('\t');
 
@@ -31,7 +29,7 @@ describe('curriculum question review ledger', () => {
     const ids = rows.map(({ '课程ID': id }) => id);
 
     expect(new Set(ids).size).toBe(ids.length);
-    expect(ids.toSorted()).toEqual(Object.keys(curriculum.units).toSorted());
+    expect([...ids].sort()).toEqual(Object.keys(curriculum.units).sort());
   });
 
   it('requiresEveryQuestionToBeReviewed', () => {

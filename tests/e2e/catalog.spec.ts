@@ -43,14 +43,52 @@ test('showsAllThreeTaskTiersAndOpensARegisteredLearningSession', async ({ page }
   await expect(page.getByRole('heading', { name: '第一单元 · 大自然的秘密' })).toBeVisible();
 
   await expect(page.locator('.difficulty-track--basic')).toContainText('3 个任务');
-  await expect(page.locator('.difficulty-track--advanced')).toContainText('1 个任务');
-  await expect(page.locator('.difficulty-track--high')).toContainText('1 个任务');
+  await expect(page.locator('.difficulty-track--advanced')).toContainText('2 个任务');
+  await expect(page.locator('.difficulty-track--high')).toContainText('2 个任务');
   await page.locator('.difficulty-track--basic').getByRole('button', { name: '查看任务' }).first().click();
   await expect(page).toHaveURL(/\/grade-2\/term-1\/chinese\/unit-01\/basic\/task-01$/);
   await expect(page.getByRole('heading', { name: '学习场次' })).toBeVisible();
   await expect(page.getByText('8 个挑战')).toBeVisible();
   await page.getByRole('button', { name: /出发前复习知识点/ }).click();
   await expect(page.getByRole('region', { name: '本任务知识点回顾' }).getByRole('listitem')).toHaveCount(4);
+});
+
+test('shows second advanced and high tasks across Chinese math and English', async ({ page }) => {
+  await installAudioSpy(page);
+  const samples = [
+    'grade-2/term-1/chinese/unit-01',
+    'grade-2/term-2/math/unit-02',
+    'grade-2/term-2/english/unit-01',
+  ];
+
+  for (const unitKey of samples) {
+    const unit = curriculum.units[unitKey];
+    if (!unit) throw new Error(`The verified curriculum is missing ${unitKey}.`);
+
+    for (const difficulty of ['advanced', 'high'] as const) {
+      await page.goto(`/${unitKey}`);
+      const track = page.locator(`.difficulty-track--${difficulty}`);
+      const secondTask = unit.difficultyTracks[difficulty].tasks[1];
+      if (!secondTask) throw new Error(`${unitKey} is missing its second ${difficulty} task.`);
+      const taskSlug = secondTask.id.slice(secondTask.id.lastIndexOf('/') + 1);
+      const expectedPath = `/${unitKey}/${difficulty}/${taskSlug}`;
+
+      await expect(track).toContainText('2 个任务');
+      await expect(track.getByRole('button', { name: '查看任务' })).toHaveCount(2);
+      await track.getByRole('button', { name: '查看任务' }).nth(1).click();
+      await expect(page).toHaveURL(new RegExp(`${expectedPath.replaceAll('/', '\\/')}$`));
+      await expect(page.getByRole('heading', { name: secondTask.title, level: 1 })).toBeVisible();
+
+      await page.goto(expectedPath);
+      await expect(page.getByRole('heading', { name: secondTask.title, level: 1 })).toBeVisible();
+      await page.reload();
+      await expect(page.getByRole('heading', { name: secondTask.title, level: 1 })).toBeVisible();
+      await expect(page.getByText('8 个挑战')).toBeVisible();
+      await page.getByRole('button', { name: '开始第 1 场' }).click();
+      await expect(page).toHaveURL(/\/session-01$/);
+      await expect(page.getByRole('region', { name: '挑战进度' })).toContainText('挑战 1 / 8');
+    }
+  }
 });
 
 

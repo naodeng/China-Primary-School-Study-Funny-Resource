@@ -304,15 +304,16 @@ test('showsCorrectPlaceValuesAndAcceptsAThreeDigitArithmeticAnswer', async ({ pa
   await expect(page.locator('.activity-feedback')).toContainText(/成功|答对|真棒|太好了/);
 });
 
-test('completesTwoBasicTasksAndOneTaskPerHigherTier', async ({ page }) => {
+test('completesTwoBasicTasksAndTwoTasksPerHigherTier', async ({ page }) => {
   await installAudioSpy(page);
   const unit = curriculum.units['grade-2/term-1/math/unit-02'];
   if (!unit) throw new Error('The second term-one math unit is missing from the verified curriculum.');
   const tasks = [
     ...unit.difficultyTracks.basic.tasks.slice(0, 2).map((task) => ({ difficulty: 'basic', task })),
-    ...unit.difficultyTracks.advanced.tasks.map((task) => ({ difficulty: 'advanced', task })),
-    ...unit.difficultyTracks.high.tasks.map((task) => ({ difficulty: 'high', task })),
+    ...unit.difficultyTracks.advanced.tasks.slice(0, 2).map((task) => ({ difficulty: 'advanced', task })),
+    ...unit.difficultyTracks.high.tasks.slice(0, 2).map((task) => ({ difficulty: 'high', task })),
   ];
+  expect(tasks).toHaveLength(6);
   const retriedKinds = new Set<ActivityDefinition['kind']>();
 
   for (let taskIndex = 0; taskIndex < tasks.length; taskIndex += 1) {
@@ -338,6 +339,10 @@ test('completesTwoBasicTasksAndOneTaskPerHigherTier', async ({ page }) => {
     }
   }
 
+  await page.goto('/achievements');
+  const unitProgress = page.locator('.achievement-unit').filter({ hasText: unit.title });
+  await expect(unitProgress).toContainText('2 / 2');
+  await expect(unitProgress).toHaveClass(/is-complete/);
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('china-study-progress-v1') ?? '{}').completedSessionIds))
-    .toHaveLength(4);
+    .toHaveLength(6);
 });
