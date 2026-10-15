@@ -77,6 +77,44 @@ const friendlyIntroductions = lessonProfile(
   { prompt: '把词卡排成“他是我的同班同学”。', items: ['classmate', 'my', 'He', 'is', '.'], correctOrderIndices: [2, 3, 1, 0, 4] },
 );
 
+const peopleCluePractice = lessonProfile(
+  [
+    { word: 'boy', meaning: '男孩' },
+    { word: 'girl', meaning: '女孩' },
+    { word: 'man', meaning: '男人' },
+    { word: 'woman', meaning: '女人' },
+  ],
+  [
+    phraseQuestion('看见一位男孩，哪句介绍合适？', ['He is a boy.', 'She is a girl.', 'He is a man.'], 0, 'boy 表示男孩，介绍时可以用 he。'),
+    phraseQuestion('看见一位女士，哪句介绍合适？', ['She is a woman.', 'He is a man.', 'She is a boy.'], 0, 'woman 表示女人或女士，介绍时可以用 she。'),
+  ],
+  ['用 he 介绍', '用 she 介绍'],
+  [
+    { label: 'boy', categoryIndex: 0 }, { label: 'man', categoryIndex: 0 },
+    { label: 'girl', categoryIndex: 1 }, { label: 'woman', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“她是一个女孩”。', items: ['girl', 'a', 'She', '.', 'is'], correctOrderIndices: [2, 4, 1, 0, 3] },
+);
+
+const friendRolePractice = lessonProfile(
+  [
+    { word: 'friend', meaning: '朋友' },
+    { word: 'classmate', meaning: '同班同学' },
+    { word: 'boy', meaning: '男孩' },
+    { word: 'girl', meaning: '女孩' },
+  ],
+  [
+    phraseQuestion('“他是我的朋友。”可以怎样说？', ['He is my friend.', 'She is my friend.', 'He is a girl.'], 0, 'friend 表示朋友，he 表示他。'),
+    phraseQuestion('“她是我的同班同学。”对应哪一句？', ['She is my classmate.', 'He is my classmate.', 'She is a boy.'], 0, 'classmate 表示同班同学，she 表示她。'),
+  ],
+  ['人物称呼', '同伴关系'],
+  [
+    { label: 'boy', categoryIndex: 0 }, { label: 'girl', categoryIndex: 0 },
+    { label: 'friend', categoryIndex: 1 }, { label: 'classmate', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“她是我的朋友”。', items: ['friend', 'She', 'my', '.', 'is'], correctOrderIndices: [1, 4, 2, 0, 3] },
+);
+
 export const unit = buildEnglishUnit({
   formalUnitNumber: 2,
   entryId: 'unit-02',
@@ -86,6 +124,12 @@ export const unit = buildEnglishUnit({
     makeTask('人物词卡观察站', '认读常见人物词汇，并练习用 he 或 she 介绍人物。', 'companion-01', peopleWords),
     makeTask('同学与朋友任务', '理解 classmate 和 friend 的意思，完成简单人物介绍。', 'companion-03', classmates),
   ],
-  advancedTask: makeTask('人物分类挑战', '综合辨认人物词汇、性别代词和同学关系表达。', 'companion-02', describePeople),
-  highTask: makeTask('友善介绍小主播', '根据人物线索组织完整句子，介绍同学或朋友。', 'companion-04', friendlyIntroductions),
+  advancedTasks: [
+    makeTask('人物分类挑战', '综合辨认人物词汇、性别代词和同学关系表达。', 'companion-02', describePeople),
+    makeTask('人物称呼情境判读员', '根据人物线索选择 boy、girl、man 或 woman，并练习 he 与 she。', 'companion-03', peopleCluePractice),
+  ],
+  highTasks: [
+    makeTask('友善介绍小主播', '根据人物线索组织完整句子，介绍同学或朋友。', 'companion-04', friendlyIntroductions),
+    makeTask('同学与朋友介绍编排师', '结合人物称呼和同伴关系，编排准确、友善的简短介绍。', 'companion-01', friendRolePractice),
+  ],
 });
