@@ -76,6 +76,18 @@ const term2EnglishEntries = [
   ['grade-2/term-2/english/review-02', '复习二 · Units 4–6', 'review', null, false],
 ] as const;
 
+function getOrderedLabelsForActivity(unitKey: string, difficulty: 'basic' | 'advanced' | 'high', prompt: string): string[] {
+  const activity = getSessionsForDifficulty(curriculum.units[unitKey], difficulty)
+    .flatMap(({ activities }) => activities)
+    .find((candidate) => candidate.kind === 'order' && candidate.prompt.includes(prompt));
+
+  if (!activity || activity.kind !== 'order') {
+    throw new Error(`Ordered activity not found: ${unitKey} / ${prompt}`);
+  }
+
+  return activity.correctOrder.map((id) => activity.items.find(({ id: itemId }) => itemId === id)?.label ?? '');
+}
+
 describe('curriculum registry', () => {
   it('listsAllVerifiedTerm1EnglishEntries', () => {
     const subject = curriculum.grades[0]?.terms[0]?.subjects.find(({ id }) => id === 'english');
@@ -460,6 +472,53 @@ describe('curriculum registry', () => {
       expect(getSessionsForDifficulty(unit, 'basic').every((session) => session.id.startsWith(`${unitKey}/basic/task-`))).toBe(true);
       expect(unit.achievementEligible).toBe(true);
     }
+  });
+
+  it('orders the term-one length comparison by ascending length', () => {
+    expect(getOrderedLabelsForActivity(
+      'grade-2/term-1/math/unit-01',
+      'advanced',
+      '按从短到长排列长度',
+    )).toEqual(['90厘米', '1米', '105厘米', '130厘米']);
+  });
+
+  it('measures before writing down and comparing the length', () => {
+    expect(getOrderedLabelsForActivity(
+      'grade-2/term-1/math/integrated-practice-01',
+      'advanced',
+      '完成一张长度调查记录卡',
+    )).toEqual([
+      '选一个身边物体并估计长度',
+      '用尺子测量并检查起点',
+      '写下测量值和单位',
+      '和伙伴比较并说明方法',
+    ]);
+  });
+
+  it('records the new leaf observation before comparing records', () => {
+    expect(getOrderedLabelsForActivity(
+      'grade-2/term-1/chinese/unit-02',
+      'basic',
+      '整理观察四季小树的步骤',
+    )).toEqual([
+      '选择并记住观察地点',
+      '隔一段时间再观察',
+      '记录树叶颜色变化',
+      '比较前后记录',
+    ]);
+  });
+
+  it('carries to the tens column before calculating the tens digit', () => {
+    expect(getOrderedLabelsForActivity(
+      'grade-2/term-2/math/unit-10',
+      'basic',
+      '完成一道两位数加法',
+    )).toEqual([
+      '把相同数位对齐',
+      '先算个位，个位满十向十位进1',
+      '再算十位，并加上进位',
+      '写出得数并检查',
+    ]);
   });
 
   it('accepts the selected curriculum registry after validating all open entries', () => {
