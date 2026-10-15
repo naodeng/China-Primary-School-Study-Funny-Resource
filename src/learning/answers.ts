@@ -13,10 +13,17 @@ export function submitAnswer(activity: ActivityDefinition, answer: unknown): boo
       return typeof answer === 'string'
         && answer === activity.correctOptionId
         && activity.options.some((option) => option.id === answer);
-    case 'match':
-      return isStringRecord(answer)
-        && Object.keys(answer).length === activity.pairs.length
-        && activity.pairs.every((pair) => answer[pair.id] === pair.id);
+    case 'match': {
+      if (!isStringRecord(answer) || Object.keys(answer).length !== activity.pairs.length) return false;
+
+      const pairsById = new Map(activity.pairs.map((pair) => [pair.id, pair]));
+      const selectedRightIds = Object.values(answer);
+      return new Set(selectedRightIds).size === activity.pairs.length
+        && activity.pairs.every((pair) => {
+          const selectedPair = pairsById.get(answer[pair.id]);
+          return selectedPair !== undefined && selectedPair.right === pair.right;
+        });
+    }
     case 'order':
       return Array.isArray(answer)
         && answer.length === activity.correctOrder.length
