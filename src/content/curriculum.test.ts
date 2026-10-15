@@ -550,6 +550,45 @@ describe('curriculum registry', () => {
     expect(validateCurriculum(curriculum)).toEqual([]);
   });
 
+  it('states the forced second place as certain in the three-partner clue', () => {
+    const question = getSessionsForDifficulty(
+      curriculum.units['grade-2/term-2/math/unit-09'],
+      'advanced',
+    ).flatMap(({ activities }) => activities)
+      .find((activity) => activity.kind === 'match' && activity.prompt.includes('三位伙伴站成一排'));
+
+    expect(question?.kind).toBe('match');
+    if (!question || question.kind !== 'match') return;
+    expect(question.pairs.find(({ left }) => left === '方方不是第一，圆圆是第三')?.right).toBe('方方一定在第二');
+    expect(question.explanation).toContain('方方一定在第二');
+  });
+
+  it('asks the length conversion question in the same unit as its numeric choices', () => {
+    const question = getSessionsForDifficulty(
+      curriculum.units['grade-2/term-1/math/unit-01'],
+      'advanced',
+    ).flatMap(({ activities }) => activities)
+      .find((activity) => activity.prompt.includes('1米20厘米'));
+
+    expect(question?.kind).toBe('choice');
+    if (!question || question.kind !== 'choice') return;
+    expect(question.prompt).toBe('把1米20厘米换成厘米，得数是多少？');
+    expect(question.options.find(({ id }) => id === question.correctOptionId)?.label).toBe('120');
+    expect(question.explanation).toContain('120厘米');
+  });
+
+  it('uses simplified Chinese throughout the first English review task prompts', () => {
+    const reviewActivities = getSessionsForDifficulty(
+      curriculum.units['grade-2/term-1/english/review-01'],
+      'advanced',
+    )[1]?.activities ?? [];
+    const visibleText = reviewActivities.flatMap(({ prompt, hint, explanation }) => [prompt, hint, explanation]).join(' ');
+
+    expect(visibleText).not.toMatch(/[紹時確樣]/);
+    expect(reviewActivities.map(({ prompt }) => prompt)).toContain('介绍爸爸时，哪句正确？');
+    expect(reviewActivities.map(({ prompt }) => prompt)).toContain('“他很高。”可以怎样说？');
+  });
+
   it('keeps the two advanced and high tasks from repeating an identical question', () => {
     const duplicateQuestions: string[] = [];
 

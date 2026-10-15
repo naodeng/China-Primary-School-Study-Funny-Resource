@@ -85,8 +85,8 @@ const peopleAndDescriptions = lessonProfile(
     { word: 'handsome', meaning: '英俊的' },
   ],
   [
-    phraseQuestion('介紹爸爸時，哪句正確？', ['This is my father.', 'This is my sister.', 'She is my father.'], 0, 'father 表示爸爸；介紹家人可以用 This is my...。'),
-    phraseQuestion('“他很高。”可以怎樣说？', ['He is tall.', 'She is tall.', 'He is handsome.'], 0, 'tall 表示高的；he 指男性。'),
+    phraseQuestion('介绍爸爸时，哪句正确？', ['This is my father.', 'This is my sister.', 'She is my father.'], 0, 'father 表示爸爸；介绍家人可以用 This is my...。'),
+    phraseQuestion('“他很高。”可以怎样说？', ['He is tall.', 'She is tall.', 'He is handsome.'], 0, 'tall 表示高的；he 指男性。'),
   ],
   ['家庭成员或人物', '外貌或身高描述'],
   [
