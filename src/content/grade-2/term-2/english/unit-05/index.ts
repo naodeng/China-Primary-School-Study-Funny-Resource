@@ -79,10 +79,10 @@ const routinePlanner = lessonProfile(
 
 const dailyRoutineInterview = lessonProfile(
   [
-    { word: 'get up', meaning: '起床' },
-    { word: 'eat breakfast', meaning: '吃早餐' },
-    { word: 'go to school', meaning: '去上学' },
-    { word: 'go home', meaning: '回家' },
+    { word: 'When', meaning: '什么时候' },
+    { word: 'every day', meaning: '每天' },
+    { word: 'at 7:00', meaning: '在七点' },
+    { word: 'at 8:00', meaning: '在八点' },
   ],
   [
     phraseQuestion('想问朋友每天什么时候起床，哪句正确？', ['When do you get up every day?', 'What day do you get up every day?', 'Where do you get up every day?'], 0, '用 When do you…every day? 询问日常活动时间。'),

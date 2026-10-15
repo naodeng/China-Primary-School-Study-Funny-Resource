@@ -1,19 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { curriculum } from './curriculum';
+import { entryDirectoriesFromFiles, inspectLayout } from './curriculumLayout';
 
-const canonicalEntryPattern = /^grade-\d+\/term-[12]\/(?:chinese|math|english)\/(?:unit|review|integrated-practice)-\d{2}$/;
+const courseFiles = import.meta.glob('./grade-*/term-*/**/*', { query: '?raw', import: 'default' });
 const courseEntryModules = import.meta.glob('./grade-*/term-*/**/index.ts');
 
 interface RegisteredEntry {
   id: string;
   subjectId: string;
   curriculumUnitKey: string;
-}
-
-interface LayoutReport {
-  missing: string[];
-  unregistered: string[];
-  invalid: string[];
 }
 
 function getPlayableEntries(): RegisteredEntry[] {
@@ -30,30 +25,21 @@ function getPlayableEntries(): RegisteredEntry[] {
   );
 }
 
-function inspectLayout(expectedDirectories: string[], actualDirectories: string[]): LayoutReport {
-  const expected = new Set(expectedDirectories);
-  const actual = new Set(actualDirectories);
-
-  return {
-    missing: [...expected].filter((directory) => !actual.has(directory)).sort(),
-    unregistered: [...actual].filter((directory) => !expected.has(directory)).sort(),
-    invalid: [...actual].filter((directory) => !canonicalEntryPattern.test(directory)).sort(),
-  };
-}
-
 describe('curriculum directory layout', () => {
   it('matchesEveryPlayableRegistryEntryToOneCanonicalDirectory', () => {
     const entries = getPlayableEntries();
     const expectedDirectories = entries.map((entry) => entry.curriculumUnitKey);
-    const actualDirectories = Object.keys(courseEntryModules).map((path) => path.replace(/^\.\//, '').replace(/\/index\.ts$/, ''));
+    const actualDirectories = entryDirectoriesFromFiles(Object.keys(courseFiles));
+    const entryModuleDirectories = entryDirectoriesFromFiles(Object.keys(courseEntryModules));
 
     expect(entries).toHaveLength(53);
     expect(entries.filter((entry) => entry.subjectId === 'chinese')).toHaveLength(16);
     expect(entries.filter((entry) => entry.subjectId === 'math')).toHaveLength(21);
     expect(entries.filter((entry) => entry.subjectId === 'english')).toHaveLength(16);
     expect(new Set(expectedDirectories).size).toBe(expectedDirectories.length);
-    expect(inspectLayout(expectedDirectories, actualDirectories)).toEqual({
+    expect(inspectLayout(expectedDirectories, actualDirectories, entryModuleDirectories)).toEqual({
       missing: [],
+      missingEntryModules: [],
       unregistered: [],
       invalid: [],
     });
@@ -72,11 +58,30 @@ describe('curriculum directory layout', () => {
     });
   });
 
+  it('reportsRegisteredEntryDirectoriesWithoutAnIndexModule', () => {
+    const directory = 'grade-2/term-1/chinese/unit-01';
+
+    expect(inspectLayout([directory], [directory], [])).toEqual({
+      missing: [],
+      missingEntryModules: [directory],
+      unregistered: [],
+      invalid: [],
+    });
+  });
+
+  it('groupsNestedFilesByEntryDirectoryAndIgnoresSubjectLevelSources', () => {
+    expect(entryDirectoriesFromFiles([
+      './grade-2/term-1/chinese/unit-01/lesson.md',
+      './grade-2/term-1/chinese/unit-01/examples/note.json',
+      './grade-2/term-1/chinese/questionAuthoring.ts',
+    ])).toEqual(['grade-2/term-1/chinese/unit-01']);
+  });
+
   it('usesExpectedGradeTermSubjectAndEntrySlugs', () => {
     const registeredDirectories = getPlayableEntries().map((entry) => entry.curriculumUnitKey);
     const invalidDirectory = 'grade-2/term-1/chinese/topic-01';
 
-    expect(registeredDirectories.every((directory) => canonicalEntryPattern.test(directory))).toBe(true);
+    expect(inspectLayout([], registeredDirectories).invalid).toEqual([]);
     expect(inspectLayout([], [invalidDirectory]).invalid).toEqual([invalidDirectory]);
   });
 });

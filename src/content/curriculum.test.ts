@@ -88,6 +88,19 @@ function getOrderedLabelsForActivity(unitKey: string, difficulty: 'basic' | 'adv
   return activity.correctOrder.map((id) => activity.items.find(({ id: itemId }) => itemId === id)?.label ?? '');
 }
 
+function withoutGeneratedIds(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(withoutGeneratedIds);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([key]) => key !== 'id')
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([key, nestedValue]) => [key, withoutGeneratedIds(nestedValue)]),
+    );
+  }
+  return value;
+}
+
 describe('curriculum registry', () => {
   it('listsAllVerifiedTerm1EnglishEntries', () => {
     const subject = curriculum.grades[0]?.terms[0]?.subjects.find(({ id }) => id === 'english');
@@ -535,5 +548,30 @@ describe('curriculum registry', () => {
 
   it('accepts the selected curriculum registry after validating all open entries', () => {
     expect(validateCurriculum(curriculum)).toEqual([]);
+  });
+
+  it('keeps the two advanced and high tasks from repeating an identical question', () => {
+    const duplicateQuestions: string[] = [];
+
+    for (const unit of Object.values(curriculum.units)) {
+      for (const difficulty of ['advanced', 'high'] as const) {
+        const [firstTask, secondTask] = unit.difficultyTracks[difficulty].tasks;
+        if (!firstTask || !secondTask) continue;
+
+        const firstTaskQuestions = new Set(
+          firstTask.sessions.flatMap(({ activities }) => activities)
+            .map((activity) => JSON.stringify(withoutGeneratedIds(activity))),
+        );
+
+        for (const activity of secondTask.sessions.flatMap(({ activities }) => activities)) {
+          const fingerprint = JSON.stringify(withoutGeneratedIds(activity));
+          if (firstTaskQuestions.has(fingerprint)) {
+            duplicateQuestions.push(`${unit.id}/${difficulty}/${activity.id}`);
+          }
+        }
+      }
+    }
+
+    expect(duplicateQuestions).toEqual([]);
   });
 });
