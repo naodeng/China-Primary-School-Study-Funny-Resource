@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from 'animal-island-ui';
+import { ArrowDownIcon, ArrowUpIcon } from 'naive-icons';
 import type { OrderActivityDefinition } from '../../content/types';
 
 interface OrderActivityProps {
@@ -40,13 +41,13 @@ export default function OrderActivity({ activity, disabled, onSubmit }: OrderAct
             <span className="order-index">{index + 1}</span>
             <span className="order-label">{labels.get(id)}</span>
             <div className="order-controls">
-              <button type="button" aria-label={`上移 ${labels.get(id)}`} disabled={disabled || index === 0} onClick={() => move(index, -1)}>↑</button>
-              <button type="button" aria-label={`下移 ${labels.get(id)}`} disabled={disabled || index === order.length - 1} onClick={() => move(index, 1)}>↓</button>
+              <Button type="default" className="order-control" aria-label={`上移 ${labels.get(id)}`} disabled={disabled || index === 0} icon={<ArrowUpIcon size={18} aria-hidden="true" />} onClick={() => move(index, -1)} />
+              <Button type="default" className="order-control" aria-label={`下移 ${labels.get(id)}`} disabled={disabled || index === order.length - 1} icon={<ArrowDownIcon size={18} aria-hidden="true" />} onClick={() => move(index, 1)} />
             </div>
           </li>
         ))}
       </ol>
-      <Button type="primary" disabled={disabled} onClick={() => onSubmit(order)}>检查顺序</Button>
+      <Button type="primary" className="activity-submit-action" disabled={disabled} onClick={() => onSubmit(order)}>检查顺序</Button>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from 'animal-island-ui';
+import { Button, Input } from 'animal-island-ui';
 import type { ArithmeticActivityDefinition } from '../../content/types';
 
 interface ArithmeticActivityProps {
@@ -32,8 +32,11 @@ export default function ArithmeticActivity({ activity, disabled, showSteps, onSu
       </div>
       <label className="arithmetic-answer-label" htmlFor={`answer-${activity.id}`}>你的答案</label>
       <div className="arithmetic-answer-row">
-        <input
+        <Input
           id={`answer-${activity.id}`}
+          className="arithmetic-answer-input"
+          size="large"
+          shadow={false}
           type="number"
           inputMode="numeric"
           min="0"
@@ -51,7 +54,7 @@ export default function ArithmeticActivity({ activity, disabled, showSteps, onSu
         <span>按题目中的单位作答</span>
       </div>
       <p className="arithmetic-keyboard-hint">可以使用键盘数字键输入，按回车提交。</p>
-      <Button type="primary" disabled={disabled || !validAnswer} onClick={() => onSubmit(Number(answer))}>检查答案</Button>
+      <Button type="primary" className="activity-submit-action" disabled={disabled || !validAnswer} onClick={() => onSubmit(Number(answer))}>检查答案</Button>
       {showSteps && activity.carryBorrowSteps && (
         <div className="calculation-steps" role="status">
           <strong>一步一步看</strong>

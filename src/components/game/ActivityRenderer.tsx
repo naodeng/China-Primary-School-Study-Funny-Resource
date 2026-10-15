@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { StarIcon } from 'naive-icons';
 import type { ActivityDefinition } from '../../content/types';
 import { submitAnswer } from '../../learning/answers';
 import { selectFeedbackMessage } from '../../learning/feedback';
@@ -74,7 +75,7 @@ export default function ActivityRenderer({ activity, onSolved, onAnswerResult, r
   return (
     <section className="activity-renderer" aria-labelledby={`activity-${activity.id}`}>
       <div className="activity-prompt-row">
-        <span className="activity-symbol" aria-hidden="true">✦</span>
+        <span className="activity-symbol" aria-hidden="true"><StarIcon size={18} /></span>
         <h2 id={`activity-${activity.id}`}>{activity.prompt}</h2>
       </div>
       {activityControl}

@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { curriculum } from '../content/curriculum';
+import * as unitLoader from '../content/unitLoader';
 import type { Curriculum } from '../content/types';
-import { getSessionPath, getSubjectTitle, getTaskPath, resolveRoute } from './router';
+import { getSessionPath, getSubjectTitle, getTaskPath, resolveAppRoute, resolveRoute } from './router';
 
 const unitKey = 'grade-2/term-1/chinese/unit-01';
 
@@ -87,19 +88,19 @@ describe('router', () => {
     expect(getSubjectTitle('english')).toBe('英语');
   });
 
-  it('distinguishesComingSoonFromUnknownCourses', () => {
-    expect(resolveRoute('/grade-2/term-1/math/unit-01').kind).toBe('unit');
-    expect(resolveRoute('/grade-2/term-1/math/unit-99').kind).toBe('notFound');
-    expect(resolveRoute('/grade-2/term-1/math/integrated-practice-01').kind).toBe('unit');
-    expect(resolveRoute('/grade-2/term-1/english/unit-01').kind).toBe('unit');
-    expect(resolveRoute('/grade-2/term-1/english/review-01').kind).toBe('unit');
-    expect(resolveRoute('/grade-2/term-2/chinese/unit-01').kind).toBe('unit');
-    expect(resolveRoute('/grade-2/term-2/chinese/unit-99').kind).toBe('notFound');
-    expect(resolveRoute('/grade-2/term-2/math/unit-01').kind).toBe('unit');
-    expect(resolveRoute('/grade-2/term-2/math/unit-10').kind).toBe('unit');
-    expect(resolveRoute('/grade-2/term-2/math/integrated-practice-01').kind).toBe('unit');
-    expect(resolveRoute('/grade-2/term-2/english/unit-01').kind).toBe('unit');
-    expect(resolveRoute('/grade-2/term-2/english/review-01').kind).toBe('unit');
+  it('distinguishesComingSoonFromUnknownCourses', async () => {
+    expect((await resolveAppRoute('/grade-2/term-1/math/unit-01')).kind).toBe('unit');
+    expect((await resolveAppRoute('/grade-2/term-1/math/unit-99')).kind).toBe('notFound');
+    expect((await resolveAppRoute('/grade-2/term-1/math/integrated-practice-01')).kind).toBe('unit');
+    expect((await resolveAppRoute('/grade-2/term-1/english/unit-01')).kind).toBe('unit');
+    expect((await resolveAppRoute('/grade-2/term-1/english/review-01')).kind).toBe('unit');
+    expect((await resolveAppRoute('/grade-2/term-2/chinese/unit-01')).kind).toBe('unit');
+    expect((await resolveAppRoute('/grade-2/term-2/chinese/unit-99')).kind).toBe('notFound');
+    expect((await resolveAppRoute('/grade-2/term-2/math/unit-01')).kind).toBe('unit');
+    expect((await resolveAppRoute('/grade-2/term-2/math/unit-10')).kind).toBe('unit');
+    expect((await resolveAppRoute('/grade-2/term-2/math/integrated-practice-01')).kind).toBe('unit');
+    expect((await resolveAppRoute('/grade-2/term-2/english/unit-01')).kind).toBe('unit');
+    expect((await resolveAppRoute('/grade-2/term-2/english/review-01')).kind).toBe('unit');
   });
 
   it('doesNotOpenAnActiveCatalogEntryWithAnUnverifiedEdition', () => {
@@ -119,6 +120,43 @@ describe('router', () => {
       difficulty: 'basic',
       task: { id: `${unitKey}/basic/task-02` },
       session: { id: `${unitKey}/basic/task-02/session-01` },
+    });
+  });
+});
+
+describe('asynchronous curriculum routes', () => {
+  it('loads a directly opened course session from its unit module', async () => {
+    const unitKey = 'grade-2/term-1/chinese/unit-01';
+    const route = await resolveAppRoute(`/${unitKey}/basic/task-01/session-01`);
+
+    expect(route).toMatchObject({
+      kind: 'session',
+      unitKey,
+      difficulty: 'basic',
+      task: { id: `${unitKey}/basic/task-01` },
+      session: { id: `${unitKey}/basic/task-01/session-01` },
+    });
+  });
+
+  it('keeps unknown unit URLs as not-found routes without loading course data', async () => {
+    await expect(resolveAppRoute('/grade-2/term-1/chinese/unit-99')).resolves.toMatchObject({ kind: 'notFound' });
+  });
+
+  it('returns a recoverable load error when a unit module fails to load', async () => {
+    vi.spyOn(unitLoader, 'loadUnit').mockRejectedValueOnce(new Error('module unavailable'));
+
+    await expect(resolveAppRoute('/grade-2/term-1/chinese/unit-01')).resolves.toEqual({
+      kind: 'loadError',
+      path: '/grade-2/term-1/chinese/unit-01',
+    });
+  });
+
+  it('returns not found when a registered unit module resolves without a unit', async () => {
+    vi.spyOn(unitLoader, 'loadUnit').mockResolvedValueOnce(undefined);
+
+    await expect(resolveAppRoute('/grade-2/term-1/chinese/unit-01')).resolves.toEqual({
+      kind: 'notFound',
+      path: '/grade-2/term-1/chinese/unit-01',
     });
   });
 });

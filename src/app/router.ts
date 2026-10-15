@@ -1,17 +1,13 @@
-import { curriculum } from '../content/curriculum';
+import { curriculumManifest } from '../content/curriculumManifest';
+import { loadUnit } from '../content/unitLoader';
 import { getSessionsForDifficulty } from '../content/sessionUtils';
-import type {
-  Curriculum,
-  CurriculumUnit,
-  Difficulty,
-  LearningSession,
-  LearningTask,
-  SubjectId,
-} from '../content/types';
+import type { Curriculum, CurriculumUnit, Difficulty, LearningSession, LearningTask, SubjectId } from '../content/types';
 
 export type AppRoute =
   | { kind: 'catalog' }
   | { kind: 'achievements' }
+  | { kind: 'loading'; path: string; unitKey: string; curriculumUnitKey: string }
+  | { kind: 'loadError'; path: string }
   | { kind: 'unit'; unitKey: string; unit: CurriculumUnit }
   | { kind: 'task'; unitKey: string; unit: CurriculumUnit; difficulty: Difficulty; task: LearningTask }
   | { kind: 'session'; unitKey: string; unit: CurriculumUnit; difficulty: Difficulty; task: LearningTask; session: LearningSession }
@@ -19,6 +15,7 @@ export type AppRoute =
   | { kind: 'notFound'; path: string };
 
 const DIFFICULTIES: readonly Difficulty[] = ['basic', 'advanced', 'high'];
+type CurriculumCatalog = Pick<Curriculum, 'grades' | 'textbooks'>;
 
 function lastPathSegment(id: string): string {
   return id.slice(id.lastIndexOf('/') + 1);
@@ -36,7 +33,7 @@ export function getSessionPath(unitKey: string, difficulty: Difficulty, taskId: 
   return `${getTaskPath(unitKey, difficulty, taskId)}/${lastPathSegment(sessionId)}`;
 }
 
-function findCatalogUnit(instance: Curriculum, key: string) {
+function findCatalogUnit(instance: CurriculumCatalog, key: string) {
   for (const grade of instance.grades) {
     for (const term of grade.terms) {
       for (const subject of term.subjects) {
@@ -70,7 +67,7 @@ function mapLegacySession(unit: CurriculumUnit, unitKey: string, legacySessionSl
     : { kind: 'notFound', path: `/${unitKey}/${legacySessionSlug}` };
 }
 
-export function resolveRoute(pathname: string, instance: Curriculum = curriculum): AppRoute {
+export function resolveRoute(pathname: string, instance?: Curriculum, loadedUnit?: CurriculumUnit): AppRoute {
   const normalized = pathname.replace(/\/+$/, '') || '/';
   if (normalized === '/') return { kind: 'catalog' };
   if (normalized === '/achievements') return { kind: 'achievements' };
@@ -89,14 +86,17 @@ export function resolveRoute(pathname: string, instance: Curriculum = curriculum
   }
 
   const unitKey = `${gradeId}/${termId}/${subjectId}/${unitId}`;
-  const catalogUnit = findCatalogUnit(instance, unitKey);
+  const catalog = instance ?? curriculumManifest;
+  const catalogUnit = findCatalogUnit(catalog, unitKey);
   if (!catalogUnit) return { kind: 'notFound', path: normalized };
-  const textbook = instance.textbooks[catalogUnit.textbookEditionId];
+  const textbook = catalog.textbooks[catalogUnit.textbookEditionId];
   if (catalogUnit.status !== 'active' || textbook?.verificationStatus !== 'verified') {
     return { kind: 'comingSoon', title: catalogUnit.title, path: normalized };
   }
 
-  const unit = instance.units[catalogUnit.curriculumUnitKey ?? unitKey];
+  const curriculumUnitKey = catalogUnit.curriculumUnitKey ?? unitKey;
+  const unit = loadedUnit ?? instance?.units[curriculumUnitKey];
+  if (!unit && !instance) return { kind: 'loading', path: normalized, unitKey, curriculumUnitKey };
   if (!unit) return { kind: 'notFound', path: normalized };
   if (segments.length === 4) return { kind: 'unit', unitKey, unit };
   if (segments.length === 5) return mapLegacySession(unit, unitKey, segments[4]);
@@ -112,6 +112,18 @@ export function resolveRoute(pathname: string, instance: Curriculum = curriculum
   return session
     ? { kind: 'session', unitKey, unit, difficulty, task, session }
     : { kind: 'notFound', path: normalized };
+}
+
+export async function resolveAppRoute(pathname: string): Promise<AppRoute> {
+  const initialRoute = resolveRoute(pathname);
+  if (initialRoute.kind !== 'loading') return initialRoute;
+  try {
+    const unit = await loadUnit(initialRoute.curriculumUnitKey);
+    if (!unit) return { kind: 'notFound', path: initialRoute.path };
+    return resolveRoute(pathname, undefined, unit);
+  } catch {
+    return { kind: 'loadError', path: initialRoute.path };
+  }
 }
 
 export function getSubjectTitle(subject: SubjectId): string {

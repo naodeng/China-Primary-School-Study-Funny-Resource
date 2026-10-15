@@ -1,4 +1,5 @@
 import type { CompanionId, SubjectId } from '../../content/types';
+import { StarIcon } from 'naive-icons';
 import CompanionAvatar, { COMPANION_PROFILES } from './CompanionAvatar';
 
 type GuideMood = 'welcome' | 'hint' | 'celebrate';
@@ -40,7 +41,7 @@ export default function HeroGuide({ mood, subject, companionId, compact = false 
         <span className="hero-guide-name">{profile.name} · 学习伙伴</span>
         <p>{GUIDE_MESSAGES[mood][subject]}</p>
       </div>
-      {!compact && <span className="hero-guide-spark" aria-hidden="true">✧</span>}
+      {!compact && <span className="hero-guide-spark" aria-hidden="true"><StarIcon size={24} /></span>}
     </div>
   );
 }

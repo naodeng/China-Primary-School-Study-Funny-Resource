@@ -65,6 +65,12 @@ describe('SessionPlayer', () => {
     const progressBar = screen.getByRole('progressbar', { name: '本场完成进度' });
     const nextButton = screen.getByRole('button', { name: /^继续下一题/ });
 
+    expect(screen.getByText(session.objective)).not.toBeVisible();
+    await user.click(screen.getByRole('button', { name: /本场学习目标/ }));
+    expect(screen.getByText(session.objective)).toBeVisible();
+    await user.click(screen.getByRole('button', { name: /本场学习目标/ }));
+    expect(screen.getByText(session.objective)).not.toBeVisible();
+
     expect(progressBar).toHaveAttribute('aria-valuenow', '0');
     expect(nextButton).toBeDisabled();
     await user.click(screen.getByRole('button', { name: '错误选项 1' }));

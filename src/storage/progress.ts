@@ -1,5 +1,4 @@
-import { curriculum } from '../content/curriculum';
-import { getSessionsForDifficulty } from '../content/sessionUtils';
+import { curriculumManifest } from '../content/curriculumManifest';
 import { getAssumedCompletedSessionIds, getRegisteredLearningPositions } from '../achievements/position';
 import type { LearningPosition } from '../achievements/position';
 
@@ -25,9 +24,7 @@ function copyProgress(progress: ProgressState): ProgressState {
 }
 
 function getCurrentSessionIds(): Set<string> {
-  return new Set(Object.values(curriculum.units).flatMap((unit) => (
-    (['basic', 'advanced', 'high'] as const).flatMap((difficulty) => getSessionsForDifficulty(unit, difficulty).map((session) => session.id))
-  )));
+  return new Set(Object.values(curriculumManifest.units).flatMap((unit) => Object.values(unit.sessionIds).flat()));
 }
 
 function parseLearningStart(value: unknown): LearningPosition | null {

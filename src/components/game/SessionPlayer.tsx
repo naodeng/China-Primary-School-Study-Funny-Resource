@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { Button, Card } from 'animal-island-ui';
+import { ArrowLeftIcon, ArrowRightIcon, ChevronDownIcon, StarIcon } from 'naive-icons';
 import type { CosmicRank } from '../../achievements/progress';
 import type { LearningSession, SubjectId } from '../../content/types';
 import { selectFeedbackMessage } from '../../learning/feedback';
@@ -28,6 +29,8 @@ interface SessionPlayerProps {
 export default function SessionPlayer({ session, subject, newlyUnlockedRank, onComplete, onExit }: SessionPlayerProps) {
   const { playCue } = useSound();
   const [sessionState, setSessionState] = useState(() => createSessionState(session.activities.map((activity) => activity.id)));
+  const [sessionObjectiveOpen, setSessionObjectiveOpen] = useState(false);
+  const sessionObjectiveId = useId();
   const nextLock = useRef(false);
   const consecutiveCorrectCount = useRef(0);
   const previousFeedbackMessages = useRef<Record<FeedbackStatus, string | null>>({ correct: null, incorrect: null });
@@ -91,7 +94,7 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
     return (
       <main className="game-page">
         <div className="game-shell">
-          <Card className="session-intro-card" color="app-yellow">
+          <Card className="session-intro-card" color="default">
             <h1>这场游戏还没有准备好</h1>
             <p>课程伙伴正在整理题目，我们确认好内容后就会邀请你来挑战。</p>
             <Button type="primary" onClick={onExit}>返回课程</Button>
@@ -105,16 +108,25 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
     <main className="game-page">
       <div className="game-shell">
         <header className="game-topbar">
-          <Button type="default" onClick={onExit}>← 返回单元</Button>
+          <Button type="default" icon={<ArrowLeftIcon size={18} aria-hidden="true" />} onClick={onExit}>返回单元</Button>
           <span className="game-duration">建议用时 {session.durationMinutes} 分钟</span>
         </header>
-        <Card className="session-intro-card" color="app-blue">
+        <Card className="session-intro-card" color="default">
           <div className="session-intro-content">
             <p className="eyebrow">学习任务</p>
             <h1>{session.title}</h1>
-            <p>{session.objective}</p>
+            <Button
+              type="text"
+              className="session-intro-objective-toggle"
+              aria-expanded={sessionObjectiveOpen}
+              aria-controls={sessionObjectiveId}
+              onClick={() => setSessionObjectiveOpen((open) => !open)}
+            >
+              <span className="button-label-with-icon">本场学习目标 <ChevronDownIcon size={15} aria-hidden="true" /></span>
+            </Button>
+            <p id={sessionObjectiveId} className="session-intro-objective" hidden={!sessionObjectiveOpen}>{session.objective}</p>
           </div>
-          <span className="session-intro-star" aria-hidden="true">✦</span>
+          <span className="session-intro-star" aria-hidden="true"><StarIcon size={96} /></span>
         </Card>
         <HeroGuide mood="hint" subject={subject} companionId={session.companionId} compact />
         <section className="game-progress-section" aria-label="挑战进度">
@@ -141,8 +153,8 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
         </Card>
         <div className={`game-navigation-row ${solved ? 'is-solved' : ''}`}>
           <p aria-live="polite">{solved ? '挑战完成！你的坚持又积累了一点能量，可以继续啦。' : '不着急，先读题找线索；愿意动脑尝试就很棒。'}</p>
-          <Button type="primary" disabled={!solved} onClick={continueSession}>
-            {sessionState.currentIndex === session.activities.length - 1 ? '完成本场' : '继续下一题'} <span aria-hidden="true">→</span>
+          <Button type="primary" icon={<ArrowRightIcon size={18} aria-hidden="true" />} disabled={!solved} onClick={continueSession}>
+            {sessionState.currentIndex === session.activities.length - 1 ? '完成本场' : '继续下一题'}
           </Button>
         </div>
       </div>

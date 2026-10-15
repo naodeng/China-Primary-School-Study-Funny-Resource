@@ -32,9 +32,10 @@ export default function MatchActivity({ activity, disabled, onSubmit, random }: 
       <div className="match-columns">
         <div className="match-column" role="group" aria-label="左侧词语">
           {activity.pairs.map((pair) => (
-            <button
+            <Button
               className={`match-choice ${selectedLeft === pair.id ? 'is-selected' : ''} ${assignments[pair.id] ? 'is-linked' : ''}`}
-              type="button"
+              type={selectedLeft === pair.id ? 'primary' : 'default'}
+              block
               key={pair.id}
               aria-pressed={selectedLeft === pair.id}
               disabled={disabled}
@@ -42,14 +43,15 @@ export default function MatchActivity({ activity, disabled, onSubmit, random }: 
             >
               <span>{pair.left}</span>
               {assignments[pair.id] ? <small>已配对</small> : selectedLeft === pair.id ? <small>已选中</small> : null}
-            </button>
+            </Button>
           ))}
         </div>
         <div className="match-column" role="group" aria-label="右侧词语">
           {rightAnswers.map((pair) => (
-            <button
+            <Button
               className={`match-choice ${takenRightIds.includes(pair.id) ? 'is-linked' : ''}`}
-              type="button"
+              type={assignments[selectedLeft ?? ''] === pair.id ? 'primary' : 'default'}
+              block
               key={pair.id}
               aria-pressed={assignments[selectedLeft ?? ''] === pair.id}
               disabled={disabled || !selectedLeft || takenRightIds.includes(pair.id)}
@@ -57,12 +59,12 @@ export default function MatchActivity({ activity, disabled, onSubmit, random }: 
             >
               <span>{pair.right}</span>
               {takenRightIds.includes(pair.id) && <small>已配对</small>}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
       <p className="match-count" aria-live="polite">已配好 {Object.keys(assignments).length}/{activity.pairs.length} 组</p>
-      <Button type="primary" disabled={disabled || Object.keys(assignments).length !== activity.pairs.length} onClick={() => onSubmit(assignments)}>
+      <Button type="primary" className="activity-submit-action" disabled={disabled || Object.keys(assignments).length !== activity.pairs.length} onClick={() => onSubmit(assignments)}>
         检查配对
       </Button>
     </div>

@@ -1,4 +1,5 @@
 import { Button, Card } from 'animal-island-ui';
+import { RocketIcon, StarIcon } from 'naive-icons';
 import type { CosmicRank } from '../../achievements/progress';
 import type { LearningSession, SubjectId } from '../../content/types';
 import HeroGuide from '../mascots/HeroGuide';
@@ -15,16 +16,16 @@ export default function SessionSummary({ session, subject, newlyUnlockedRank, on
   return (
     <main className="game-page">
       <div className="game-shell">
-        <Card className="session-finish-card" color="app-green">
-          <span className="finish-emblem" aria-hidden="true">✦</span>
+        <Card className="session-finish-card" color="default">
+          <span className="finish-emblem" aria-hidden="true"><StarIcon size={36} /></span>
           <p className="eyebrow">任务完成</p>
           <h1>太棒了，能量收集完成！</h1>
           <p>你完成了“{session.title}”里的 {session.activities.length} 个小挑战，这份认真和坚持值得一枚星章！</p>
-          <div className="earned-star" role="img" aria-label="获得一枚星章">⭐</div>
+          <div className="earned-star" role="img" aria-label="获得一枚星章"><StarIcon size={40} /></div>
           {newlyUnlockedRank && (
             <div className="summary-achievement" role="status">
               <span>新头衔解锁</span>
-              <strong><span aria-hidden="true">{newlyUnlockedRank.symbol}</span> {newlyUnlockedRank.title}</strong>
+              <strong><RocketIcon size={20} aria-hidden="true" /> {newlyUnlockedRank.title}</strong>
               <p>{newlyUnlockedRank.description}。继续按自己的节奏探索吧！</p>
             </div>
           )}

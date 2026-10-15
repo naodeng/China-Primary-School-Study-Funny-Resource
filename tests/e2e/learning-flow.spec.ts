@@ -107,6 +107,29 @@ async function continueToNext(page: import('@playwright/test').Page, final = fal
   await page.getByRole('button', { name: final ? /^完成本场/ : /^继续下一题/ }).click();
 }
 
+test('alignsChoiceLabelsBesideLetterMarkersOnPhoneAndDesktop', async ({ page }) => {
+  await installAudioSpy(page);
+  const session = '/grade-2/term-1/chinese/unit-02/basic/task-01/session-01';
+
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1280, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto(session);
+    const option = page.getByRole('group', { name: '选择一个答案' }).getByRole('button').first();
+    const marker = option.locator('.choice-option-letter');
+    const label = option.locator('.choice-option-label');
+    const markerBox = await marker.boundingBox();
+    const labelBox = await label.boundingBox();
+
+    expect(markerBox).not.toBeNull();
+    expect(labelBox).not.toBeNull();
+    expect(labelBox!.x).toBeGreaterThan(markerBox!.x + markerBox!.width);
+    expect(Math.abs((labelBox!.y + labelBox!.height / 2) - (markerBox!.y + markerBox!.height / 2))).toBeLessThan(7);
+  }
+});
+
 test('playsAnswerCuesInOrderAndSavesEightQuestionProgress', async ({ page }) => {
   await installAudioSpy(page);
   await page.goto(sessionUrl);
@@ -241,24 +264,22 @@ test('playsInteractionCuesForArithmeticAndMeasurementInputs', async ({ page }) =
   ]);
   await continueToNext(page);
 
-  const slider = page.getByRole('slider', { name: '选择虚拟铅笔的长度，单位厘米' });
-  await expect(slider).toBeVisible();
-  await slider.click();
+  const increaseLength = page.getByRole('button', { name: '增加 1 厘米' });
+  await expect(increaseLength).toBeVisible();
+  await increaseLength.click();
   const clickCountWithMeasurement = (await readAudioEvents(page))
     .filter((event) => event.type === 'play' && event.src === '/audio/interaction-click.mp3').length;
   expect(clickCountWithMeasurement).toBeGreaterThan(arithmeticClickCount);
 
-  await slider.press('Home');
-  for (let tick = 0; tick < 9; tick += 1) await slider.press('ArrowRight');
+  for (let tick = 1; tick < 9; tick += 1) await increaseLength.click();
   await page.getByRole('button', { name: '检查长度' }).click();
   await expect(page.locator('.activity-feedback')).toContainText(/这次还没|勇敢尝试|还差|先别|每一次尝试/);
   await page.getByRole('button', { name: '再试一次' }).click();
   await page.getByRole('button', { name: '给我一点提示' }).click();
-  await slider.press('Home');
-  for (let tick = 0; tick < 8; tick += 1) await slider.press('ArrowRight');
-  await expect(slider).toHaveAttribute('aria-valuetext', '8厘米');
+  for (let tick = 1; tick < 9; tick += 1) await increaseLength.click();
+  await expect(page.locator('.measurement-value')).toHaveText('8 厘米');
   await page.getByRole('button', { name: '检查长度' }).click();
-  await expect(page.getByRole('status')).toContainText(/答对了|真棒|太好了|成功啦/);
+  await expect(page.locator('.activity-feedback')).toContainText(/答对了|真棒|太好了|成功啦/);
 });
 
 test('completesTwoBasicTasksAndOneTaskPerHigherTier', async ({ page }) => {

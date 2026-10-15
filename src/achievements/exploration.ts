@@ -1,6 +1,5 @@
-import { curriculum } from '../content/curriculum';
-import { getSessionsForDifficulty } from '../content/sessionUtils';
-import type { Curriculum } from '../content/types';
+import { curriculumManifest } from '../content/curriculumManifest';
+import type { CurriculumProgressSource } from '../content/curriculumManifest';
 import { getRegisteredCurriculumPositions } from './position';
 import type { LearningPosition } from './position';
 import { getLearningUnitProgress } from './progress';
@@ -25,7 +24,6 @@ export interface ExplorationZone {
   termTitle: string;
   number: number;
   title: string;
-  symbol: string;
   visualStyle: string;
   unitArtifact: string;
   units: ExplorationUnitNode[];
@@ -38,21 +36,21 @@ export interface ExplorationZone {
 }
 
 const ZONE_DESIGNS = [
-  { grade: 1, term: 1, title: '月球空港', symbol: '🌙', visualStyle: '萌系卡通、温暖明亮', unitArtifact: '月球基地' },
-  { grade: 1, term: 2, title: '红色火星', symbol: '🔴', visualStyle: '荒漠开拓、极客初现', unitArtifact: '火星运河 / 地下城' },
-  { grade: 2, term: 1, title: '小行星带', symbol: '☄️', visualStyle: '乱石穿空、极速闪避', unitArtifact: '发光矿石' },
-  { grade: 2, term: 2, title: '木星风暴', symbol: '🌀', visualStyle: '气态巨星、科幻震撼', unitArtifact: '稳定锚点' },
-  { grade: 3, term: 1, title: '半人马座', symbol: '🌌', visualStyle: '深空幽蓝、异星文明', unitArtifact: '量子通信密码' },
-  { grade: 3, term: 2, title: '猎户旋臂', symbol: '🏹', visualStyle: '星云绚丽、航线绵长', unitArtifact: '星际灯塔' },
-  { grade: 4, term: 1, title: '天鹅座X1', symbol: '🕳️', visualStyle: '引力扭曲、神秘硬核', unitArtifact: '反物质收集器' },
-  { grade: 4, term: 2, title: '织女星云', symbol: '💎', visualStyle: '晶莹剔透、几何美感', unitArtifact: '星际水晶' },
-  { grade: 5, term: 1, title: '超星系团', symbol: '🔱', visualStyle: '宏大叙事、星系熔炉', unitArtifact: '星系核心' },
-  { grade: 5, term: 2, title: '流浪星域', symbol: '🪐', visualStyle: '冰冷孤寂、寻找家园', unitArtifact: '恒星引力弹弓' },
-  { grade: 6, term: 1, title: '引力波源', symbol: '🌊', visualStyle: '高维空间、线条极简', unitArtifact: '维度碎片' },
-  { grade: 6, term: 2, title: '宇宙终点', symbol: '🛸', visualStyle: '终极荣耀、黄金圣殿', unitArtifact: '神级文明进化阶梯' },
+  { grade: 1, term: 1, title: '月球空港', visualStyle: '萌系卡通、温暖明亮', unitArtifact: '月球基地' },
+  { grade: 1, term: 2, title: '红色火星', visualStyle: '荒漠开拓、极客初现', unitArtifact: '火星运河 / 地下城' },
+  { grade: 2, term: 1, title: '小行星带', visualStyle: '乱石穿空、极速闪避', unitArtifact: '发光矿石' },
+  { grade: 2, term: 2, title: '木星风暴', visualStyle: '气态巨星、科幻震撼', unitArtifact: '稳定锚点' },
+  { grade: 3, term: 1, title: '半人马座', visualStyle: '深空幽蓝、异星文明', unitArtifact: '量子通信密码' },
+  { grade: 3, term: 2, title: '猎户旋臂', visualStyle: '星云绚丽、航线绵长', unitArtifact: '星际灯塔' },
+  { grade: 4, term: 1, title: '天鹅座X1', visualStyle: '引力扭曲、神秘硬核', unitArtifact: '反物质收集器' },
+  { grade: 4, term: 2, title: '织女星云', visualStyle: '晶莹剔透、几何美感', unitArtifact: '星际水晶' },
+  { grade: 5, term: 1, title: '超星系团', visualStyle: '宏大叙事、星系熔炉', unitArtifact: '星系核心' },
+  { grade: 5, term: 2, title: '流浪星域', visualStyle: '冰冷孤寂、寻找家园', unitArtifact: '恒星引力弹弓' },
+  { grade: 6, term: 1, title: '引力波源', visualStyle: '高维空间、线条极简', unitArtifact: '维度碎片' },
+  { grade: 6, term: 2, title: '宇宙终点', visualStyle: '终极荣耀、黄金圣殿', unitArtifact: '神级文明进化阶梯' },
 ] as const;
 
-export function getExplorationZones(completedSessionIds: string[], startAt?: LearningPosition | null, source: Curriculum = curriculum): ExplorationZone[] {
+export function getExplorationZones(completedSessionIds: string[], startAt?: LearningPosition | null, source: CurriculumProgressSource = curriculumManifest): ExplorationZone[] {
   const progress = getLearningUnitProgress(completedSessionIds, startAt, source);
   const registeredPositions = getRegisteredCurriculumPositions(source);
 
@@ -75,7 +73,7 @@ export function getExplorationZones(completedSessionIds: string[], startAt?: Lea
           subjectTitle: position.subjectTitle,
           state,
           completedSessions: unitProgress?.completedSessionIds.length ?? 0,
-          totalSessions: unitProgress ? getSessionsForDifficulty(unitProgress.unit, 'basic').length : 0,
+          totalSessions: unitProgress?.basicSessions.length ?? 0,
           grade: position.grade,
           term: position.term,
           unit: position.unit,
@@ -92,7 +90,6 @@ export function getExplorationZones(completedSessionIds: string[], startAt?: Lea
       termTitle,
       number: index + 1,
       title: design.title,
-      symbol: design.symbol,
       visualStyle: design.visualStyle,
       unitArtifact: design.unitArtifact,
       units,

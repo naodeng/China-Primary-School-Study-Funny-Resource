@@ -1,4 +1,5 @@
 import type { CompanionId } from '../../content/types';
+import { StarIcon } from 'naive-icons';
 
 export const COMPANION_IDS: CompanionId[] = [
   'companion-01',
@@ -35,7 +36,7 @@ export default function CompanionAvatar({ id, alt, size = 'medium', className = 
   return (
     <span className={classes}>
       <img src={COMPANION_IMAGES[id]} alt={alt ?? profile.alt} loading="lazy" decoding="async" />
-      <span className="companion-avatar-spark" aria-hidden="true">✦</span>
+      <span className="companion-avatar-spark" aria-hidden="true"><StarIcon size={10} /></span>
     </span>
   );
 }

@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import type { MeasurementActivityDefinition } from '../../content/types';
 import MeasurementActivity from './MeasurementActivity';
 
@@ -16,14 +17,15 @@ const activity: MeasurementActivityDefinition = {
 };
 
 describe('MeasurementActivity', () => {
-  it('keepsTheDisplayedTargetLengthIndependentFromTheLearnersSliderAnswer', () => {
+  it('keepsTheDisplayedTargetLengthIndependentFromTheLearnersStepperAnswer', async () => {
+    const user = userEvent.setup();
     const { container } = render(<MeasurementActivity activity={activity} disabled={false} onSubmit={vi.fn()} />);
     const object = container.querySelector('.measurement-object-shape');
     const targetWidth = object?.getAttribute('style');
 
-    fireEvent.change(screen.getByRole('slider'), { target: { value: '4' } });
+    for (let tick = 0; tick < 4; tick += 1) await user.click(screen.getByRole('button', { name: '增加 1 厘米' }));
 
-    expect(screen.getByRole('slider')).toHaveAttribute('aria-valuetext', '4厘米');
+    expect(screen.getByText('4 厘米')).toBeInTheDocument();
     expect(object?.getAttribute('style')).toBe(targetWidth);
   });
 });

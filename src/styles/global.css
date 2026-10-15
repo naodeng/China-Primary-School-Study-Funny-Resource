@@ -1,5 +1,5 @@
 :root {
-  font-family: system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: var(--animal-font-family);
   color: var(--island-ink);
   background: var(--island-paper);
   color-scheme: light;
@@ -11,6 +11,7 @@
 body { margin: 0; min-width: 0; min-height: 100vh; color: var(--island-ink); background: var(--island-paper); }
 button, input { font: inherit; }
 .app-frame { min-height: 100vh; }
+.app-frame main h1[data-route-focus='true']:focus-visible { outline: 3px solid var(--animal-primary-color); outline-offset: 5px; border-radius: 6px; }
 .app-toolbar { position: relative; z-index: 2; display: flex; justify-content: flex-end; width: min(1120px, calc(100% - 48px)); margin: 14px auto 0; }
 .theme-switcher { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 7px 10px 8px; border: 1px solid rgba(81, 103, 126, .14); border-radius: 18px; background: rgba(255, 255, 255, .88); box-shadow: 0 5px 18px rgba(48, 73, 62, .08); }
 .theme-switcher legend { padding: 0 4px; color: var(--island-muted); font-size: 11px; font-weight: 800; }
@@ -20,7 +21,7 @@ button, input { font: inherit; }
 .theme-switcher [class*='animal-label'] { color: #52665a; }
 .theme-switcher [class*='animal-checked'] [class*='animal-label'] { color: #315d42; font-weight: 800; }
 .bootstrap-screen { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at 15% 15%, #fff 0 8%, transparent 9%), linear-gradient(145deg, #fff9ec, #e8f7ed 65%, #e8f2ff); }
-.bootstrap-card { position: relative; width: min(100%, 620px); padding: clamp(32px, 8vw, 64px); border: 1px solid #f0e8d8; border-radius: 34px; background: rgba(255,255,255,.9); box-shadow: 0 22px 60px rgba(65,82,109,.12); text-align: center; }
+.bootstrap-card { position: relative; width: min(100%, 620px); padding: clamp(32px, 8vw, 64px); border: 1px solid #f0e8d8; border-radius: 34px; background: rgba(255,255,255,.9); text-align: center; }
 .bootstrap-eyebrow { color: #617189; font-weight: 800; letter-spacing: .08em; }
 .bootstrap-card h1 { margin: 12px 0; font-size: clamp(36px, 8vw, 56px); color: #27334a; }
 .bootstrap-card p:last-child { margin: 0; line-height: 1.8; }

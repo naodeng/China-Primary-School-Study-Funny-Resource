@@ -17,6 +17,8 @@ interface SoundProviderProps {
 type SoundChannel = 'voice' | 'interaction';
 type AudioChannels = Record<SoundChannel, HTMLAudioElement | null>;
 
+const INTERACTION_CUE_VOLUME = 0.3;
+
 const SoundContext = createContext<SoundContextValue | null>(null);
 
 function stopAudio(audio: HTMLAudioElement | null): void {
@@ -57,6 +59,7 @@ export function SoundProvider({ children }: SoundProviderProps) {
         audio.pause();
         audio.src = SOUND_CUE_ASSETS[cue];
       }
+      audio.volume = channel === 'interaction' ? INTERACTION_CUE_VOLUME : 1;
       audio.currentTime = 0;
       void audio.play().catch(() => undefined);
     } catch {

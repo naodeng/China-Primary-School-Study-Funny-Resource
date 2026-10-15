@@ -18,11 +18,29 @@ function renderCatalog(onNavigate = vi.fn()) {
 }
 
 describe('CourseCatalog', () => {
+  it('highlightsTheCurrentCourseAndLetsLearnersJumpToCourseSelection', async () => {
+    const user = userEvent.setup();
+    renderCatalog();
+
+    const route = screen.getByText('当前探索航线').parentElement?.parentElement;
+    expect(route).toHaveTextContent('二年级');
+    expect(route).toHaveTextContent('上学期');
+    expect(route).toHaveTextContent('语文');
+    expect(route).toHaveTextContent('人教版');
+
+    const selection = screen.getByRole('group', { name: '选择学习年级和学期' });
+    await user.click(screen.getByRole('button', { name: /调整课程选择/ }));
+    expect(selection).toHaveFocus();
+
+    await user.click(screen.getByRole('button', { name: '英语' }));
+    expect(route).toHaveTextContent('英语');
+  });
+
   it('offersRegistryDrivenGradeAndTermControls', () => {
     renderCatalog();
 
-    expect(screen.getByRole('combobox', { name: '年级' })).toHaveValue('grade-2');
-    expect(screen.getByRole('combobox', { name: '学期' })).toHaveValue('term-1');
+    expect(screen.getByRole('combobox', { name: '年级' })).toHaveTextContent('二年级');
+    expect(screen.getByRole('combobox', { name: '学期' })).toHaveTextContent('上学期');
     expect(screen.getByRole('button', { name: '语文' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '数学' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '英语' })).toBeInTheDocument();
@@ -36,7 +54,7 @@ describe('CourseCatalog', () => {
     expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(8);
     expect(screen.queryByText('筹备中')).not.toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '数学' }));
-    expect(screen.getByText('数学', { selector: '.catalog-subject-name' })).toBeInTheDocument();
+    expect(screen.getByText('数学', { selector: '.catalog-route-subject' })).toBeInTheDocument();
     expect(screen.queryByText('筹备中')).not.toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(10);
     expect(onNavigate).not.toHaveBeenCalled();
@@ -46,7 +64,8 @@ describe('CourseCatalog', () => {
     const user = userEvent.setup();
     renderCatalog();
 
-    await user.selectOptions(screen.getByRole('combobox', { name: '学期' }), 'term-2');
+    await user.click(screen.getByRole('combobox', { name: '学期' }));
+    await user.click(await screen.findByRole('option', { name: '下学期' }));
     await user.click(screen.getByRole('button', { name: '数学' }));
 
     expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(11);
@@ -70,7 +89,8 @@ describe('CourseCatalog', () => {
     const user = userEvent.setup();
     renderCatalog();
 
-    await user.selectOptions(screen.getByRole('combobox', { name: '学期' }), 'term-2');
+    await user.click(screen.getByRole('combobox', { name: '学期' }));
+    await user.click(await screen.findByRole('option', { name: '下学期' }));
     await user.click(screen.getByRole('button', { name: '英语' }));
 
     expect(screen.getByText('英语预备级是否属于学校本学期实际开设课程，请以学校安排为准。')).toBeInTheDocument();

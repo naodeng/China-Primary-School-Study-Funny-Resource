@@ -14,20 +14,21 @@ export default function ChoiceActivity({ activity, disabled, onSubmit }: ChoiceA
     <div className="choice-activity">
       <div className="choice-options" role="group" aria-label="选择一个答案">
         {activity.options.map((option, index) => (
-          <button
+          <Button
             className={`choice-option ${selected === option.id ? 'is-selected' : ''}`}
             key={option.id}
-            type="button"
+            type={selected === option.id ? 'primary' : 'default'}
+            block
             aria-pressed={selected === option.id}
             disabled={disabled}
             onClick={() => setSelected(option.id)}
           >
             <span className="choice-option-letter" aria-hidden="true">{String.fromCharCode(65 + index)}</span>
-            <span>{option.label}</span>
-          </button>
+            <span className="choice-option-label">{option.label}</span>
+          </Button>
         ))}
       </div>
-      <Button type="primary" disabled={!selected || disabled} onClick={() => selected && onSubmit(selected)}>
+      <Button type="primary" className="activity-submit-action" disabled={!selected || disabled} onClick={() => selected && onSubmit(selected)}>
         提交答案
       </Button>
     </div>

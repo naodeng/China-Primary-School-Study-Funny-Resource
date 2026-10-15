@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
-import { Button } from 'animal-island-ui';
+import { useEffect, useState } from 'react';
+import { Button, Modal, Select, Switch } from 'animal-island-ui';
+import { ArrowRightIcon, CloseIcon } from 'naive-icons';
 import { getRegisteredLearningPositions } from '../../achievements/position';
 import type { LearningPosition } from '../../achievements/position';
 import type { ProgressState } from '../../storage/progress';
 import ThemeSwitcher from '../theme/ThemeSwitcher';
+import ProjectLegalFooter from '../layout/ProjectLegalFooter';
 import { useSound } from '../../sound/SoundProvider';
 
 interface SettingsDialogProps {
@@ -25,7 +27,6 @@ function getInitialPosition(progress: ProgressState): LearningPosition {
 
 export default function SettingsDialog({ open, progress, onClose, onApplyLearningStart, onNavigate }: SettingsDialogProps) {
   const { enabled: soundEnabled, setEnabled: setSoundEnabled } = useSound();
-  const dialogRef = useRef<HTMLDialogElement>(null);
   const initialPosition = getInitialPosition(progress);
   const [grade, setGrade] = useState(String(initialPosition.grade));
   const [term, setTerm] = useState(String(initialPosition.term));
@@ -54,16 +55,29 @@ export default function SettingsDialog({ open, progress, onClose, onApplyLearnin
   const selectedPositionIsRegistered = positions.some((position) => (
     position.grade === Number(grade) && position.term === Number(term) && position.unit === Number(unit)
   ));
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    if (open && !dialog.open) {
-      dialog.showModal();
-      dialog.querySelector<HTMLButtonElement>('.settings-dialog-close')?.focus();
-    }
-    if (!open && dialog.open) dialog.close();
-  }, [open]);
+  const gradeSelectOptions = gradeOptions.map((number) => {
+    const unregistered = hasUnregisteredSavedStart
+      && progress.learningStart!.grade === number
+      && !positions.some((position) => position.grade === number);
+    return { key: String(number), label: `${number} 年级${unregistered ? '（当前起点未登记）' : ''}` };
+  });
+  const termSelectOptions = termOptions.map((number) => {
+    const unregistered = hasUnregisteredSavedStart
+      && progress.learningStart!.grade === Number(grade)
+      && progress.learningStart!.term === number
+      && !positions.some((position) => position.grade === Number(grade) && position.term === number);
+    return { key: String(number), label: `${number === 1 ? '上学期' : '下学期'}${unregistered ? '（当前起点未登记）' : ''}` };
+  });
+  const unitSelectOptions = unitOptions.length
+    ? unitOptions.map((number) => {
+      const unregistered = hasUnregisteredSavedStart
+        && progress.learningStart!.grade === Number(grade)
+        && progress.learningStart!.term === Number(term)
+        && progress.learningStart!.unit === number
+        && !selectedPositionIsRegistered;
+      return { key: String(number), label: `第 ${number} 单元${unregistered ? '（当前起点未登记）' : ''}` };
+    })
+    : [{ key: '', label: '暂无登记单元' }];
 
   useEffect(() => {
     if (!open) return;
@@ -93,22 +107,20 @@ export default function SettingsDialog({ open, progress, onClose, onApplyLearnin
   }
 
   return (
-    <dialog
-      className="settings-dialog"
-      ref={dialogRef}
-      aria-labelledby="settings-heading"
+    <Modal
+      open={open}
+      variant="game"
+      title="设置"
+      width="min(760px, calc(100vw - 24px))"
+      className="settings-modal"
+      typewriter={false}
+      footer={null}
       onClose={onClose}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) onClose();
-      }}
     >
-      <div className="settings-dialog-panel">
+      <div className="settings-modal-content">
         <header className="settings-dialog-header">
-          <div>
-            <p className="eyebrow">飞船控制台</p>
-            <h2 id="settings-heading">设置</h2>
-          </div>
-          <Button type="default" className="settings-dialog-close" aria-label="关闭设置" onClick={onClose}>关闭</Button>
+          <p className="eyebrow">飞船控制台</p>
+          <Button type="default" className="settings-dialog-close" aria-label="关闭设置" icon={<CloseIcon size={18} aria-hidden="true" />} onClick={onClose}>关闭</Button>
         </header>
 
         <section className="settings-section" aria-labelledby="settings-theme-heading">
@@ -120,19 +132,17 @@ export default function SettingsDialog({ open, progress, onClose, onApplyLearnin
         <section className="settings-section" aria-labelledby="settings-sound-heading" data-sound-silent="true">
           <h3 id="settings-sound-heading">语音与提示音</h3>
           <p>答题时听到鼓励，操作页面时也会有轻轻的提示音。</p>
-          <label className="settings-sound-control">
+          <div className="settings-sound-control">
             <span>
-              <strong>语音提示与交互音效</strong>
+              <strong id="settings-sound-control-label">语音提示与交互音效</strong>
               <span className="settings-sound-state" role="status">{soundEnabled ? '已开启' : '已关闭'}</span>
             </span>
-            <input
-              type="checkbox"
-              role="switch"
-              aria-label="语音提示与交互音效"
+            <Switch
+              aria-labelledby="settings-sound-control-label"
               checked={soundEnabled}
-              onChange={(event) => setSoundEnabled(event.currentTarget.checked)}
+              onChange={setSoundEnabled}
             />
-          </label>
+          </div>
         </section>
 
         <section className="settings-section settings-achievement-link" aria-labelledby="settings-achievement-heading">
@@ -140,7 +150,7 @@ export default function SettingsDialog({ open, progress, onClose, onApplyLearnin
             <h3 id="settings-achievement-heading">我的成就</h3>
             <p>查看已点亮的星区、课程进度和已获得头衔。</p>
           </div>
-          <Button type="default" onClick={openAchievements}>查看成就详情 <span aria-hidden="true">→</span></Button>
+          <Button type="default" onClick={openAchievements}><span className="button-label-with-icon">查看成就详情 <ArrowRightIcon size={18} aria-hidden="true" /></span></Button>
         </section>
 
         <section className="settings-section" aria-labelledby="settings-progress-heading">
@@ -149,60 +159,29 @@ export default function SettingsDialog({ open, progress, onClose, onApplyLearnin
           <form className="learning-start-form" onSubmit={applyLearningStart}>
             <div className="learning-start-fields">
               <label>
-                <span>年级</span>
-                <select value={grade} onChange={(event) => {
-                  const nextGrade = Number(event.target.value);
+                <span id="learning-start-grade-label">年级</span>
+                <Select aria-labelledby="learning-start-grade-label" options={gradeSelectOptions} value={grade} onChange={(value) => {
+                  const nextGrade = Number(value);
                   const nextPosition = positions.find((position) => position.grade === nextGrade);
                   if (!nextPosition) return;
                   setGrade(String(nextGrade));
                   setTerm(String(nextPosition.term));
                   setUnit(String(nextPosition.unit));
-                }}>
-                  {gradeOptions.map((number) => {
-                    const unregistered = hasUnregisteredSavedStart
-                      && progress.learningStart!.grade === number
-                      && !positions.some((position) => position.grade === number);
-                    return <option key={number} value={number} disabled={unregistered}>
-                      {number} 年级{unregistered ? '（当前起点未登记）' : ''}
-                    </option>;
-                  })}
-                </select>
+                }} />
               </label>
               <label>
-                <span>学期</span>
-                <select value={term} onChange={(event) => {
-                  const nextTerm = Number(event.target.value);
+                <span id="learning-start-term-label">学期</span>
+                <Select aria-labelledby="learning-start-term-label" options={termSelectOptions} value={term} onChange={(value) => {
+                  const nextTerm = Number(value);
                   const nextPosition = positions.find((position) => position.grade === Number(grade) && position.term === nextTerm);
                   if (!nextPosition) return;
                   setTerm(String(nextTerm));
                   setUnit(String(nextPosition.unit));
-                }}>
-                  {termOptions.map((number) => {
-                    const unregistered = hasUnregisteredSavedStart
-                      && progress.learningStart!.grade === Number(grade)
-                      && progress.learningStart!.term === number
-                      && !positions.some((position) => position.grade === Number(grade) && position.term === number);
-                    return <option key={number} value={number} disabled={unregistered}>
-                      {number === 1 ? '上学期' : '下学期'}{unregistered ? '（当前起点未登记）' : ''}
-                    </option>;
-                  })}
-                </select>
+                }} />
               </label>
               <label>
-                <span>从第几单元开始</span>
-                <select aria-label="从第几单元开始" value={unit} onChange={(event) => setUnit(event.target.value)} disabled={!unitOptions.length}>
-                  {unitOptions.map((number) => {
-                    const unregistered = hasUnregisteredSavedStart
-                      && progress.learningStart!.grade === Number(grade)
-                      && progress.learningStart!.term === Number(term)
-                      && progress.learningStart!.unit === number
-                      && !selectedPositionIsRegistered;
-                    return <option key={number} value={number} disabled={unregistered}>
-                      第 {number} 单元{unregistered ? '（当前起点未登记）' : ''}
-                    </option>;
-                  })}
-                  {!unitOptions.length ? <option value="">暂无登记单元</option> : null}
-                </select>
+                <span id="learning-start-unit-label">从第几单元开始</span>
+                <Select aria-labelledby="learning-start-unit-label" options={unitSelectOptions} value={unit} onChange={setUnit} disabled={!unitOptions.length} />
               </label>
             </div>
             <p className="learning-start-note">起点之前已登记的单元会记为已完成；从所选单元开始重新探索。课程加入后也会按这个起点计算。</p>
@@ -215,6 +194,7 @@ export default function SettingsDialog({ open, progress, onClose, onApplyLearnin
           </form>
         </section>
       </div>
-    </dialog>
+      <ProjectLegalFooter placement="dialog" />
+    </Modal>
   );
 }

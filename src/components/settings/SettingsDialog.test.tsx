@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeProvider from '../../theme/ThemeProvider';
 import ThemeSwitcher from '../theme/ThemeSwitcher';
@@ -45,9 +45,16 @@ describe('SettingsDialog', () => {
     expect(document.documentElement.dataset.theme).toBe('light');
     expect(screen.getByText(/应用后会替换当前进度记录/)).toBeInTheDocument();
 
-    await user.selectOptions(screen.getByRole('combobox', { name: '年级' }), '2');
-    await user.selectOptions(screen.getByRole('combobox', { name: '学期' }), '1');
-    await user.selectOptions(screen.getByRole('combobox', { name: '从第几单元开始' }), '2');
+    const dialog = within(screen.getByRole('dialog'));
+    expect(dialog.getByRole('contentinfo', { name: '版权与许可' })).toHaveTextContent('© 2026 naodeng All Rights Reserved.');
+    expect(dialog.getByRole('link', { name: 'naodeng 的个人网站' })).toHaveAttribute('href', 'https://inaodeng.com');
+    expect(dialog.getByRole('link', { name: 'PolyForm Noncommercial License 1.0.0' })).toHaveAttribute('href', 'https://polyformproject.org/licenses/noncommercial/1.0.0/');
+    await user.click(dialog.getByRole('combobox', { name: '年级' }));
+    await user.click(await dialog.findByRole('option', { name: '2 年级' }));
+    await user.click(dialog.getByRole('combobox', { name: '学期' }));
+    await user.click(await dialog.findByRole('option', { name: '上学期' }));
+    await user.click(dialog.getByRole('combobox', { name: '从第几单元开始' }));
+    await user.click(await dialog.findByRole('option', { name: '第 2 单元' }));
     await user.click(screen.getByRole('button', { name: '应用学习起点' }));
     expect(onApplyLearningStart).toHaveBeenCalledWith({ grade: 2, term: 1, unit: 2 });
 
@@ -77,14 +84,15 @@ describe('SettingsDialog', () => {
     expect(document.documentElement.dataset.theme).toBe('light');
   });
 
-  it('doesNotApplyAnUnregisteredLearningStart', () => {
+  it('doesNotApplyAnUnregisteredLearningStart', async () => {
     const onApplyLearningStart = vi.fn();
-    const { container } = render(
+    const user = userEvent.setup();
+    render(
       <SoundProvider>
         <ThemeProvider>
           <SettingsDialog
             open
-            progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: null }}
+            progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: { grade: 3, term: 2, unit: 1 } }}
             onClose={vi.fn()}
             onApplyLearningStart={onApplyLearningStart}
             onNavigate={vi.fn()}
@@ -92,9 +100,8 @@ describe('SettingsDialog', () => {
         </ThemeProvider>
       </SoundProvider>,
     );
-    const unitSelect = screen.getByRole('combobox', { name: '从第几单元开始' });
-    fireEvent.change(unitSelect, { target: { value: '99' } });
-    fireEvent.submit(container.querySelector('form')!);
+    expect(screen.getByRole('button', { name: '应用学习起点' })).toBeDisabled();
+    await user.click(screen.getByRole('button', { name: '应用学习起点' }));
     expect(onApplyLearningStart).not.toHaveBeenCalled();
   });
 
@@ -113,9 +120,9 @@ describe('SettingsDialog', () => {
       </SoundProvider>,
     );
 
-    expect(screen.getByRole('combobox', { name: '年级' })).toHaveValue('3');
-    expect(screen.getByRole('combobox', { name: '学期' })).toHaveValue('2');
-    expect(screen.getByRole('combobox', { name: '从第几单元开始' })).toHaveValue('1');
+    expect(screen.getByRole('combobox', { name: '年级' })).toHaveTextContent('3 年级');
+    expect(screen.getByRole('combobox', { name: '学期' })).toHaveTextContent('下学期');
+    expect(screen.getByRole('combobox', { name: '从第几单元开始' })).toHaveTextContent('第 1 单元');
     expect(screen.getByText(/尚未登记到课程目录/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '应用学习起点' })).toBeDisabled();
   });

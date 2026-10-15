@@ -10,6 +10,7 @@ let rejectNextPlayback = false;
 class TestAudio {
   currentTime = 0;
   paused = true;
+  volume = 1;
   preload = 'auto';
   play = vi.fn(() => {
     this.paused = false;
@@ -58,6 +59,8 @@ describe('SoundProvider', () => {
     expect(audioInstances).toHaveLength(2);
     expect(audioInstances[0].src).toBe('/audio/answer-correct.mp3');
     expect(audioInstances[1].src).toBe('/audio/interaction-click.mp3');
+    expect(audioInstances[0].volume).toBe(1);
+    expect(audioInstances[1].volume).toBe(0.3);
     expect(audioInstances[0].play).toHaveBeenCalledOnce();
     expect(audioInstances[1].play).toHaveBeenCalledOnce();
     expect(audioInstances[0].pause).not.toHaveBeenCalled();
