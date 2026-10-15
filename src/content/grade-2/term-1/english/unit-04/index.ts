@@ -77,6 +77,44 @@ const placeHelpers = lessonProfile(
   { prompt: '把词卡排成“他正要去超市”。', items: ['the', 'supermarket', 'He', 'to', 'going', '.', 'is'], correctOrderIndices: [2, 6, 5, 3, 0, 1, 4] },
 );
 
+const purposeAndPlaces = lessonProfile(
+  [
+    { word: 'school', meaning: '学校' },
+    { word: 'hospital', meaning: '医院' },
+    { word: 'park', meaning: '公园' },
+    { word: 'zoo', meaning: '动物园' },
+  ],
+  [
+    phraseQuestion('“我正要去公园。”应该选哪句？', ['I am going to the park.', 'I am at the zoo.', 'I can see a hospital.'], 0, 'going to 表示前往；park 前加 the。'),
+    phraseQuestion('“他在医院。”对应哪句？', ['He is at the hospital.', 'He is at school.', 'She is going to the park.'], 0, 'hospital 前用 the；句子主语是 he。'),
+  ],
+  ['学习或服务地点', '休闲或游览地点'],
+  [
+    { label: 'school', categoryIndex: 0 }, { label: 'hospital', categoryIndex: 0 },
+    { label: 'park', categoryIndex: 1 }, { label: 'zoo', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“我正要去学校”。', items: ['school', 'to', 'I', 'going', '.', 'am'], correctOrderIndices: [2, 5, 3, 1, 0, 4] },
+);
+
+const communitySentenceBuilder = lessonProfile(
+  [
+    { word: 'bookshop', meaning: '书店' },
+    { word: 'supermarket', meaning: '超市' },
+    { word: 'zoo', meaning: '动物园' },
+    { word: 'park', meaning: '公园' },
+  ],
+  [
+    phraseQuestion('“我正要去书店。”可以怎样说？', ['I am going to the bookshop.', 'I am at the bookshop.', 'I can see a bookshop.'], 0, 'going to 表示正要前往。'),
+    phraseQuestion('想询问“你在哪里？”，应该选哪句？', ['Where are you?', 'Where are you going?', 'What can you see?'], 0, 'Where are you? 询问当前位置。'),
+  ],
+  ['购物或办事地点', '休闲游览地点'],
+  [
+    { label: 'bookshop', categoryIndex: 0 }, { label: 'supermarket', categoryIndex: 0 },
+    { label: 'zoo', categoryIndex: 1 }, { label: 'park', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“我正要去动物园”。', items: ['the', 'zoo', '.', 'I', 'going', 'to', 'am'], correctOrderIndices: [3, 6, 4, 5, 0, 1, 2] },
+);
+
 export const unit = buildEnglishUnit({
   formalUnitNumber: 4,
   entryId: 'unit-04',
@@ -86,6 +124,12 @@ export const unit = buildEnglishUnit({
     makeTask('社区地点发现站', '认读常见地点词汇，练习询问去哪里和表达前往。', 'companion-01', places),
     makeTask('公共地点寻路图', '分辨学校、医院、书店和超市，并练习简单地点问答。', 'companion-04', communityPlaces),
   ],
-  advancedTask: makeTask('社区路线挑战', '根据人物目的辨认地点，正确使用 go to 与 at 表达。', 'companion-03', askForDirections),
-  highTask: makeTask('社区小向导', '综合运用地点词与问路句式，为同伴选择合适的目的地。', 'companion-02', placeHelpers),
+  advancedTasks: [
+    makeTask('社区路线挑战', '根据人物目的辨认地点，正确使用 go to 与 at 表达。', 'companion-03', askForDirections),
+    makeTask('地点用途分类赛', '根据学习、服务和游览目的区分地点，并练习前往某地的表达。', 'companion-01', purposeAndPlaces),
+  ],
+  highTasks: [
+    makeTask('社区小向导', '综合运用地点词与问路句式，为同伴选择合适的目的地。', 'companion-02', placeHelpers),
+    makeTask('路线句子拼图', '综合辨认社区地点并整理完整的地点问答句。', 'companion-04', communitySentenceBuilder),
+  ],
 });

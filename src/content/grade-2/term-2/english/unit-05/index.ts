@@ -77,6 +77,44 @@ const routinePlanner = lessonProfile(
   { prompt: '把词卡排成“我八点去上学”。', items: ['school', 'at 8:00', 'go', '.', 'I', 'to'], correctOrderIndices: [4, 2, 5, 0, 1, 3] },
 );
 
+const dailyRoutineInterview = lessonProfile(
+  [
+    { word: 'When', meaning: '什么时候' },
+    { word: 'every day', meaning: '每天' },
+    { word: 'at 7:00', meaning: '在七点' },
+    { word: 'at 8:00', meaning: '在八点' },
+  ],
+  [
+    phraseQuestion('想问朋友每天什么时候起床，哪句正确？', ['When do you get up every day?', 'What day do you get up every day?', 'Where do you get up every day?'], 0, '用 When do you…every day? 询问日常活动时间。'),
+    phraseQuestion('“我七点吃早餐。”哪句表达合适？', ['I eat breakfast at 7:00.', 'I get up at breakfast 7:00.', 'I go home at 7:00 breakfast.'], 0, 'at 后面接时间，eat breakfast 表示吃早餐。'),
+  ],
+  ['日常活动问句', '介绍日常安排的句子'],
+  [
+    { label: 'When do you get up every day?', categoryIndex: 0 }, { label: 'When do you eat breakfast every day?', categoryIndex: 0 },
+    { label: 'I go to school at 8:00.', categoryIndex: 1 }, { label: 'I go home at four.', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“我六点半起床”。', items: ['6:30', 'up', '.', 'I', 'get', 'at'], correctOrderIndices: [3, 4, 1, 5, 0, 2] },
+);
+
+const dayScheduleAudit = lessonProfile(
+  [
+    { word: 'go to school', meaning: '去上学' },
+    { word: 'go home', meaning: '回家' },
+    { word: 'get up', meaning: '起床' },
+    { word: 'eat breakfast', meaning: '吃早餐' },
+  ],
+  [
+    phraseQuestion('想问“你每天几点回家？”，哪句正确？', ['When do you go home every day?', 'What day do you go home every day?', 'Where do you go home every day?'], 0, 'When 询问时间，What day 询问星期。'),
+    phraseQuestion('“我八点去上学。”可以怎样说？', ['I go to school at 8:00.', 'I go home at 8:00 school.', 'I eat breakfast at school 8:00.'], 0, 'go to school 表示去上学，at 后接时间。'),
+  ],
+  ['起床和早餐', '去上学或回家'],
+  [
+    { label: 'get up', categoryIndex: 0 }, { label: 'eat breakfast', categoryIndex: 0 },
+    { label: 'go to school', categoryIndex: 1 }, { label: 'go home', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“我四点回家”。', items: ['home', 'at four', '.', 'go', 'I'], correctOrderIndices: [4, 3, 0, 1, 2] },
+);
+
 export const unit = buildEnglishUnit({
   term: 2,
   formalUnitNumber: 5,
@@ -87,6 +125,12 @@ export const unit = buildEnglishUnit({
     makeTask('我的早晨时间表', '认读起床、早餐、上学和回家等日常活动词组。', 'companion-02', morningRoutine),
     makeTask('一天安排配对站', '把日常活动与合适的时间表达连起来。', 'companion-01', daySchedule),
   ],
-  advancedTask: makeTask('日常时间问答挑战', '用 When 问句和 at 时间回答介绍日常安排。', 'companion-04', askAboutRoutines),
-  highTask: makeTask('我的一天规划师', '综合排序一天中的活动，并准确说出活动时间。', 'companion-03', routinePlanner),
+  advancedTasks: [
+    makeTask('日常时间问答挑战', '用 When 问句和 at 时间回答介绍日常安排。', 'companion-04', askAboutRoutines),
+    makeTask('日常活动采访卡', '听懂 When 问句，并用活动词组和 at 时间回答。', 'companion-01', dailyRoutineInterview),
+  ],
+  highTasks: [
+    makeTask('我的一天规划师', '综合排序一天中的活动，并准确说出活动时间。', 'companion-03', routinePlanner),
+    makeTask('一天时间表校对', '检查日常活动、问句和时间表达是否彼此对应。', 'companion-02', dayScheduleAudit),
+  ],
 });

@@ -146,7 +146,8 @@ test('playsAnswerCuesInOrderAndSavesEightQuestionProgress', async ({ page }) => 
   await solveChoice(page, '它正在长大');
   await page.evaluate(() => {
     const values = [0, 0];
-    Math.random = () => values.shift() ?? 0;
+    const nativeRandom = Math.random;
+    Math.random = () => values.shift() ?? nativeRandom();
   });
   await continueToNext(page);
 
@@ -167,7 +168,8 @@ test('playsAnswerCuesInOrderAndSavesEightQuestionProgress', async ({ page }) => 
   await expect(page.locator('.activity-feedback')).toContainText(/这次还没|勇敢尝试|还差|先别|每一次尝试/);
   await page.evaluate(() => {
     const values = [0.999, 0];
-    Math.random = () => values.shift() ?? 0;
+    const nativeRandom = Math.random;
+    Math.random = () => values.shift() ?? nativeRandom();
   });
   await page.getByRole('button', { name: '再试一次' }).click();
   expect(await rightColumn.getByRole('button').allTextContents()).not.toEqual(initialRightOrder);
@@ -189,7 +191,12 @@ test('playsAnswerCuesInOrderAndSavesEightQuestionProgress', async ({ page }) => 
   await solveChoice(page, '先说开始，再说变化，最后说结果');
   await continueToNext(page);
 
-  await setOrder(page, ['说出想知道的问题', '仔细观察', '整理线索', '记录发现']);
+  const observationOrderActivity = curriculum.units['grade-2/term-1/chinese/unit-01']
+    ?.difficultyTracks.basic.tasks[0]?.sessions[0]?.activities[5];
+  if (!observationOrderActivity || observationOrderActivity.kind !== 'order') {
+    throw new Error('Expected the observation process challenge to be an ordering activity.');
+  }
+  await solveActivity(page, observationOrderActivity);
   await continueToNext(page);
 
   await solveChoice(page, '回到已有记录中比较');
@@ -304,15 +311,16 @@ test('showsCorrectPlaceValuesAndAcceptsAThreeDigitArithmeticAnswer', async ({ pa
   await expect(page.locator('.activity-feedback')).toContainText(/成功|答对|真棒|太好了/);
 });
 
-test('completesTwoBasicTasksAndOneTaskPerHigherTier', async ({ page }) => {
+test('completesTwoBasicTasksAndTwoTasksPerHigherTier', async ({ page }) => {
   await installAudioSpy(page);
   const unit = curriculum.units['grade-2/term-1/math/unit-02'];
   if (!unit) throw new Error('The second term-one math unit is missing from the verified curriculum.');
   const tasks = [
     ...unit.difficultyTracks.basic.tasks.slice(0, 2).map((task) => ({ difficulty: 'basic', task })),
-    ...unit.difficultyTracks.advanced.tasks.map((task) => ({ difficulty: 'advanced', task })),
-    ...unit.difficultyTracks.high.tasks.map((task) => ({ difficulty: 'high', task })),
+    ...unit.difficultyTracks.advanced.tasks.slice(0, 2).map((task) => ({ difficulty: 'advanced', task })),
+    ...unit.difficultyTracks.high.tasks.slice(0, 2).map((task) => ({ difficulty: 'high', task })),
   ];
+  expect(tasks).toHaveLength(6);
   const retriedKinds = new Set<ActivityDefinition['kind']>();
 
   for (let taskIndex = 0; taskIndex < tasks.length; taskIndex += 1) {
@@ -338,6 +346,10 @@ test('completesTwoBasicTasksAndOneTaskPerHigherTier', async ({ page }) => {
     }
   }
 
+  await page.goto('/achievements');
+  const unitProgress = page.locator('.achievement-unit').filter({ hasText: unit.title });
+  await expect(unitProgress).toContainText('2 / 2');
+  await expect(unitProgress).toHaveClass(/is-complete/);
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('china-study-progress-v1') ?? '{}').completedSessionIds))
-    .toHaveLength(4);
+    .toHaveLength(6);
 });

@@ -77,6 +77,44 @@ const familySentence = lessonProfile(
   { prompt: '把词卡排成“她是我的姐姐或妹妹”。', items: ['sister', 'my', 'She', '.', 'is'], correctOrderIndices: [2, 4, 1, 0, 3] },
 );
 
+const grandparentIntroductions = lessonProfile(
+  [
+    { word: 'grandfather', meaning: '爷爷或外公' },
+    { word: 'grandmother', meaning: '奶奶或外婆' },
+    { word: 'father', meaning: '爸爸' },
+    { word: 'mother', meaning: '妈妈' },
+  ],
+  [
+    phraseQuestion('介绍奶奶或外婆，哪句话合适？', ['She is my grandmother.', 'He is my grandfather.', 'She is my mother.'], 0, 'grandmother 表示奶奶或外婆。'),
+    phraseQuestion('介绍爷爷或外公，哪句话合适？', ['He is my grandfather.', 'She is my grandmother.', 'He is my father.'], 0, 'grandfather 表示爷爷或外公。'),
+  ],
+  ['男性家人', '女性家人'],
+  [
+    { label: 'grandfather', categoryIndex: 0 }, { label: 'father', categoryIndex: 0 },
+    { label: 'grandmother', categoryIndex: 1 }, { label: 'mother', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“他是我的爷爷或外公”。', items: ['grandfather', 'my', 'He', '.', 'is'], correctOrderIndices: [2, 4, 1, 0, 3] },
+);
+
+const siblingSentencePractice = lessonProfile(
+  [
+    { word: 'brother', meaning: '哥哥或弟弟' },
+    { word: 'sister', meaning: '姐姐或妹妹' },
+    { word: 'father', meaning: '爸爸' },
+    { word: 'mother', meaning: '妈妈' },
+  ],
+  [
+    phraseQuestion('想说“他是我的哥哥或弟弟”，应该选哪句？', ['He is my brother.', 'She is my sister.', 'He is my father.'], 0, '介绍哥哥或弟弟时用 brother。'),
+    phraseQuestion('想说“她是我的姐姐或妹妹”，应该选哪句？', ['She is my sister.', 'He is my brother.', 'She is my mother.'], 0, '介绍姐姐或妹妹时用 sister。'),
+  ],
+  ['用 he 介绍', '用 she 介绍'],
+  [
+    { label: 'brother', categoryIndex: 0 }, { label: 'father', categoryIndex: 0 },
+    { label: 'sister', categoryIndex: 1 }, { label: 'mother', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“她是我的姐姐或妹妹”。', items: ['my', 'sister', 'She', 'is', '.'], correctOrderIndices: [2, 3, 0, 1, 4] },
+);
+
 export const unit = buildEnglishUnit({
   formalUnitNumber: 1,
   entryId: 'unit-01',
@@ -86,6 +124,12 @@ export const unit = buildEnglishUnit({
     makeTask('家庭词卡收集站', '认读常见家庭成员词汇，并用 This is my… 介绍家人。', 'companion-03', familyBasics),
     makeTask('家人介绍练习场', '辨认父母与祖辈称呼，练习用简单句介绍一位家人。', 'companion-02', familyClues),
   ],
-  advancedTask: makeTask('家庭成员线索挑战', '根据人物线索选择合适的家庭成员词，并完成简短介绍。', 'companion-04', introduceFamily),
-  highTask: makeTask('我的家庭小播报', '综合运用家庭成员词汇与 he、she，完成清楚友善的家庭介绍。', 'companion-01', familySentence),
+  advancedTasks: [
+    makeTask('家庭成员线索挑战', '根据人物线索选择合适的家庭成员词，并完成简短介绍。', 'companion-04', introduceFamily),
+    makeTask('祖辈称呼表达员', '辨认 grandfather 与 grandmother，并用 he 或 she 完成简短介绍。', 'companion-02', grandparentIntroductions),
+  ],
+  highTasks: [
+    makeTask('我的家庭小播报', '综合运用家庭成员词汇与 he、she，完成清楚友善的家庭介绍。', 'companion-01', familySentence),
+    makeTask('兄弟姐妹介绍策划师', '根据人物线索组织介绍句，选择合适代词并清楚表达家人关系。', 'companion-03', siblingSentencePractice),
+  ],
 });

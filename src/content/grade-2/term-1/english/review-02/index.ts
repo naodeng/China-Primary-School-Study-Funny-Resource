@@ -77,6 +77,44 @@ const combinedAdventure = lessonProfile(
   { prompt: '把词卡排成“我能看见一份礼物”。', items: ['present', 'a', 'I', 'see', '.', 'can'], correctOrderIndices: [2, 5, 3, 1, 0, 4] },
 );
 
+const placesAndObservations = lessonProfile(
+  [
+    { word: 'school', meaning: '学校' },
+    { word: 'bookshop', meaning: '书店' },
+    { word: 'boat', meaning: '小船' },
+    { word: 'flower', meaning: '花' },
+  ],
+  [
+    phraseQuestion('“我们正要去学校。”应该选哪句？', ['We are going to school.', 'We are at the school.', 'We can see a school.'], 0, '表示去上学时，school 前通常不加 the。'),
+    phraseQuestion('“我能看见一艘船。”可以怎样说？', ['I can see a boat.', 'I can see a flower.', 'I am at the bookshop.'], 0, 'boat 表示小船；单数前用 a。'),
+  ],
+  ['社区地点', '公园景物'],
+  [
+    { label: 'school', categoryIndex: 0 }, { label: 'bookshop', categoryIndex: 0 },
+    { label: 'boat', categoryIndex: 1 }, { label: 'flower', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“我正要去书店”。', items: ['bookshop', 'to', 'I', 'the', '.', 'going', 'am'], correctOrderIndices: [2, 6, 5, 1, 3, 0, 4] },
+);
+
+const natureAndCelebrations = lessonProfile(
+  [
+    { word: 'card', meaning: '卡片' },
+    { word: 'present', meaning: '礼物' },
+    { word: 'lake', meaning: '湖' },
+    { word: 'grass', meaning: '草' },
+  ],
+  [
+    phraseQuestion('收到卡片或礼物后，哪句可以表达感谢？', ['Thank you.', 'Good night.', 'Where are you?'], 0, 'Thank you. 表示“谢谢你”。'),
+    phraseQuestion('“我能看见草。”对应哪句？', ['I can see grass.', 'I can see a lake.', 'I am at the park.'], 0, 'grass 表示草，通常不在前面加 a。'),
+  ],
+  ['节日物品', '自然景物'],
+  [
+    { label: 'card', categoryIndex: 0 }, { label: 'present', categoryIndex: 0 },
+    { label: 'lake', categoryIndex: 1 }, { label: 'grass', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“我能看见一个湖”。', items: ['lake', '.', 'I', 'a', 'see', 'can'], correctOrderIndices: [2, 5, 4, 3, 0, 1] },
+);
+
 export const unit = buildEnglishUnit({
   formalUnitNumber: null,
   entryId: 'review-02',
@@ -87,6 +125,12 @@ export const unit = buildEnglishUnit({
     makeTask('社区与公园复习站', '回顾社区地点、公园景物和“我能看见……”表达。', 'companion-01', placesAndPark),
     makeTask('自然与地点分类站', '分辨公园景物和社区服务地点，练习简单句。', 'companion-03', natureAndPlaces),
   ],
-  advancedTask: makeTask('节日问候复习挑战', '回顾节日物品词汇，并选择礼貌、合适的节日祝福。', 'companion-04', holidaysAndGreetings),
-  highTask: makeTask('后半学期英语大探险', '串联社区、自然和节日词汇，完成情境表达。', 'companion-02', combinedAdventure),
+  advancedTasks: [
+    makeTask('节日问候复习挑战', '回顾节日物品词汇，并选择礼貌、合适的节日祝福。', 'companion-04', holidaysAndGreetings),
+    makeTask('地点与观察综合赛', '串联社区地点和公园景物，选择合适的表达方式。', 'companion-01', placesAndObservations),
+  ],
+  highTasks: [
+    makeTask('后半学期英语大探险', '串联社区、自然和节日词汇，完成情境表达。', 'companion-02', combinedAdventure),
+    makeTask('自然与节日拼图', '综合回顾自然景物和节日物品，并完成观察句。', 'companion-03', natureAndCelebrations),
+  ],
 });

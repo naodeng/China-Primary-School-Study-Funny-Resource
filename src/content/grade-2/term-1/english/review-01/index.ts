@@ -77,6 +77,44 @@ const friendIntroduction = lessonProfile(
   { prompt: '把词卡排成“他是我的朋友”。', items: ['friend', 'He', '.', 'my', 'is'], correctOrderIndices: [1, 4, 3, 0, 2] },
 );
 
+const peopleAndDescriptions = lessonProfile(
+  [
+    { word: 'father', meaning: '爸爸' },
+    { word: 'sister', meaning: '姐姐或妹妹' },
+    { word: 'tall', meaning: '高的' },
+    { word: 'handsome', meaning: '英俊的' },
+  ],
+  [
+    phraseQuestion('介绍爸爸时，哪句正确？', ['This is my father.', 'This is my sister.', 'She is my father.'], 0, 'father 表示爸爸；介绍家人可以用 This is my...。'),
+    phraseQuestion('“他很高。”可以怎样说？', ['He is tall.', 'She is tall.', 'He is handsome.'], 0, 'tall 表示高的；he 指男性。'),
+  ],
+  ['家庭成员或人物', '外貌或身高描述'],
+  [
+    { label: 'father', categoryIndex: 0 }, { label: 'sister', categoryIndex: 0 },
+    { label: 'tall', categoryIndex: 1 }, { label: 'handsome', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“她是我的妹妹”。', items: ['my', 'sister', 'She', '.', 'is'], correctOrderIndices: [2, 4, 0, 1, 3] },
+);
+
+const friendsAndKindWords = lessonProfile(
+  [
+    { word: 'classmate', meaning: '同班同学' },
+    { word: 'friend', meaning: '朋友' },
+    { word: 'pretty', meaning: '漂亮的' },
+    { word: 'short', meaning: '矮的或短的' },
+  ],
+  [
+    phraseQuestion('“她是我的朋友。”对应哪句？', ['She is my friend.', 'He is my friend.', 'She is short.'], 0, 'friend 表示朋友；she 指女性。'),
+    phraseQuestion('想表达“她很漂亮”，应该选哪句？', ['She is pretty.', 'He is pretty.', 'She is tall.'], 0, 'pretty 表示漂亮的；she 指女性。'),
+  ],
+  ['人物关系词', '人物描述词'],
+  [
+    { label: 'classmate', categoryIndex: 0 }, { label: 'friend', categoryIndex: 0 },
+    { label: 'pretty', categoryIndex: 1 }, { label: 'short', categoryIndex: 1 },
+  ],
+  { prompt: '把词卡排成“他是我的同班同学”。', items: ['my', 'classmate', 'He', '.', 'is'], correctOrderIndices: [2, 4, 0, 1, 3] },
+);
+
 export const unit = buildEnglishUnit({
   formalUnitNumber: null,
   entryId: 'review-01',
@@ -87,6 +125,12 @@ export const unit = buildEnglishUnit({
     makeTask('人物与家庭复习站', '复习家庭成员、男孩女孩词汇，并练习 he 和 she。', 'companion-02', familyAndPeople),
     makeTask('朋友特征配对站', '综合回顾朋友、同学与简单描述词。', 'companion-03', friendsAndFeatures),
   ],
-  advancedTask: makeTask('代词与人物线索挑战', '根据人物线索选择 he 或 she，并正确介绍家庭成员。', 'companion-01', reviewPronouns),
-  highTask: makeTask('前三单元综合播报', '把人物关系词与友善描述词组合成简短介绍。', 'companion-04', friendIntroduction),
+  advancedTasks: [
+    makeTask('代词与人物线索挑战', '根据人物线索选择 he 或 she，并正确介绍家庭成员。', 'companion-01', reviewPronouns),
+    makeTask('人物与描述分类赛', '区分人物关系词和外貌身高描述词，并练习完整介绍。', 'companion-02', peopleAndDescriptions),
+  ],
+  highTasks: [
+    makeTask('前三单元综合播报', '把人物关系词与友善描述词组合成简短介绍。', 'companion-04', friendIntroduction),
+    makeTask('朋友介绍拼图', '综合运用朋友、同学和人物描述词整理完整句子。', 'companion-03', friendsAndKindWords),
+  ],
 });

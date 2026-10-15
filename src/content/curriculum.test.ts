@@ -88,6 +88,19 @@ function getOrderedLabelsForActivity(unitKey: string, difficulty: 'basic' | 'adv
   return activity.correctOrder.map((id) => activity.items.find(({ id: itemId }) => itemId === id)?.label ?? '');
 }
 
+function withoutGeneratedIds(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(withoutGeneratedIds);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([key]) => key !== 'id')
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([key, nestedValue]) => [key, withoutGeneratedIds(nestedValue)]),
+    );
+  }
+  return value;
+}
+
 describe('curriculum registry', () => {
   it('listsAllVerifiedTerm1EnglishEntries', () => {
     const subject = curriculum.grades[0]?.terms[0]?.subjects.find(({ id }) => id === 'english');
@@ -118,14 +131,16 @@ describe('curriculum registry', () => {
   });
 
   it.each(term1EnglishEntries.map(([unitKey]) => unitKey))(
-    'gives %s two basic tasks, one task per higher tier, and eight questions per session',
+    'gives %s two basic tasks and two tasks per higher tier with eight questions per session',
     (unitKey) => {
       const unit = curriculum.units[unitKey];
       expect(unit, `missing curriculum entry: ${unitKey}`).toBeDefined();
       if (!unit) return;
       expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
-      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
-      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.advanced.tasks.map(({ objective }) => objective)).size).toBe(2);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.high.tasks.map(({ objective }) => objective)).size).toBe(2);
       Object.values(unit.difficultyTracks).forEach(({ tasks }) => tasks.forEach((task) => {
         expect(task.sessions.length).toBeGreaterThan(0);
         task.sessions.forEach((session) => {
@@ -166,14 +181,16 @@ describe('curriculum registry', () => {
   });
 
   it.each(term2EnglishEntries.map(([unitKey]) => unitKey))(
-    'gives %s two basic tasks, one task per higher tier, and eight questions per session',
+    'gives %s two basic tasks and two tasks per higher tier with eight questions per session',
     (unitKey) => {
       const unit = curriculum.units[unitKey];
       expect(unit, `missing curriculum entry: ${unitKey}`).toBeDefined();
       if (!unit) return;
       expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
-      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
-      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.advanced.tasks.map(({ objective }) => objective)).size).toBe(2);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.high.tasks.map(({ objective }) => objective)).size).toBe(2);
       Object.values(unit.difficultyTracks).forEach(({ tasks }) => tasks.forEach((task) => {
         expect(task.sessions.length).toBeGreaterThan(0);
         task.sessions.forEach((session) => {
@@ -266,12 +283,14 @@ describe('curriculum registry', () => {
   });
 
   it.each(term2MathEntries.map(([unitKey]) => unitKey))(
-    'gives %s three difficulty tracks, basic practice, and eight questions per session',
+    'gives %s two basic tasks and two tasks per higher tier with eight questions per session',
     (unitKey) => {
       const unit = curriculum.units[unitKey];
       expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
-      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
-      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.advanced.tasks.map(({ objective }) => objective)).size).toBe(2);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.high.tasks.map(({ objective }) => objective)).size).toBe(2);
       Object.values(unit.difficultyTracks).forEach(({ tasks }) => tasks.forEach((task) => {
         expect(task.sessions.length).toBeGreaterThan(0);
         task.sessions.forEach((session) => {
@@ -283,12 +302,14 @@ describe('curriculum registry', () => {
   );
 
   it.each(term1MathEntries.map(([unitKey]) => unitKey))(
-    'gives %s three difficulty tracks, basic practice, and eight questions per session',
+    'gives %s two tasks per higher tier and eight questions per session',
     (unitKey) => {
       const unit = curriculum.units[unitKey];
       expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
-      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
-      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.advanced.tasks.map(({ objective }) => objective)).size).toBe(2);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.high.tasks.map(({ objective }) => objective)).size).toBe(2);
       Object.values(unit.difficultyTracks).forEach(({ tasks }) => tasks.forEach((task) => {
         expect(task.sessions.length).toBeGreaterThan(0);
         task.sessions.forEach((session) => expect(session.activities).toHaveLength(8));
@@ -334,12 +355,14 @@ describe('curriculum registry', () => {
   });
 
   it.each(term2ChineseUnits.map(([unitKey]) => unitKey))(
-    'gives %s two basic tasks and one task at each higher tier with eight questions per session',
+    'gives %s two basic tasks and two tasks per higher tier with eight questions per session',
     (unitKey) => {
       const unit = curriculum.units[unitKey];
       expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
-      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
-      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.advanced.tasks.map(({ objective }) => objective)).size).toBe(2);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.high.tasks.map(({ objective }) => objective)).size).toBe(2);
       Object.values(unit.difficultyTracks).forEach(({ tasks }) => tasks.forEach((task) => {
         expect(task.sessions.length).toBeGreaterThan(0);
         task.sessions.forEach((session) => expect(session.activities).toHaveLength(8));
@@ -348,12 +371,14 @@ describe('curriculum registry', () => {
   );
 
   it.each(term1ChineseUnits.map(([unitKey]) => unitKey))(
-    'gives %s two basic tasks and one task at each higher tier with eight questions per session',
+    'gives %s two basic tasks, two tasks per higher tier, and eight questions per session',
     (unitKey) => {
       const unit = curriculum.units[unitKey];
       expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
-      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
-      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.advanced.tasks.map(({ objective }) => objective)).size).toBe(2);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.high.tasks.map(({ objective }) => objective)).size).toBe(2);
 
       Object.values(unit.difficultyTracks).forEach(({ tasks }) => {
         tasks.forEach((task) => {
@@ -523,5 +548,69 @@ describe('curriculum registry', () => {
 
   it('accepts the selected curriculum registry after validating all open entries', () => {
     expect(validateCurriculum(curriculum)).toEqual([]);
+  });
+
+  it('states the forced second place as certain in the three-partner clue', () => {
+    const question = getSessionsForDifficulty(
+      curriculum.units['grade-2/term-2/math/unit-09'],
+      'advanced',
+    ).flatMap(({ activities }) => activities)
+      .find((activity) => activity.kind === 'match' && activity.prompt.includes('三位伙伴站成一排'));
+
+    expect(question?.kind).toBe('match');
+    if (!question || question.kind !== 'match') return;
+    expect(question.pairs.find(({ left }) => left === '方方不是第一，圆圆是第三')?.right).toBe('方方一定在第二');
+    expect(question.explanation).toContain('方方一定在第二');
+  });
+
+  it('asks the length conversion question in the same unit as its numeric choices', () => {
+    const question = getSessionsForDifficulty(
+      curriculum.units['grade-2/term-1/math/unit-01'],
+      'advanced',
+    ).flatMap(({ activities }) => activities)
+      .find((activity) => activity.prompt.includes('1米20厘米'));
+
+    expect(question?.kind).toBe('choice');
+    if (!question || question.kind !== 'choice') return;
+    expect(question.prompt).toBe('把1米20厘米换成厘米，得数是多少？');
+    expect(question.options.find(({ id }) => id === question.correctOptionId)?.label).toBe('120');
+    expect(question.explanation).toContain('120厘米');
+  });
+
+  it('uses simplified Chinese throughout the first English review task prompts', () => {
+    const reviewActivities = getSessionsForDifficulty(
+      curriculum.units['grade-2/term-1/english/review-01'],
+      'advanced',
+    )[1]?.activities ?? [];
+    const visibleText = reviewActivities.flatMap(({ prompt, hint, explanation }) => [prompt, hint, explanation]).join(' ');
+
+    expect(visibleText).not.toMatch(/[紹時確樣]/);
+    expect(reviewActivities.map(({ prompt }) => prompt)).toContain('介绍爸爸时，哪句正确？');
+    expect(reviewActivities.map(({ prompt }) => prompt)).toContain('“他很高。”可以怎样说？');
+  });
+
+  it('keeps the two advanced and high tasks from repeating an identical question', () => {
+    const duplicateQuestions: string[] = [];
+
+    for (const unit of Object.values(curriculum.units)) {
+      for (const difficulty of ['advanced', 'high'] as const) {
+        const [firstTask, secondTask] = unit.difficultyTracks[difficulty].tasks;
+        if (!firstTask || !secondTask) continue;
+
+        const firstTaskQuestions = new Set(
+          firstTask.sessions.flatMap(({ activities }) => activities)
+            .map((activity) => JSON.stringify(withoutGeneratedIds(activity))),
+        );
+
+        for (const activity of secondTask.sessions.flatMap(({ activities }) => activities)) {
+          const fingerprint = JSON.stringify(withoutGeneratedIds(activity));
+          if (firstTaskQuestions.has(fingerprint)) {
+            duplicateQuestions.push(`${unit.id}/${difficulty}/${activity.id}`);
+          }
+        }
+      }
+    }
+
+    expect(duplicateQuestions).toEqual([]);
   });
 });
