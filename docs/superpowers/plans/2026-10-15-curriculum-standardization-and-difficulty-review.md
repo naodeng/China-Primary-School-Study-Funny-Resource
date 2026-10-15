@@ -41,12 +41,12 @@
 
 **接口：** 新编写规范成为课程贡献的单一入口，定义年级/学期/学科/条目路径、类别 slug、入口文件、共享构建器、稳定 ID、来源字段、难度、审校、目录注册及检查命令。README 按规格规定的章节顺序呈现项目、启动、课程/难度、目录、审校、质量检查、Cloudflare、素材/隐私/许可；旧规格和已完成计划仅加“历史记录/由新规格覆盖”说明，不篡改原任务完成记录。
 
-- [ ] **Step 1：写中文目录与内容编写规范**，逐项使用规格中的路径模式、`unit-NN`/`review-NN`/`integrated-practice-NN`、`index.ts` 入口及题目审校维度。
-- [ ] **Step 2：按固定章节顺序重写 README 课程说明**，准确列出 53 个条目分类与每档任务数量，移除“进阶、高阶各一个”的旧说法。
-- [ ] **Step 3：同步 AGENTS 和历史文档说明**，为后续贡献者指向新编写规范，并在 2026-10-13 的历史规格/计划开头标注当前任务数量和审校规则由本规格覆盖。
-- [ ] **Step 4：更新项目包名和锁文件根元数据**为 `starry-island`；只改 `package.json.name`、`package-lock.json.name` 与 `packages[""].name`，不改依赖版本。
-- [ ] **Step 5：运行文档和元数据检查**：`git diff --check`；用 Node 读取两份 JSON 并断言根包名均为 `starry-island`；人工核对 README 各章节顺序和旧计数用语。
-- [ ] **Step 6：提交本任务范围**：`git add README.md AGENTS.md package.json package-lock.json docs/curriculum/authoring-standard.md docs/superpowers/specs/2026-10-13-grade-2-full-curriculum-and-testing-design.md docs/superpowers/plans/2026-10-13-grade-2-full-curriculum-and-testing.md && git commit -m "docs: standardize curriculum authoring guidance"`。
+- [x] **Step 1：写中文目录与内容编写规范**，逐项使用规格中的路径模式、`unit-NN`/`review-NN`/`integrated-practice-NN`、`index.ts` 入口及题目审校维度。
+- [x] **Step 2：按固定章节顺序重写 README 课程说明**，准确列出 53 个条目分类与每档任务数量，移除“进阶、高阶各一个”的旧说法。
+- [x] **Step 3：同步 AGENTS 和历史文档说明**，为后续贡献者指向新编写规范，并在 2026-10-13 的历史规格/计划开头标注当前任务数量和审校规则由本规格覆盖。
+- [x] **Step 4：更新项目包名和锁文件根元数据**为 `starry-island`；只改 `package.json.name`、`package-lock.json.name` 与 `packages[""].name`，不改依赖版本。
+- [x] **Step 5：运行文档和元数据检查**：`git diff --check`；用 Node 读取两份 JSON 并断言根包名均为 `starry-island`；人工核对 README 各章节顺序和旧计数用语。
+- [x] **Step 6：提交本任务范围**：`git add README.md AGENTS.md package.json package-lock.json docs/curriculum/authoring-standard.md docs/superpowers/specs/2026-10-13-grade-2-full-curriculum-and-testing-design.md docs/superpowers/plans/2026-10-13-grade-2-full-curriculum-and-testing.md && git commit -m "docs: standardize curriculum authoring guidance"`。
 
 ### Task 2：用测试锁定课程目录规范
 
@@ -57,11 +57,11 @@
 
 **接口：** 测试从 curriculum registry 取得每个有 `curriculumUnitKey` 的目录项，转换为 `src/content/{unitKey}/index.ts`；递归枚举课程入口并与注册表双向比对。当前应精确找到 53 个入口、16 个语文条目、21 个数学条目、16 个英语条目。
 
-- [ ] **Step 1：先写失败测试** `matchesEveryPlayableRegistryEntryToOneCanonicalDirectory`、`rejectsMissingEntryFilesAndUnregisteredEntryDirectories`、`usesExpectedGradeTermSubjectAndEntrySlugs`。
-- [ ] **Step 2：运行 `npx vitest run src/content/curriculumLayout.test.ts`**，确认现有 53 个课程入口通过目录与 registry 双向对照；在测试中使用内存中的缺入口、多余入口、非法路径样本验证断言确实能识别不一致，不修改真实课程目录制造失败。
-- [ ] **Step 3：实现只读目录枚举与路径断言**，不新增第二套课程注册表，不改变运行时课程加载方式。
-- [ ] **Step 4：重跑该测试**，确认 53 个条目全部一一对应，并验证测试夹具可捕获少入口、多余入口及非法 slug。
-- [ ] **Step 5：提交**：`git add src/content/curriculumLayout.test.ts && git commit -m "test: enforce canonical curriculum directories"`。
+- [x] **Step 1：先写失败测试** `matchesEveryPlayableRegistryEntryToOneCanonicalDirectory`、`rejectsMissingEntryFilesAndUnregisteredEntryDirectories`、`usesExpectedGradeTermSubjectAndEntrySlugs`。
+- [x] **Step 2：运行 `npx vitest run src/content/curriculumLayout.test.ts`**，确认现有 53 个课程入口通过目录与 registry 双向对照；在测试中使用内存中的缺入口、多余入口、非法路径样本验证断言确实能识别不一致，不修改真实课程目录制造失败。
+- [x] **Step 3：实现只读目录枚举与路径断言**，不新增第二套课程注册表，不改变运行时课程加载方式。
+- [x] **Step 4：重跑该测试**，确认 53 个条目全部一一对应，并验证测试夹具可捕获少入口、多余入口及非法 slug。
+- [x] **Step 5：提交**：`git add src/content/curriculumLayout.test.ts && git commit -m "test: enforce canonical curriculum directories"`。
 
 ### Task 3：扩展三种课程构建器以接收双任务
 
@@ -75,11 +75,11 @@
 
 **接口：** 三种 unit spec 增加 `advancedTasks` 和 `highTasks` 双元素只读 tuple，并生成各难度 `task-01`、`task-02`、`order: 1/2` 及其独立 session/question ID。为了让后续六批内容可单独验证，迁移期间暂时接受原 `advancedTask`/`highTask` 单值字段；Task 10 会删除此兼容路径。
 
-- [ ] **Step 1：先在三个 builder 测试中加入双任务 fixture 和断言**，验证两个标题、目标、顺序、session ID、每场 8 题及题目 ID 无重复。
-- [ ] **Step 2：分别运行三个 builder 测试**，确认新增双任务断言失败。
-- [ ] **Step 3：扩展三种 spec 类型和 `build*Unit`**，优先消费 tuple；旧单值仅作为迁移期后备。
-- [ ] **Step 4：重跑三个 builder 测试**，并运行 `npm run build` 验证 53 个尚未迁移的入口仍可编译。
-- [ ] **Step 5：提交**：`git add src/content/grade-2/term-1/{chinese,math,english}/build*Unit* && git commit -m "feat: support paired advanced curriculum tasks"`。
+- [x] **Step 1：先在三个 builder 测试中加入双任务 fixture 和断言**，验证两个标题、目标、顺序、session ID、每场 8 题及题目 ID 无重复。
+- [x] **Step 2：分别运行三个 builder 测试**，确认新增双任务断言失败。
+- [x] **Step 3：扩展三种 spec 类型和 `build*Unit`**，优先消费 tuple；旧单值仅作为迁移期后备。
+- [x] **Step 4：重跑三个 builder 测试**，并运行 `npm run build` 验证 53 个尚未迁移的入口仍可编译。
+- [x] **Step 5：提交**：`git add src/content/grade-2/term-1/{chinese,math,english}/build*Unit* && git commit -m "feat: support paired advanced curriculum tasks"`。
 
 ### 六批课程数据扩写和逐题审校的共同要求
 
@@ -107,11 +107,11 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 - 创建/更新：`docs/curriculum/grade-2-question-review.tsv`
 - 测试：`src/content/curriculum.test.ts` 中 `term1ChineseUnits`
 
-- [ ] **Step 1：写失败断言**，对 `term1ChineseUnits` 中每个 unit 断言 `advanced/high` 各 2 个任务，并确认两个目标不同。
-- [ ] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/chinese'`**，确认上学期语文条目仍因只有一个进阶/高阶任务而失败。
-- [ ] **Step 3：复核 8 个语文入口的所有旧题，新增 16 个任务、128 道题**，并逐条更新审校台账及错误修复记录。
-- [ ] **Step 4：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/chinese'` 和 `npm run build`**；检查新增题目目标不同、题数/ID正确且无超纲知识。全量课程校验留到 Task 10，避免中间迁移数据被旧的“恰好一个任务”校验规则拒绝。
-- [ ] **Step 5：提交**：`git add src/content/grade-2/term-1/chinese/unit-*/index.ts src/content/curriculum.test.ts docs/curriculum/grade-2-question-review.tsv && git commit -m "feat: add reviewed Chinese extension tasks for term one"`。
+- [x] **Step 1：写失败断言**，对 `term1ChineseUnits` 中每个 unit 断言 `advanced/high` 各 2 个任务，并确认两个目标不同。
+- [x] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/chinese'`**，确认上学期语文条目仍因只有一个进阶/高阶任务而失败。
+- [x] **Step 3：复核 8 个语文入口的所有旧题，新增 16 个任务、128 道题**，并逐条更新审校台账及错误修复记录。
+- [x] **Step 4：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/chinese'` 和 `npm run build`**；检查新增题目目标不同、题数/ID正确且无超纲知识。全量课程校验留到 Task 10，避免中间迁移数据被旧的“恰好一个任务”校验规则拒绝。
+- [x] **Step 5：提交**：`git add src/content/grade-2/term-1/chinese/unit-*/index.ts src/content/curriculum.test.ts docs/curriculum/grade-2-question-review.tsv && git commit -m "feat: add reviewed Chinese extension tasks for term one"`。
 
 ### Task 5：扩写并审校二年级上学期数学
 
@@ -121,11 +121,11 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 - 修改：`src/content/curriculum.test.ts`
 - 更新：`docs/curriculum/grade-2-question-review.tsv`
 
-- [ ] **Step 1：写失败断言**，对 10 个 `term1MathEntries` 条目断言进阶/高阶各两个不同任务。
-- [ ] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/math'`**，确认上学期数学条目因数据仍各一个任务而失败。
-- [ ] **Step 3：复核 10 个条目所有旧题，新增 20 个任务、160 道题**；逐项复算新旧算式，核对单位、题意、量级、提示和解释；检查综合实践题目只组合已学内容。
-- [ ] **Step 4：更新上学期数学逐题台账；运行 `npx vitest run src/content/grade-2/term-1/math/mathAnswers.test.ts`、`npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/math'` 和 `npm run build`**，确认既有数学答案测试遍历全部新旧算式并保持答案一致。
-- [ ] **Step 5：提交**：暂存上学期数学的 `unit-*/index.ts`、`integrated-practice-01/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed math extension tasks for term one` 提交。
+- [x] **Step 1：写失败断言**，对 10 个 `term1MathEntries` 条目断言进阶/高阶各两个不同任务。
+- [x] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/math'`**，确认上学期数学条目因数据仍各一个任务而失败。
+- [x] **Step 3：复核 10 个条目所有旧题，新增 20 个任务、160 道题**；逐项复算新旧算式，核对单位、题意、量级、提示和解释；检查综合实践题目只组合已学内容。
+- [x] **Step 4：更新上学期数学逐题台账；运行 `npx vitest run src/content/grade-2/term-1/math/mathAnswers.test.ts`、`npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/math'` 和 `npm run build`**，确认既有数学答案测试遍历全部新旧算式并保持答案一致。
+- [x] **Step 5：提交**：暂存上学期数学的 `unit-*/index.ts`、`integrated-practice-01/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed math extension tasks for term one` 提交。
 
 ### Task 6：扩写并审校二年级上学期英语
 
@@ -135,11 +135,11 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 - 修改：`src/content/curriculum.test.ts`
 - 更新：`docs/curriculum/grade-2-question-review.tsv`
 
-- [ ] **Step 1：写失败断言**，对 8 个 `term1EnglishEntries` 条目断言进阶/高阶各两个不同任务。
-- [ ] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/english'`**，确认英语复习站和正式单元的新任务数断言失败。
-- [ ] **Step 3：复核 8 个条目全部旧题，新增 16 个任务、128 道题**；核对单词拼写/大小写、词义、语法、题目指令和学生书目录范围，复习站题目只复习对应已登记单元。
-- [ ] **Step 4：写入上学期英语台账；运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/english'` 和 `npm run build`**，确保复习条目类型、成就资格和英语任务数据不变。
-- [ ] **Step 5：提交**：暂存上学期英语 `unit-*/index.ts`、`review-*/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed English extension tasks for term one` 提交。
+- [x] **Step 1：写失败断言**，对 8 个 `term1EnglishEntries` 条目断言进阶/高阶各两个不同任务。
+- [x] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/english'`**，确认英语复习站和正式单元的新任务数断言失败。
+- [x] **Step 3：复核 8 个条目全部旧题，新增 16 个任务、128 道题**；核对单词拼写/大小写、词义、语法、题目指令和学生书目录范围，复习站题目只复习对应已登记单元。
+- [x] **Step 4：写入上学期英语台账；运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-1/english'` 和 `npm run build`**，确保复习条目类型、成就资格和英语任务数据不变。
+- [x] **Step 5：提交**：暂存上学期英语 `unit-*/index.ts`、`review-*/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed English extension tasks for term one` 提交。
 
 ### Task 7：扩写并审校二年级下学期语文
 
@@ -149,11 +149,11 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 - 修改：`src/content/curriculum.test.ts`
 - 更新：`docs/curriculum/grade-2-question-review.tsv`
 
-- [ ] **Step 1：写失败断言**，对 `term2ChineseUnits` 八个条目要求进阶/高阶各 2 个任务。
-- [ ] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/chinese'`**，确认当前单任务数据不能满足预期。
-- [ ] **Step 3：复核全部 8 个条目的所有旧题，新增 16 个任务、128 道题**；核验语文知识点、表达清楚程度、提示讲解一致性和与上学期内容的适当递进。
-- [ ] **Step 4：完成台账并运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/chinese'` 与 `npm run build`**，确认二年级下学期数据和 task-02 ID 正确。
-- [ ] **Step 5：提交**：暂存下学期语文 `unit-*/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed Chinese extension tasks for term two` 提交。
+- [x] **Step 1：写失败断言**，对 `term2ChineseUnits` 八个条目要求进阶/高阶各 2 个任务。
+- [x] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/chinese'`**，确认当前单任务数据不能满足预期。
+- [x] **Step 3：复核全部 8 个条目的所有旧题，新增 16 个任务、128 道题**；核验语文知识点、表达清楚程度、提示讲解一致性和与上学期内容的适当递进。
+- [x] **Step 4：完成台账并运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/chinese'` 与 `npm run build`**，确认二年级下学期数据和 task-02 ID 正确。
+- [x] **Step 5：提交**：暂存下学期语文 `unit-*/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed Chinese extension tasks for term two` 提交。
 
 ### Task 8：扩写并审校二年级下学期数学
 
@@ -163,11 +163,11 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 - 修改：`src/content/curriculum.test.ts`
 - 更新：`docs/curriculum/grade-2-question-review.tsv`
 
-- [ ] **Step 1：写失败断言**，对 11 个 `term2MathEntries` 条目要求进阶/高阶各 2 个任务，并覆盖所有新算式。
-- [ ] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/math'`**，确认任务数断言失败。
-- [ ] **Step 3：复核 11 个条目的全部旧题，新增 22 个任务、176 道题**；逐式复算并重点检查表内乘除、混合运算、有余数、千以内/万以内数、单位换算、数据统计与情境条件是否符合所用册次内容。
-- [ ] **Step 4：完成下学期数学台账；运行 `npx vitest run src/content/grade-2/term-1/math/mathAnswers.test.ts`、`npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/math'` 和 `npm run build`**，确认答案测试自动覆盖新旧两学期数学算式且答案一致、无超纲先修知识。
-- [ ] **Step 5：提交**：暂存下学期数学的 `unit-*/index.ts`、`integrated-practice-01/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed math extension tasks for term two` 提交。
+- [x] **Step 1：写失败断言**，对 11 个 `term2MathEntries` 条目要求进阶/高阶各 2 个任务，并覆盖所有新算式。
+- [x] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/math'`**，确认任务数断言失败。
+- [x] **Step 3：复核 11 个条目的全部旧题，新增 22 个任务、176 道题**；逐式复算并重点检查表内乘除、混合运算、有余数、千以内/万以内数、单位换算、数据统计与情境条件是否符合所用册次内容。
+- [x] **Step 4：完成下学期数学台账；运行 `npx vitest run src/content/grade-2/term-1/math/mathAnswers.test.ts`、`npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/math'` 和 `npm run build`**，确认答案测试自动覆盖新旧两学期数学算式且答案一致、无超纲先修知识。
+- [x] **Step 5：提交**：暂存下学期数学的 `unit-*/index.ts`、`integrated-practice-01/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed math extension tasks for term two` 提交。
 
 ### Task 9：扩写并审校二年级下学期英语
 
@@ -177,11 +177,11 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 - 修改：`src/content/curriculum.test.ts`
 - 更新：`docs/curriculum/grade-2-question-review.tsv`
 
-- [ ] **Step 1：写失败断言**，对 8 个 `term2EnglishEntries` 条目要求进阶/高阶各 2 个任务。
-- [ ] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/english'`**，确认已有正式单元和两处复习站均缺少第二个任务。
-- [ ] **Step 3：复核全部旧题，新增 16 个任务、128 道题**；检查大小写、拼写、词义、表达、复习范围和高阶任务的跨知识点要求仍局限在已学英语。
-- [ ] **Step 4：完成下学期英语台账；运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/english'` 和 `npm run build`**。
-- [ ] **Step 5：提交**：暂存下学期英语 `unit-*/index.ts`、`review-*/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed English extension tasks for term two` 提交。
+- [x] **Step 1：写失败断言**，对 8 个 `term2EnglishEntries` 条目要求进阶/高阶各 2 个任务。
+- [x] **Step 2：运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/english'`**，确认已有正式单元和两处复习站均缺少第二个任务。
+- [x] **Step 3：复核全部旧题，新增 16 个任务、128 道题**；检查大小写、拼写、词义、表达、复习范围和高阶任务的跨知识点要求仍局限在已学英语。
+- [x] **Step 4：完成下学期英语台账；运行 `npx vitest run src/content/curriculum.test.ts -t 'grade-2/term-2/english'` 和 `npm run build`**。
+- [x] **Step 5：提交**：暂存下学期英语 `unit-*/index.ts`、`review-*/index.ts`、`src/content/curriculum.test.ts` 与台账；使用 `feat: add reviewed English extension tasks for term two` 提交。
 
 ### Task 10：移除迁移兼容并强制校验精确任务数
 
@@ -193,11 +193,11 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 
 **接口：** `ChineseUnitSpec`、`MathUnitSpec`、`EnglishUnitSpec` 必需 `advancedTasks`、`highTasks` 两元素 tuple；移除旧的单值 `advancedTask`、`highTask`。可玩条目进阶/高阶计数不为 2 时返回既有稳定错误码 `TIER_TASK_COUNT`，错误 path 定位对应 difficulty track。
 
-- [ ] **Step 1：先写校验器失败测试** `requiresExactlyTwoAdvancedTasks`、`rejectsOneAdvancedTask`、`rejectsThreeAdvancedTasks`、`requiresExactlyTwoHighTasks`、`rejectsOneHighTask`、`rejectsThreeHighTasks`。
-- [ ] **Step 2：运行 `npx vitest run src/content/validateCurriculum.test.ts`**，确认 1 和 3 的任务数边界测试失败。
-- [ ] **Step 3：更新校验器提示、三个 spec 类型和 builder 测试**，删除迁移期单任务后备字段；更新全部课程清单断言为 `toHaveLength(2)`。
-- [ ] **Step 4：运行 `npx vitest run src/content/validateCurriculum.test.ts src/content/curriculum.test.ts src/content/grade-2/term-1/chinese/buildChineseUnit.test.ts src/content/grade-2/term-1/math/buildMathUnit.test.ts src/content/grade-2/term-1/english/buildEnglishUnit.test.ts`**，再运行 `npm run build`。
-- [ ] **Step 5：提交**：暂存三个明确的 `build*Unit.ts` 与对应 builder 测试、`src/content/grade-2/term-2/chinese/unit-06/index.ts`、`src/content/validateCurriculum.ts`、`src/content/validateCurriculum.test.ts`、`src/content/curriculum.test.ts`；使用 `feat: require two tasks in advanced curriculum tiers` 提交。
+- [x] **Step 1：先写校验器失败测试** `requiresExactlyTwoAdvancedTasks`、`rejectsOneAdvancedTask`、`rejectsThreeAdvancedTasks`、`requiresExactlyTwoHighTasks`、`rejectsOneHighTask`、`rejectsThreeHighTasks`。
+- [x] **Step 2：运行 `npx vitest run src/content/validateCurriculum.test.ts`**，确认 1 和 3 的任务数边界测试失败。
+- [x] **Step 3：更新校验器提示、三个 spec 类型和 builder 测试**，删除迁移期单任务后备字段；更新全部课程清单断言为 `toHaveLength(2)`。
+- [x] **Step 4：运行 `npx vitest run src/content/validateCurriculum.test.ts src/content/curriculum.test.ts src/content/grade-2/term-1/chinese/buildChineseUnit.test.ts src/content/grade-2/term-1/math/buildMathUnit.test.ts src/content/grade-2/term-1/english/buildEnglishUnit.test.ts`**，再运行 `npm run build`。
+- [x] **Step 5：提交**：暂存三个明确的 `build*Unit.ts` 与对应 builder 测试、`src/content/grade-2/term-2/chinese/unit-06/index.ts`、`src/content/validateCurriculum.ts`、`src/content/validateCurriculum.test.ts`、`src/content/curriculum.test.ts`；使用 `feat: require two tasks in advanced curriculum tiers` 提交。
 
 ### Task 11：校验逐题审校台账覆盖完整
 
@@ -209,12 +209,12 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 
 **接口：** TSV 恰好有一条数据记录对应一个可玩课程条目；每行的 `课程ID` 唯一，`题目总数`、`已审数量` 均为该课程 registry 下全部难度/任务/场次/题目数之和；答案正确性、题目清晰度、年龄适配、教材主题对齐、难度归属五列均为“完成”。`修复记录` 为“无”或至少包含修复题目完整 ID 与原因。
 
-- [ ] **Step 1：先写失败测试** `listsEveryPlayableEntryExactlyOnce`、`requiresEveryQuestionToBeReviewed`、`requiresAllEditorialDimensionsComplete`、`recordsQuestionIdsForRepairs`。
-- [ ] **Step 2：运行 `npx vitest run src/content/questionReviewLedger.test.ts`**，确认缺少 ledger 时失败。
-- [ ] **Step 3：按最终课程数据补齐 53 行台账**，以实际生成的活动 ID 和数量核算总题数；逐行复核每个条目是否有漏审任务、状态是否错误。
-- [ ] **Step 4：实现 TSV 读取和完整性断言**，将台账课程 ID 与 registry 一一对照，并逐条比较已审数、总数和课程实际活动数。
-- [ ] **Step 5：运行 ledger 测试、所有课程与数学答案测试**；只有三方题数相等且所有审校维度完成时测试通过。
-- [ ] **Step 6：提交**：`git add docs/curriculum/grade-2-question-review.tsv src/content/questionReviewLedger.test.ts && git commit -m "test: verify complete curriculum question review"`。
+- [x] **Step 1：先写失败测试** `listsEveryPlayableEntryExactlyOnce`、`requiresEveryQuestionToBeReviewed`、`requiresAllEditorialDimensionsComplete`、`recordsQuestionIdsForRepairs`。
+- [x] **Step 2：运行 `npx vitest run src/content/questionReviewLedger.test.ts`**，确认缺少 ledger 时失败。
+- [x] **Step 3：按最终课程数据补齐 53 行台账**，以实际生成的活动 ID 和数量核算总题数；逐行复核每个条目是否有漏审任务、状态是否错误。
+- [x] **Step 4：实现 TSV 读取和完整性断言**，将台账课程 ID 与 registry 一一对照，并逐条比较已审数、总数和课程实际活动数。
+- [x] **Step 5：运行 ledger 测试、所有课程与数学答案测试**；只有三方题数相等且所有审校维度完成时测试通过。
+- [x] **Step 6：提交**：`git add docs/curriculum/grade-2-question-review.tsv src/content/questionReviewLedger.test.ts && git commit -m "test: verify complete curriculum question review"`。
 
 ### Task 12：更新二任务路由与学习 E2E
 
@@ -239,9 +239,9 @@ Task 4–9 各自只负责表中列出的一个学期/学科批次。每批都�
 - 检查：全部变更文件、README、课程台账、测试和 `dist/` 构建结果
 - 如有失败：只修复本次改动引入的问题，并在归属任务中补充回归测试
 
-- [ ] **Step 1：运行单元/组件测试** `npm run test:unit`，确认全量课程、构建器、目录、数学答案和审校台账测试通过。
-- [ ] **Step 2：运行覆盖率** `npm run test:coverage`，确认全局四项各不少于 60%，既有核心模块四项各为 100%；不得通过排除文件或忽略分支规避失败。
-- [ ] **Step 3：运行 E2E** `npm run test:e2e`，确认 Chromium 全链路及第二任务路由通过。
-- [ ] **Step 4：运行 `npm run build` 和 `git diff --check`**；检查包名/锁文件一致、53 个台账行和新增数量（106 tasks / 848 questions）准确、README 无过时任务数。
-- [ ] **Step 5：检查 git 状态与最终 diff**，确认只包含本计划范围和已记录修复，不包含临时教材、生成物或无关工作区修改。
-- [ ] **Step 6：完成前独立 review 整个分支**，特别检查难度是否实质递进、答案和讲解是否一致、重复题/超纲题、复习条目是否纳入、目录及许可文案是否一致；修复发现的问题并重跑相关检查。
+- [x] **Step 1：运行单元/组件测试** `npm run test:unit`，确认全量课程、构建器、目录、数学答案和审校台账测试通过。
+- [x] **Step 2：运行覆盖率** `npm run test:coverage`，确认全局四项各不少于 60%，既有核心模块四项各为 100%；不得通过排除文件或忽略分支规避失败。
+- [x] **Step 3：运行 E2E** `npm run test:e2e`，确认 Chromium 全链路及第二任务路由通过。
+- [x] **Step 4：运行 `npm run build` 和 `git diff --check`**；检查包名/锁文件一致、53 个台账行和新增数量（106 tasks / 848 questions）准确、README 无过时任务数。
+- [x] **Step 5：检查 git 状态与最终 diff**，确认只包含本计划范围和已记录修复，不包含临时教材、生成物或无关工作区修改。
+- [x] **Step 6：完成前独立 review 整个分支**，特别检查难度是否实质递进、答案和讲解是否一致、重复题/超纲题、复习条目是否纳入、目录及许可文案是否一致；修复发现的问题并重跑相关检查。

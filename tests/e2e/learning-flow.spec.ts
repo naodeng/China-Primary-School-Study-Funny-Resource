@@ -146,7 +146,8 @@ test('playsAnswerCuesInOrderAndSavesEightQuestionProgress', async ({ page }) => 
   await solveChoice(page, '它正在长大');
   await page.evaluate(() => {
     const values = [0, 0];
-    Math.random = () => values.shift() ?? 0;
+    const nativeRandom = Math.random;
+    Math.random = () => values.shift() ?? nativeRandom();
   });
   await continueToNext(page);
 
@@ -167,7 +168,8 @@ test('playsAnswerCuesInOrderAndSavesEightQuestionProgress', async ({ page }) => 
   await expect(page.locator('.activity-feedback')).toContainText(/这次还没|勇敢尝试|还差|先别|每一次尝试/);
   await page.evaluate(() => {
     const values = [0.999, 0];
-    Math.random = () => values.shift() ?? 0;
+    const nativeRandom = Math.random;
+    Math.random = () => values.shift() ?? nativeRandom();
   });
   await page.getByRole('button', { name: '再试一次' }).click();
   expect(await rightColumn.getByRole('button').allTextContents()).not.toEqual(initialRightOrder);
@@ -189,7 +191,12 @@ test('playsAnswerCuesInOrderAndSavesEightQuestionProgress', async ({ page }) => 
   await solveChoice(page, '先说开始，再说变化，最后说结果');
   await continueToNext(page);
 
-  await setOrder(page, ['说出想知道的问题', '仔细观察', '整理线索', '记录发现']);
+  const observationOrderActivity = curriculum.units['grade-2/term-1/chinese/unit-01']
+    ?.difficultyTracks.basic.tasks[0]?.sessions[0]?.activities[5];
+  if (!observationOrderActivity || observationOrderActivity.kind !== 'order') {
+    throw new Error('Expected the observation process challenge to be an ordering activity.');
+  }
+  await solveActivity(page, observationOrderActivity);
   await continueToNext(page);
 
   await solveChoice(page, '回到已有记录中比较');
