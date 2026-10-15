@@ -8,7 +8,7 @@ const unitKey = 'grade-2/term-1/chinese/unit-01';
 
 function createPlayableCurriculum(): Curriculum {
   const copy = structuredClone(curriculum);
-  const entry = copy.grades[0].terms[0].subjects.find((subject) => subject.id === 'chinese')!.units[0];
+  const entry = copy.grades.find((grade) => grade.id === 'grade-2')!.terms[0].subjects.find((subject) => subject.id === 'chinese')!.units[0];
   entry.status = 'active';
   copy.textbooks[entry.textbookEditionId].verificationStatus = 'verified';
   return copy;
@@ -69,14 +69,14 @@ describe('router', () => {
     expect(resolveRoute(`/${unitKey}/invalid`, instance).kind).toBe('notFound');
     expect(resolveRoute(`/${unitKey}/session-99`, instance).kind).toBe('notFound');
 
-    const entry = instance.grades[0].terms[0].subjects.find((subject) => subject.id === 'chinese')!.units[0];
+    const entry = instance.grades.find((grade) => grade.id === 'grade-2')!.terms[0].subjects.find((subject) => subject.id === 'chinese')!.units[0];
     entry.curriculumUnitKey = `${unitKey}/missing`;
     expect(resolveRoute(`/${unitKey}`, instance).kind).toBe('notFound');
   });
 
   it('usesTheUnitKeyFallbackWhenAnEntryDoesNotSetItsCurriculumKey', () => {
     const instance = createPlayableCurriculum();
-    const entry = instance.grades[0].terms[0].subjects.find((subject) => subject.id === 'chinese')!.units[0];
+    const entry = instance.grades.find((grade) => grade.id === 'grade-2')!.terms[0].subjects.find((subject) => subject.id === 'chinese')!.units[0];
     entry.curriculumUnitKey = undefined;
 
     expect(resolveRoute(`/${unitKey}`, instance).kind).toBe('unit');
@@ -105,7 +105,7 @@ describe('router', () => {
 
   it('doesNotOpenAnActiveCatalogEntryWithAnUnverifiedEdition', () => {
     const copy = structuredClone(curriculum);
-    const entry = copy.grades[0].terms[0].subjects.find((subject) => subject.id === 'math')!.units[0];
+    const entry = copy.grades.find((grade) => grade.id === 'grade-2')!.terms[0].subjects.find((subject) => subject.id === 'math')!.units[0];
     entry.status = 'active';
     copy.textbooks[entry.textbookEditionId].verificationStatus = 'pending';
 

@@ -112,7 +112,7 @@ const seasonalWeatherCheck = lessonProfile(
     { label: 'spring', categoryIndex: 0 }, { label: 'autumn', categoryIndex: 0 },
     { label: 'Winter is cold.', categoryIndex: 1 }, { label: 'Summer is hot.', categoryIndex: 1 },
   ],
-  { prompt: '把词卡排成“夏天很热”。', items: ['hot', 'Summer', 'is', '.'], correctOrderIndices: [1, 2, 0, 3] },
+  { prompt: '把词卡排成“冬天很冷”。', items: ['cold', 'in', 'It', 'winter', 'is', '.'], correctOrderIndices: [2, 4, 0, 1, 3, 5] },
 );
 
 export const unit = buildEnglishUnit({

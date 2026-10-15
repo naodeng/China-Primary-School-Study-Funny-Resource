@@ -9,7 +9,7 @@ describe('AchievementSummary', () => {
     const user = userEvent.setup();
     const onNavigate = vi.fn();
     const completedSessionIds: string[] = [];
-    const learningStart = { grade: 2, term: 1 as const, unit: 1 };
+    const learningStart = { grade: 1, term: 1 as const, unit: 1 };
     const completedCount = getCompletedUnitCount(completedSessionIds, learningStart);
 
     render(<AchievementSummary completedSessionIds={completedSessionIds} learningStart={learningStart} onNavigate={onNavigate} />);

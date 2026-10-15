@@ -51,12 +51,53 @@ import { unit as englishTerm2Unit04 } from './grade-2/term-2/english/unit-04';
 import { unit as englishTerm2Unit05 } from './grade-2/term-2/english/unit-05';
 import { unit as englishTerm2Unit06 } from './grade-2/term-2/english/unit-06';
 import { unit as englishTerm2Review02 } from './grade-2/term-2/english/review-02';
+import { addedCourseCatalog } from './grade-1-and-3/catalog';
 import { textbooks } from './textbooks';
-import type { Curriculum } from './types';
+import type { Curriculum, CurriculumUnit, SubjectId } from './types';
+
+const addedCourseModules = import.meta.glob<CurriculumUnit>(
+  ['./grade-1/term-*/**/index.ts', './grade-3/term-*/**/index.ts'],
+  { eager: true, import: 'unit' },
+);
+
+export function getAddedCourseUnit(id: string): CurriculumUnit {
+  const unit = addedCourseModules[`./${id}/index.ts`];
+  if (!unit) throw new Error(`课程目录已登记但缺少条目模块：${id}`);
+  return unit;
+}
+
+function buildAddedGrade(gradeNumber: 1 | 3): Curriculum['grades'][number] {
+  const gradeId = `grade-${gradeNumber}` as const;
+  return {
+    id: gradeId,
+    title: `${gradeNumber}年级`,
+    terms: ([1, 2] as const).map((termNumber) => ({
+      id: `term-${termNumber}` as const,
+      title: termNumber === 1 ? '上学期' : '下学期',
+      subjects: (['chinese', 'math', 'english'] as const).map((subjectId: SubjectId) => ({
+        id: subjectId,
+        title: subjectId === 'chinese' ? '语文' : subjectId === 'math' ? '数学' : '英语',
+        units: addedCourseCatalog
+          .filter((entry) => entry.grade === gradeNumber && entry.term === termNumber && entry.subject === subjectId)
+          .map((entry) => ({
+            id: entry.slug,
+            title: entry.title,
+            status: 'active' as const,
+            type: entry.type,
+            formalUnitNumber: entry.formalUnitNumber,
+            achievementEligible: entry.type === 'unit' && entry.formalUnitNumber !== null,
+            textbookEditionId: `grade-${gradeNumber}/term-${termNumber}/${subjectId}`,
+            curriculumUnitKey: entry.id,
+          })),
+      })),
+    })),
+  };
+}
 
 export const curriculum: Curriculum = {
   textbooks,
   grades: [
+    buildAddedGrade(1),
     {
       id: 'grade-2',
       title: '二年级',
@@ -164,8 +205,10 @@ export const curriculum: Curriculum = {
         },
       ],
     },
+    buildAddedGrade(3),
   ],
   units: {
+    ...Object.fromEntries(addedCourseCatalog.map((entry) => [entry.id, getAddedCourseUnit(entry.id)])),
     'grade-2/term-1/chinese/unit-01': chineseUnit01,
     'grade-2/term-1/chinese/unit-02': chineseUnit02,
     'grade-2/term-1/chinese/unit-03': chineseUnit03,

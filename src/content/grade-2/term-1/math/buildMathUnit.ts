@@ -3,6 +3,7 @@ import { buildDifficultyTracks, formatCurriculumSequence } from '../../../taskAs
 import type { MathQuestionSpec, MathTaskSpec } from './questionAuthoring';
 
 export interface MathUnitSpec {
+  grade?: 1 | 2 | 3;
   term?: 1 | 2;
   formalUnitNumber: number | null;
   entryId?: string;
@@ -55,10 +56,11 @@ function createActivity(question: MathQuestionSpec, id: string): ActivityDefinit
 }
 
 export function buildMathUnit(spec: MathUnitSpec): CurriculumUnit {
+  const grade = spec.grade ?? 2;
   const term = spec.term ?? 1;
   const type = spec.type ?? 'unit';
   const entryId = spec.entryId ?? `unit-${formatCurriculumSequence(spec.formalUnitNumber ?? 0)}`;
-  const textbookEditionId = `grade-2/term-${term}/math`;
+  const textbookEditionId = `grade-${grade}/term-${term}/math`;
   const id = `${textbookEditionId}/${entryId}`;
   return {
     id,

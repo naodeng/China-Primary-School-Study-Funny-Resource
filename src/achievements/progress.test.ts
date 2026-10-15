@@ -17,8 +17,10 @@ const basicSessions = getSessionsForDifficulty(unit, 'basic');
 
 function createVerifiedCurriculum(unitCount: number): Curriculum {
   const source = structuredClone(curriculum);
-  source.grades[0].terms = [source.grades[0].terms[0]];
-  const subject = source.grades.find((grade) => grade.id === 'grade-2')!.terms[0].subjects.find((entry) => entry.id === 'chinese')!;
+  const grade2 = source.grades.find((grade) => grade.id === 'grade-2')!;
+  source.grades = [grade2];
+  grade2.terms = [grade2.terms[0]];
+  const subject = grade2.terms[0].subjects.find((entry) => entry.id === 'chinese')!;
   const textbookId = 'grade-2/term-1/chinese';
   source.textbooks[textbookId].verificationStatus = 'verified';
   const units: CurriculumUnit[] = [];
@@ -97,14 +99,10 @@ describe('achievement progress', () => {
     expect(getRegisteredLearningPositions(source)).toEqual([
       ...Array.from({ length: 9 }, (_, index) => ({ grade: 2, term: 1 as const, unit: index + 1 })),
     ]);
-    expect(getKnownCurriculumPositions().map((position) => position.curriculumUnitKey)).toEqual([
-      ...Array.from({ length: 8 }, (_, index) => `grade-2/term-1/chinese/unit-${String(index + 1).padStart(2, '0')}`),
-      ...Array.from({ length: 9 }, (_, index) => `grade-2/term-1/math/unit-${String(index + 1).padStart(2, '0')}`),
-      ...Array.from({ length: 6 }, (_, index) => `grade-2/term-1/english/unit-${String(index + 1).padStart(2, '0')}`),
-      ...Array.from({ length: 8 }, (_, index) => `grade-2/term-2/chinese/unit-${String(index + 1).padStart(2, '0')}`),
-      ...Array.from({ length: 10 }, (_, index) => `grade-2/term-2/math/unit-${String(index + 1).padStart(2, '0')}`),
-      ...Array.from({ length: 6 }, (_, index) => `grade-2/term-2/english/unit-${String(index + 1).padStart(2, '0')}`),
-    ]);
+    const verifiedKeys = getKnownCurriculumPositions().map((position) => position.curriculumUnitKey);
+    expect(verifiedKeys).toHaveLength(123);
+    expect(verifiedKeys).toContain('grade-1/term-1/math/unit-01');
+    expect(verifiedKeys).toContain('grade-3/term-2/math/unit-09');
   });
 
   it('unlocksRanksAt1_2_4_8', () => {

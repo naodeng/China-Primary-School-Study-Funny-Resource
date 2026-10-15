@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { curriculum } from './curriculum';
+import { curriculum, getAddedCourseUnit } from './curriculum';
 import { validateCurriculum } from './validateCurriculum';
 import { getSessionsForDifficulty } from './sessionUtils';
 import { getKnownCurriculumPositions } from '../achievements/position';
 import { TAPX_TEXTBOOK_COMMIT } from './textbooks';
+import { addedCourseCatalog } from './grade-1-and-3/catalog';
 
 const term1ChineseUnits = [
   ['grade-2/term-1/chinese/unit-01', '第一单元 · 大自然的秘密'],
@@ -102,8 +103,12 @@ function withoutGeneratedIds(value: unknown): unknown {
 }
 
 describe('curriculum registry', () => {
+  it('reports a missing added-course module with its registered ID', () => {
+    expect(() => getAddedCourseUnit('grade-1/term-1/math/missing-unit')).toThrow('课程目录已登记但缺少条目模块');
+  });
+
   it('listsAllVerifiedTerm1EnglishEntries', () => {
-    const subject = curriculum.grades[0]?.terms[0]?.subjects.find(({ id }) => id === 'english');
+    const subject = curriculum.grades.find(({ id }) => id === 'grade-2')?.terms[0]?.subjects.find(({ id }) => id === 'english');
     expect(subject?.units.map(({ id }) => id)).toEqual(term1EnglishEntries.map(([key]) => key.split('/').at(-1)));
     expect(curriculum.textbooks['grade-2/term-1/english']?.verificationStatus).toBe('verified');
     expect(curriculum.textbooks['grade-2/term-1/english']?.schoolOfferingStatus).toBe('unconfirmed');
@@ -152,7 +157,7 @@ describe('curriculum registry', () => {
   );
 
   it('listsAllVerifiedTerm2EnglishEntries', () => {
-    const subject = curriculum.grades[0]?.terms.find(({ id }) => id === 'term-2')?.subjects.find(({ id }) => id === 'english');
+    const subject = curriculum.grades.find(({ id }) => id === 'grade-2')?.terms.find(({ id }) => id === 'term-2')?.subjects.find(({ id }) => id === 'english');
     expect(subject?.units.map(({ id }) => id)).toEqual(term2EnglishEntries.map(([key]) => key.split('/').at(-1)));
     expect(subject?.units.filter(({ type }) => type === 'review')).toHaveLength(2);
     expect(subject?.units.filter(({ type }) => type === 'integrated-practice')).toHaveLength(0);
@@ -231,7 +236,7 @@ describe('curriculum registry', () => {
   });
 
   it('listsAllVerifiedTerm1MathEntries', () => {
-    const subject = curriculum.grades[0]?.terms[0]?.subjects.find(({ id }) => id === 'math');
+    const subject = curriculum.grades.find(({ id }) => id === 'grade-2')?.terms[0]?.subjects.find(({ id }) => id === 'math');
     expect(subject?.units.map(({ id }) => id)).toEqual(term1MathEntries.map(([key]) => key.split('/').at(-1)));
     expect(curriculum.textbooks['grade-2/term-1/math']?.verificationStatus).toBe('verified');
 
@@ -257,7 +262,7 @@ describe('curriculum registry', () => {
   });
 
   it('listsAllVerifiedTerm2MathEntries', () => {
-    const subject = curriculum.grades[0]?.terms.find(({ id }) => id === 'term-2')?.subjects.find(({ id }) => id === 'math');
+    const subject = curriculum.grades.find(({ id }) => id === 'grade-2')?.terms.find(({ id }) => id === 'term-2')?.subjects.find(({ id }) => id === 'math');
     expect(subject?.units.map(({ id }) => id)).toEqual(term2MathEntries.map(([key]) => key.split('/').at(-1)));
     expect(curriculum.textbooks['grade-2/term-2/math']?.verificationStatus).toBe('verified');
 
@@ -318,7 +323,7 @@ describe('curriculum registry', () => {
   );
 
   it('listsAllVerifiedTerm1ChineseEntries', () => {
-    const subject = curriculum.grades[0]?.terms[0]?.subjects.find(({ id }) => id === 'chinese');
+    const subject = curriculum.grades.find(({ id }) => id === 'grade-2')?.terms[0]?.subjects.find(({ id }) => id === 'chinese');
     expect(subject?.units.map(({ id }) => id)).toEqual(term1ChineseUnits.map(([key]) => key.split('/').at(-1)));
     expect(curriculum.textbooks['grade-2/term-1/chinese']?.verificationStatus).toBe('verified');
 
@@ -337,7 +342,7 @@ describe('curriculum registry', () => {
   });
 
   it('listsAllVerifiedTerm2ChineseEntries', () => {
-    const subject = curriculum.grades[0]?.terms.find(({ id }) => id === 'term-2')?.subjects.find(({ id }) => id === 'chinese');
+    const subject = curriculum.grades.find(({ id }) => id === 'grade-2')?.terms.find(({ id }) => id === 'term-2')?.subjects.find(({ id }) => id === 'chinese');
     expect(subject?.units.map(({ id }) => id)).toEqual(term2ChineseUnits.map(([key]) => key.split('/').at(-1)));
     expect(curriculum.textbooks['grade-2/term-2/chinese']?.verificationStatus).toBe('verified');
 
@@ -440,13 +445,24 @@ describe('curriculum registry', () => {
   });
 
   it('marks only the fully checked fallback books as verified', () => {
-    expect(Object.keys(curriculum.textbooks)).toHaveLength(6);
+    expect(Object.keys(curriculum.textbooks)).toHaveLength(18);
     expect(curriculum.textbooks['grade-2/term-1/chinese']?.verificationStatus).toBe('verified');
     expect(curriculum.textbooks['grade-2/term-2/chinese']?.verificationStatus).toBe('verified');
     expect(curriculum.textbooks['grade-2/term-1/math']?.verificationStatus).toBe('verified');
     expect(curriculum.textbooks['grade-2/term-2/math']?.verificationStatus).toBe('verified');
     expect(curriculum.textbooks['grade-2/term-1/english']?.verificationStatus).toBe('verified');
     expect(curriculum.textbooks['grade-2/term-2/english']?.verificationStatus).toBe('verified');
+    for (const grade of [1, 3] as const) {
+      for (const term of [1, 2] as const) {
+        for (const subject of ['chinese', 'math', 'english'] as const) {
+          expect(curriculum.textbooks[`grade-${grade}/term-${term}/${subject}`]).toMatchObject({
+            sourceKind: 'tapx-fallback',
+            tapxCommit: TAPX_TEXTBOOK_COMMIT,
+            verificationStatus: 'verified',
+          });
+        }
+      }
+    }
     expect(Object.values(curriculum.textbooks).every((book) => book.verificationStatus === 'verified')).toBe(true);
   });
 
@@ -469,16 +485,21 @@ describe('curriculum registry', () => {
   });
 
   it('creates achievement positions for all verified formal units', () => {
-    expect(getKnownCurriculumPositions().map(({ key }) => key)).toEqual(
-      [
+    const existingGrade2Keys = [
         ...term1ChineseUnits,
         ...term1MathEntries.filter(([, , type]) => type === 'unit'),
         ...term1EnglishEntries.filter(([, , type]) => type === 'unit'),
         ...term2ChineseUnits,
         ...term2MathEntries.filter(([, , type]) => type === 'unit'),
         ...term2EnglishEntries.filter(([, , type]) => type === 'unit'),
-      ].map(([unitKey]) => unitKey),
-    );
+      ].map(([unitKey]) => unitKey);
+    const addedFormalUnitKeys = addedCourseCatalog
+      .filter((entry) => entry.type === 'unit' && entry.formalUnitNumber !== null)
+      .map(({ id }) => id);
+    const actualKeys = getKnownCurriculumPositions().map(({ key }) => key);
+
+    expect(actualKeys).toHaveLength(123);
+    expect(new Set(actualKeys)).toEqual(new Set([...existingGrade2Keys, ...addedFormalUnitKeys]));
   });
 
   it('keeps basic tasks under full canonical IDs for existing curriculum entries', () => {

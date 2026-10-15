@@ -83,12 +83,13 @@ test('keepsAchievementDetailsSkimmableAcrossPhoneTabletAndDesktop', async ({ pag
   const mathToggle = page.getByRole('button', { name: /二年级上学期数学进度/ });
   await chineseToggle.click();
   await expect(chineseToggle).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('#achievement-record-group-1')).toBeVisible();
-  await expect(page.locator('#achievement-record-group-1 .achievement-unit')).toHaveCount(8);
+  const chineseGroup = page.locator(`#${await chineseToggle.getAttribute('aria-controls')}`);
+  await expect(chineseGroup).toBeVisible();
+  await expect(chineseGroup.locator('.achievement-unit')).toHaveCount(8);
   await mathToggle.click();
   await expect(mathToggle).toHaveAttribute('aria-expanded', 'true');
   await expect(chineseToggle).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.locator('#achievement-record-group-1')).toBeHidden();
+  await expect(chineseGroup).toBeHidden();
 });
 
 test('doesNotPlayForDisabledOrAriaDisabledControls', async ({ page }) => {

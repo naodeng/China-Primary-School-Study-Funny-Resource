@@ -92,7 +92,7 @@ describe('SettingsDialog', () => {
         <ThemeProvider>
           <SettingsDialog
             open
-            progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: { grade: 3, term: 2, unit: 1 } }}
+            progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: { grade: 4, term: 2, unit: 1 } }}
             onClose={vi.fn()}
             onApplyLearningStart={onApplyLearningStart}
             onNavigate={vi.fn()}
@@ -105,13 +105,13 @@ describe('SettingsDialog', () => {
     expect(onApplyLearningStart).not.toHaveBeenCalled();
   });
 
-  it('keepsAnOlderValidStartVisibleUntilItsCourseIsRegistered', () => {
+  it('keepsAnUnregisteredSavedStartVisibleUntilItsCourseIsRegistered', () => {
     render(
       <SoundProvider>
         <ThemeProvider>
           <SettingsDialog
             open
-            progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: { grade: 3, term: 2, unit: 1 } }}
+            progress={{ schemaVersion: 3, completedSessionIds: [], learningStart: { grade: 4, term: 2, unit: 1 } }}
             onClose={vi.fn()}
             onApplyLearningStart={vi.fn()}
             onNavigate={vi.fn()}
@@ -120,7 +120,7 @@ describe('SettingsDialog', () => {
       </SoundProvider>,
     );
 
-    expect(screen.getByRole('combobox', { name: '年级' })).toHaveTextContent('3 年级');
+    expect(screen.getByRole('combobox', { name: '年级' })).toHaveTextContent('4 年级');
     expect(screen.getByRole('combobox', { name: '学期' })).toHaveTextContent('下学期');
     expect(screen.getByRole('combobox', { name: '从第几单元开始' })).toHaveTextContent('第 1 单元');
     expect(screen.getByText(/尚未登记到课程目录/)).toBeInTheDocument();

@@ -1,6 +1,6 @@
 import type { CurriculumUnit } from './types';
 
-const unitModules = import.meta.glob<{ unit: CurriculumUnit }>('./grade-2/**/index.ts');
+const unitModules = import.meta.glob<{ unit: CurriculumUnit }>('./grade-*/**/index.ts');
 const loadedUnits = new Map<string, Promise<CurriculumUnit | undefined>>();
 
 export function loadUnit(unitKey: string): Promise<CurriculumUnit | undefined> {

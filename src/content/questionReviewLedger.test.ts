@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import ledgerText from '../../docs/curriculum/grade-2-question-review.tsv?raw';
+import grade2LedgerText from '../../docs/curriculum/grade-2-question-review.tsv?raw';
+import addedLedgerText from '../../docs/curriculum/grade-1-and-3-question-review.tsv?raw';
 import { curriculum } from './curriculum';
 
 type ReviewRow = Record<string, string>;
 
-const questionIdPattern = /grade-2\/term-[12]\/chinese\/(?:unit-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}|grade-2\/term-[12]\/math\/(?:unit-\d{2}|integrated-practice-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}|grade-2\/term-[12]\/english\/(?:unit-\d{2}|review-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}/;
+const questionIdPattern = /grade-[123]\/term-[12]\/chinese\/unit-\d{2}\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}|grade-[123]\/term-[12]\/math\/(?:unit-\d{2}|integrated-practice-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}|grade-[123]\/term-[12]\/english\/(?:unit-\d{2}|review-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}/;
 
-function readRows(): ReviewRow[] {
+function parseRows(ledgerText: string): ReviewRow[] {
   const [headerLine, ...dataLines] = ledgerText.trim().split(/\r?\n/);
   if (!headerLine) return [];
   const headers = headerLine.replace(/^\uFEFF/, '').split('\t');
@@ -14,6 +15,10 @@ function readRows(): ReviewRow[] {
   return dataLines.map((line) => Object.fromEntries(
     line.split('\t').map((value, index) => [headers[index] ?? `column-${index}`, value]),
   ));
+}
+
+function readRows(): ReviewRow[] {
+  return [...parseRows(grade2LedgerText), ...parseRows(addedLedgerText)];
 }
 
 function questionCount(unitKey: string): number {

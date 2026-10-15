@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { installAudioSpy, readAudioEvents } from './audioSpy';
-import { curriculum } from '../../src/content/curriculum';
+import { unit as observationUnit } from '../../src/content/grade-2/term-1/chinese/unit-01';
+import { unit as arithmeticUnit } from '../../src/content/grade-2/term-1/math/unit-02';
 import type { ActivityDefinition } from '../../src/content/types';
 
 const sessionUrl = '/grade-2/term-1/chinese/unit-01/basic/task-01/session-01';
@@ -191,8 +192,8 @@ test('playsAnswerCuesInOrderAndSavesEightQuestionProgress', async ({ page }) => 
   await solveChoice(page, '先说开始，再说变化，最后说结果');
   await continueToNext(page);
 
-  const observationOrderActivity = curriculum.units['grade-2/term-1/chinese/unit-01']
-    ?.difficultyTracks.basic.tasks[0]?.sessions[0]?.activities[5];
+  const observationOrderActivity = observationUnit.difficultyTracks.basic.tasks[0]
+    ?.sessions[0]?.activities[5];
   if (!observationOrderActivity || observationOrderActivity.kind !== 'order') {
     throw new Error('Expected the observation process challenge to be an ordering activity.');
   }
@@ -313,14 +314,12 @@ test('showsCorrectPlaceValuesAndAcceptsAThreeDigitArithmeticAnswer', async ({ pa
 
 test('completesTwoBasicTasksAndTwoTasksPerHigherTier', async ({ page }) => {
   await installAudioSpy(page);
-  const unit = curriculum.units['grade-2/term-1/math/unit-02'];
-  if (!unit) throw new Error('The second term-one math unit is missing from the verified curriculum.');
-  const tasks = [
-    ...unit.difficultyTracks.basic.tasks.slice(0, 2).map((task) => ({ difficulty: 'basic', task })),
-    ...unit.difficultyTracks.advanced.tasks.slice(0, 2).map((task) => ({ difficulty: 'advanced', task })),
-    ...unit.difficultyTracks.high.tasks.slice(0, 2).map((task) => ({ difficulty: 'high', task })),
-  ];
+  const unit = arithmeticUnit;
+  const tasks = (['basic', 'advanced', 'high'] as const).flatMap((difficulty) => (
+    unit.difficultyTracks[difficulty].tasks.slice(0, 2).map((task) => ({ difficulty, task }))
+  ));
   expect(tasks).toHaveLength(6);
+  const unitTitle = unit.title;
   const retriedKinds = new Set<ActivityDefinition['kind']>();
 
   for (let taskIndex = 0; taskIndex < tasks.length; taskIndex += 1) {
@@ -340,14 +339,14 @@ test('completesTwoBasicTasksAndTwoTasksPerHigherTier', async ({ page }) => {
 
     if (taskIndex < 2) {
       await page.goto('/achievements');
-      const unitProgress = page.locator('.achievement-unit').filter({ hasText: unit.title });
+      const unitProgress = page.locator('.achievement-unit').filter({ hasText: unitTitle });
       await expect(unitProgress).toContainText(`${taskIndex + 1} / 2`);
       await expect(unitProgress).toHaveClass(taskIndex === 0 ? /is-pending/ : /is-complete/);
     }
   }
 
   await page.goto('/achievements');
-  const unitProgress = page.locator('.achievement-unit').filter({ hasText: unit.title });
+  const unitProgress = page.locator('.achievement-unit').filter({ hasText: unitTitle });
   await expect(unitProgress).toContainText('2 / 2');
   await expect(unitProgress).toHaveClass(/is-complete/);
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('china-study-progress-v1') ?? '{}').completedSessionIds))

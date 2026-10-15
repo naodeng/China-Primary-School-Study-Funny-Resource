@@ -3,6 +3,7 @@ import { buildDifficultyTracks, formatCurriculumSequence } from '../../../taskAs
 import type { EnglishQuestionSpec, EnglishTaskSpec } from './questionAuthoring';
 
 export interface EnglishUnitSpec {
+  grade?: 1 | 2 | 3;
   term?: 1 | 2;
   formalUnitNumber: number | null;
   entryId: string;
@@ -48,9 +49,10 @@ function createActivity(question: EnglishQuestionSpec, id: string): ActivityDefi
 }
 
 export function buildEnglishUnit(spec: EnglishUnitSpec): CurriculumUnit {
+  const grade = spec.grade ?? 2;
   const term = spec.term ?? 1;
   const type: CatalogEntryType = spec.type ?? 'unit';
-  const textbookEditionId = `grade-2/term-${term}/english`;
+  const textbookEditionId = `grade-${grade}/term-${term}/english`;
   const id = `${textbookEditionId}/${spec.entryId}`;
   return {
     id,

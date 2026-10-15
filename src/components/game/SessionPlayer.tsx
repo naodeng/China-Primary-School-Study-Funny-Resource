@@ -128,16 +128,18 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
           </div>
           <span className="session-intro-star" aria-hidden="true"><StarIcon size={96} /></span>
         </Card>
-        <HeroGuide mood="hint" subject={subject} companionId={session.companionId} compact />
-        <section className="game-progress-section" aria-label="挑战进度">
-          <div className="game-progress-labels">
-            <span>挑战 {sessionState.currentIndex + 1} / {session.activities.length}</span>
-            <span>{sessionState.solvedActivityIds.length} 个挑战已完成</span>
-          </div>
-          <div className="game-progress-track" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100} aria-label="本场完成进度">
-            <span style={{ width: `${progress}%` }} />
-          </div>
-        </section>
+        <div className="session-support-row">
+          <HeroGuide mood="hint" subject={subject} companionId={session.companionId} compact />
+          <section className="game-progress-section" aria-label="挑战进度">
+            <div className="game-progress-labels">
+              <span>挑战 {sessionState.currentIndex + 1} / {session.activities.length}</span>
+              <span>{sessionState.solvedActivityIds.length} 个挑战已完成</span>
+            </div>
+            <div className="game-progress-track" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100} aria-label="本场完成进度">
+              <span style={{ transform: `scaleX(${progress / 100})` }} />
+            </div>
+          </section>
+        </div>
         <Card className="activity-card" color="default">
           <div className="activity-card-heading">
             <span className="activity-number">挑战 {String(sessionState.currentIndex + 1).padStart(2, '0')}</span>
@@ -152,8 +154,13 @@ export default function SessionPlayer({ session, subject, newlyUnlockedRank, onC
           />
         </Card>
         <div className={`game-navigation-row ${solved ? 'is-solved' : ''}`}>
-          <p aria-live="polite">{solved ? '挑战完成！你的坚持又积累了一点能量，可以继续啦。' : '不着急，先读题找线索；愿意动脑尝试就很棒。'}</p>
-          <Button type="primary" icon={<ArrowRightIcon size={18} aria-hidden="true" />} disabled={!solved} onClick={continueSession}>
+          <div className="game-navigation-copy">
+            <span>{solved ? '本题已完成' : '下一步'}</span>
+            <p id={`${sessionObjectiveId}-next`} aria-live="polite">
+              {solved ? '准备好后，继续探索下一题。' : '完成当前挑战后，就可以继续下一题。'}
+            </p>
+          </div>
+          <Button type="primary" icon={<ArrowRightIcon size={18} aria-hidden="true" />} aria-describedby={`${sessionObjectiveId}-next`} disabled={!solved} onClick={continueSession}>
             {sessionState.currentIndex === session.activities.length - 1 ? '完成本场' : '继续下一题'}
           </Button>
         </div>

@@ -6,6 +6,7 @@ import { getExplorationZones } from './exploration';
 
 function createOneVerifiedUnit(): Curriculum {
   const source = structuredClone(curriculum);
+  source.grades = [source.grades.find((grade) => grade.id === 'grade-2')!];
   const entry = source.grades[0].terms[0].subjects.find((subject) => subject.id === 'chinese')!.units[0];
   entry.status = 'active';
   source.textbooks[entry.textbookEditionId].verificationStatus = 'verified';

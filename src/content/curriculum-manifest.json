@@ -103,9 +103,781 @@
       "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
       "verificationStatus": "verified",
       "schoolOfferingStatus": "unconfirmed"
+    },
+    "grade-1/term-1/chinese": {
+      "id": "grade-1/term-1/chinese",
+      "subject": "chinese",
+      "grade": 1,
+      "term": 1,
+      "series": "义务教育教科书·语文（一年级上册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E8%AF%AD%E6%96%87/%E7%BB%9F%E7%BC%96%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%AF%AD%E6%96%87%E4%B8%80%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf",
+      "fallbackReason": "人教社公开了语文修订教材信息，但未取得本册完整新版学生用书和目录；本课程按用户裁定使用 TapXWorld 固定快照中的整册目录，不将回退版本称为最新版。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified"
+    },
+    "grade-1/term-2/chinese": {
+      "id": "grade-1/term-2/chinese",
+      "subject": "chinese",
+      "grade": 1,
+      "term": 2,
+      "series": "义务教育教科书·语文（一年级下册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E8%AF%AD%E6%96%87/%E7%BB%9F%E7%BC%96%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%AF%AD%E6%96%87%E4%B8%80%E5%B9%B4%E7%BA%A7%E4%B8%8B%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf",
+      "fallbackReason": "人教社公开了语文修订教材信息，但未取得本册完整新版学生用书和目录；本课程按用户裁定使用 TapXWorld 固定快照中的整册目录，不将回退版本称为最新版。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified"
+    },
+    "grade-3/term-1/chinese": {
+      "id": "grade-3/term-1/chinese",
+      "subject": "chinese",
+      "grade": 3,
+      "term": 1,
+      "series": "义务教育教科书·语文（三年级上册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E8%AF%AD%E6%96%87/%E7%BB%9F%E7%BC%96%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%AF%AD%E6%96%87%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf",
+      "fallbackReason": "人教社公开了语文修订教材信息，但未取得本册完整新版学生用书和目录；本课程按用户裁定使用 TapXWorld 固定快照中的整册目录，不将回退版本称为最新版。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified"
+    },
+    "grade-3/term-2/chinese": {
+      "id": "grade-3/term-2/chinese",
+      "subject": "chinese",
+      "grade": 3,
+      "term": 2,
+      "series": "义务教育教科书·语文（三年级下册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E8%AF%AD%E6%96%87/%E7%BB%9F%E7%BC%96%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%AF%AD%E6%96%87%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8B%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/bks/xxyw/jzjd/202507/W020250716532280620290.pdf",
+      "fallbackReason": "人教社公开了语文修订教材信息，但未取得本册完整新版学生用书和目录；本课程按用户裁定使用 TapXWorld 固定快照中的整册目录，不将回退版本称为最新版。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified"
+    },
+    "grade-1/term-1/math": {
+      "id": "grade-1/term-1/math",
+      "subject": "math",
+      "grade": 1,
+      "term": 1,
+      "series": "义务教育教科书·数学（一年级上册）",
+      "edition": "2022年8月第2版",
+      "printing": null,
+      "isbn": "978-7-107-36922-3",
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E6%95%B0%E5%AD%A6/%E4%BA%BA%E6%95%99%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%20%C2%B7%20%E6%95%B0%E5%AD%A6%E4%B8%80%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml",
+      "fallbackReason": "人教社公开了新版数学教材资源入口，但未取得本册完整新版学生用书和目录；按用户裁定使用 TapXWorld 固定快照中的整册目录。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified"
+    },
+    "grade-1/term-2/math": {
+      "id": "grade-1/term-2/math",
+      "subject": "math",
+      "grade": 1,
+      "term": 2,
+      "series": "义务教育教科书·数学（一年级下册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E6%95%B0%E5%AD%A6/%E4%BA%BA%E6%95%99%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E6%95%B0%E5%AD%A6%E4%B8%80%E5%B9%B4%E7%BA%A7%E4%B8%8B%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml",
+      "fallbackReason": "人教社公开了新版数学教材资源入口，但未取得本册完整新版学生用书和目录；按用户裁定使用 TapXWorld 固定快照中的整册目录。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified"
+    },
+    "grade-3/term-1/math": {
+      "id": "grade-3/term-1/math",
+      "subject": "math",
+      "grade": 3,
+      "term": 1,
+      "series": "义务教育教科书·数学（三年级上册）",
+      "edition": "2022年8月第2版",
+      "printing": null,
+      "isbn": "978-7-107-36924-7",
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E6%95%B0%E5%AD%A6/%E4%BA%BA%E6%95%99%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%20%C2%B7%20%E6%95%B0%E5%AD%A6%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml",
+      "fallbackReason": "人教社公开了新版数学教材资源入口，但未取得本册完整新版学生用书和目录；按用户裁定使用 TapXWorld 固定快照中的整册目录。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified"
+    },
+    "grade-3/term-2/math": {
+      "id": "grade-3/term-2/math",
+      "subject": "math",
+      "grade": 3,
+      "term": 2,
+      "series": "义务教育教科书·数学（三年级下册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E6%95%B0%E5%AD%A6/%E4%BA%BA%E6%95%99%E7%89%88/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E6%95%B0%E5%AD%A6%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8B%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/rjyx/qnbjsjc/sytj/202605/t20260514_2006676.shtml",
+      "fallbackReason": "人教社公开了新版数学教材资源入口，但未取得本册完整新版学生用书和目录；按用户裁定使用 TapXWorld 固定快照中的整册目录。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified"
+    },
+    "grade-1/term-1/english": {
+      "id": "grade-1/term-1/english",
+      "subject": "english",
+      "grade": 1,
+      "term": 1,
+      "series": "义务教育教科书·英语（一年级起点，一年级上册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E8%8B%B1%E8%AF%AD/%E4%BA%BA%E6%95%99%E7%89%88%EF%BC%88%E4%B8%80%E5%B9%B4%E7%BA%A7%E8%B5%B7%E7%82%B9%EF%BC%89%EF%BC%88%E4%B8%BB%E7%BC%96%EF%BC%9A%E5%90%B4%E6%AC%A3%EF%BC%89/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%8B%B1%E8%AF%AD%EF%BC%88%E4%B8%80%E5%B9%B4%E7%BA%A7%E8%B5%B7%E7%82%B9%EF%BC%89%E4%B8%80%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html",
+      "fallbackReason": "人教社介绍了新版小学英语教材的不同起点，但未取得本册完整新版学生用书和目录；按站内现有一年级起点序列使用 TapXWorld 固定快照。学校是否开设英语尚未确认。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified",
+      "schoolOfferingStatus": "unconfirmed"
+    },
+    "grade-1/term-2/english": {
+      "id": "grade-1/term-2/english",
+      "subject": "english",
+      "grade": 1,
+      "term": 2,
+      "series": "义务教育教科书·英语（一年级起点，一年级下册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E8%8B%B1%E8%AF%AD/%E4%BA%BA%E6%95%99%E7%89%88%EF%BC%88%E4%B8%80%E5%B9%B4%E7%BA%A7%E8%B5%B7%E7%82%B9%EF%BC%89%EF%BC%88%E4%B8%BB%E7%BC%96%EF%BC%9A%E5%90%B4%E6%AC%A3%EF%BC%89/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%8B%B1%E8%AF%AD%EF%BC%88%E4%B8%80%E5%B9%B4%E7%BA%A7%E8%B5%B7%E7%82%B9%EF%BC%89%E4%B8%80%E5%B9%B4%E7%BA%A7%E4%B8%8B%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html",
+      "fallbackReason": "人教社介绍了新版小学英语教材的不同起点，但未取得本册完整新版学生用书和目录；按站内现有一年级起点序列使用 TapXWorld 固定快照。学校是否开设英语尚未确认。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified",
+      "schoolOfferingStatus": "unconfirmed"
+    },
+    "grade-3/term-1/english": {
+      "id": "grade-3/term-1/english",
+      "subject": "english",
+      "grade": 3,
+      "term": 1,
+      "series": "义务教育教科书·英语（一年级起点，三年级上册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E8%8B%B1%E8%AF%AD/%E4%BA%BA%E6%95%99%E7%89%88%EF%BC%88%E4%B8%80%E5%B9%B4%E7%BA%A7%E8%B5%B7%E7%82%B9%EF%BC%89%EF%BC%88%E4%B8%BB%E7%BC%96%EF%BC%9A%E5%90%B4%E6%AC%A3%EF%BC%89/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%8B%B1%E8%AF%AD%EF%BC%88%E4%B8%80%E5%B9%B4%E7%BA%A7%E8%B5%B7%E7%82%B9%EF%BC%89%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html",
+      "fallbackReason": "人教社介绍了新版小学英语教材的不同起点，但未取得本册完整新版学生用书和目录；按站内现有一年级起点序列使用 TapXWorld 固定快照。学校是否开设英语尚未确认。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified",
+      "schoolOfferingStatus": "unconfirmed"
+    },
+    "grade-3/term-2/english": {
+      "id": "grade-3/term-2/english",
+      "subject": "english",
+      "grade": 3,
+      "term": 2,
+      "series": "义务教育教科书·英语（一年级起点，三年级下册）",
+      "edition": null,
+      "printing": null,
+      "isbn": null,
+      "sourceKind": "tapx-fallback",
+      "sourceUrl": "https://github.com/TapXWorld/ChinaTextbook/blob/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7/%E5%B0%8F%E5%AD%A6/%E8%8B%B1%E8%AF%AD/%E4%BA%BA%E6%95%99%E7%89%88%EF%BC%88%E4%B8%80%E5%B9%B4%E7%BA%A7%E8%B5%B7%E7%82%B9%EF%BC%89%EF%BC%88%E4%B8%BB%E7%BC%96%EF%BC%9A%E5%90%B4%E6%AC%A3%EF%BC%89/%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%95%99%E7%A7%91%E4%B9%A6%C2%B7%E8%8B%B1%E8%AF%AD%EF%BC%88%E4%B8%80%E5%B9%B4%E7%BA%A7%E8%B5%B7%E7%82%B9%EF%BC%89%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8B%E5%86%8C.pdf",
+      "latestPepEvidenceUrl": "https://www.pep.com.cn/xw/zt/hd/12/xjcjs/xx/202409/t20240920_1995564.html",
+      "fallbackReason": "人教社介绍了新版小学英语教材的不同起点，但未取得本册完整新版学生用书和目录；按站内现有一年级起点序列使用 TapXWorld 固定快照。学校是否开设英语尚未确认。",
+      "checkedAt": "2026-10-15",
+      "tapxCommit": "5a80345f2043ba6f8db8d7be9cf3db82725ff1f7",
+      "verificationStatus": "verified",
+      "schoolOfferingStatus": "unconfirmed"
     }
   },
   "grades": [
+    {
+      "id": "grade-1",
+      "title": "1年级",
+      "terms": [
+        {
+          "id": "term-1",
+          "title": "上学期",
+          "subjects": [
+            {
+              "id": "chinese",
+              "title": "语文",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "主题组 01 · 入学启蒙与识字",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/chinese",
+                  "curriculumUnitKey": "grade-1/term-1/chinese/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "主题组 02 · 汉语拼音（一）",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/chinese",
+                  "curriculumUnitKey": "grade-1/term-1/chinese/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "主题组 03 · 汉语拼音（二）",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/chinese",
+                  "curriculumUnitKey": "grade-1/term-1/chinese/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "主题组 04 · 四季与自然",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/chinese",
+                  "curriculumUnitKey": "grade-1/term-1/chinese/unit-04"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "主题组 05 · 日常识字",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/chinese",
+                  "curriculumUnitKey": "grade-1/term-1/chinese/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "主题组 06 · 影子与动物",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/chinese",
+                  "curriculumUnitKey": "grade-1/term-1/chinese/unit-06"
+                },
+                {
+                  "id": "unit-07",
+                  "title": "主题组 07 · 成长体验",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/chinese",
+                  "curriculumUnitKey": "grade-1/term-1/chinese/unit-07"
+                },
+                {
+                  "id": "unit-08",
+                  "title": "主题组 08 · 自然想象与故事",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/chinese",
+                  "curriculumUnitKey": "grade-1/term-1/chinese/unit-08"
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "数学",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · 准备课",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · 位置",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · 5 以内数的认识和加减法",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · 认识图形（一）",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/unit-04"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · 6～10 的认识和加减法",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · 11～20 各数的认识",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/unit-06"
+                },
+                {
+                  "id": "unit-07",
+                  "title": "第七单元 · 认识钟表",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 7,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/unit-07"
+                },
+                {
+                  "id": "unit-08",
+                  "title": "第八单元 · 20 以内的进位加法",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 8,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/unit-08"
+                },
+                {
+                  "id": "unit-09",
+                  "title": "第九单元 · 总复习",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 9,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/unit-09"
+                },
+                {
+                  "id": "integrated-practice-01",
+                  "title": "综合实践 · 数学乐园",
+                  "status": "active",
+                  "type": "integrated-practice",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/math",
+                  "curriculumUnitKey": "grade-1/term-1/math/integrated-practice-01"
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "英语",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · School",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/english",
+                  "curriculumUnitKey": "grade-1/term-1/english/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · Face",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/english",
+                  "curriculumUnitKey": "grade-1/term-1/english/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · Animals",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/english",
+                  "curriculumUnitKey": "grade-1/term-1/english/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · Numbers",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/english",
+                  "curriculumUnitKey": "grade-1/term-1/english/unit-04"
+                },
+                {
+                  "id": "review-01",
+                  "title": "复习一 · Units 1–3",
+                  "status": "active",
+                  "type": "review",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/english",
+                  "curriculumUnitKey": "grade-1/term-1/english/review-01"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · Colours",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/english",
+                  "curriculumUnitKey": "grade-1/term-1/english/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · Fruit",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-1/english",
+                  "curriculumUnitKey": "grade-1/term-1/english/unit-06"
+                },
+                {
+                  "id": "review-02",
+                  "title": "复习二 · Units 4–6",
+                  "status": "active",
+                  "type": "review",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-1/english",
+                  "curriculumUnitKey": "grade-1/term-1/english/review-02"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "term-2",
+          "title": "下学期",
+          "subjects": [
+            {
+              "id": "chinese",
+              "title": "语文",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "主题组 01 · 春夏秋冬与识字",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/chinese",
+                  "curriculumUnitKey": "grade-1/term-2/chinese/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "主题组 02 · 家庭与愿望",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/chinese",
+                  "curriculumUnitKey": "grade-1/term-2/chinese/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "主题组 03 · 友谊与游戏",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/chinese",
+                  "curriculumUnitKey": "grade-1/term-2/chinese/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "主题组 04 · 夜色与节日",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/chinese",
+                  "curriculumUnitKey": "grade-1/term-2/chinese/unit-04"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "主题组 05 · 动物与校园",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/chinese",
+                  "curriculumUnitKey": "grade-1/term-2/chinese/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "主题组 06 · 池塘与雨天",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/chinese",
+                  "curriculumUnitKey": "grade-1/term-2/chinese/unit-06"
+                },
+                {
+                  "id": "unit-07",
+                  "title": "主题组 07 · 生活习惯",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/chinese",
+                  "curriculumUnitKey": "grade-1/term-2/chinese/unit-07"
+                },
+                {
+                  "id": "unit-08",
+                  "title": "主题组 08 · 动物故事",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/chinese",
+                  "curriculumUnitKey": "grade-1/term-2/chinese/unit-08"
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "数学",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · 认识图形（二）",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/math",
+                  "curriculumUnitKey": "grade-1/term-2/math/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · 20 以内的退位减法",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/math",
+                  "curriculumUnitKey": "grade-1/term-2/math/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · 分类与整理",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/math",
+                  "curriculumUnitKey": "grade-1/term-2/math/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · 100 以内数的认识",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/math",
+                  "curriculumUnitKey": "grade-1/term-2/math/unit-04"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · 认识人民币",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/math",
+                  "curriculumUnitKey": "grade-1/term-2/math/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · 100 以内的加法和减法（一）",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/math",
+                  "curriculumUnitKey": "grade-1/term-2/math/unit-06"
+                },
+                {
+                  "id": "unit-07",
+                  "title": "第七单元 · 找规律",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 7,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/math",
+                  "curriculumUnitKey": "grade-1/term-2/math/unit-07"
+                },
+                {
+                  "id": "unit-08",
+                  "title": "第八单元 · 总复习",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 8,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/math",
+                  "curriculumUnitKey": "grade-1/term-2/math/unit-08"
+                },
+                {
+                  "id": "integrated-practice-01",
+                  "title": "综合实践 · 摆一摆，想一想",
+                  "status": "active",
+                  "type": "integrated-practice",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/math",
+                  "curriculumUnitKey": "grade-1/term-2/math/integrated-practice-01"
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "英语",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · Classroom",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/english",
+                  "curriculumUnitKey": "grade-1/term-2/english/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · Room",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/english",
+                  "curriculumUnitKey": "grade-1/term-2/english/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · Toys",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/english",
+                  "curriculumUnitKey": "grade-1/term-2/english/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · Food",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/english",
+                  "curriculumUnitKey": "grade-1/term-2/english/unit-04"
+                },
+                {
+                  "id": "review-01",
+                  "title": "复习一 · Units 1–3",
+                  "status": "active",
+                  "type": "review",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/english",
+                  "curriculumUnitKey": "grade-1/term-2/english/review-01"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · Drink",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/english",
+                  "curriculumUnitKey": "grade-1/term-2/english/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · Clothes",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-1/term-2/english",
+                  "curriculumUnitKey": "grade-1/term-2/english/unit-06"
+                },
+                {
+                  "id": "review-02",
+                  "title": "复习二 · Units 4–6",
+                  "status": "active",
+                  "type": "review",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-1/term-2/english",
+                  "curriculumUnitKey": "grade-1/term-2/english/review-02"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       "id": "grade-2",
       "title": "二年级",
@@ -689,9 +1461,3333 @@
           ]
         }
       ]
+    },
+    {
+      "id": "grade-3",
+      "title": "3年级",
+      "terms": [
+        {
+          "id": "term-1",
+          "title": "上学期",
+          "subjects": [
+            {
+              "id": "chinese",
+              "title": "语文",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · 校园生活",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/chinese",
+                  "curriculumUnitKey": "grade-3/term-1/chinese/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · 金秋与观察",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/chinese",
+                  "curriculumUnitKey": "grade-3/term-1/chinese/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · 童话与想象",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/chinese",
+                  "curriculumUnitKey": "grade-3/term-1/chinese/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · 预测与续写",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/chinese",
+                  "curriculumUnitKey": "grade-3/term-1/chinese/unit-04"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · 自然观察记录",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/chinese",
+                  "curriculumUnitKey": "grade-3/term-1/chinese/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · 祖国山河",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/chinese",
+                  "curriculumUnitKey": "grade-3/term-1/chinese/unit-06"
+                },
+                {
+                  "id": "unit-07",
+                  "title": "第七单元 · 自然声音与发现",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 7,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/chinese",
+                  "curriculumUnitKey": "grade-3/term-1/chinese/unit-07"
+                },
+                {
+                  "id": "unit-08",
+                  "title": "第八单元 · 人物故事",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 8,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/chinese",
+                  "curriculumUnitKey": "grade-3/term-1/chinese/unit-08"
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "数学",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · 时、分、秒",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · 万以内的加法和减法（一）",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · 测量",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · 万以内加减法（二）",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-04"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · 倍的认识",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · 多位数乘一位数",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-06"
+                },
+                {
+                  "id": "unit-07",
+                  "title": "第七单元 · 长方形和正方形",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 7,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-07"
+                },
+                {
+                  "id": "unit-08",
+                  "title": "第八单元 · 分数的初步认识",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 8,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-08"
+                },
+                {
+                  "id": "unit-09",
+                  "title": "第九单元 · 数学广角——集合",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 9,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-09"
+                },
+                {
+                  "id": "unit-10",
+                  "title": "第十单元 · 总复习",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 10,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/unit-10"
+                },
+                {
+                  "id": "integrated-practice-01",
+                  "title": "综合实践 · 数字编码",
+                  "status": "active",
+                  "type": "integrated-practice",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-3/term-1/math",
+                  "curriculumUnitKey": "grade-3/term-1/math/integrated-practice-01"
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "英语",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · Myself",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/english",
+                  "curriculumUnitKey": "grade-3/term-1/english/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · My Body",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/english",
+                  "curriculumUnitKey": "grade-3/term-1/english/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · Food",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/english",
+                  "curriculumUnitKey": "grade-3/term-1/english/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · Pets",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/english",
+                  "curriculumUnitKey": "grade-3/term-1/english/unit-04"
+                },
+                {
+                  "id": "review-01",
+                  "title": "复习一 · Units 1–3",
+                  "status": "active",
+                  "type": "review",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-3/term-1/english",
+                  "curriculumUnitKey": "grade-3/term-1/english/review-01"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · Clothes",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/english",
+                  "curriculumUnitKey": "grade-3/term-1/english/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · Birthdays",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-1/english",
+                  "curriculumUnitKey": "grade-3/term-1/english/unit-06"
+                },
+                {
+                  "id": "review-02",
+                  "title": "复习二 · Units 4–6",
+                  "status": "active",
+                  "type": "review",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-3/term-1/english",
+                  "curriculumUnitKey": "grade-3/term-1/english/review-02"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "term-2",
+          "title": "下学期",
+          "subjects": [
+            {
+              "id": "chinese",
+              "title": "语文",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · 春日与植物",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/chinese",
+                  "curriculumUnitKey": "grade-3/term-2/chinese/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · 寓言与判断",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/chinese",
+                  "curriculumUnitKey": "grade-3/term-2/chinese/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · 传统节日与桥梁",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/chinese",
+                  "curriculumUnitKey": "grade-3/term-2/chinese/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · 观察与实验",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/chinese",
+                  "curriculumUnitKey": "grade-3/term-2/chinese/unit-04"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · 奇妙想象",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/chinese",
+                  "curriculumUnitKey": "grade-3/term-2/chinese/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · 童年与诚信",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/chinese",
+                  "curriculumUnitKey": "grade-3/term-2/chinese/unit-06"
+                },
+                {
+                  "id": "unit-07",
+                  "title": "第七单元 · 自然世界",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 7,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/chinese",
+                  "curriculumUnitKey": "grade-3/term-2/chinese/unit-07"
+                },
+                {
+                  "id": "unit-08",
+                  "title": "第八单元 · 故事讲述",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 8,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/chinese",
+                  "curriculumUnitKey": "grade-3/term-2/chinese/unit-08"
+                }
+              ]
+            },
+            {
+              "id": "math",
+              "title": "数学",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · 位置与方向（一）",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · 除数是一位数的除法",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · 复式统计表",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · 两位数乘两位数",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/unit-04"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · 面积",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · 年、月、日",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/unit-06"
+                },
+                {
+                  "id": "unit-07",
+                  "title": "第七单元 · 小数的初步认识",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 7,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/unit-07"
+                },
+                {
+                  "id": "unit-08",
+                  "title": "第八单元 · 数学广角——搭配（二）",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 8,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/unit-08"
+                },
+                {
+                  "id": "unit-09",
+                  "title": "第九单元 · 总复习",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 9,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/unit-09"
+                },
+                {
+                  "id": "integrated-practice-01",
+                  "title": "综合实践 · 制作活动日历",
+                  "status": "active",
+                  "type": "integrated-practice",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/integrated-practice-01"
+                },
+                {
+                  "id": "integrated-practice-02",
+                  "title": "综合实践 · 我们的校园",
+                  "status": "active",
+                  "type": "integrated-practice",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-3/term-2/math",
+                  "curriculumUnitKey": "grade-3/term-2/math/integrated-practice-02"
+                }
+              ]
+            },
+            {
+              "id": "english",
+              "title": "英语",
+              "units": [
+                {
+                  "id": "unit-01",
+                  "title": "第一单元 · School Subjects",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 1,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/english",
+                  "curriculumUnitKey": "grade-3/term-2/english/unit-01"
+                },
+                {
+                  "id": "unit-02",
+                  "title": "第二单元 · My School",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 2,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/english",
+                  "curriculumUnitKey": "grade-3/term-2/english/unit-02"
+                },
+                {
+                  "id": "unit-03",
+                  "title": "第三单元 · After School Activities",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 3,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/english",
+                  "curriculumUnitKey": "grade-3/term-2/english/unit-03"
+                },
+                {
+                  "id": "unit-04",
+                  "title": "第四单元 · My Family",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 4,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/english",
+                  "curriculumUnitKey": "grade-3/term-2/english/unit-04"
+                },
+                {
+                  "id": "review-01",
+                  "title": "复习一 · Units 1–3",
+                  "status": "active",
+                  "type": "review",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-3/term-2/english",
+                  "curriculumUnitKey": "grade-3/term-2/english/review-01"
+                },
+                {
+                  "id": "unit-05",
+                  "title": "第五单元 · Family Activities",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 5,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/english",
+                  "curriculumUnitKey": "grade-3/term-2/english/unit-05"
+                },
+                {
+                  "id": "unit-06",
+                  "title": "第六单元 · My Home",
+                  "status": "active",
+                  "type": "unit",
+                  "formalUnitNumber": 6,
+                  "achievementEligible": true,
+                  "textbookEditionId": "grade-3/term-2/english",
+                  "curriculumUnitKey": "grade-3/term-2/english/unit-06"
+                },
+                {
+                  "id": "review-02",
+                  "title": "复习二 · Units 4–6",
+                  "status": "active",
+                  "type": "review",
+                  "formalUnitNumber": null,
+                  "achievementEligible": false,
+                  "textbookEditionId": "grade-3/term-2/english",
+                  "curriculumUnitKey": "grade-3/term-2/english/review-02"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "units": {
+    "grade-1/term-1/chinese/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/chinese/unit-01/basic/task-01/session-01",
+          "grade-1/term-1/chinese/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/chinese/unit-01/advanced/task-01/session-01",
+          "grade-1/term-1/chinese/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/chinese/unit-01/high/task-01/session-01",
+          "grade-1/term-1/chinese/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/chinese/unit-01/basic/task-01/session-01",
+          "title": "主题组 01 · 入学启蒙与识字 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-1/chinese/unit-01/basic/task-02/session-01",
+          "title": "主题组 01 · 入学启蒙与识字 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-1/chinese/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/chinese/unit-02/basic/task-01/session-01",
+          "grade-1/term-1/chinese/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/chinese/unit-02/advanced/task-01/session-01",
+          "grade-1/term-1/chinese/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/chinese/unit-02/high/task-01/session-01",
+          "grade-1/term-1/chinese/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/chinese/unit-02/basic/task-01/session-01",
+          "title": "主题组 02 · 汉语拼音（一） · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-1/chinese/unit-02/basic/task-02/session-01",
+          "title": "主题组 02 · 汉语拼音（一） · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-1/chinese/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/chinese/unit-03/basic/task-01/session-01",
+          "grade-1/term-1/chinese/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/chinese/unit-03/advanced/task-01/session-01",
+          "grade-1/term-1/chinese/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/chinese/unit-03/high/task-01/session-01",
+          "grade-1/term-1/chinese/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/chinese/unit-03/basic/task-01/session-01",
+          "title": "主题组 03 · 汉语拼音（二） · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-1/chinese/unit-03/basic/task-02/session-01",
+          "title": "主题组 03 · 汉语拼音（二） · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-1/chinese/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/chinese/unit-04/basic/task-01/session-01",
+          "grade-1/term-1/chinese/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/chinese/unit-04/advanced/task-01/session-01",
+          "grade-1/term-1/chinese/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/chinese/unit-04/high/task-01/session-01",
+          "grade-1/term-1/chinese/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/chinese/unit-04/basic/task-01/session-01",
+          "title": "主题组 04 · 四季与自然 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-1/chinese/unit-04/basic/task-02/session-01",
+          "title": "主题组 04 · 四季与自然 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-1/chinese/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/chinese/unit-05/basic/task-01/session-01",
+          "grade-1/term-1/chinese/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/chinese/unit-05/advanced/task-01/session-01",
+          "grade-1/term-1/chinese/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/chinese/unit-05/high/task-01/session-01",
+          "grade-1/term-1/chinese/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/chinese/unit-05/basic/task-01/session-01",
+          "title": "主题组 05 · 日常识字 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-1/chinese/unit-05/basic/task-02/session-01",
+          "title": "主题组 05 · 日常识字 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-1/chinese/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/chinese/unit-06/basic/task-01/session-01",
+          "grade-1/term-1/chinese/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/chinese/unit-06/advanced/task-01/session-01",
+          "grade-1/term-1/chinese/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/chinese/unit-06/high/task-01/session-01",
+          "grade-1/term-1/chinese/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/chinese/unit-06/basic/task-01/session-01",
+          "title": "主题组 06 · 影子与动物 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-1/chinese/unit-06/basic/task-02/session-01",
+          "title": "主题组 06 · 影子与动物 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-1/chinese/unit-07": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/chinese/unit-07/basic/task-01/session-01",
+          "grade-1/term-1/chinese/unit-07/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/chinese/unit-07/advanced/task-01/session-01",
+          "grade-1/term-1/chinese/unit-07/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/chinese/unit-07/high/task-01/session-01",
+          "grade-1/term-1/chinese/unit-07/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/chinese/unit-07/basic/task-01/session-01",
+          "title": "主题组 07 · 成长体验 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-1/chinese/unit-07/basic/task-02/session-01",
+          "title": "主题组 07 · 成长体验 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-1/chinese/unit-08": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/chinese/unit-08/basic/task-01/session-01",
+          "grade-1/term-1/chinese/unit-08/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/chinese/unit-08/advanced/task-01/session-01",
+          "grade-1/term-1/chinese/unit-08/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/chinese/unit-08/high/task-01/session-01",
+          "grade-1/term-1/chinese/unit-08/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/chinese/unit-08/basic/task-01/session-01",
+          "title": "主题组 08 · 自然想象与故事 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-1/chinese/unit-08/basic/task-02/session-01",
+          "title": "主题组 08 · 自然想象与故事 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-1/math/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/unit-01/basic/task-01/session-01",
+          "grade-1/term-1/math/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/unit-01/advanced/task-01/session-01",
+          "grade-1/term-1/math/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/unit-01/high/task-01/session-01",
+          "grade-1/term-1/math/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/unit-01/basic/task-01/session-01",
+          "title": "准备课 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/unit-01/basic/task-02/session-01",
+          "title": "准备课 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/math/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/unit-02/basic/task-01/session-01",
+          "grade-1/term-1/math/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/unit-02/advanced/task-01/session-01",
+          "grade-1/term-1/math/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/unit-02/high/task-01/session-01",
+          "grade-1/term-1/math/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/unit-02/basic/task-01/session-01",
+          "title": "位置 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/unit-02/basic/task-02/session-01",
+          "title": "位置 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/math/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/unit-03/basic/task-01/session-01",
+          "grade-1/term-1/math/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/unit-03/advanced/task-01/session-01",
+          "grade-1/term-1/math/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/unit-03/high/task-01/session-01",
+          "grade-1/term-1/math/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/unit-03/basic/task-01/session-01",
+          "title": "5 以内数的认识和加减法 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/unit-03/basic/task-02/session-01",
+          "title": "5 以内数的认识和加减法 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/math/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/unit-04/basic/task-01/session-01",
+          "grade-1/term-1/math/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/unit-04/advanced/task-01/session-01",
+          "grade-1/term-1/math/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/unit-04/high/task-01/session-01",
+          "grade-1/term-1/math/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/unit-04/basic/task-01/session-01",
+          "title": "认识图形（一） · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/unit-04/basic/task-02/session-01",
+          "title": "认识图形（一） · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/math/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/unit-05/basic/task-01/session-01",
+          "grade-1/term-1/math/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/unit-05/advanced/task-01/session-01",
+          "grade-1/term-1/math/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/unit-05/high/task-01/session-01",
+          "grade-1/term-1/math/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/unit-05/basic/task-01/session-01",
+          "title": "6～10 的认识和加减法 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/unit-05/basic/task-02/session-01",
+          "title": "6～10 的认识和加减法 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/math/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/unit-06/basic/task-01/session-01",
+          "grade-1/term-1/math/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/unit-06/advanced/task-01/session-01",
+          "grade-1/term-1/math/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/unit-06/high/task-01/session-01",
+          "grade-1/term-1/math/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/unit-06/basic/task-01/session-01",
+          "title": "11～20 各数的认识 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/unit-06/basic/task-02/session-01",
+          "title": "11～20 各数的认识 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/math/unit-07": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/unit-07/basic/task-01/session-01",
+          "grade-1/term-1/math/unit-07/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/unit-07/advanced/task-01/session-01",
+          "grade-1/term-1/math/unit-07/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/unit-07/high/task-01/session-01",
+          "grade-1/term-1/math/unit-07/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/unit-07/basic/task-01/session-01",
+          "title": "认识钟表 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/unit-07/basic/task-02/session-01",
+          "title": "认识钟表 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/math/unit-08": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/unit-08/basic/task-01/session-01",
+          "grade-1/term-1/math/unit-08/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/unit-08/advanced/task-01/session-01",
+          "grade-1/term-1/math/unit-08/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/unit-08/high/task-01/session-01",
+          "grade-1/term-1/math/unit-08/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/unit-08/basic/task-01/session-01",
+          "title": "20 以内的进位加法 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/unit-08/basic/task-02/session-01",
+          "title": "20 以内的进位加法 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/math/unit-09": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/unit-09/basic/task-01/session-01",
+          "grade-1/term-1/math/unit-09/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/unit-09/advanced/task-01/session-01",
+          "grade-1/term-1/math/unit-09/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/unit-09/high/task-01/session-01",
+          "grade-1/term-1/math/unit-09/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/unit-09/basic/task-01/session-01",
+          "title": "总复习 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/unit-09/basic/task-02/session-01",
+          "title": "总复习 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/math/integrated-practice-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/math/integrated-practice-01/basic/task-01/session-01",
+          "grade-1/term-1/math/integrated-practice-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/math/integrated-practice-01/advanced/task-01/session-01",
+          "grade-1/term-1/math/integrated-practice-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/math/integrated-practice-01/high/task-01/session-01",
+          "grade-1/term-1/math/integrated-practice-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/math/integrated-practice-01/basic/task-01/session-01",
+          "title": "数学乐园 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-1/math/integrated-practice-01/basic/task-02/session-01",
+          "title": "数学乐园 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-1/english/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/english/unit-01/basic/task-01/session-01",
+          "grade-1/term-1/english/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/english/unit-01/advanced/task-01/session-01",
+          "grade-1/term-1/english/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/english/unit-01/high/task-01/session-01",
+          "grade-1/term-1/english/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/english/unit-01/basic/task-01/session-01",
+          "title": "School · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-1/english/unit-01/basic/task-02/session-01",
+          "title": "School · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-1/english/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/english/unit-02/basic/task-01/session-01",
+          "grade-1/term-1/english/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/english/unit-02/advanced/task-01/session-01",
+          "grade-1/term-1/english/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/english/unit-02/high/task-01/session-01",
+          "grade-1/term-1/english/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/english/unit-02/basic/task-01/session-01",
+          "title": "Face · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-1/english/unit-02/basic/task-02/session-01",
+          "title": "Face · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-1/english/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/english/unit-03/basic/task-01/session-01",
+          "grade-1/term-1/english/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/english/unit-03/advanced/task-01/session-01",
+          "grade-1/term-1/english/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/english/unit-03/high/task-01/session-01",
+          "grade-1/term-1/english/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/english/unit-03/basic/task-01/session-01",
+          "title": "Animals · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-1/english/unit-03/basic/task-02/session-01",
+          "title": "Animals · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-1/english/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/english/unit-04/basic/task-01/session-01",
+          "grade-1/term-1/english/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/english/unit-04/advanced/task-01/session-01",
+          "grade-1/term-1/english/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/english/unit-04/high/task-01/session-01",
+          "grade-1/term-1/english/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/english/unit-04/basic/task-01/session-01",
+          "title": "Numbers · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-1/english/unit-04/basic/task-02/session-01",
+          "title": "Numbers · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-1/english/review-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/english/review-01/basic/task-01/session-01",
+          "grade-1/term-1/english/review-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/english/review-01/advanced/task-01/session-01",
+          "grade-1/term-1/english/review-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/english/review-01/high/task-01/session-01",
+          "grade-1/term-1/english/review-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/english/review-01/basic/task-01/session-01",
+          "title": "复习一 · Units 1–3 · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-1/english/review-01/basic/task-02/session-01",
+          "title": "复习一 · Units 1–3 · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-1/english/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/english/unit-05/basic/task-01/session-01",
+          "grade-1/term-1/english/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/english/unit-05/advanced/task-01/session-01",
+          "grade-1/term-1/english/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/english/unit-05/high/task-01/session-01",
+          "grade-1/term-1/english/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/english/unit-05/basic/task-01/session-01",
+          "title": "Colours · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-1/english/unit-05/basic/task-02/session-01",
+          "title": "Colours · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-1/english/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/english/unit-06/basic/task-01/session-01",
+          "grade-1/term-1/english/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/english/unit-06/advanced/task-01/session-01",
+          "grade-1/term-1/english/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/english/unit-06/high/task-01/session-01",
+          "grade-1/term-1/english/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/english/unit-06/basic/task-01/session-01",
+          "title": "Fruit · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-1/english/unit-06/basic/task-02/session-01",
+          "title": "Fruit · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-1/english/review-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-1/english/review-02/basic/task-01/session-01",
+          "grade-1/term-1/english/review-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-1/english/review-02/advanced/task-01/session-01",
+          "grade-1/term-1/english/review-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-1/english/review-02/high/task-01/session-01",
+          "grade-1/term-1/english/review-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-1/english/review-02/basic/task-01/session-01",
+          "title": "复习二 · Units 4–6 · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-1/english/review-02/basic/task-02/session-01",
+          "title": "复习二 · Units 4–6 · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-2/chinese/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/chinese/unit-01/basic/task-01/session-01",
+          "grade-1/term-2/chinese/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/chinese/unit-01/advanced/task-01/session-01",
+          "grade-1/term-2/chinese/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/chinese/unit-01/high/task-01/session-01",
+          "grade-1/term-2/chinese/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/chinese/unit-01/basic/task-01/session-01",
+          "title": "主题组 01 · 春夏秋冬与识字 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-2/chinese/unit-01/basic/task-02/session-01",
+          "title": "主题组 01 · 春夏秋冬与识字 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-2/chinese/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/chinese/unit-02/basic/task-01/session-01",
+          "grade-1/term-2/chinese/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/chinese/unit-02/advanced/task-01/session-01",
+          "grade-1/term-2/chinese/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/chinese/unit-02/high/task-01/session-01",
+          "grade-1/term-2/chinese/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/chinese/unit-02/basic/task-01/session-01",
+          "title": "主题组 02 · 家庭与愿望 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-2/chinese/unit-02/basic/task-02/session-01",
+          "title": "主题组 02 · 家庭与愿望 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-2/chinese/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/chinese/unit-03/basic/task-01/session-01",
+          "grade-1/term-2/chinese/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/chinese/unit-03/advanced/task-01/session-01",
+          "grade-1/term-2/chinese/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/chinese/unit-03/high/task-01/session-01",
+          "grade-1/term-2/chinese/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/chinese/unit-03/basic/task-01/session-01",
+          "title": "主题组 03 · 友谊与游戏 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-2/chinese/unit-03/basic/task-02/session-01",
+          "title": "主题组 03 · 友谊与游戏 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-2/chinese/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/chinese/unit-04/basic/task-01/session-01",
+          "grade-1/term-2/chinese/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/chinese/unit-04/advanced/task-01/session-01",
+          "grade-1/term-2/chinese/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/chinese/unit-04/high/task-01/session-01",
+          "grade-1/term-2/chinese/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/chinese/unit-04/basic/task-01/session-01",
+          "title": "主题组 04 · 夜色与节日 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-2/chinese/unit-04/basic/task-02/session-01",
+          "title": "主题组 04 · 夜色与节日 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-2/chinese/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/chinese/unit-05/basic/task-01/session-01",
+          "grade-1/term-2/chinese/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/chinese/unit-05/advanced/task-01/session-01",
+          "grade-1/term-2/chinese/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/chinese/unit-05/high/task-01/session-01",
+          "grade-1/term-2/chinese/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/chinese/unit-05/basic/task-01/session-01",
+          "title": "主题组 05 · 动物与校园 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-2/chinese/unit-05/basic/task-02/session-01",
+          "title": "主题组 05 · 动物与校园 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-2/chinese/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/chinese/unit-06/basic/task-01/session-01",
+          "grade-1/term-2/chinese/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/chinese/unit-06/advanced/task-01/session-01",
+          "grade-1/term-2/chinese/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/chinese/unit-06/high/task-01/session-01",
+          "grade-1/term-2/chinese/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/chinese/unit-06/basic/task-01/session-01",
+          "title": "主题组 06 · 池塘与雨天 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-2/chinese/unit-06/basic/task-02/session-01",
+          "title": "主题组 06 · 池塘与雨天 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-2/chinese/unit-07": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/chinese/unit-07/basic/task-01/session-01",
+          "grade-1/term-2/chinese/unit-07/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/chinese/unit-07/advanced/task-01/session-01",
+          "grade-1/term-2/chinese/unit-07/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/chinese/unit-07/high/task-01/session-01",
+          "grade-1/term-2/chinese/unit-07/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/chinese/unit-07/basic/task-01/session-01",
+          "title": "主题组 07 · 生活习惯 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-2/chinese/unit-07/basic/task-02/session-01",
+          "title": "主题组 07 · 生活习惯 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-2/chinese/unit-08": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/chinese/unit-08/basic/task-01/session-01",
+          "grade-1/term-2/chinese/unit-08/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/chinese/unit-08/advanced/task-01/session-01",
+          "grade-1/term-2/chinese/unit-08/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/chinese/unit-08/high/task-01/session-01",
+          "grade-1/term-2/chinese/unit-08/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/chinese/unit-08/basic/task-01/session-01",
+          "title": "主题组 08 · 动物故事 · 词卡发现员"
+        },
+        {
+          "id": "grade-1/term-2/chinese/unit-08/basic/task-02/session-01",
+          "title": "主题组 08 · 动物故事 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-1/term-2/math/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/math/unit-01/basic/task-01/session-01",
+          "grade-1/term-2/math/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/math/unit-01/advanced/task-01/session-01",
+          "grade-1/term-2/math/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/math/unit-01/high/task-01/session-01",
+          "grade-1/term-2/math/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/math/unit-01/basic/task-01/session-01",
+          "title": "认识图形（二） · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-2/math/unit-01/basic/task-02/session-01",
+          "title": "认识图形（二） · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-2/math/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/math/unit-02/basic/task-01/session-01",
+          "grade-1/term-2/math/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/math/unit-02/advanced/task-01/session-01",
+          "grade-1/term-2/math/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/math/unit-02/high/task-01/session-01",
+          "grade-1/term-2/math/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/math/unit-02/basic/task-01/session-01",
+          "title": "20 以内的退位减法 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-2/math/unit-02/basic/task-02/session-01",
+          "title": "20 以内的退位减法 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-2/math/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/math/unit-03/basic/task-01/session-01",
+          "grade-1/term-2/math/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/math/unit-03/advanced/task-01/session-01",
+          "grade-1/term-2/math/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/math/unit-03/high/task-01/session-01",
+          "grade-1/term-2/math/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/math/unit-03/basic/task-01/session-01",
+          "title": "分类与整理 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-2/math/unit-03/basic/task-02/session-01",
+          "title": "分类与整理 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-2/math/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/math/unit-04/basic/task-01/session-01",
+          "grade-1/term-2/math/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/math/unit-04/advanced/task-01/session-01",
+          "grade-1/term-2/math/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/math/unit-04/high/task-01/session-01",
+          "grade-1/term-2/math/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/math/unit-04/basic/task-01/session-01",
+          "title": "100 以内数的认识 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-2/math/unit-04/basic/task-02/session-01",
+          "title": "100 以内数的认识 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-2/math/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/math/unit-05/basic/task-01/session-01",
+          "grade-1/term-2/math/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/math/unit-05/advanced/task-01/session-01",
+          "grade-1/term-2/math/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/math/unit-05/high/task-01/session-01",
+          "grade-1/term-2/math/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/math/unit-05/basic/task-01/session-01",
+          "title": "认识人民币 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-2/math/unit-05/basic/task-02/session-01",
+          "title": "认识人民币 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-2/math/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/math/unit-06/basic/task-01/session-01",
+          "grade-1/term-2/math/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/math/unit-06/advanced/task-01/session-01",
+          "grade-1/term-2/math/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/math/unit-06/high/task-01/session-01",
+          "grade-1/term-2/math/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/math/unit-06/basic/task-01/session-01",
+          "title": "100 以内的加法和减法（一） · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-2/math/unit-06/basic/task-02/session-01",
+          "title": "100 以内的加法和减法（一） · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-2/math/unit-07": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/math/unit-07/basic/task-01/session-01",
+          "grade-1/term-2/math/unit-07/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/math/unit-07/advanced/task-01/session-01",
+          "grade-1/term-2/math/unit-07/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/math/unit-07/high/task-01/session-01",
+          "grade-1/term-2/math/unit-07/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/math/unit-07/basic/task-01/session-01",
+          "title": "找规律 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-2/math/unit-07/basic/task-02/session-01",
+          "title": "找规律 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-2/math/unit-08": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/math/unit-08/basic/task-01/session-01",
+          "grade-1/term-2/math/unit-08/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/math/unit-08/advanced/task-01/session-01",
+          "grade-1/term-2/math/unit-08/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/math/unit-08/high/task-01/session-01",
+          "grade-1/term-2/math/unit-08/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/math/unit-08/basic/task-01/session-01",
+          "title": "总复习 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-2/math/unit-08/basic/task-02/session-01",
+          "title": "总复习 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-2/math/integrated-practice-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/math/integrated-practice-01/basic/task-01/session-01",
+          "grade-1/term-2/math/integrated-practice-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/math/integrated-practice-01/advanced/task-01/session-01",
+          "grade-1/term-2/math/integrated-practice-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/math/integrated-practice-01/high/task-01/session-01",
+          "grade-1/term-2/math/integrated-practice-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/math/integrated-practice-01/basic/task-01/session-01",
+          "title": "摆一摆，想一想 · 基础概念练习站"
+        },
+        {
+          "id": "grade-1/term-2/math/integrated-practice-01/basic/task-02/session-01",
+          "title": "摆一摆，想一想 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-1/term-2/english/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/english/unit-01/basic/task-01/session-01",
+          "grade-1/term-2/english/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/english/unit-01/advanced/task-01/session-01",
+          "grade-1/term-2/english/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/english/unit-01/high/task-01/session-01",
+          "grade-1/term-2/english/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/english/unit-01/basic/task-01/session-01",
+          "title": "Classroom · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-2/english/unit-01/basic/task-02/session-01",
+          "title": "Classroom · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-2/english/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/english/unit-02/basic/task-01/session-01",
+          "grade-1/term-2/english/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/english/unit-02/advanced/task-01/session-01",
+          "grade-1/term-2/english/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/english/unit-02/high/task-01/session-01",
+          "grade-1/term-2/english/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/english/unit-02/basic/task-01/session-01",
+          "title": "Room · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-2/english/unit-02/basic/task-02/session-01",
+          "title": "Room · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-2/english/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/english/unit-03/basic/task-01/session-01",
+          "grade-1/term-2/english/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/english/unit-03/advanced/task-01/session-01",
+          "grade-1/term-2/english/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/english/unit-03/high/task-01/session-01",
+          "grade-1/term-2/english/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/english/unit-03/basic/task-01/session-01",
+          "title": "Toys · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-2/english/unit-03/basic/task-02/session-01",
+          "title": "Toys · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-2/english/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/english/unit-04/basic/task-01/session-01",
+          "grade-1/term-2/english/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/english/unit-04/advanced/task-01/session-01",
+          "grade-1/term-2/english/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/english/unit-04/high/task-01/session-01",
+          "grade-1/term-2/english/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/english/unit-04/basic/task-01/session-01",
+          "title": "Food · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-2/english/unit-04/basic/task-02/session-01",
+          "title": "Food · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-2/english/review-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/english/review-01/basic/task-01/session-01",
+          "grade-1/term-2/english/review-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/english/review-01/advanced/task-01/session-01",
+          "grade-1/term-2/english/review-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/english/review-01/high/task-01/session-01",
+          "grade-1/term-2/english/review-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/english/review-01/basic/task-01/session-01",
+          "title": "复习一 · Units 1–3 · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-2/english/review-01/basic/task-02/session-01",
+          "title": "复习一 · Units 1–3 · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-2/english/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/english/unit-05/basic/task-01/session-01",
+          "grade-1/term-2/english/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/english/unit-05/advanced/task-01/session-01",
+          "grade-1/term-2/english/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/english/unit-05/high/task-01/session-01",
+          "grade-1/term-2/english/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/english/unit-05/basic/task-01/session-01",
+          "title": "Drink · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-2/english/unit-05/basic/task-02/session-01",
+          "title": "Drink · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-2/english/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/english/unit-06/basic/task-01/session-01",
+          "grade-1/term-2/english/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/english/unit-06/advanced/task-01/session-01",
+          "grade-1/term-2/english/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/english/unit-06/high/task-01/session-01",
+          "grade-1/term-2/english/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/english/unit-06/basic/task-01/session-01",
+          "title": "Clothes · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-2/english/unit-06/basic/task-02/session-01",
+          "title": "Clothes · 短句练习站"
+        }
+      ]
+    },
+    "grade-1/term-2/english/review-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-1/term-2/english/review-02/basic/task-01/session-01",
+          "grade-1/term-2/english/review-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-1/term-2/english/review-02/advanced/task-01/session-01",
+          "grade-1/term-2/english/review-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-1/term-2/english/review-02/high/task-01/session-01",
+          "grade-1/term-2/english/review-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-1/term-2/english/review-02/basic/task-01/session-01",
+          "title": "复习二 · Units 4–6 · 词汇认读小队"
+        },
+        {
+          "id": "grade-1/term-2/english/review-02/basic/task-02/session-01",
+          "title": "复习二 · Units 4–6 · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-1/chinese/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/chinese/unit-01/basic/task-01/session-01",
+          "grade-3/term-1/chinese/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/chinese/unit-01/advanced/task-01/session-01",
+          "grade-3/term-1/chinese/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/chinese/unit-01/high/task-01/session-01",
+          "grade-3/term-1/chinese/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/chinese/unit-01/basic/task-01/session-01",
+          "title": "校园生活 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-1/chinese/unit-01/basic/task-02/session-01",
+          "title": "校园生活 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-1/chinese/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/chinese/unit-02/basic/task-01/session-01",
+          "grade-3/term-1/chinese/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/chinese/unit-02/advanced/task-01/session-01",
+          "grade-3/term-1/chinese/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/chinese/unit-02/high/task-01/session-01",
+          "grade-3/term-1/chinese/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/chinese/unit-02/basic/task-01/session-01",
+          "title": "金秋与观察 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-1/chinese/unit-02/basic/task-02/session-01",
+          "title": "金秋与观察 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-1/chinese/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/chinese/unit-03/basic/task-01/session-01",
+          "grade-3/term-1/chinese/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/chinese/unit-03/advanced/task-01/session-01",
+          "grade-3/term-1/chinese/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/chinese/unit-03/high/task-01/session-01",
+          "grade-3/term-1/chinese/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/chinese/unit-03/basic/task-01/session-01",
+          "title": "童话与想象 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-1/chinese/unit-03/basic/task-02/session-01",
+          "title": "童话与想象 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-1/chinese/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/chinese/unit-04/basic/task-01/session-01",
+          "grade-3/term-1/chinese/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/chinese/unit-04/advanced/task-01/session-01",
+          "grade-3/term-1/chinese/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/chinese/unit-04/high/task-01/session-01",
+          "grade-3/term-1/chinese/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/chinese/unit-04/basic/task-01/session-01",
+          "title": "预测与续写 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-1/chinese/unit-04/basic/task-02/session-01",
+          "title": "预测与续写 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-1/chinese/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/chinese/unit-05/basic/task-01/session-01",
+          "grade-3/term-1/chinese/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/chinese/unit-05/advanced/task-01/session-01",
+          "grade-3/term-1/chinese/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/chinese/unit-05/high/task-01/session-01",
+          "grade-3/term-1/chinese/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/chinese/unit-05/basic/task-01/session-01",
+          "title": "自然观察记录 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-1/chinese/unit-05/basic/task-02/session-01",
+          "title": "自然观察记录 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-1/chinese/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/chinese/unit-06/basic/task-01/session-01",
+          "grade-3/term-1/chinese/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/chinese/unit-06/advanced/task-01/session-01",
+          "grade-3/term-1/chinese/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/chinese/unit-06/high/task-01/session-01",
+          "grade-3/term-1/chinese/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/chinese/unit-06/basic/task-01/session-01",
+          "title": "祖国山河 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-1/chinese/unit-06/basic/task-02/session-01",
+          "title": "祖国山河 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-1/chinese/unit-07": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/chinese/unit-07/basic/task-01/session-01",
+          "grade-3/term-1/chinese/unit-07/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/chinese/unit-07/advanced/task-01/session-01",
+          "grade-3/term-1/chinese/unit-07/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/chinese/unit-07/high/task-01/session-01",
+          "grade-3/term-1/chinese/unit-07/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/chinese/unit-07/basic/task-01/session-01",
+          "title": "自然声音与发现 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-1/chinese/unit-07/basic/task-02/session-01",
+          "title": "自然声音与发现 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-1/chinese/unit-08": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/chinese/unit-08/basic/task-01/session-01",
+          "grade-3/term-1/chinese/unit-08/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/chinese/unit-08/advanced/task-01/session-01",
+          "grade-3/term-1/chinese/unit-08/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/chinese/unit-08/high/task-01/session-01",
+          "grade-3/term-1/chinese/unit-08/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/chinese/unit-08/basic/task-01/session-01",
+          "title": "人物故事 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-1/chinese/unit-08/basic/task-02/session-01",
+          "title": "人物故事 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-01/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-01/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-01/high/task-01/session-01",
+          "grade-3/term-1/math/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-01/basic/task-01/session-01",
+          "title": "时、分、秒 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-01/basic/task-02/session-01",
+          "title": "时、分、秒 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-02/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-02/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-02/high/task-01/session-01",
+          "grade-3/term-1/math/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-02/basic/task-01/session-01",
+          "title": "万以内的加法和减法（一） · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-02/basic/task-02/session-01",
+          "title": "万以内的加法和减法（一） · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-03/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-03/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-03/high/task-01/session-01",
+          "grade-3/term-1/math/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-03/basic/task-01/session-01",
+          "title": "测量 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-03/basic/task-02/session-01",
+          "title": "测量 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-04/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-04/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-04/high/task-01/session-01",
+          "grade-3/term-1/math/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-04/basic/task-01/session-01",
+          "title": "万以内加减法（二） · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-04/basic/task-02/session-01",
+          "title": "万以内加减法（二） · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-05/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-05/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-05/high/task-01/session-01",
+          "grade-3/term-1/math/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-05/basic/task-01/session-01",
+          "title": "倍的认识 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-05/basic/task-02/session-01",
+          "title": "倍的认识 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-06/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-06/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-06/high/task-01/session-01",
+          "grade-3/term-1/math/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-06/basic/task-01/session-01",
+          "title": "多位数乘一位数 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-06/basic/task-02/session-01",
+          "title": "多位数乘一位数 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-07": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-07/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-07/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-07/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-07/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-07/high/task-01/session-01",
+          "grade-3/term-1/math/unit-07/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-07/basic/task-01/session-01",
+          "title": "长方形和正方形 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-07/basic/task-02/session-01",
+          "title": "长方形和正方形 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-08": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-08/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-08/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-08/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-08/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-08/high/task-01/session-01",
+          "grade-3/term-1/math/unit-08/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-08/basic/task-01/session-01",
+          "title": "分数的初步认识 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-08/basic/task-02/session-01",
+          "title": "分数的初步认识 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-09": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-09/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-09/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-09/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-09/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-09/high/task-01/session-01",
+          "grade-3/term-1/math/unit-09/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-09/basic/task-01/session-01",
+          "title": "数学广角——集合 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-09/basic/task-02/session-01",
+          "title": "数学广角——集合 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/unit-10": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/unit-10/basic/task-01/session-01",
+          "grade-3/term-1/math/unit-10/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/unit-10/advanced/task-01/session-01",
+          "grade-3/term-1/math/unit-10/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/unit-10/high/task-01/session-01",
+          "grade-3/term-1/math/unit-10/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/unit-10/basic/task-01/session-01",
+          "title": "总复习 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/unit-10/basic/task-02/session-01",
+          "title": "总复习 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/math/integrated-practice-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/math/integrated-practice-01/basic/task-01/session-01",
+          "grade-3/term-1/math/integrated-practice-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/math/integrated-practice-01/advanced/task-01/session-01",
+          "grade-3/term-1/math/integrated-practice-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/math/integrated-practice-01/high/task-01/session-01",
+          "grade-3/term-1/math/integrated-practice-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/math/integrated-practice-01/basic/task-01/session-01",
+          "title": "数字编码 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-1/math/integrated-practice-01/basic/task-02/session-01",
+          "title": "数字编码 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-1/english/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/english/unit-01/basic/task-01/session-01",
+          "grade-3/term-1/english/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/english/unit-01/advanced/task-01/session-01",
+          "grade-3/term-1/english/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/english/unit-01/high/task-01/session-01",
+          "grade-3/term-1/english/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/english/unit-01/basic/task-01/session-01",
+          "title": "Myself · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-1/english/unit-01/basic/task-02/session-01",
+          "title": "Myself · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-1/english/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/english/unit-02/basic/task-01/session-01",
+          "grade-3/term-1/english/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/english/unit-02/advanced/task-01/session-01",
+          "grade-3/term-1/english/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/english/unit-02/high/task-01/session-01",
+          "grade-3/term-1/english/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/english/unit-02/basic/task-01/session-01",
+          "title": "My Body · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-1/english/unit-02/basic/task-02/session-01",
+          "title": "My Body · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-1/english/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/english/unit-03/basic/task-01/session-01",
+          "grade-3/term-1/english/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/english/unit-03/advanced/task-01/session-01",
+          "grade-3/term-1/english/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/english/unit-03/high/task-01/session-01",
+          "grade-3/term-1/english/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/english/unit-03/basic/task-01/session-01",
+          "title": "Food · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-1/english/unit-03/basic/task-02/session-01",
+          "title": "Food · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-1/english/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/english/unit-04/basic/task-01/session-01",
+          "grade-3/term-1/english/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/english/unit-04/advanced/task-01/session-01",
+          "grade-3/term-1/english/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/english/unit-04/high/task-01/session-01",
+          "grade-3/term-1/english/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/english/unit-04/basic/task-01/session-01",
+          "title": "Pets · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-1/english/unit-04/basic/task-02/session-01",
+          "title": "Pets · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-1/english/review-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/english/review-01/basic/task-01/session-01",
+          "grade-3/term-1/english/review-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/english/review-01/advanced/task-01/session-01",
+          "grade-3/term-1/english/review-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/english/review-01/high/task-01/session-01",
+          "grade-3/term-1/english/review-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/english/review-01/basic/task-01/session-01",
+          "title": "复习一 · Units 1–3 · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-1/english/review-01/basic/task-02/session-01",
+          "title": "复习一 · Units 1–3 · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-1/english/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/english/unit-05/basic/task-01/session-01",
+          "grade-3/term-1/english/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/english/unit-05/advanced/task-01/session-01",
+          "grade-3/term-1/english/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/english/unit-05/high/task-01/session-01",
+          "grade-3/term-1/english/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/english/unit-05/basic/task-01/session-01",
+          "title": "Clothes · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-1/english/unit-05/basic/task-02/session-01",
+          "title": "Clothes · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-1/english/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/english/unit-06/basic/task-01/session-01",
+          "grade-3/term-1/english/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/english/unit-06/advanced/task-01/session-01",
+          "grade-3/term-1/english/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/english/unit-06/high/task-01/session-01",
+          "grade-3/term-1/english/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/english/unit-06/basic/task-01/session-01",
+          "title": "Birthdays · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-1/english/unit-06/basic/task-02/session-01",
+          "title": "Birthdays · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-1/english/review-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-1/english/review-02/basic/task-01/session-01",
+          "grade-3/term-1/english/review-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-1/english/review-02/advanced/task-01/session-01",
+          "grade-3/term-1/english/review-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-1/english/review-02/high/task-01/session-01",
+          "grade-3/term-1/english/review-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-1/english/review-02/basic/task-01/session-01",
+          "title": "复习二 · Units 4–6 · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-1/english/review-02/basic/task-02/session-01",
+          "title": "复习二 · Units 4–6 · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-2/chinese/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/chinese/unit-01/basic/task-01/session-01",
+          "grade-3/term-2/chinese/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/chinese/unit-01/advanced/task-01/session-01",
+          "grade-3/term-2/chinese/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/chinese/unit-01/high/task-01/session-01",
+          "grade-3/term-2/chinese/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/chinese/unit-01/basic/task-01/session-01",
+          "title": "春日与植物 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-2/chinese/unit-01/basic/task-02/session-01",
+          "title": "春日与植物 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-2/chinese/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/chinese/unit-02/basic/task-01/session-01",
+          "grade-3/term-2/chinese/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/chinese/unit-02/advanced/task-01/session-01",
+          "grade-3/term-2/chinese/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/chinese/unit-02/high/task-01/session-01",
+          "grade-3/term-2/chinese/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/chinese/unit-02/basic/task-01/session-01",
+          "title": "寓言与判断 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-2/chinese/unit-02/basic/task-02/session-01",
+          "title": "寓言与判断 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-2/chinese/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/chinese/unit-03/basic/task-01/session-01",
+          "grade-3/term-2/chinese/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/chinese/unit-03/advanced/task-01/session-01",
+          "grade-3/term-2/chinese/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/chinese/unit-03/high/task-01/session-01",
+          "grade-3/term-2/chinese/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/chinese/unit-03/basic/task-01/session-01",
+          "title": "传统节日与桥梁 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-2/chinese/unit-03/basic/task-02/session-01",
+          "title": "传统节日与桥梁 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-2/chinese/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/chinese/unit-04/basic/task-01/session-01",
+          "grade-3/term-2/chinese/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/chinese/unit-04/advanced/task-01/session-01",
+          "grade-3/term-2/chinese/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/chinese/unit-04/high/task-01/session-01",
+          "grade-3/term-2/chinese/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/chinese/unit-04/basic/task-01/session-01",
+          "title": "观察与实验 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-2/chinese/unit-04/basic/task-02/session-01",
+          "title": "观察与实验 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-2/chinese/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/chinese/unit-05/basic/task-01/session-01",
+          "grade-3/term-2/chinese/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/chinese/unit-05/advanced/task-01/session-01",
+          "grade-3/term-2/chinese/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/chinese/unit-05/high/task-01/session-01",
+          "grade-3/term-2/chinese/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/chinese/unit-05/basic/task-01/session-01",
+          "title": "奇妙想象 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-2/chinese/unit-05/basic/task-02/session-01",
+          "title": "奇妙想象 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-2/chinese/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/chinese/unit-06/basic/task-01/session-01",
+          "grade-3/term-2/chinese/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/chinese/unit-06/advanced/task-01/session-01",
+          "grade-3/term-2/chinese/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/chinese/unit-06/high/task-01/session-01",
+          "grade-3/term-2/chinese/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/chinese/unit-06/basic/task-01/session-01",
+          "title": "童年与诚信 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-2/chinese/unit-06/basic/task-02/session-01",
+          "title": "童年与诚信 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-2/chinese/unit-07": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/chinese/unit-07/basic/task-01/session-01",
+          "grade-3/term-2/chinese/unit-07/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/chinese/unit-07/advanced/task-01/session-01",
+          "grade-3/term-2/chinese/unit-07/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/chinese/unit-07/high/task-01/session-01",
+          "grade-3/term-2/chinese/unit-07/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/chinese/unit-07/basic/task-01/session-01",
+          "title": "自然世界 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-2/chinese/unit-07/basic/task-02/session-01",
+          "title": "自然世界 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-2/chinese/unit-08": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/chinese/unit-08/basic/task-01/session-01",
+          "grade-3/term-2/chinese/unit-08/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/chinese/unit-08/advanced/task-01/session-01",
+          "grade-3/term-2/chinese/unit-08/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/chinese/unit-08/high/task-01/session-01",
+          "grade-3/term-2/chinese/unit-08/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/chinese/unit-08/basic/task-01/session-01",
+          "title": "故事讲述 · 词卡发现员"
+        },
+        {
+          "id": "grade-3/term-2/chinese/unit-08/basic/task-02/session-01",
+          "title": "故事讲述 · 主题表达练习场"
+        }
+      ]
+    },
+    "grade-3/term-2/math/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/unit-01/basic/task-01/session-01",
+          "grade-3/term-2/math/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/unit-01/advanced/task-01/session-01",
+          "grade-3/term-2/math/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/unit-01/high/task-01/session-01",
+          "grade-3/term-2/math/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/unit-01/basic/task-01/session-01",
+          "title": "位置与方向（一） · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/unit-01/basic/task-02/session-01",
+          "title": "位置与方向（一） · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/unit-02/basic/task-01/session-01",
+          "grade-3/term-2/math/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/unit-02/advanced/task-01/session-01",
+          "grade-3/term-2/math/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/unit-02/high/task-01/session-01",
+          "grade-3/term-2/math/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/unit-02/basic/task-01/session-01",
+          "title": "除数是一位数的除法 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/unit-02/basic/task-02/session-01",
+          "title": "除数是一位数的除法 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/unit-03/basic/task-01/session-01",
+          "grade-3/term-2/math/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/unit-03/advanced/task-01/session-01",
+          "grade-3/term-2/math/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/unit-03/high/task-01/session-01",
+          "grade-3/term-2/math/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/unit-03/basic/task-01/session-01",
+          "title": "复式统计表 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/unit-03/basic/task-02/session-01",
+          "title": "复式统计表 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/unit-04/basic/task-01/session-01",
+          "grade-3/term-2/math/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/unit-04/advanced/task-01/session-01",
+          "grade-3/term-2/math/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/unit-04/high/task-01/session-01",
+          "grade-3/term-2/math/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/unit-04/basic/task-01/session-01",
+          "title": "两位数乘两位数 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/unit-04/basic/task-02/session-01",
+          "title": "两位数乘两位数 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/unit-05/basic/task-01/session-01",
+          "grade-3/term-2/math/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/unit-05/advanced/task-01/session-01",
+          "grade-3/term-2/math/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/unit-05/high/task-01/session-01",
+          "grade-3/term-2/math/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/unit-05/basic/task-01/session-01",
+          "title": "面积 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/unit-05/basic/task-02/session-01",
+          "title": "面积 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/unit-06/basic/task-01/session-01",
+          "grade-3/term-2/math/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/unit-06/advanced/task-01/session-01",
+          "grade-3/term-2/math/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/unit-06/high/task-01/session-01",
+          "grade-3/term-2/math/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/unit-06/basic/task-01/session-01",
+          "title": "年、月、日 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/unit-06/basic/task-02/session-01",
+          "title": "年、月、日 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/unit-07": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/unit-07/basic/task-01/session-01",
+          "grade-3/term-2/math/unit-07/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/unit-07/advanced/task-01/session-01",
+          "grade-3/term-2/math/unit-07/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/unit-07/high/task-01/session-01",
+          "grade-3/term-2/math/unit-07/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/unit-07/basic/task-01/session-01",
+          "title": "小数的初步认识 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/unit-07/basic/task-02/session-01",
+          "title": "小数的初步认识 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/unit-08": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/unit-08/basic/task-01/session-01",
+          "grade-3/term-2/math/unit-08/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/unit-08/advanced/task-01/session-01",
+          "grade-3/term-2/math/unit-08/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/unit-08/high/task-01/session-01",
+          "grade-3/term-2/math/unit-08/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/unit-08/basic/task-01/session-01",
+          "title": "数学广角——搭配（二） · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/unit-08/basic/task-02/session-01",
+          "title": "数学广角——搭配（二） · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/unit-09": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/unit-09/basic/task-01/session-01",
+          "grade-3/term-2/math/unit-09/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/unit-09/advanced/task-01/session-01",
+          "grade-3/term-2/math/unit-09/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/unit-09/high/task-01/session-01",
+          "grade-3/term-2/math/unit-09/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/unit-09/basic/task-01/session-01",
+          "title": "总复习 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/unit-09/basic/task-02/session-01",
+          "title": "总复习 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/integrated-practice-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/integrated-practice-01/basic/task-01/session-01",
+          "grade-3/term-2/math/integrated-practice-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/integrated-practice-01/advanced/task-01/session-01",
+          "grade-3/term-2/math/integrated-practice-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/integrated-practice-01/high/task-01/session-01",
+          "grade-3/term-2/math/integrated-practice-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/integrated-practice-01/basic/task-01/session-01",
+          "title": "制作活动日历 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/integrated-practice-01/basic/task-02/session-01",
+          "title": "制作活动日历 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/math/integrated-practice-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/math/integrated-practice-02/basic/task-01/session-01",
+          "grade-3/term-2/math/integrated-practice-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/math/integrated-practice-02/advanced/task-01/session-01",
+          "grade-3/term-2/math/integrated-practice-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/math/integrated-practice-02/high/task-01/session-01",
+          "grade-3/term-2/math/integrated-practice-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/math/integrated-practice-02/basic/task-01/session-01",
+          "title": "我们的校园 · 基础概念练习站"
+        },
+        {
+          "id": "grade-3/term-2/math/integrated-practice-02/basic/task-02/session-01",
+          "title": "我们的校园 · 一步应用小队"
+        }
+      ]
+    },
+    "grade-3/term-2/english/unit-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/english/unit-01/basic/task-01/session-01",
+          "grade-3/term-2/english/unit-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/english/unit-01/advanced/task-01/session-01",
+          "grade-3/term-2/english/unit-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/english/unit-01/high/task-01/session-01",
+          "grade-3/term-2/english/unit-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/english/unit-01/basic/task-01/session-01",
+          "title": "School Subjects · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-2/english/unit-01/basic/task-02/session-01",
+          "title": "School Subjects · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-2/english/unit-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/english/unit-02/basic/task-01/session-01",
+          "grade-3/term-2/english/unit-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/english/unit-02/advanced/task-01/session-01",
+          "grade-3/term-2/english/unit-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/english/unit-02/high/task-01/session-01",
+          "grade-3/term-2/english/unit-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/english/unit-02/basic/task-01/session-01",
+          "title": "My School · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-2/english/unit-02/basic/task-02/session-01",
+          "title": "My School · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-2/english/unit-03": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/english/unit-03/basic/task-01/session-01",
+          "grade-3/term-2/english/unit-03/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/english/unit-03/advanced/task-01/session-01",
+          "grade-3/term-2/english/unit-03/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/english/unit-03/high/task-01/session-01",
+          "grade-3/term-2/english/unit-03/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/english/unit-03/basic/task-01/session-01",
+          "title": "After School Activities · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-2/english/unit-03/basic/task-02/session-01",
+          "title": "After School Activities · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-2/english/unit-04": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/english/unit-04/basic/task-01/session-01",
+          "grade-3/term-2/english/unit-04/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/english/unit-04/advanced/task-01/session-01",
+          "grade-3/term-2/english/unit-04/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/english/unit-04/high/task-01/session-01",
+          "grade-3/term-2/english/unit-04/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/english/unit-04/basic/task-01/session-01",
+          "title": "My Family · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-2/english/unit-04/basic/task-02/session-01",
+          "title": "My Family · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-2/english/review-01": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/english/review-01/basic/task-01/session-01",
+          "grade-3/term-2/english/review-01/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/english/review-01/advanced/task-01/session-01",
+          "grade-3/term-2/english/review-01/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/english/review-01/high/task-01/session-01",
+          "grade-3/term-2/english/review-01/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/english/review-01/basic/task-01/session-01",
+          "title": "复习一 · Units 1–3 · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-2/english/review-01/basic/task-02/session-01",
+          "title": "复习一 · Units 1–3 · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-2/english/unit-05": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/english/unit-05/basic/task-01/session-01",
+          "grade-3/term-2/english/unit-05/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/english/unit-05/advanced/task-01/session-01",
+          "grade-3/term-2/english/unit-05/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/english/unit-05/high/task-01/session-01",
+          "grade-3/term-2/english/unit-05/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/english/unit-05/basic/task-01/session-01",
+          "title": "Family Activities · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-2/english/unit-05/basic/task-02/session-01",
+          "title": "Family Activities · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-2/english/unit-06": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/english/unit-06/basic/task-01/session-01",
+          "grade-3/term-2/english/unit-06/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/english/unit-06/advanced/task-01/session-01",
+          "grade-3/term-2/english/unit-06/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/english/unit-06/high/task-01/session-01",
+          "grade-3/term-2/english/unit-06/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/english/unit-06/basic/task-01/session-01",
+          "title": "My Home · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-2/english/unit-06/basic/task-02/session-01",
+          "title": "My Home · 短句练习站"
+        }
+      ]
+    },
+    "grade-3/term-2/english/review-02": {
+      "sessionIds": {
+        "basic": [
+          "grade-3/term-2/english/review-02/basic/task-01/session-01",
+          "grade-3/term-2/english/review-02/basic/task-02/session-01"
+        ],
+        "advanced": [
+          "grade-3/term-2/english/review-02/advanced/task-01/session-01",
+          "grade-3/term-2/english/review-02/advanced/task-02/session-01"
+        ],
+        "high": [
+          "grade-3/term-2/english/review-02/high/task-01/session-01",
+          "grade-3/term-2/english/review-02/high/task-02/session-01"
+        ]
+      },
+      "basicSessions": [
+        {
+          "id": "grade-3/term-2/english/review-02/basic/task-01/session-01",
+          "title": "复习二 · Units 4–6 · 词汇认读小队"
+        },
+        {
+          "id": "grade-3/term-2/english/review-02/basic/task-02/session-01",
+          "title": "复习二 · Units 4–6 · 短句练习站"
+        }
+      ]
+    },
     "grade-2/term-1/chinese/unit-01": {
       "sessionIds": {
         "basic": [

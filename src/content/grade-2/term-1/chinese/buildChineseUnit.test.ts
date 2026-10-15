@@ -52,6 +52,22 @@ describe('buildChineseUnit', () => {
       .toBe('grade-2/term-2/chinese/unit-01/basic/task-01/session-01');
   });
 
+  it('buildsCanonicalIdsForGradeOneAndThreeWithoutChangingGradeTwoDefaults', () => {
+    const make = (grade: 1 | 3) => buildChineseUnit({
+      grade,
+      term: 2,
+      formalUnitNumber: 1,
+      title: '主题单元',
+      sourceTopics: ['识字与表达'],
+      basicTasks: [task('认识主题', 1), task('表达主题', 2)],
+      advancedTasks: [task('应用线索', 1), task('比较线索', 2)],
+      highTasks: [task('设计表达', 1), task('检查表达', 2)],
+    });
+
+    expect(make(1)).toMatchObject({ id: 'grade-1/term-2/chinese/unit-01', textbookEditionId: 'grade-1/term-2/chinese' });
+    expect(make(3)).toMatchObject({ id: 'grade-3/term-2/chinese/unit-01', textbookEditionId: 'grade-3/term-2/chinese' });
+  });
+
   it('buildsCanonicalThreeTierTasksWithEightTypedActivities', () => {
     const unit = buildChineseUnit({
       formalUnitNumber: 3,

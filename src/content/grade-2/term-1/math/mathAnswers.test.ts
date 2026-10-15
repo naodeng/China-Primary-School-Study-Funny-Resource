@@ -2,13 +2,6 @@ import { describe, expect, it } from 'vitest';
 import { curriculum } from '../../../curriculum';
 import type { CurriculumUnit } from '../../../types';
 
-const mathUnitKeys = [
-  ...Array.from({ length: 9 }, (_, index) => `grade-2/term-1/math/unit-${String(index + 1).padStart(2, '0')}`),
-  'grade-2/term-1/math/integrated-practice-01',
-  ...Array.from({ length: 10 }, (_, index) => `grade-2/term-2/math/unit-${String(index + 1).padStart(2, '0')}`),
-  'grade-2/term-2/math/integrated-practice-01',
-];
-
 function evaluateArithmeticExpression(expression: string): number {
   const normalized = expression.replace(/\s+/g, '');
   const tokens = normalized.match(/\d+|[()+\-×÷]/g) ?? [];
@@ -53,14 +46,19 @@ function evaluateArithmeticExpression(expression: string): number {
 }
 
 function registeredMathUnits(): Array<[string, CurriculumUnit]> {
-  return mathUnitKeys.flatMap((key) => {
-    const unit = curriculum.units[key];
-    expect(unit, `缺少课程数据：${key}`).toBeDefined();
-    return unit ? [[key, unit]] : [];
-  });
+  return Object.entries(curriculum.units).filter(([, unit]) => unit.subject === 'math');
 }
 
-describe('grade 2 math answers', () => {
+function activitiesForUnit(unitKey: string) {
+  const unit = curriculum.units[unitKey];
+  if (!unit) throw new Error(`缺少课程：${unitKey}`);
+  return Object.values(unit.difficultyTracks)
+    .flatMap(({ tasks }) => tasks)
+    .flatMap(({ sessions }) => sessions)
+    .flatMap(({ activities }) => activities);
+}
+
+describe('registered math answers', () => {
   it('computes every arithmetic answer from its written expression', () => {
     const activities = registeredMathUnits().flatMap(([, unit]) => Object.values(unit.difficultyTracks)
       .flatMap(({ tasks }) => tasks.flatMap(({ sessions }) => sessions.flatMap(({ activities: sessionActivities }) => sessionActivities))))
@@ -86,6 +84,70 @@ describe('grade 2 math answers', () => {
           }
         }
       }
+    }
+  });
+
+  it('keeps grade-one term-two addition and subtraction within the taught no-carry range', () => {
+    const unitKeys = [
+      'grade-1/term-2/math/unit-06',
+      'grade-1/term-2/math/unit-08',
+    ];
+    const arithmeticQuestions = unitKeys.flatMap(activitiesForUnit)
+      .filter((activity) => activity.kind === 'arithmetic');
+
+    expect(arithmeticQuestions.length).toBeGreaterThan(0);
+    for (const question of arithmeticQuestions) {
+      if (question.kind !== 'arithmetic') continue;
+      const match = question.expression.match(/^(\d+) ([+-]) (\d+)$/);
+      expect(match, question.expression).not.toBeNull();
+      const left = Number(match?.[1]);
+      const operator = match?.[2];
+      const right = Number(match?.[3]);
+
+      expect(left, question.expression).toBeGreaterThanOrEqual(10);
+      expect(left, question.expression).toBeLessThan(100);
+      if (operator === '+') {
+        const isSingleDigit = right < 10;
+        const isMultipleOfTen = right >= 10 && right % 10 === 0;
+        expect(isSingleDigit || isMultipleOfTen, question.expression).toBe(true);
+        if (isSingleDigit) expect((left % 10) + right, question.expression).toBeLessThan(10);
+        expect(left + right, question.expression).toBeLessThanOrEqual(100);
+      } else {
+        const isSingleDigit = right < 10;
+        const isMultipleOfTen = right >= 10 && right % 10 === 0;
+        expect(isSingleDigit || isMultipleOfTen, question.expression).toBe(true);
+        if (isSingleDigit) expect(left % 10, question.expression).toBeGreaterThanOrEqual(right);
+        if (isMultipleOfTen) expect(left % 10, question.expression).toBe(0);
+        expect(left, question.expression).toBeGreaterThanOrEqual(right);
+      }
+    }
+  });
+
+  it('uses numeric fields throughout the grade-three number-coding match question', () => {
+    const matches = activitiesForUnit('grade-3/term-1/math/integrated-practice-01')
+      .filter((activity) => activity.kind === 'match');
+    const codingMatch = matches.find((activity) => activity.kind === 'match' && activity.prompt.includes('编码中的部分'));
+
+    expect(codingMatch, 'number-coding match question').toBeDefined();
+    if (codingMatch?.kind !== 'match') return;
+    expect(codingMatch.pairs.some(({ left, right }) => left === '编号开头的数字' && right === '物品类别')).toBe(true);
+    expect(JSON.stringify(codingMatch.pairs)).not.toContain('字母');
+  });
+
+  it.each([
+    {
+      unitKey: 'grade-3/term-1/math/unit-10',
+      topics: ['分钟', '进位', '毫米', '×', '周长', '分之一', '集合', '倍'],
+    },
+    {
+      unitKey: 'grade-3/term-2/math/unit-09',
+      topics: ['方向', '÷', '一班', '×', '面积', '月', '0.', '搭配'],
+    },
+  ])('reviews the full grade-three semester topic set in %s', ({ unitKey, topics }) => {
+    const serializedActivities = JSON.stringify(activitiesForUnit(unitKey));
+
+    for (const topic of topics) {
+      expect(serializedActivities, `${unitKey} should review ${topic}`).toContain(topic);
     }
   });
 });

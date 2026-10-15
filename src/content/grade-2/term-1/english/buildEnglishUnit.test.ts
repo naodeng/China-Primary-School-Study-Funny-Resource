@@ -50,4 +50,22 @@ describe('buildEnglishUnit', () => {
     expectTwoTasks(unit.difficultyTracks.advanced.tasks, unit.id, 'advanced', ['听线索找家人', '用完整句子介绍']);
     expectTwoTasks(unit.difficultyTracks.high.tasks, unit.id, 'high', ['设计家庭介绍卡', '连贯介绍家庭成员']);
   });
+
+  it('buildsCanonicalIdsForGradeOneAndThree', () => {
+    for (const grade of [1, 3] as const) {
+      const unit = buildEnglishUnit({
+        grade,
+        term: 2,
+        formalUnitNumber: 1,
+        entryId: 'unit-01',
+        title: 'English theme',
+        sourceTopics: ['Vocabulary'],
+        basicTasks: [task('Recognize', 1), task('Introduce', 2)],
+        advancedTasks: [task('Apply', 1), task('Compare', 2)],
+        highTasks: [task('Plan', 1), task('Review', 2)],
+      });
+      expect(unit.id).toBe(`grade-${grade}/term-2/english/unit-01`);
+      expect(unit.textbookEditionId).toBe(`grade-${grade}/term-2/english`);
+    }
+  });
 });

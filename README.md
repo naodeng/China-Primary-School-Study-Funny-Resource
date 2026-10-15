@@ -30,16 +30,13 @@ npm run preview
 
 ## 当前课程范围与难度
 
-目前已登记二年级上下学期语文、数学和英语的 53 个可玩条目：47 个有编号的课程条目、4 个英语复习站和 2 个数学综合实践。
+目前已登记一至三年级上下学期语文、数学和英语的 158 个可玩条目：一年级 51 个、二年级 53 个、三年级 54 个。科目合计为语文 48 个、数学 62 个、英语 48 个；具体分类以课程注册表与逐册教材清单为准。一年级语文的部分主题分组是内部课程条目，不对应教材正式编号单元。
 
-| 学期 | 学科 | 已登记内容 |
-| --- | --- | --- |
-| 二年级上学期 | 语文 | 8 个有编号条目 |
-| 二年级上学期 | 数学 | 9 个有编号条目（含总复习）、1 个综合实践 |
-| 二年级上学期 | 英语 | 6 个 Unit、2 个 Revision |
-| 二年级下学期 | 语文 | 8 个有编号条目 |
-| 二年级下学期 | 数学 | 10 个有编号条目（含总复习）、1 个综合实践 |
-| 二年级下学期 | 英语 | 6 个 Unit、2 个 Revision |
+| 年级 | 上学期 | 下学期 | 合计 |
+| --- | ---: | ---: | ---: |
+| 一年级 | 26 个 | 25 个 | 51 个 |
+| 二年级 | 26 个 | 27 个 | 53 个 |
+| 三年级 | 27 个 | 27 个 | 54 个 |
 
 每个可玩条目提供三个难度：基础版至少 2 个按知识目标拆分的任务，进阶版和高阶版各 2 个不同任务。每个任务约 20 分钟、恰好 8 道题；学习进度和偏好只保存在当前浏览器。基础练习帮助掌握单个知识点，进阶练习迁移或组合已学知识，高阶练习在已学范围内进行多步推理与策略选择。
 
@@ -53,18 +50,18 @@ npm run preview
 src/content/
 ├── curriculum.ts
 ├── textbooks.ts
-└── grade-2/
-    ├── term-1/{chinese,math,english}/
-    └── term-2/{chinese,math,english}/
+├── grade-1/term-{1|2}/{chinese,math,english}/
+├── grade-2/term-{1|2}/{chinese,math,english}/
+└── grade-3/term-{1|2}/{chinese,math,english}/
 ```
 
 课程 ID、任务、场次、题目 ID、注册表、难度和新增课程检查步骤见[课程目录与内容编写规范](docs/curriculum/authoring-standard.md)。主要页面、路由和进度逻辑分别位于 `src/components/`、`src/app/` 与 `src/storage/`。学习星图按一至六年级上下学期规划 12 个星区；只依据已核实课程目录生成学习节点和头衔进度。
 
 ## 教材来源与题目审校
 
-课程知识按册次优先使用可完整核实的人教社公开最新版；找不到完整新版学生书或目录时，使用用户确认的 [TapXWorld/ChinaTextbook 固定快照](https://github.com/TapXWorld/ChinaTextbook/tree/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7)，并在元数据中标记实际来源和回退原因。TapX 回退版本不称为人教社最新版；同一册不混用版次。来源与目录依据见[二年级教材清单](docs/curriculum/grade-2-textbook-inventory.md)。
+课程知识按册次优先使用可完整核实的人教社公开最新版；找不到完整新版学生书或目录时，使用用户确认的 [TapXWorld/ChinaTextbook 固定快照](https://github.com/TapXWorld/ChinaTextbook/tree/5a80345f2043ba6f8db8d7be9cf3db82725ff1f7)，并在元数据中标记实际来源和回退原因。TapX 回退版本不称为人教社最新版；同一册不混用版次。来源与目录依据见[一年级和三年级教材清单](docs/curriculum/grade-1-and-3-textbook-inventory.md)及[二年级教材清单](docs/curriculum/grade-2-textbook-inventory.md)。
 
-题目、提示、讲解和图形表达均为原创。所有基础、进阶和高阶旧题及新增题均需核对答案、表达清晰度、年龄适配、教材主题和难度归属；问题修复须在[逐题审校台账](docs/curriculum/grade-2-question-review.tsv)记录题目 ID 与原因。
+题目、提示、讲解和图形表达均为原创。所有基础、进阶和高阶旧题及新增题均需核对答案、表达清晰度、年龄适配、教材主题和难度归属；修复记录分别见[一年级和三年级逐题审校台账](docs/curriculum/grade-1-and-3-question-review.tsv)和[二年级逐题审校台账](docs/curriculum/grade-2-question-review.tsv)。
 
 ## 测试与质量检查
 

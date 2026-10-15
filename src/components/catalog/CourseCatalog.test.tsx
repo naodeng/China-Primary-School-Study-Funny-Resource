@@ -23,7 +23,7 @@ describe('CourseCatalog', () => {
     renderCatalog();
 
     const route = screen.getByText('当前探索航线').parentElement?.parentElement;
-    expect(route).toHaveTextContent('二年级');
+    expect(route).toHaveTextContent('1年级');
     expect(route).toHaveTextContent('上学期');
     expect(route).toHaveTextContent('语文');
     expect(route).toHaveTextContent('人教版');
@@ -39,7 +39,7 @@ describe('CourseCatalog', () => {
   it('offersRegistryDrivenGradeAndTermControls', () => {
     renderCatalog();
 
-    expect(screen.getByRole('combobox', { name: '年级' })).toHaveTextContent('二年级');
+    expect(screen.getByRole('combobox', { name: '年级' })).toHaveTextContent('1年级');
     expect(screen.getByRole('combobox', { name: '学期' })).toHaveTextContent('上学期');
     expect(screen.getByRole('button', { name: '语文' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '数学' })).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('CourseCatalog', () => {
     expect(onNavigate).not.toHaveBeenCalled();
   });
 
-  it('opensAllVerifiedSecondTermMathEntries', async () => {
+  it('opensAllVerifiedGradeOneSecondTermMathEntries', async () => {
     const user = userEvent.setup();
     renderCatalog();
 
@@ -68,9 +68,9 @@ describe('CourseCatalog', () => {
     await user.click(await screen.findByRole('option', { name: '下学期' }));
     await user.click(screen.getByRole('button', { name: '数学' }));
 
-    expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(11);
-    expect(screen.getByText('第十单元 · 总复习')).toBeInTheDocument();
-    expect(screen.getByText('综合实践 · 小小设计师')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(9);
+    expect(screen.getByText('第八单元 · 总复习')).toBeInTheDocument();
+    expect(screen.getByText('综合实践 · 摆一摆，想一想')).toBeInTheDocument();
   });
 
   it('showsTheSchoolOfferingNoticeForPreparatoryEnglish', async () => {
@@ -96,6 +96,6 @@ describe('CourseCatalog', () => {
     expect(screen.getByText('英语预备级是否属于学校本学期实际开设课程，请以学校安排为准。')).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /进入单元/ })).toHaveLength(8);
     expect(screen.getAllByText('复习站')).toHaveLength(2);
-    expect(screen.getByText('第一单元 · Playtime')).toBeInTheDocument();
+    expect(screen.getByText('第一单元 · Classroom')).toBeInTheDocument();
   });
 });

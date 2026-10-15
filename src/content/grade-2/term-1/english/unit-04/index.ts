@@ -74,7 +74,7 @@ const placeHelpers = lessonProfile(
     { label: 'supermarket', categoryIndex: 0 }, { label: 'bookshop', categoryIndex: 0 },
     { label: 'hospital', categoryIndex: 1 }, { label: 'school', categoryIndex: 1 },
   ],
-  { prompt: '把词卡排成“他正要去超市”。', items: ['the', 'supermarket', 'He', 'to', 'going', '.', 'is'], correctOrderIndices: [2, 6, 5, 3, 0, 1, 4] },
+  { prompt: '把词卡排成“他正要去超市”。', items: ['the', 'supermarket', 'He', 'to', 'going', '.', 'is'], correctOrderIndices: [2, 6, 4, 3, 0, 1, 5] },
 );
 
 const purposeAndPlaces = lessonProfile(

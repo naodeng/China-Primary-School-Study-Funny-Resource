@@ -1,6 +1,6 @@
-#root { min-height: 100vh; }
-.catalog-page, .unit-page, .route-message-page, .achievement-page { min-height: 100vh; padding: 28px 24px 56px; background: radial-gradient(circle at 12% 6%, rgba(255,255,255,.9), transparent 26rem), linear-gradient(145deg, #fff9ec 0%, #f2f8eb 58%, #eaf3ff 100%); }
-.catalog-shell { width: min(100%, 1120px); margin: 0 auto; }
+#root { min-height: 100vh; min-height: 100dvh; }
+.catalog-page, .unit-page, .route-message-page, .achievement-page { min-height: 100vh; min-height: 100dvh; padding: 28px 24px 56px; background: radial-gradient(circle at 12% 6%, rgba(255,255,255,.9), transparent 26rem), linear-gradient(145deg, #fff9ec 0%, #f2f8eb 58%, #eaf3ff 100%); }
+.catalog-shell { width: min(100%, var(--island-content-width, 1120px)); margin: 0 auto; }
 .course-breadcrumbs { margin: 4px 0 24px; color: #758198; font-size: 14px; }
 .course-breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
 .course-breadcrumbs li { display: flex; align-items: center; gap: 8px; }
@@ -73,6 +73,9 @@
 .difficulty-track-heading > div > p:last-child { margin: 8px 0 0; color: #65758a; line-height: 1.6; }
 .difficulty-task-count { flex: none; padding: 8px 12px; border-radius: 999px; color: #416c5b; background: #e4f3e5; font-size: 13px; font-weight: 800; }
 .task-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (min-width: 701px) {
+  .task-grid:not(.is-single) > :last-child:nth-child(odd) { grid-column: 1 / -1; width: calc((100% - 16px) / 2); justify-self: center; }
+}
 .task-card { min-height: 220px; display: flex; flex-direction: column; padding: 22px; border: 1px solid rgba(65, 82, 109, .1); border-radius: 22px; }
 .task-card h3 { margin: 13px 0 8px; color: #2b3a50; font-size: 21px; }
 .task-card > p { flex: 1; margin: 0 0 12px; color: #66748a; line-height: 1.65; }
@@ -82,6 +85,9 @@
 .route-message-page .route-message-card { max-width: 720px; margin: 60px auto; padding: clamp(28px, 6vw, 56px); border-radius: 30px; }
 .route-message-card h1 { font-size: clamp(30px, 5vw, 46px); }
 .route-message-card .animal-button { margin-top: 16px; }
+.app-frame > main.route-message-page--not-found { display: flex; min-height: 0; flex: 1 0 0; }
+.app-frame > main.route-message-page--not-found > .catalog-shell { display: flex; flex: 1; flex-direction: column; }
+.app-frame > main.route-message-page--not-found .route-message-card { margin: auto; }
 :where(a, button):focus-visible { outline: 3px solid #276b57; outline-offset: 3px; }
 @media (max-width: 700px) {
   .catalog-page, .unit-page, .route-message-page, .achievement-page { padding: 18px 14px 42px; }
@@ -327,7 +333,7 @@
 .achievement-summary-next { display: grid; gap: 4px; max-width: 470px; margin-top: 7px; }
 .achievement-summary-next-label { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3px 8px; color: var(--animal-text-color-secondary); font-size: 10px; font-weight: 800; }
 .achievement-summary-track { height: 5px; overflow: hidden; border-radius: 999px; background: var(--animal-border-color); }
-.achievement-summary-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--island-mint), var(--island-sun)); transition: width .25s ease; }
+.achievement-summary-track span { display: block; width: 100%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--island-mint), var(--island-sun)); transform: scaleX(1); transform-origin: left center; transition: transform .25s ease; }
 .achievement-summary-max { font-weight: 700; }
 .achievement-summary-card > button { min-height: 40px; padding-inline: 12px; white-space: nowrap; }
 .achievement-page-heading { margin: 8px 0 4px; }
@@ -513,12 +519,12 @@
 .project-legal-footer a:hover { color: var(--animal-primary-color-hover); }
 .project-legal-footer--page { width: 100%; padding: 16px 20px max(18px, env(safe-area-inset-bottom)); border-top: 1px solid var(--animal-border-color-light); background: var(--animal-bg-color); }
 .project-legal-footer--dialog { width: 100%; max-width: 560px; margin: 16px auto 0; padding-top: 12px; border-top: 1px solid var(--animal-border-color-light); font-size: 12px; }
-.app-frame { display: flex; flex-direction: column; min-height: 100vh; }
+.app-frame { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
 .app-frame > main { flex: 1 0 auto; }
 .catalog-grade-label[tabindex='-1']:focus { outline-offset: 7px; }
 
 /* Achievement details use a progressive-disclosure layout to reduce visual noise. */
-.achievement-page { min-height: 100vh; }
+.achievement-page { min-height: 100vh; min-height: 100dvh; }
 .achievement-page-heading { padding: 10px 0 4px; }
 .achievement-page-heading h1 { color: var(--animal-text-color); }
 .achievement-page-heading > p:last-child { color: var(--animal-text-color-secondary); }
@@ -552,7 +558,7 @@
 .achievement-next-rank-label { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; color: var(--animal-text-color-secondary); font-size: 12px; }
 .achievement-next-rank-label strong { color: var(--animal-text-color); font-size: 13px; }
 .achievement-next-rank-track { height: 7px; overflow: hidden; border-radius: 999px; background: var(--animal-border-color); }
-.achievement-next-rank-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--island-mint), var(--island-sun)); transition: width .25s ease; }
+.achievement-next-rank-track span { display: block; width: 100%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--island-mint), var(--island-sun)); transform: scaleX(1); transform-origin: left center; transition: transform .25s ease; }
 .achievement-next-rank-complete { grid-column: 2; margin: 0; color: var(--animal-text-color-secondary); font-size: 13px; line-height: 1.5; }
 .achievement-badge-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; }
 .achievement-badge { min-height: 138px; gap: 5px; padding: 11px 9px; border-color: var(--animal-border-color); border-radius: 17px; color: var(--animal-text-color-secondary); background: var(--animal-bg-color-secondary); }
@@ -646,13 +652,22 @@
 .achievement-kindness { padding: 4px 8px 0; color: var(--animal-text-color-secondary); }
 @media (max-width: 900px) {
   .achievement-badge-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .achievement-progress-group-heading { grid-template-columns: minmax(0, 1fr) auto; }
-  .achievement-progress-group-toggle { grid-column: 1 / -1; justify-self: start; }
+}
+@media (min-width: 701px) and (max-width: 900px) {
+  .achievement-badge-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .achievement-badge-grid > * { grid-column: span 2; }
+  .achievement-badge-grid > :nth-last-child(2):nth-child(3n + 1) { grid-column: 2 / span 2; }
+  .achievement-badge-grid > :last-child:nth-child(3n + 2) { grid-column: 4 / span 2; }
 }
 @media (max-width: 700px) {
   .achievement-journey-section,
   .achievement-course-progress { margin-top: 18px; padding: 16px 13px; border-radius: 20px; }
   .achievement-badge-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .achievement-badge-grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    width: calc((100% - 9px) / 2);
+    justify-self: center;
+  }
   .achievement-section-heading { align-items: center; }
   .achievement-next-rank { padding: 10px; }
   .exploration-map { margin-top: 18px; }
@@ -661,8 +676,6 @@
   .exploration-unit-nodes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .achievement-progress-group-list { grid-template-columns: 1fr; }
   .achievement-progress-group.is-expanded { grid-column: auto; }
-  .achievement-progress-group-heading { grid-template-columns: minmax(0, 1fr) auto; }
-  .achievement-progress-group-toggle { grid-column: auto; justify-self: end; }
   .achievement-detail-heading { align-items: flex-start; }
 }
 @media (max-width: 420px) {
@@ -677,8 +690,6 @@
   .exploration-zone-status { font-size: 9px; }
   .exploration-zone-toggle { padding-inline: 6px; font-size: 10px; }
   .achievement-detail-heading { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .achievement-progress-group-heading { grid-template-columns: minmax(0, 1fr) auto; }
-  .achievement-progress-group-count { white-space: normal; text-align: right; }
   .achievement-unit { padding: 11px; }
 }
 @media (max-width: 360px) {
@@ -751,6 +762,11 @@ button[class*='animal-btn'] svg { display: block; flex: 0 0 auto; color: current
 [hidden] { display: none !important; }
 :where(a, button):focus-visible { outline-color: var(--animal-primary-color); }
 
+@media (max-width: 900px) {
+  .session-card-action.is-dock-target { display: none; }
+  .session-card { min-height: 0; }
+}
+
 @media (max-width: 700px) {
   .course-breadcrumbs { margin: 0 0 12px; font-size: 12px; }
   .course-breadcrumbs-full { display: none !important; }
@@ -763,6 +779,8 @@ button[class*='animal-btn'] svg { display: block; flex: 0 0 auto; color: current
   .unit-content-section { gap: 16px; margin-top: 16px; }
   .source-card--compact { padding: 12px 15px; border-radius: 20px; }
   .source-topic-list { margin-top: 12px; }
+  .unit-hero h1 { text-wrap: balance; }
+  .unit-hero .catalog-lead { margin-top: 8px; }
   .unit-hero--task { gap: 12px; padding: 18px 16px; border-radius: 23px; }
   .unit-hero--task h1 { font-size: clamp(27px, 7vw, 34px); }
   .unit-hero--task .catalog-lead { margin: 8px 0 10px; font-size: 14px; line-height: 1.5; }
@@ -854,4 +872,65 @@ button[class*='animal-btn'] svg { display: block; flex: 0 0 auto; color: current
   .catalog-hero-crew .achievement-summary-section--compact .achievement-summary-card > button,
   .exploration-zone-toggle,
   .achievement-progress-group-toggle { min-height: 44px; }
+}
+
+/* Keep the catalog story compact on phones so learners reach the course map sooner. */
+@media (max-width: 480px) {
+  .catalog-hero { gap: 13px; padding: 16px 14px; }
+  .catalog-hero-copy { gap: 11px; }
+  .catalog-brand-lockup { grid-template-columns: 72px minmax(0, 1fr); gap: 9px; }
+  .catalog-brand-logo { width: 72px; border-radius: 14px; }
+  .catalog-hero-message { display: grid; gap: 7px; }
+  .catalog-hero-message .eyebrow { margin-bottom: 0; }
+  .catalog-lead { margin: 0; font-size: 13px; line-height: 1.45; }
+  .catalog-meta { gap: 4px; }
+  .catalog-meta span { padding: 3px 5px; font-size: 10px; line-height: 1.3; }
+  .catalog-hero-crew { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: start; gap: 9px 10px; }
+  .catalog-hero-crew-heading { grid-column: 1 / -1; }
+  .companion-roster { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px; }
+  .companion-roster-member { gap: 3px; font-size: 11px; }
+  .companion-roster-member .companion-avatar--small { --avatar-size: 36px; }
+  .catalog-hero-crew .hero-guide--compact { min-height: 0; gap: 7px; padding: 7px; border-radius: 15px; }
+  .catalog-hero-crew .hero-guide--compact .companion-avatar--small { --avatar-size: 36px; }
+  .catalog-hero-crew .hero-guide--compact .hero-guide-copy p { font-size: 12px; line-height: 1.4; }
+}
+@media (max-width: 360px) {
+  .catalog-brand-lockup { grid-template-columns: 62px minmax(0, 1fr); gap: 8px; }
+  .catalog-brand-logo { width: 62px; }
+  .catalog-meta { gap: 3px; }
+  .catalog-meta span { padding: 2px 4px; font-size: 8px; }
+  .catalog-current-route .catalog-current-route-action svg { display: none; }
+  .companion-roster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 4px; }
+  .companion-roster-member .companion-avatar--small { --avatar-size: 32px; }
+  .catalog-hero-crew .hero-guide--compact .companion-avatar--small { --avatar-size: 32px; }
+}
+@media (max-width: 480px) {
+  .learning-start-fields { grid-template-columns: minmax(0, 1fr); }
+  .learning-start-fields label:last-child { grid-column: auto; }
+}
+@media (max-width: 600px) {
+  :is(.catalog-selector, .learning-start-fields) [class*='animal-dropdown'] {
+    top: 100% !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: 0 !important;
+    margin: 6px 0 0 !important;
+    transform: none !important;
+    max-width: calc(100vw - 32px);
+  }
+}
+
+/* Give actionable cards a quiet hover response while keeping keyboard focus explicit. */
+.unit-card-active,
+.session-card,
+.task-card {
+  transition: transform var(--animal-motion-duration-fast, .16s) var(--animal-motion-ease, ease), border-color var(--animal-motion-duration-fast, .16s) var(--animal-motion-ease, ease);
+}
+.unit-card-active:focus-within,
+.session-card:focus-within,
+.task-card:focus-within { border-color: var(--animal-border-color-hover); }
+@media (hover: hover) and (pointer: fine) {
+  .unit-card-active:hover,
+  .session-card:hover,
+  .task-card:hover { transform: translateY(-2px); border-color: var(--animal-border-color-hover); }
 }

@@ -325,7 +325,14 @@
 :root[data-theme='dark'] .session-intro-card p:last-child { color: var(--island-muted); }
 :root[data-theme='dark'] .game-duration { border-color: var(--island-border); background: #29382f; }
 :root[data-theme='dark'] .game-progress-track { background: #3b4b3f; }
+:root[data-theme='dark'] .game-progress-section,
+:root[data-theme='dark'] .game-navigation-row { border-color: var(--island-border); background: #29382f; }
+:root[data-theme='dark'] .game-navigation-copy > span { color: #a8d7b0; }
+:root[data-theme='dark'] .game-navigation-row > button:disabled { border-color: var(--island-border); color: var(--island-muted); background: #3a4440; }
+:root[data-theme='dark'] .game-navigation-row.is-solved { background: #304a39; }
 :root[data-theme='dark'] .activity-kind-label { color: #c1cbd1; background: #3a444a; }
+:root[data-theme='dark'] .activity-prompt-row { border-color: var(--island-border); }
+:root[data-theme='dark'] .activity-guidance { border-color: var(--island-border); }
 :root[data-theme='dark'] .order-row,
 :root[data-theme='dark'] .categorize-row,
 :root[data-theme='dark'] .measurement-object-card,
@@ -412,6 +419,24 @@
 :root[data-theme='dark'] .achievement-page-heading h1 { color: var(--island-ink); }
 :root[data-theme='dark'] .achievement-page-heading > p:last-child { color: var(--island-muted); }
 :root[data-theme='dark'] .catalog-selector { color: #c4d4c6; }
+/* The installed Select trigger uses fixed light colors, so map its surface to the site theme. */
+:root[data-theme='dark'] :is(.catalog-selector, .learning-start-fields) [class*='animal-trigger'] {
+  color: var(--animal-text-color);
+  border-color: var(--animal-border-color);
+  background: var(--animal-bg-color-secondary);
+}
+:root[data-theme='dark'] :is(.catalog-selector, .learning-start-fields) [class*='animal-value'],
+:root[data-theme='dark'] :is(.catalog-selector, .learning-start-fields) [class*='animal-searchInput'] { color: var(--animal-text-color); }
+:root[data-theme='dark'] :is(.catalog-selector, .learning-start-fields) [class*='animal-placeholder'],
+:root[data-theme='dark'] :is(.catalog-selector, .learning-start-fields) [class*='animal-arrow'] { color: var(--animal-text-color-secondary); }
+:root[data-theme='dark'] :is(.catalog-selector, .learning-start-fields) [class*='animal-dropdown'] {
+  border: 1px solid var(--animal-border-color);
+  border-radius: 16px;
+  color: var(--animal-text-color);
+  background: var(--animal-bg-color-secondary);
+  box-shadow: var(--animal-shadow-lg);
+}
+:root[data-theme='dark'] :is(.catalog-selector, .learning-start-fields) [class*='animal-option'] { color: var(--animal-text-color); }
 :root[data-theme='dark'] .difficulty-track { border-color: var(--island-border); background: rgba(42, 56, 47, .62); }
 :root[data-theme='dark'] .difficulty-track-heading h2,
 :root[data-theme='dark'] .task-card h3 { color: var(--island-ink); }

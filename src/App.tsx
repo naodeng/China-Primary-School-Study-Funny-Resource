@@ -196,7 +196,7 @@ export default function App() {
     );
   } else {
     page = (
-      <main className="route-message-page">
+      <main className="route-message-page route-message-page--not-found">
         <div className="catalog-shell">
           <CourseBreadcrumbs items={[{ label: '课程目录', path: '/' }, { label: '页面未找到' }]} onNavigate={navigate} />
           <Card className="route-message-card" color="default">

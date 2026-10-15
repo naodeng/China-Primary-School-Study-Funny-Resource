@@ -20,7 +20,7 @@ export default function MeasurementActivity({ activity, disabled, onSubmit }: Me
     <div className="measurement-activity">
       <div className="measurement-object-card" role="img" aria-label={`${activity.objectLabel}的长度示意图`}>
         <span className="measurement-object-label">{activity.objectLabel}</span>
-        <span className="measurement-object-shape" style={{ width: `${Math.max(2, objectWidth)}%` }} />
+        <span className="measurement-object-shape" style={{ transform: `scaleX(${Math.max(0.02, objectWidth / 100)})` }} />
       </div>
       <div className="ruler-face" aria-hidden="true">
         <div className="ruler-ticks" style={{ gridTemplateColumns: `repeat(${tickCount}, minmax(0, 1fr))` }}>

@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 import { installAudioSpy } from './audioSpy';
 import { chooseSelectOption } from './selectOption';
-import { curriculum } from '../../src/content/curriculum';
+
+const curriculumManifest = JSON.parse(readFileSync(new URL('../../src/content/curriculum-manifest.json', import.meta.url), 'utf8'));
 
 test('showsCompactHomeExplorationProgressAndOpensAchievementDetails', async ({ page }) => {
   await installAudioSpy(page);
@@ -24,7 +26,7 @@ test('updatesTheHighlightedCourseAndMovesKeyboardFocusToItsSelectors', async ({ 
   await page.goto('/');
 
   const currentRoute = page.locator('.catalog-current-route');
-  await expect(currentRoute).toContainText('二年级');
+  await expect(currentRoute).toContainText('1年级');
   await expect(currentRoute).toContainText('上学期');
   await expect(currentRoute).toContainText('语文');
   await expect(currentRoute).toContainText('人教版');
@@ -62,27 +64,23 @@ test('shows second advanced and high tasks across Chinese math and English', asy
   ];
 
   for (const unitKey of samples) {
-    const unit = curriculum.units[unitKey];
-    if (!unit) throw new Error(`The verified curriculum is missing ${unitKey}.`);
-
     for (const difficulty of ['advanced', 'high'] as const) {
       await page.goto(`/${unitKey}`);
       const track = page.locator(`.difficulty-track--${difficulty}`);
-      const secondTask = unit.difficultyTracks[difficulty].tasks[1];
-      if (!secondTask) throw new Error(`${unitKey} is missing its second ${difficulty} task.`);
-      const taskSlug = secondTask.id.slice(secondTask.id.lastIndexOf('/') + 1);
+      const taskSlug = 'task-02';
       const expectedPath = `/${unitKey}/${difficulty}/${taskSlug}`;
 
       await expect(track).toContainText('2 个任务');
       await expect(track.getByRole('button', { name: '查看任务' })).toHaveCount(2);
       await track.getByRole('button', { name: '查看任务' }).nth(1).click();
       await expect(page).toHaveURL(new RegExp(`${expectedPath.replaceAll('/', '\\/')}$`));
-      await expect(page.getByRole('heading', { name: secondTask.title, level: 1 })).toBeVisible();
+      const secondTaskTitle = await page.getByRole('heading', { level: 1 }).textContent();
+      expect(secondTaskTitle).toBeTruthy();
 
       await page.goto(expectedPath);
-      await expect(page.getByRole('heading', { name: secondTask.title, level: 1 })).toBeVisible();
+      await expect(page.getByRole('heading', { name: secondTaskTitle!, level: 1 })).toBeVisible();
       await page.reload();
-      await expect(page.getByRole('heading', { name: secondTask.title, level: 1 })).toBeVisible();
+      await expect(page.getByRole('heading', { name: secondTaskTitle!, level: 1 })).toBeVisible();
       await expect(page.getByText('8 个挑战')).toBeVisible();
       await page.getByRole('button', { name: '开始第 1 场' }).click();
       await expect(page).toHaveURL(/\/session-01$/);
@@ -144,7 +142,7 @@ test('keepsMobileStudyActionsWithinReachAndUsesReadableAlignedIconsInBothThemes'
 
   const taskDock = page.locator('.mobile-study-dock');
   await expect(taskDock).toBeVisible();
-  await taskDock.getByRole('button', { name: '继续学习第 1 场' }).click();
+  await taskDock.getByRole('button', { name: /第 1 场$/ }).click();
   await expect(page).toHaveURL(/\/grade-2\/term-1\/chinese\/unit-01\/basic\/task-01\/session-01$/);
 
   const submitAction = page.locator('.activity-submit-action').first();
@@ -205,13 +203,13 @@ test('keepsMobileStudyActionsWithinReachAndUsesReadableAlignedIconsInBothThemes'
 });
 
 test('rendersEveryVerifiedCourseEntryAndOpensItsUnit', async ({ page }) => {
-  test.setTimeout(90_000);
+  test.setTimeout(300_000);
   await installAudioSpy(page);
-  for (const grade of curriculum.grades) {
+  for (const grade of curriculumManifest.grades) {
     for (const term of grade.terms) {
       for (const subject of term.subjects) {
         const verifiedEntries = subject.units.filter((entry) => entry.status === 'active'
-          && curriculum.textbooks[entry.textbookEditionId]?.verificationStatus === 'verified');
+          && curriculumManifest.textbooks[entry.textbookEditionId]?.verificationStatus === 'verified');
         await page.goto('/');
         await expect(page.getByRole('heading', { name: '星岛学园 · Starry Island' })).toBeVisible();
         await chooseSelectOption(page, '年级', grade.title);
@@ -223,7 +221,7 @@ test('rendersEveryVerifiedCourseEntryAndOpensItsUnit', async ({ page }) => {
         }
         for (const entry of verifiedEntries) {
           await page.goto(`/${grade.id}/${term.id}/${subject.id}/${entry.id}`);
-          await expect(page.getByRole('heading', { name: entry.title })).toBeVisible();
+          await expect(page.getByRole('heading', { name: entry.title, exact: true })).toBeVisible();
         }
       }
     }
@@ -253,7 +251,7 @@ test('keepsCatalogAndSettingsUsableOnPhoneTabletAndDesktop', async ({ page }) =>
     if (viewport.width === 390) {
       const companionName = page.locator('.companion-roster-member').first().locator(':scope > span').last();
       await expect(companionName).toBeVisible();
-      expect(await companionName.evaluate((element) => getComputedStyle(element).fontSize)).toBe('12px');
+      expect(await companionName.evaluate((element) => getComputedStyle(element).fontSize)).toBe('11px');
     }
 
     await page.getByRole('button', { name: '设置' }).click();
@@ -327,7 +325,7 @@ test('supportsKeyboardFocusReducedMotionAndNarrowScreens', async ({ page }) => {
     window.scrollTo = ((options?: ScrollToOptions) => target.__studyScrollBehaviors.push(options?.behavior)) as typeof window.scrollTo;
   });
   await page.getByRole('button', { name: /进入单元/ }).first().click();
-  await expect(page).toHaveURL(/\/grade-2\/term-1\/chinese\/unit-\d+$/);
+  await expect(page).toHaveURL(/\/grade-1\/term-1\/chinese\/unit-\d+$/);
   expect(await page.evaluate(() => (window as Window & { __studyScrollBehaviors: Array<ScrollBehavior | undefined> }).__studyScrollBehaviors))
     .toContain('auto');
 

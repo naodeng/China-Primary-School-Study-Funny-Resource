@@ -145,7 +145,7 @@ export default function CourseCatalog({ progress, onNavigate, onApplyLearningSta
           <div className="catalog-section-heading">
             <div>
               <p className="eyebrow">学习地图</p>
-              <h2 id="subject-heading">今天想玩哪门课？</h2>
+              <h2 id="subject-heading">今天想探索哪座星球</h2>
             </div>
             <div className="subject-switch" role="group" aria-label="选择学科">
               {term.subjects.map((entry) => (

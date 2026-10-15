@@ -42,7 +42,7 @@ export default function AchievementSummary({ completedSessionIds, learningStart,
                   <span>{completedCount === 0 ? '完成第一个完整单元' : `还差 ${remainingUnits} 个完整单元`}</span>
                 </div>
                 <div className="achievement-summary-track" role="progressbar" aria-label={`距离${nextRank.title}的进度`} aria-valuenow={Math.round(rankProgress)} aria-valuemin={0} aria-valuemax={100}>
-                  <span style={{ width: `${rankProgress}%` }} />
+                  <span style={{ transform: `scaleX(${rankProgress / 100})` }} />
                 </div>
               </div>
             ) : (

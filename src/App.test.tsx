@@ -75,10 +75,11 @@ describe('App', () => {
     expect(document.title).toBe(`${screen.getByRole('heading', { level: 1 }).textContent} | 星岛学园`);
 
     await user.click(screen.getAllByRole('button', { name: /查看任务/ })[0]);
-    await screen.findByRole('button', { name: /开始第 1 场/ });
+    await waitFor(() => expect(document.querySelector('.session-card')).not.toBeNull());
     await waitFor(() => expect(screen.getByRole('heading', { level: 1 })).toHaveFocus());
     expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();
-    await user.click(screen.getByRole('button', { name: /开始第 1 场/ }));
+    const firstSessionCard = document.querySelector('.session-card') as HTMLElement;
+    await user.click(within(firstSessionCard).getByRole('button', { name: /开始第 1 场/ }));
     await screen.findByRole('button', { name: /提交答案|检查配对|检查顺序|检查分类|检查测量/ });
     await waitFor(() => expect(screen.getByRole('heading', { level: 1 })).toHaveFocus());
     expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();

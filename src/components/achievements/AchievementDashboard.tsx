@@ -65,7 +65,7 @@ export default function AchievementDashboard({ completedSessionIds, learningStar
                 <span>{nextRank.unitsRequired - completedUnitCount} 个完整单元后解锁</span>
               </div>
               <div className="achievement-next-rank-track" role="progressbar" aria-label={`距离${nextRank.title}的进度`} aria-valuenow={rankProgress} aria-valuemin={0} aria-valuemax={100}>
-                <span style={{ width: `${rankProgress}%` }} />
+                <span style={{ transform: `scaleX(${rankProgress / 100})` }} />
               </div>
             </div>
           ) : (

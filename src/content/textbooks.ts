@@ -20,6 +20,41 @@ const reasons = {
   english: '人教社公开说明设有一、二年级英语预备级，但未找到本册完整新版学生用书和目录；按用户授权采用 TapXWorld 固定快照。学校是否开设尚未确认。',
 };
 
+const addedBookReasons = {
+  chinese: '人教社公开了语文修订教材信息，但未取得本册完整新版学生用书和目录；本课程按用户裁定使用 TapXWorld 固定快照中的整册目录，不将回退版本称为最新版。',
+  math: '人教社公开了新版数学教材资源入口，但未取得本册完整新版学生用书和目录；按用户裁定使用 TapXWorld 固定快照中的整册目录。',
+  english: '人教社介绍了新版小学英语教材的不同起点，但未取得本册完整新版学生用书和目录；按站内现有一年级起点序列使用 TapXWorld 固定快照。学校是否开设英语尚未确认。',
+};
+
+function addedBook(
+  grade: 1 | 3,
+  term: 1 | 2,
+  subject: 'chinese' | 'math' | 'english',
+  series: string,
+  path: string,
+  edition: string | null = null,
+  isbn: string | null = null,
+) {
+  return {
+    id: `grade-${grade}/term-${term}/${subject}`,
+    subject,
+    grade,
+    term,
+    series,
+    edition,
+    printing: null,
+    isbn,
+    sourceKind: 'tapx-fallback' as const,
+    sourceUrl: tapxPdfUrl(path),
+    latestPepEvidenceUrl: pepEvidence[subject],
+    fallbackReason: addedBookReasons[subject],
+    checkedAt: '2026-10-15',
+    tapxCommit: TAPX_TEXTBOOK_COMMIT,
+    verificationStatus: 'verified' as const,
+    ...(subject === 'english' ? { schoolOfferingStatus: 'unconfirmed' as const } : {}),
+  };
+}
+
 export const textbooks: Record<string, TextbookEdition> = {
   'grade-2/term-1/chinese': {
     id: 'grade-2/term-1/chinese',
@@ -125,4 +160,16 @@ export const textbooks: Record<string, TextbookEdition> = {
     verificationStatus: 'verified',
     schoolOfferingStatus: 'unconfirmed',
   },
+  'grade-1/term-1/chinese': addedBook(1, 1, 'chinese', '义务教育教科书·语文（一年级上册）', '小学/语文/统编版/义务教育教科书·语文一年级上册.pdf'),
+  'grade-1/term-2/chinese': addedBook(1, 2, 'chinese', '义务教育教科书·语文（一年级下册）', '小学/语文/统编版/义务教育教科书·语文一年级下册.pdf'),
+  'grade-3/term-1/chinese': addedBook(3, 1, 'chinese', '义务教育教科书·语文（三年级上册）', '小学/语文/统编版/义务教育教科书·语文三年级上册.pdf'),
+  'grade-3/term-2/chinese': addedBook(3, 2, 'chinese', '义务教育教科书·语文（三年级下册）', '小学/语文/统编版/义务教育教科书·语文三年级下册.pdf'),
+  'grade-1/term-1/math': addedBook(1, 1, 'math', '义务教育教科书·数学（一年级上册）', '小学/数学/人教版/义务教育教科书 · 数学一年级上册.pdf', '2022年8月第2版', '978-7-107-36922-3'),
+  'grade-1/term-2/math': addedBook(1, 2, 'math', '义务教育教科书·数学（一年级下册）', '小学/数学/人教版/义务教育教科书·数学一年级下册.pdf'),
+  'grade-3/term-1/math': addedBook(3, 1, 'math', '义务教育教科书·数学（三年级上册）', '小学/数学/人教版/义务教育教科书 · 数学三年级上册.pdf', '2022年8月第2版', '978-7-107-36924-7'),
+  'grade-3/term-2/math': addedBook(3, 2, 'math', '义务教育教科书·数学（三年级下册）', '小学/数学/人教版/义务教育教科书·数学三年级下册.pdf'),
+  'grade-1/term-1/english': addedBook(1, 1, 'english', '义务教育教科书·英语（一年级起点，一年级上册）', '小学/英语/人教版（一年级起点）（主编：吴欣）/义务教育教科书·英语（一年级起点）一年级上册.pdf'),
+  'grade-1/term-2/english': addedBook(1, 2, 'english', '义务教育教科书·英语（一年级起点，一年级下册）', '小学/英语/人教版（一年级起点）（主编：吴欣）/义务教育教科书·英语（一年级起点）一年级下册.pdf'),
+  'grade-3/term-1/english': addedBook(3, 1, 'english', '义务教育教科书·英语（一年级起点，三年级上册）', '小学/英语/人教版（一年级起点）（主编：吴欣）/义务教育教科书·英语（一年级起点）三年级上册.pdf'),
+  'grade-3/term-2/english': addedBook(3, 2, 'english', '义务教育教科书·英语（一年级起点，三年级下册）', '小学/英语/人教版（一年级起点）（主编：吴欣）/义务教育教科书·英语（一年级起点）三年级下册.pdf'),
 };

@@ -112,7 +112,7 @@ const siblingSentencePractice = lessonProfile(
     { label: 'brother', categoryIndex: 0 }, { label: 'father', categoryIndex: 0 },
     { label: 'sister', categoryIndex: 1 }, { label: 'mother', categoryIndex: 1 },
   ],
-  { prompt: '把词卡排成“她是我的姐姐或妹妹”。', items: ['my', 'sister', 'She', 'is', '.'], correctOrderIndices: [2, 3, 0, 1, 4] },
+  { prompt: '把词卡排成“他是我的哥哥或弟弟”。', items: ['my', 'brother', 'He', '.', 'is'], correctOrderIndices: [2, 4, 0, 1, 3] },
 );
 
 export const unit = buildEnglishUnit({

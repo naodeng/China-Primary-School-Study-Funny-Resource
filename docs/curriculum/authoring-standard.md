@@ -1,6 +1,6 @@
 # 课程目录与内容编写规范
 
-本文是新增或修改课程时的单一操作入口。先按目录和数据约定录入，再核对教材范围、逐题审校并运行检查；项目当前课程范围以 `src/content/curriculum.ts` 和 `docs/curriculum/grade-2-textbook-inventory.md` 为准。
+本文是新增或修改课程时的单一操作入口。先按目录和数据约定录入，再核对教材范围、逐题审校并运行检查；项目当前课程范围以 `src/content/curriculum.ts` 和 `docs/curriculum/grade-1-and-3-textbook-inventory.md`、`docs/curriculum/grade-2-textbook-inventory.md` 为准。
 
 ## 目录结构
 
@@ -12,7 +12,7 @@ src/content/grade-{年级}/term-{1|2}/{chinese|math|english}/{条目 slug}/index
 
 条目 slug 仅使用下列形式，序号为两位数并按册次目录排列：
 
-- `unit-NN`：教材中的编号单元，包括有编号的总复习。
+- `unit-NN`：教材中的编号单元（包括有编号的总复习），或目录明确登记的未编号主题组；主题组的正式单元号留空，不能称为教材正式编号单元。
 - `review-NN`：未编号的复习条目。
 - `integrated-practice-NN`：未编号的综合实践条目。
 
@@ -61,20 +61,20 @@ src/content/grade-2/term-2/english/review-01/index.ts
 逐条目检查全部难度、任务、场次中的旧题和新题，不只审新增题。每道题都要确认：
 
 1. 答案唯一，答案键准确；配对、排序和分类没有遗漏或冲突。
-2. 题干、提示和解释相互一致，信息完整，二年级学生能理解。
+2. 题干、提示和解释相互一致，信息完整，对应年级学生能理解。
 3. 知识点符合对应册次主题且没有挪用受保护教材原文。
 4. 情境、词汇、单位和信息量适龄，表述自然、没有隐藏条件。
 5. 题目服务于任务目标，难度确实符合所在档位。
 
 学科检查另包括：数学逐式复算、单位与情境条件核对；英语拼写、大小写、词义和语法核对；语文字词、题意和解释准确性核对。可执行的答案校验是辅助筛查，不能替代语义审校。
 
-在 `docs/curriculum/grade-2-question-review.tsv` 记录每个课程条目的题目总数、已审数量、各项审校状态和修复记录。发现问题时记录完整题目 ID、修改原因和状态；未审完时不得把该行标记为“完成”。
+在相应台账记录每个课程条目的题目总数、已审数量、各项审校状态和修复记录：一年级、三年级使用 `docs/curriculum/grade-1-and-3-question-review.tsv`，二年级使用 `docs/curriculum/grade-2-question-review.tsv`。发现问题时记录完整题目 ID、修改原因和状态；未审完时不得把该行标记为“完成”。
 
 ## 新增课程检查清单
 
 1. 核对教材清单、来源类型、单元类别和 `sourceTopics`。
 2. 新建规范目录与 `index.ts`，并在课程注册表中仅登记一次。
 3. 依据难度标准编写各任务和题目，保证稳定 ID、答案引用、每场 8 题。
-4. 逐题审校并更新中文审校台账。
+4. 逐题审校并更新对应年级的中文审校台账。
 5. 运行 `npx vitest run src/content/curriculumLayout.test.ts`、`npx vitest run src/content/curriculum.test.ts`、`npm run test:unit`、`npm run test:coverage`、`npm run test:e2e`、`npm run build` 和 `git diff --check`；修复失败后重跑相关检查。
 6. 检查 Cloudflare Pages 静态 SPA 路由未被破坏；不要新增顶层 `404.html`。

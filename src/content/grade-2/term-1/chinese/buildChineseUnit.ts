@@ -22,8 +22,11 @@ export interface ChineseTaskSpec {
 }
 
 export interface ChineseUnitSpec {
+  grade?: 1 | 2 | 3;
   term?: 1 | 2;
-  formalUnitNumber: number;
+  formalUnitNumber: number | null;
+  entryId?: string;
+  type?: 'unit' | 'review' | 'integrated-practice';
   title: string;
   sourceTopics: readonly string[];
   basicTasks: readonly [ChineseTaskSpec, ChineseTaskSpec, ...ChineseTaskSpec[]];
@@ -82,16 +85,19 @@ function createActivity(question: ChineseQuestionSpec, id: string): ActivityDefi
 }
 
 export function buildChineseUnit(spec: ChineseUnitSpec): CurriculumUnit {
+  const grade = spec.grade ?? 2;
   const term = spec.term ?? 1;
-  const textbookEditionId = `grade-2/term-${term}/chinese`;
-  const id = `${textbookEditionId}/unit-${formatCurriculumSequence(spec.formalUnitNumber)}`;
+  const type = spec.type ?? 'unit';
+  const textbookEditionId = `grade-${grade}/term-${term}/chinese`;
+  const entryId = spec.entryId ?? `unit-${formatCurriculumSequence(spec.formalUnitNumber ?? 0)}`;
+  const id = `${textbookEditionId}/${entryId}`;
   return {
     id,
     subject: 'chinese',
     title: spec.title,
-    type: 'unit',
+    type,
     formalUnitNumber: spec.formalUnitNumber,
-    achievementEligible: true,
+    achievementEligible: type === 'unit' && spec.formalUnitNumber !== null,
     textbookEditionId,
     sourceTopics: [...spec.sourceTopics],
     difficultyTracks: buildDifficultyTracks(id, {

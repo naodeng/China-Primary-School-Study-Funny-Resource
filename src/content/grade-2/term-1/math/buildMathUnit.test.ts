@@ -48,4 +48,21 @@ describe('buildMathUnit', () => {
     expectTwoTasks(unit.difficultyTracks.advanced.tasks, unit.id, 'advanced', ['解决购物问题', '比较两种算法']);
     expectTwoTasks(unit.difficultyTracks.high.tasks, unit.id, 'high', ['规划分组方案', '检查方案是否合理']);
   });
+
+  it('buildsCanonicalIdsForGradeOneAndThree', () => {
+    for (const grade of [1, 3] as const) {
+      const unit = buildMathUnit({
+        grade,
+        term: 2,
+        formalUnitNumber: 1,
+        title: '数学主题',
+        sourceTopics: ['数与运算'],
+        basicTasks: [task('认识', 1), task('应用', 2)],
+        advancedTasks: [task('迁移', 1), task('比较', 2)],
+        highTasks: [task('规划', 1), task('检验', 2)],
+      });
+      expect(unit.id).toBe(`grade-${grade}/term-2/math/unit-01`);
+      expect(unit.textbookEditionId).toBe(`grade-${grade}/term-2/math`);
+    }
+  });
 });

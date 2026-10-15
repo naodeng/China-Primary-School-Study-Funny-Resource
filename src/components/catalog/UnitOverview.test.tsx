@@ -51,7 +51,8 @@ describe('UnitOverview', () => {
     expect(screen.getByRole('heading', { name: task.title, level: 1 })).toBeInTheDocument();
     expect(document.querySelector('.unit-hero .eyebrow')).toHaveTextContent(/2年级.*上学期.*语文.*UNIT 1.*基础版任务/);
     expect(screen.getByRole('heading', { name: '学习场次' })).toBeInTheDocument();
-    const startButton = screen.getByRole('button', { name: '开始第 1 场' });
+    const sessionCard = document.querySelector('.session-card') as HTMLElement;
+    const startButton = within(sessionCard).getByRole('button', { name: '开始第 1 场' });
     startButton.focus();
     await user.keyboard('{Enter}');
 
@@ -89,6 +90,6 @@ describe('UnitOverview', () => {
     expect(within(review).getAllByRole('listitem')).toHaveLength(3);
     expect(within(review).getByText('按过程整理线索。')).toBeInTheDocument();
     expect(within(review).getByText('用完整句说明发现。')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /继续学习第 1 场/ })).toBeInTheDocument();
+    expect(within(firstSessionCard as HTMLElement).getByRole('button', { name: '开始第 1 场' })).toBeInTheDocument();
   });
 });

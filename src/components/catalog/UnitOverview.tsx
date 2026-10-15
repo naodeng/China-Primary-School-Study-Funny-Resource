@@ -80,6 +80,16 @@ export default function UnitOverview({
   const dockSession = selectedTask?.sessions[nextSessionIndex];
   const allTaskSessionsComplete = Boolean(selectedTask)
     && selectedTask!.sessions.every((session) => completedSessionIds.includes(session.id));
+  const dockActionLabel = allTaskSessionsComplete
+    ? `复习第 ${nextSessionIndex + 1} 场`
+    : completedCount > 0
+      ? `继续学习第 ${nextSessionIndex + 1} 场`
+      : `开始第 ${nextSessionIndex + 1} 场`;
+  const dockRegionLabel = allTaskSessionsComplete
+    ? '复习本任务'
+    : completedCount > 0
+      ? '继续学习'
+      : '开始学习';
   const sourceDisclosureId = `${disclosureId}-source`;
   const knowledgeMapId = `${disclosureId}-map`;
   const reviewId = `${disclosureId}-review`;
@@ -249,14 +259,16 @@ export default function UnitOverview({
                       <span>建议 {session.durationMinutes} 分钟</span>
                       <span>{session.activities.length} 个挑战</span>
                     </div>
-                    <Button
-                      type="primary"
-                      block
-                      icon={<ArrowRightIcon size={18} aria-hidden="true" />}
-                      onClick={() => onNavigate(getSessionPath(unitKey, selectedDifficulty!, selectedTask.id, session.id))}
-                    >
-                      {complete ? '再玩一次' : `开始第 ${index + 1} 场`}
-                    </Button>
+                    <div className={`session-card-action${session.id === dockSession?.id ? ' is-dock-target' : ''}`}>
+                      <Button
+                        type="primary"
+                        block
+                        icon={<ArrowRightIcon size={18} aria-hidden="true" />}
+                        onClick={() => onNavigate(getSessionPath(unitKey, selectedDifficulty!, selectedTask.id, session.id))}
+                      >
+                        {complete ? '再玩一次' : `开始第 ${index + 1} 场`}
+                      </Button>
+                    </div>
                     {complete && <span className="session-complete-label"><CheckCircleIcon size={16} aria-hidden="true" /> 已完成</span>}
                   </Card>
                 );
@@ -293,17 +305,17 @@ export default function UnitOverview({
           </section>
         )}
         {selectedTask && dockSession ? (
-          <aside className="mobile-study-dock" aria-label="继续学习">
+          <aside className="mobile-study-dock" aria-label={dockRegionLabel}>
             <p>{allTaskSessionsComplete ? '本任务已经完成' : `已完成 ${completedCount}/${visibleSessions.length} 场`}</p>
             <Button
               type="primary"
               icon={<ArrowRightIcon size={18} aria-hidden="true" />}
               onClick={() => onNavigate(getSessionPath(unitKey, selectedDifficulty!, selectedTask.id, dockSession.id))}
             >
-              {allTaskSessionsComplete ? `复习第 ${nextSessionIndex + 1} 场` : `继续学习第 ${nextSessionIndex + 1} 场`}
+              {dockActionLabel}
             </Button>
           </aside>
-        ) : firstBasicTask ? (
+        ) : !selectedTask && firstBasicTask ? (
           <aside className="mobile-study-dock" aria-label="继续学习">
             <p>从基础任务开始，稳稳点亮知识</p>
             <Button
