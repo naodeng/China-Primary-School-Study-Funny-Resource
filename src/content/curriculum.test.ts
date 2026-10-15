@@ -348,12 +348,14 @@ describe('curriculum registry', () => {
   );
 
   it.each(term1ChineseUnits.map(([unitKey]) => unitKey))(
-    'gives %s two basic tasks and one task at each higher tier with eight questions per session',
+    'gives %s two basic tasks, two tasks per higher tier, and eight questions per session',
     (unitKey) => {
       const unit = curriculum.units[unitKey];
       expect(unit.difficultyTracks.basic.tasks.length).toBeGreaterThanOrEqual(2);
-      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(1);
-      expect(unit.difficultyTracks.high.tasks).toHaveLength(1);
+      expect(unit.difficultyTracks.advanced.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.advanced.tasks.map(({ objective }) => objective)).size).toBe(2);
+      expect(unit.difficultyTracks.high.tasks).toHaveLength(2);
+      expect(new Set(unit.difficultyTracks.high.tasks.map(({ objective }) => objective)).size).toBe(2);
 
       Object.values(unit.difficultyTracks).forEach(({ tasks }) => {
         tasks.forEach((task) => {
