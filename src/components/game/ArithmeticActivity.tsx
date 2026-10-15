@@ -9,10 +9,26 @@ interface ArithmeticActivityProps {
   onSubmit: (answer: number) => void;
 }
 
+const PLACE_NAMES = ['个位', '十位', '百位', '千位', '万位', '十万位', '百万位', '千万位', '亿位'];
+
 export default function ArithmeticActivity({ activity, disabled, showSteps, onSubmit }: ArithmeticActivityProps) {
   const [answer, setAnswer] = useState('');
   const operands = activity.expression.match(/\d+/g)?.map(Number) ?? [];
-  const validAnswer = answer.trim() !== '' && Number.isInteger(Number(answer)) && Number(answer) >= 0;
+  const largestValue = Math.max(0, activity.correctAnswer, ...operands);
+  const placeCount = Math.max(2, String(Math.trunc(largestValue)).length);
+  const placeColumns = Array.from({ length: placeCount }, (_, index) => {
+    const power = placeCount - index - 1;
+    return {
+      label: PLACE_NAMES[power] ?? `${10 ** power}位`,
+      divisor: 10 ** power,
+    };
+  });
+  const maxAnswer = 10 ** placeCount - 1;
+  const numericAnswer = Number(answer);
+  const validAnswer = answer.trim() !== ''
+    && Number.isInteger(numericAnswer)
+    && numericAnswer >= 0
+    && numericAnswer <= maxAnswer;
 
   return (
     <div className="arithmetic-activity">
@@ -24,8 +40,9 @@ export default function ArithmeticActivity({ activity, disabled, showSteps, onSu
           <div className="place-number" key={`${operand}-${index}`}>
             <span className="place-number-value">{operand}</span>
             <div className="place-digit-grid">
-              <span><small>十位</small><strong>{Math.floor(operand / 10)}</strong></span>
-              <span><small>个位</small><strong>{operand % 10}</strong></span>
+              {placeColumns.map(({ label, divisor }) => (
+                <span key={label}><small>{label}</small><strong>{Math.floor(operand / divisor) % 10}</strong></span>
+              ))}
             </div>
           </div>
         ))}
@@ -40,7 +57,7 @@ export default function ArithmeticActivity({ activity, disabled, showSteps, onSu
           type="number"
           inputMode="numeric"
           min="0"
-          max="99"
+          max={String(maxAnswer)}
           step="1"
           value={answer}
           disabled={disabled}
