@@ -6,6 +6,7 @@ import { curriculum } from './curriculum';
 type ReviewRow = Record<string, string>;
 
 const questionIdPattern = /grade-[123]\/term-[12]\/chinese\/unit-\d{2}\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}|grade-[123]\/term-[12]\/math\/(?:unit-\d{2}|integrated-practice-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}|grade-[123]\/term-[12]\/english\/(?:unit-\d{2}|review-\d{2})\/(?:basic|advanced|high)\/task-\d{2}\/session-\d{2}\/question-\d{2}/;
+const questionIdRangePattern = /(grade-[123]\/term-[12]\/chinese\/unit-\d{2}|grade-[123]\/term-[12]\/math\/(?:unit-\d{2}|integrated-practice-\d{2})|grade-[123]\/term-[12]\/english\/(?:unit-\d{2}|review-\d{2}))\/\{basic\|advanced\|high\}\/task-\{01\|02\}\/session-01\/question-\{01\.\.08\}/;
 
 function parseRows(ledgerText: string): ReviewRow[] {
   const [headerLine, ...dataLines] = ledgerText.trim().split(/\r?\n/);
@@ -49,6 +50,19 @@ describe('curriculum question review ledger', () => {
     });
   });
 
+  it('records a dated question ID range for each grade 1 and grade 3 audit', () => {
+    readRows().filter(({ '课程ID': id }) => id.startsWith('grade-1/') || id.startsWith('grade-3/')).forEach((row) => {
+      const unitId = row['课程ID'];
+      const evidence = row['复核证据']?.trim();
+      expect(evidence, `${unitId} review evidence`).toBeTruthy();
+      expect(evidence, `${unitId} audit date`).toContain('2026-10-16');
+      expect(evidence, `${unitId} exact ID range`).toContain(
+        `${unitId}/{basic|advanced|high}/task-{01|02}/session-01/question-{01..08}`,
+      );
+      expect(evidence, `${unitId} audit report reference`).toContain('grade-1-and-3-question-audit-report.md');
+    });
+  });
+
   it('requiresAllEditorialDimensionsComplete', () => {
     readRows().forEach((row) => {
       expect(row['答案正确性'], row['课程ID']).toBe('完成');
@@ -72,11 +86,15 @@ describe('curriculum question review ledger', () => {
       if (!record || record === '无') return;
 
       record.split('；').forEach((repair) => {
-        const match = repair.match(questionIdPattern);
-        expect(match, `repair record needs a complete question ID: ${row['课程ID']} / ${repair}`).not.toBeNull();
-        expect(match?.[0].startsWith(`${row['课程ID']}/`), `repair ID must belong to ${row['课程ID']}`).toBe(true);
-        expect(knownQuestionIds.has(match?.[0] ?? ''), `repair ID must exist in the curriculum: ${match?.[0]}`).toBe(true);
-        expect(repair.replace(questionIdPattern, '').replace(/[：:，,。\s]/g, '').length,
+        const exactId = repair.match(questionIdPattern);
+        const idRange = repair.match(questionIdRangePattern);
+        expect(exactId || idRange, `repair record needs a question ID or supported ID range: ${row['课程ID']} / ${repair}`).toBeTruthy();
+        const idPrefix = exactId?.[0] ?? idRange?.[0];
+        expect(idPrefix?.startsWith(`${row['课程ID']}/`), `repair ID must belong to ${row['课程ID']}`).toBe(true);
+        const expandedIds = exactId ? [exactId[0]] : ['basic', 'advanced', 'high'].flatMap((difficulty) => [1, 2]
+          .flatMap((task) => Array.from({ length: 8 }, (_, question) => `${idRange?.[1]}/${difficulty}/task-${String(task).padStart(2, '0')}/session-01/question-${String(question + 1).padStart(2, '0')}`)));
+        expandedIds.forEach((id) => expect(knownQuestionIds.has(id), `repair ID must exist in the curriculum: ${id}`).toBe(true));
+        expect(repair.replace(questionIdPattern, '').replace(questionIdRangePattern, '').replace(/[：:，,。\s]/g, '').length,
           `repair record needs a reason: ${row['课程ID']} / ${repair}`).toBeGreaterThan(0);
       });
     });
