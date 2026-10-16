@@ -182,21 +182,37 @@ function activitiesFor(unitId: string) {
     .flatMap(({ activities }) => activities);
 }
 
+const maxClassificationItemsPerActivity = 8;
+
 describe('added English vocabulary and textbook alignment', () => {
   it.each(alignmentCases)('$unitId uses the matching book vocabulary and phrases', (alignment) => {
     const activities = activitiesFor(alignment.unitId);
     const classifications = activities.filter((activity) => activity.kind === 'categorize');
     expect(classifications.length).toBeGreaterThan(0);
-    const classifiedCategoryByWord = Object.fromEntries(classifications.flatMap((activity) => {
-      if (activity.kind !== 'categorize') return [];
-      expect(activity.categories.map(({ label }) => label)).toEqual(alignment.categories);
-      const categoryIndexById = new Map(activity.categories.map(({ id }, index) => [id, index] as const));
-      return activity.items.map(({ label, categoryId }) => [label, categoryIndexById.get(categoryId)] as const);
-    }).sort(([left], [right]) => left.localeCompare(right)));
     const expectedCategoryByWord = Object.fromEntries(alignment.classificationGroups.flatMap((words, categoryIndex) =>
       words.map((word) => [word, categoryIndex] as const),
     ).sort(([left], [right]) => left.localeCompare(right)));
-    expect(classifiedCategoryByWord).toEqual(expectedCategoryByWord);
+    const unit = curriculum.units[alignment.unitId];
+    if (!unit) throw new Error(`Missing curriculum unit: ${alignment.unitId}`);
+    Object.values(unit.difficultyTracks).forEach((track) => {
+      const trackActivities = track.tasks
+        .flatMap(({ sessions }) => sessions)
+        .flatMap(({ activities: sessionActivities }) => sessionActivities);
+      const trackClassifications = trackActivities.filter((activity) => activity.kind === 'categorize');
+      const classifiedEntries = trackClassifications.flatMap((activity) => {
+        if (activity.kind !== 'categorize') return [];
+        expect(activity.items.length).toBeLessThanOrEqual(maxClassificationItemsPerActivity);
+        if (Object.keys(expectedCategoryByWord).length > maxClassificationItemsPerActivity) {
+          expect(activity.items.length).toBeGreaterThanOrEqual(4);
+        }
+        expect(activity.categories.map(({ label }) => label)).toEqual(alignment.categories);
+        const categoryIndexById = new Map(activity.categories.map(({ id }, index) => [id, index] as const));
+        return activity.items.map(({ label, categoryId }) => [label, categoryIndexById.get(categoryId)] as const);
+      });
+      expect(new Set(classifiedEntries.map(([label]) => label)).size).toBe(classifiedEntries.length);
+      expect(Object.fromEntries(classifiedEntries.sort(([left], [right]) => left.localeCompare(right))))
+        .toEqual(expectedCategoryByWord);
+    });
 
     const matchingActivities = activities.filter((activity) => activity.kind === 'match');
     expect(matchingActivities).toHaveLength(6);

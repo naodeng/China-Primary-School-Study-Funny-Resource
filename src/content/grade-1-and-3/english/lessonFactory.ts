@@ -431,6 +431,45 @@ function rotate<T>(items: readonly T[], offset: number): T[] {
   return [...items.slice(start), ...items.slice(0, start)];
 }
 
+const classificationItemsPerQuestion = 8;
+const classificationQuestionsPerTask = 2;
+
+function chunkClassifications(items: EnglishProfile['classified']): EnglishProfile['classified'][] {
+  if (items.length <= classificationItemsPerQuestion) return [[...items]];
+
+  const groups: [Array<EnglishProfile['classified'][number]>, Array<EnglishProfile['classified'][number]>] = [
+    items.filter(({ categoryIndex }) => categoryIndex === 0),
+    items.filter(({ categoryIndex }) => categoryIndex === 1),
+  ];
+  const chunkCount = Math.ceil(items.length / classificationItemsPerQuestion);
+  const baseChunkSize = Math.floor(items.length / chunkCount);
+  const largerChunkCount = items.length % chunkCount;
+  const chunkSizes = Array.from({ length: chunkCount }, (_, index) => baseChunkSize + Number(index < largerChunkCount));
+  const chunks = chunkSizes.map(() => [] as Array<EnglishProfile['classified'][number]>);
+  const categoryCounts = chunkSizes.map(() => [0, 0] as [number, number]);
+
+  for (const categoryIndex of [0, 1] as const) {
+    for (const item of groups[categoryIndex]) {
+      const chunkIndex = chunkSizes
+        .map((_, index) => index)
+        .filter((index) => chunks[index]!.length < chunkSizes[index]!)
+        .sort((left, right) => categoryCounts[left]![categoryIndex]
+          - categoryCounts[right]![categoryIndex]
+          || chunks[left]!.length - chunks[right]!.length
+          || left - right)[0];
+      if (chunkIndex === undefined) throw new Error('分类词卡分组在拆分过程中意外耗尽容量。');
+      chunks[chunkIndex]!.push(item);
+      categoryCounts[chunkIndex]![categoryIndex] += 1;
+    }
+  }
+
+  if (chunks.some((chunk, index) => chunk.length !== chunkSizes[index])) {
+    throw new Error('分类词卡拆分后未完整放入各题。');
+  }
+
+  return chunks;
+}
+
 function varyChoicePositions(questions: readonly EnglishQuestionSpec[], seed: number): EnglishQuestionSpec[] {
   return questions.map((question, index) => {
     if (question.kind !== 'choice') return question;
@@ -463,6 +502,24 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
     categoryIndex,
     words: selected.classified.filter((item) => item.categoryIndex === categoryIndex).map(({ label: word }) => word),
   }));
+  const classificationChunks = chunkClassifications(selected.classified);
+  if (classificationChunks.length > classificationQuestionsPerTask * 2) {
+    throw new Error(`分类词卡超过单元可拆分容量：${entry.id}（${selected.classified.length} 项）`);
+  }
+  const taskClassificationChunkIndex = taskIndex * classificationQuestionsPerTask;
+  const primaryClassificationChunk = classificationChunks.length === 1
+    ? taskIndex === 0 ? classificationChunks[0] : undefined
+    : classificationChunks[taskClassificationChunkIndex];
+  const secondaryClassificationChunk = classificationChunks.length > 1
+    ? classificationChunks[taskClassificationChunkIndex + 1]
+    : undefined;
+  const classifyChunk = (items: EnglishProfile['classified'], chunkIndex: number): EnglishQuestionSpec => sortInto(
+    classificationChunks.length > 1 ? `把第${chunkIndex + 1}组词卡放进合适的小组。` : '把词卡放进合适的小组。',
+    selected.categories,
+    items,
+    '读懂每张词卡，再按本组名称分类。',
+    '每张词卡都按同一个分类标准放入一组。',
+  );
   const multiWordGroups = categoryGroups.filter(({ words: groupWords }) => groupWords.length >= 2);
   const advancedGroup = multiWordGroups[taskIndex % multiWordGroups.length];
   const pairStart = advancedGroup && taskIndex > 0 && advancedGroup.words.length > 2 ? 1 : 0;
@@ -491,8 +548,8 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
       '不看题意，保留原来的选择。',
     ], 0, '回到题目中的英文和中文线索，核对选项是否符合要求。', `${target.options[target.correct]}符合“${target.prompt}”的要求。`);
   };
-  const classificationQuestion: EnglishQuestionSpec = taskIndex === 0
-    ? sortInto('把词卡放进合适的小组。', selected.categories, selected.classified, '读懂每张词卡，再按本组名称分类。', '每张词卡都按同一个分类标准放入一组。')
+  const classificationQuestion: EnglishQuestionSpec = primaryClassificationChunk
+    ? classifyChunk(primaryClassificationChunk, taskClassificationChunkIndex)
     : (() => {
       const { label, categoryIndex } = selected.classified[selected.classified.length - 1]!;
       return choose(`“${label}”belongs to which group?`, [selected.categories[categoryIndex]!, selected.categories[1 - categoryIndex]!, '两组都不符合'], 0, '读懂这个英文词，再对照两个小组的名称。', `“${label}”属于“${selected.categories[categoryIndex]}”这一组。`);
@@ -512,6 +569,9 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
       '只比较选项的长短，不看英文词义。',
       '不读题目和词卡，直接猜答案。',
     ], 0, '把题意和词卡线索放在一起核对。', secondPhrase.hint);
+  const secondaryClassificationQuestion = secondaryClassificationChunk
+    ? classifyChunk(secondaryClassificationChunk, taskClassificationChunkIndex + 1)
+    : phraseStrategy;
   const highQuestion = taskIndex === 0
     ? choose('向伙伴介绍句子前，先检查什么？', [
       '核对关键词的意思，再按正确词序读一遍。',
@@ -531,7 +591,7 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
     phraseRepair(firstPhrase),
     classificationQuestion,
     wordStudyOrder,
-    phraseStrategy,
+    secondaryClassificationQuestion,
     difficulty === 'basic'
       ? choose(`Which sentence matches “${fourth[1]}”?`, [
         `${fourth[0]} means “${fourth[1]}”.`, `${first[0]} means “${fourth[1]}”.`, `${third[0]} means “${second[1]}”.`,
