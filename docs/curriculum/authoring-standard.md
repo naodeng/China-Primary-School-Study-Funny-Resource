@@ -1,6 +1,6 @@
 # 课程目录与内容编写规范
 
-本文是新增或修改课程时的单一操作入口。先按目录和数据约定录入，再核对教材范围、逐题审校并运行检查；项目当前课程范围以 `src/content/curriculum.ts` 和 `docs/curriculum/grade-1-and-3-textbook-inventory.md`、`docs/curriculum/grade-2-textbook-inventory.md` 为准。
+本文是新增或修改课程时的单一操作入口。先按目录和数据约定录入，再核对教材范围、逐题审校并运行检查；项目当前课程范围以 `src/content/curriculum.ts` 和 `docs/curriculum/grade-1-and-3-textbook-inventory.md`、`docs/curriculum/grade-2-textbook-inventory.md` 为准。按“学期 → 单元 → 任务 → 题目”审核的细则见[课程内容分层审核规则](course-content-review-rules.md)。
 
 ## 目录结构
 
@@ -58,6 +58,8 @@ src/content/grade-2/term-2/english/review-01/index.ts
 
 ## 逐题审校
 
+依次通过学期、单元、任务、题目四层审核后再放行：学期确认唯一教材版本与整册范围；单元确认目录顺序和 `sourceTopics`；任务确认学习目标、前置知识及三档难度；题目确认答案、表述、题型和解释。具体检查项、版本差异门槛、自动/人工审校边界和记录格式见[分层审核规则](course-content-review-rules.md)。
+
 逐条目检查全部难度、任务、场次中的旧题和新题，不只审新增题。每道题都要确认：
 
 1. 答案唯一，答案键准确；配对、排序和分类没有遗漏或冲突。
@@ -68,7 +70,7 @@ src/content/grade-2/term-2/english/review-01/index.ts
 
 学科检查另包括：数学逐式复算、单位与情境条件核对；英语拼写、大小写、词义和语法核对；语文字词、题意和解释准确性核对。可执行的答案校验是辅助筛查，不能替代语义审校。
 
-在相应台账记录每个课程条目的题目总数、已审数量、各项审校状态和修复记录：一年级、三年级使用 `docs/curriculum/grade-1-and-3-question-review.tsv`，二年级使用 `docs/curriculum/grade-2-question-review.tsv`。发现问题时记录完整题目 ID、修改原因和状态；未审完时不得把该行标记为“完成”。
+在相应台账记录每个课程条目的题目总数、已审数量、各项审校状态、修复记录和独立的复核范围/证据：一年级、三年级使用 `docs/curriculum/grade-1-and-3-question-review.tsv`，二年级使用 `docs/curriculum/grade-2-question-review.tsv`。发现问题时记录完整题目 ID、修改原因和状态；生成器覆盖整课时可按审核规则记录完整 48 题范围。没有修复时“修复记录”保留“无”，复核日期、范围和证据写入复核列；未审完时不得把该行标记为“完成”。
 
 ## 新增课程检查清单
 

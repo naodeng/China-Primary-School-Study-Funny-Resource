@@ -142,7 +142,7 @@ const profiles: Record<string, EnglishProfile> = {
     ],
     [
       phrase('“Do you like noodles?” 是在问什么？', ['你喜欢面条吗？', '你喜欢茶吗？', '你喜欢玩具吗？'], 0, 'Do you like…? 可以询问喜好，noodles 表示“面条”。', 'Do you like noodles? 是在询问是否喜欢面条。', ['noodles', 'Do', 'you', 'like', '?'], [1, 2, 3, 0, 4]),
-      phrase('想回答“是的，我喜欢面条”，哪句话合适？', ['Yes, yes, I do.', 'No, no, I don’t.', 'Thank you.'], 0, 'Yes, yes, I do. 用来肯定回答 Do you like…?。', 'Yes, yes, I do. 的意思是“是的，我喜欢”。', ['do.', 'Yes,', 'I', 'yes,'], [1, 3, 2, 0]),
+      phrase('想回答“是的，我喜欢面条”，哪句话合适？', ['Yes, I do.', 'No, I don’t.', 'Thank you.'], 0, 'Yes, I do. 用来肯定回答 Do you like…?。', 'Yes, I do. 的意思是“是的，我喜欢”。', ['do.', 'Yes,', 'I'], [1, 2, 0]),
     ],
   ),
   'food-g3': profile(
@@ -160,8 +160,11 @@ const profiles: Record<string, EnglishProfile> = {
     ],
   ),
   drink: profile(
-    [['water', '水'], ['juice', '果汁'], ['milk', '牛奶'], ['tea', '茶']], ['有字母 e', '没有字母 e'],
-    [{ label: 'water', categoryIndex: 0 }, { label: 'milk', categoryIndex: 1 }, { label: 'juice', categoryIndex: 0 }, { label: 'tea', categoryIndex: 0 }],
+    [['water', '水'], ['juice', '果汁'], ['milk', '牛奶'], ['tea', '茶']], ['饮品词语', '礼貌请求句'],
+    [
+      { label: 'water', categoryIndex: 0 }, { label: 'juice', categoryIndex: 0 }, { label: 'milk', categoryIndex: 0 },
+      { label: 'tea', categoryIndex: 0 }, { label: 'Can I have water?', categoryIndex: 1 }, { label: 'Can I have tea?', categoryIndex: 1 },
+    ],
     [
       phrase('想礼貌地要水喝，应该选哪句话？', ['Can I have water?', 'Can I have a book?', 'Can I have a ruler?'], 0, 'water 表示“水”，Can I have…? 可以礼貌地提出请求。', 'Can I have water? 的意思是“我可以喝点水吗？”', ['water', 'I', '?', 'Can', 'have'], [3, 1, 4, 0, 2]),
       phrase('想礼貌地要茶喝，应该选哪句话？', ['Can I have tea?', 'Can I have a chair?', 'Can I have a pencil?'], 0, 'tea 表示“茶”。', 'Can I have tea? 的意思是“我可以喝点茶吗？”', ['tea', 'Can', 'have', '?', 'I'], [1, 4, 2, 0, 3]),
@@ -494,7 +497,7 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
   const wordOffset = taskIndex * 2 + (difficulty === 'basic' ? 0 : difficulty === 'advanced' ? 1 : 2);
   const words = rotate(selected.words, wordOffset);
   const [first, second, third, fourth] = words;
-  const phraseOffset = (taskIndex + (difficulty === 'high' ? 1 : 0)) % selected.phrases.length;
+  const phraseOffset = (taskIndex + (difficulty === 'basic' ? 0 : 1)) % selected.phrases.length;
   const firstPhrase = selected.phrases[phraseOffset]!;
   const secondPhrase = selected.phrases[(phraseOffset + 1) % selected.phrases.length]!;
   const categoryGroups = selected.categories.map((label, categoryIndex) => ({
@@ -513,13 +516,22 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
     : classificationChunks.slice(firstTaskClassificationChunkCount);
   const primaryClassificationChunk = taskClassificationChunks[0];
   const secondaryClassificationChunk = taskClassificationChunks[1];
-  const classifyChunk = (items: EnglishProfile['classified'], chunkIndex: number): EnglishQuestionSpec => sortInto(
-    classificationChunks.length > 1 ? `把第${chunkIndex + 1}组词卡放进合适的小组。` : '把词卡放进合适的小组。',
-    selected.categories,
-    items,
-    '读懂每张词卡，再按本组名称分类。',
-    '每张词卡都按同一个分类标准放入一组。',
-  );
+  const classifyChunk = (items: EnglishProfile['classified'], chunkIndex: number): EnglishQuestionSpec => {
+    const isFruitOnlyChunk = entry.profileKey === 'food-g3'
+      && items.every(({ categoryIndex }) => categoryIndex === 0)
+      && items.some(({ label }) => label === 'fruit');
+    const categories = isFruitOnlyChunk ? ['水果', '其他食物'] as const : selected.categories;
+    const classifiedItems = isFruitOnlyChunk
+      ? items.map(({ label }) => ({ label, categoryIndex: label === 'fruit' ? 0 as const : 1 as const }))
+      : items;
+    return sortInto(
+      classificationChunks.length > 1 ? `把第${chunkIndex + 1}组词卡放进合适的小组。` : '把词卡放进合适的小组。',
+      categories,
+      classifiedItems,
+      isFruitOnlyChunk ? '找出表示水果的词，其他食物放在另一组。' : '读懂每张词卡，再按本组名称分类。',
+      isFruitOnlyChunk ? 'fruit 表示水果；其余词卡表示其他食物。' : '每张词卡都按同一个分类标准放入一组。',
+    );
+  };
   const multiWordGroups = categoryGroups.filter(({ words: groupWords }) => groupWords.length >= 2);
   const advancedGroup = multiWordGroups[taskIndex % multiWordGroups.length];
   const pairStart = advancedGroup && taskIndex > 0 && advancedGroup.words.length > 2 ? 1 : 0;
@@ -535,6 +547,13 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
     `${outsideWords[0] ?? words[2]![0]} and ${advancedPair[1]}`,
   ] as [string, string, string];
   const wordMeaningCheck = `“${first[0]}”表示“${first[1]}”，“${second[0]}”表示“${second[1]}”。`;
+  const swappedMeanings = `“${first[0]}”表示“${second[1]}”，“${second[0]}”表示“${first[1]}”。`;
+  const repeatedMeaning = `“${first[0]}”表示“${first[1]}”，“${second[0]}”也表示“${first[1]}”。`;
+  const anchoredThreeWordMapping = [
+    `已知“${third[0]}”表示“${third[1]}”；再将“${first[0]}”配“${first[1]}”、“${second[0]}”配“${second[1]}”。`,
+    `已知“${third[0]}”表示“${third[1]}”；再将“${first[0]}”配“${second[1]}”、“${second[0]}”配“${first[1]}”。`,
+    `已知“${third[0]}”表示“${third[1]}”；再将“${first[0]}”和“${second[0]}”都配“${first[1]}”。`,
+  ] as [string, string, string];
   const matchPairs = taskIndex === 0
     ? words.map(([word, meaning]) => [word, meaning] as const)
     : words.map(([word, meaning]) => [meaning, word] as const);
@@ -554,16 +573,17 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
       const { label, categoryIndex } = selected.classified[selected.classified.length - 1]!;
       return choose(`“${label}”belongs to which group?`, [selected.categories[categoryIndex]!, selected.categories[1 - categoryIndex]!, '两组都不符合'], 0, '读懂这个英文词，再对照两个小组的名称。', `“${label}”属于“${selected.categories[categoryIndex]}”这一组。`);
     })();
-  const wordStudyOrder: EnglishQuestionSpec = taskIndex === 0
+  const wordStudyOrder: EnglishQuestionSpec = difficulty === 'basic'
     ? arrange('Put the word cards in the correct order.', firstPhrase.orderItems, firstPhrase.correctOrder, '先找句子的开头，再检查词序和句末标点。', `正确表达是：${firstPhrase.correctOrder.map((index) => firstPhrase.orderItems[index]).join(' ')}。`)
-    : arrange('Plan a short English introduction. Put the steps in order.', [
-      'Choose word cards that fit the topic',
-      'Check what each word means',
-      'Use the words in a simple expression',
-      'Read it aloud and check the word order',
-    ], [0, 1, 2, 3], '先选符合主题的词卡，再核对词义和表达顺序。', '先选词卡、确认词义，再组成简单表达并检查词序。');
+    : difficulty === 'advanced'
+      ? arrange('Choose the word cards that fit the scene, then put them in order.', firstPhrase.orderItems, firstPhrase.correctOrder, '先联系题目情境，再检查词序和句末标点。', `符合情境的表达是：${firstPhrase.correctOrder.map((index) => firstPhrase.orderItems[index]).join(' ')}。`)
+      : arrange('Put the word cards in order and check that the sentence matches the meaning.', firstPhrase.orderItems, firstPhrase.correctOrder, '排列后读一遍，再对照词义和标点检查。', `正确表达是：${firstPhrase.correctOrder.map((index) => firstPhrase.orderItems[index]).join(' ')}；词义和标点都符合。`);
   const phraseStrategy: EnglishQuestionSpec = taskIndex === 0
-    ? choose(secondPhrase.prompt, secondPhrase.options, secondPhrase.correct, secondPhrase.hint, secondPhrase.explanation)
+    ? choose(`要判断“${secondPhrase.options[secondPhrase.correct]}”是否符合“${secondPhrase.prompt}”，哪条线索最有帮助？`, [
+      secondPhrase.hint,
+      '只比较句子的长短，不看英文词义。',
+      '不读题目和词卡，直接猜答案。',
+    ], 0, '把题意、英文词语和中文线索放在一起核对。', secondPhrase.hint)
     : choose(`要判断“${secondPhrase.options[secondPhrase.correct]}”是否符合“${secondPhrase.prompt}”，先做什么？`, [
       secondPhrase.hint,
       '只比较选项的长短，不看英文词义。',
@@ -578,35 +598,162 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
       '不核对词义，先加上更多词。',
       '省略词序，请伙伴猜一猜。',
     ], 0, '检查词语意思和排列顺序。', '核对词义和词序，伙伴更容易听懂句子。')
-    : choose(`同伴把“${first[0]}”的意思说成“${second[1]}”，哪条词卡能改正？`, [
-      wordMeaningCheck,
-      `“${first[0]}”表示“${second[1]}”，“${second[0]}”表示“${first[1]}”。`,
-      `“${first[0]}”表示“${first[1]}”，“${second[0]}”也表示“${first[1]}”。`,
-    ], 0, '对照两张词卡，分别核对英文和中文意思。', wordMeaningCheck);
+    : choose(`已核对“${third[0]}”表示“${third[1]}”。其余两张词卡各用一次，哪条记录同时符合词义？`, anchoredThreeWordMapping, 0,
+      '先保留已核对的词卡，再分别核对另外两个英文词和中文意思；每个意思只用一次。',
+      `“${third[0]}”表示“${third[1]}”，“${first[0]}”表示“${first[1]}”，“${second[0]}”表示“${second[1]}”。`);
 
+  const orderedSentence = (target: Phrase): string => target.correctOrder
+    .map((index) => target.orderItems[index])
+    .join(' ')
+    .replace(/ ([?.!,])/g, '$1');
+  const sentencePurpose = (target: Phrase): { label: string; alternatives: readonly [string, string] } => {
+    const sentence = orderedSentence(target);
+    if (/^Can I have\b/i.test(sentence)) return { label: '礼貌地提出请求', alternatives: ['询问地点', '陈述物品'] };
+    if (/^(Touch|Raise|Give|Put)\b/i.test(sentence)) return { label: '发出指令', alternatives: ['询问问题', '表达喜好'] };
+    if (/^(Where|What|How|Which|Do you)\b/i.test(sentence)) return { label: '询问信息', alternatives: ['陈述或描述', '发出指令'] };
+    return { label: '陈述或描述', alternatives: ['询问信息', '发出指令'] };
+  };
+  const phrasePurposeQuestion = (advanced: boolean): EnglishQuestionSpec => {
+    const purpose = sentencePurpose(secondPhrase);
+    const sentence = orderedSentence(secondPhrase);
+    return advanced
+      ? choose(`“${sentence}”在交流中的主要作用是什么？`, [purpose.label, ...purpose.alternatives], 0,
+        '结合句子的意思和标点判断它在交流中完成什么任务。', `“${sentence}”主要用于${purpose.label}。`)
+      : choose(`同伴要完成“${secondPhrase.prompt}”，还要说明句子的用途。哪条记录最完整？`, [
+        `“${sentence}”用于${purpose.label}。`,
+        `“${sentence}”用于${purpose.alternatives[0]}。`,
+        '不核对句意和交流目的。',
+      ], 0, '先核对句意，再说明它在对话中起什么作用。', `“${sentence}”符合题意，主要用于${purpose.label}。`);
+  };
+  const starterQuestion = entry.profileKey === 'school'
+    ? entry.id === 'grade-1/term-1/english/unit-01'
+      ? taskIndex === 0
+        ? difficulty === 'basic'
+          ? choose('老师说“Stand up.”，应该怎样做？', ['站起来', '坐下来', '闭上眼睛'], 0,
+            '听清老师发出的课堂指令。', 'Stand up. 的意思是“站起来”。')
+          : difficulty === 'advanced'
+            ? choose('老师想让你展示铅笔，应该听哪句指令？', ['Show me your pencil.', 'Show me your book.', 'Sit down, please.'], 0,
+              '核对指令中的物品名称。', 'Show me your pencil. 的意思是“给我看看你的铅笔”。')
+            : choose('同伴站着，老师请大家坐下。哪句指令符合要求？', ['Sit down, please.', 'Stand up.', 'Open your eyes.'], 0,
+              '把动作和老师的要求对应起来。', 'Sit down, please. 的意思是“请坐下”。')
+        : difficulty === 'basic'
+          ? choose('老师说“Close your eyes.”，应该怎样做？', ['闭上眼睛', '睁开眼睛', '站起来'], 0,
+            'Close 表示“闭上”。', 'Close your eyes. 的意思是“闭上眼睛”。')
+          : difficulty === 'advanced'
+            ? choose('老师请大家睁开眼睛，应该听哪句指令？', ['Open your eyes.', 'Close your eyes.', 'Stand up.'], 0,
+              'Open 和 Close 表示不同的动作。', 'Open your eyes. 的意思是“睁开眼睛”。')
+            : choose('桌上有 book、pencil、ruler，拿走 ruler 后老师问“What’s missing?”，少了什么？',
+              ['ruler', 'book', 'pencil'], 0,
+              '比较拿走前后的物品，再说出少了哪一个。', '拿走的是 ruler，所以“What’s missing?”的答案是 ruler。')
+      : taskIndex === 0
+      ? difficulty === 'basic'
+        ? choose('早晨见到老师，哪句问候合适？', ['Good morning!', 'Goodbye!', 'Good afternoon!'], 0,
+          '把早晨问候和告别语区分开。', 'Good morning! 用来表示“早上好”。')
+        : difficulty === 'advanced'
+          ? choose('下午在学校遇到同学，哪句问候符合时间？', ['Good afternoon!', 'Good morning!', 'Goodbye!'], 0,
+            '注意题目说的是下午。', 'Good afternoon! 用来表示“下午好”。')
+          : choose('同伴下午见到老师时说了“Good morning!”。哪句改正后符合时间？',
+            ['Good afternoon!', 'Goodbye!', 'Good morning!'], 0,
+            '问候语要和见面的时间相符。', '下午见面时可以说 Good afternoon!。')
+      : difficulty === 'basic'
+        ? choose('准备离开同学时，哪句可以用来告别？', ['Bye!', 'Good morning!', 'Hello!'], 0,
+          '选择表示“再见”的表达。', 'Bye! 可以用来表示“再见”。')
+        : difficulty === 'advanced'
+          ? choose('结束交谈并向同学告别，哪句表达合适？', ['Goodbye.', 'Good afternoon!', 'Hello!'], 0,
+            '问候和告别的用途不同。', 'Goodbye. 用来表示“再见”。')
+          : choose('同伴离开时说“Hello!”。哪句更适合用来告别？', ['Goodbye.', 'Good morning!', 'Hi!'], 0,
+            'Hello! 和 Hi! 用来问候，告别时选择另一种表达。', 'Goodbye. 表示“再见”，适合告别时使用。')
+    : entry.profileKey === 'classroom'
+      ? taskIndex === 0
+        ? difficulty === 'basic'
+          ? choose('老师说“Put your schoolbag under the chair.”，书包应放在哪里？',
+            ['椅子下面', '椅子上面', '桌子下面'], 0,
+            'under 表示“在……下面”。', 'Put your schoolbag under the chair. 的意思是“把书包放在椅子下面”。')
+          : difficulty === 'advanced'
+            ? choose('要把书包放在椅子下面，哪条课堂指令符合要求？',
+              ['Put your schoolbag under the chair.', 'Put your schoolbag on the chair.', 'Put your pencil box under the chair.'], 0,
+              '核对 under 和 on 的位置区别，也要看物品名称。', 'Put your schoolbag under the chair. 表示把书包放在椅子下面。')
+            : choose('老师要求把书包放到椅子下面，同伴却放在椅子上。哪条指令能帮助他改正？',
+              ['Put your schoolbag under the chair.', 'Put your schoolbag on the chair.', 'Put your pencil box under the chair.'], 0,
+              '先确认要移动的物品，再核对它应在椅子的哪一边。', 'Put your schoolbag under the chair. 符合“把书包放在椅子下面”的要求。')
+        : difficulty === 'basic'
+          ? choose('“Put my pencil box in the schoolbag.” 是什么意思？',
+            ['把我的铅笔盒放进书包里。', '把我的铅笔盒放在椅子上。', '把我的书包放进铅笔盒里。'], 0,
+            'in 表示“在……里面”。', 'Put my pencil box in the schoolbag. 的意思是“把我的铅笔盒放进书包里”。')
+          : difficulty === 'advanced'
+            ? choose('老师说“Put my pencil box in the schoolbag.”，应该怎样摆放？',
+              ['把铅笔盒放进书包里。', '把书包放进铅笔盒里。', '把铅笔盒放到椅子下面。'], 0,
+              '分清 pencil box 和 schoolbag，再理解 in。', '这句话要求把铅笔盒放进书包里。')
+            : choose('同伴把书包放进铅笔盒里。老师要求“Put my pencil box in the schoolbag.”，怎样改正？',
+              ['把铅笔盒放进书包里。', '把书包放进铅笔盒里。', '把铅笔盒放在椅子上。'], 0,
+              '核对指令中的物品和 in 所表示的位置关系。', '要把 pencil box 放进 schoolbag，而不是把书包放进铅笔盒。')
+      : undefined;
+
+  const highPairReasoningQuestion = (() => {
+    const anchorA = words[taskIndex === 0 ? 0 : 1]!;
+    const anchorB = words[taskIndex === 0 ? 1 : 2]!;
+    const target = words[taskIndex === 0 ? 2 : 3]!;
+    return choose(`已知“${anchorA[0]}”表示“${anchorA[1]}”，“${anchorB[0]}”表示“${anchorB[1]}”；“${target[0]}”应对应哪个意思？`, [
+      target[1], anchorA[1], anchorB[1],
+    ], 0, '先排除已经用过的两个意思，再核对目标词卡。', `“${anchorA[0]}”和“${anchorB[0]}”已各有对应意思；“${target[0]}”表示“${target[1]}”。`);
+  })();
+  const pairReasoningQuestion: EnglishQuestionSpec = difficulty === 'basic'
+    ? pair(taskIndex === 0 ? 'Match each English word with its Chinese meaning.' : 'Match each Chinese meaning with its English word.', matchPairs, '先读清词语或意思，再逐个核对对应关系。', '每个英文单词都和对应的中文意思配成一组。')
+    : difficulty === 'advanced'
+      ? choose('核对两张词卡的记录，哪一项把英文和中文意思都配对正确？', [wordMeaningCheck, swappedMeanings, repeatedMeaning], 0,
+        '逐张读出英文和中文意思，再检查两张卡。', wordMeaningCheck)
+      : highPairReasoningQuestion;
+  const phraseQuestion: EnglishQuestionSpec = entry.id === 'grade-1/term-1/english/unit-01'
+    ? taskIndex === 0
+      ? difficulty === 'basic'
+        ? choose('早晨见到老师，哪句问候合适？', ['Good morning!', 'Goodbye!', 'Good afternoon!'], 0,
+          '把早晨问候和告别语区分开。', 'Good morning! 用来表示“早上好”。')
+        : difficulty === 'advanced'
+          ? choose('下午在学校遇到同学，哪句问候符合时间？', ['Good afternoon!', 'Good morning!', 'Goodbye!'], 0,
+            '注意题目说的是下午。', 'Good afternoon! 用来表示“下午好”。')
+          : choose('同伴下午见到老师时说了“Good morning!”。哪句改正后符合时间？',
+            ['Good afternoon!', 'Goodbye!', 'Good morning!'], 0,
+            '问候语要和见面的时间相符。', '下午见面时可以说 Good afternoon!。')
+      : difficulty === 'basic'
+        ? choose('准备离开同学时，哪句可以用来告别？', ['Bye!', 'Good morning!', 'Hello!'], 0,
+          '选择表示“再见”的表达。', 'Bye! 可以用来表示“再见”。')
+        : difficulty === 'advanced'
+          ? choose('结束交谈并向同学告别，哪句表达合适？', ['Goodbye.', 'Good afternoon!', 'Hello!'], 0,
+            '问候和告别的用途不同。', 'Goodbye. 用来表示“再见”。')
+          : choose('同伴离开时说“Hello!”。哪句更适合用来告别？', ['Goodbye.', 'Good morning!', 'Hi!'], 0,
+            'Hello! 和 Hi! 用来问候，告别时选择另一种表达。', 'Goodbye. 表示“再见”，适合告别时使用。')
+    : difficulty === 'basic'
+    ? phraseRepair(firstPhrase)
+    : difficulty === 'advanced'
+      ? choose(`在“${firstPhrase.explanation}”的情境中，哪句话表达合适？`, firstPhrase.options, firstPhrase.correct,
+        '把情境中的意思和每个英文选项逐一核对。', firstPhrase.explanation)
+      : choose(`同伴选了“${firstPhrase.options[(firstPhrase.correct + 1) % firstPhrase.options.length]}”来回答“${firstPhrase.prompt}”，哪条记录能改正？`, [
+        `“${firstPhrase.options[firstPhrase.correct]}”符合题意。`,
+        `“${firstPhrase.options[(firstPhrase.correct + 2) % firstPhrase.options.length]}”符合题意。`,
+        '不检查题目意思，保留原来的选项。',
+      ], 0, '回到题目中的交际情境，核对回答是否表达了需要的意思。', `“${firstPhrase.options[firstPhrase.correct]}”符合题意。`);
   const questions: EnglishQuestionSpec[] = [
     choose(`Which word means “${first[1]}”?`, [first[0], second[0], third[0]], 0, '先想一想本单元词卡里的英文单词。', `${first[0]} means “${first[1]}”.`),
     choose(`Which word means “${second[1]}”?`, [third[0], second[0], fourth[0]], 1, '把中文意思和你学过的词卡逐个核对。', `${second[0]} means “${second[1]}”.`),
-    pair(taskIndex === 0 ? 'Match each English word with its Chinese meaning.' : 'Match each Chinese meaning with its English word.', matchPairs, '先读清词语或意思，再逐个核对对应关系。', '每个英文单词都和对应的中文意思配成一组。'),
-    phraseRepair(firstPhrase),
+    pairReasoningQuestion,
+    phraseQuestion,
     classificationQuestion,
     wordStudyOrder,
     secondaryClassificationQuestion,
     difficulty === 'basic'
-      ? choose(`Which sentence matches “${fourth[1]}”?`, [
+      ? starterQuestion ?? choose(`Which sentence matches “${fourth[1]}”?`, [
         `${fourth[0]} means “${fourth[1]}”.`, `${first[0]} means “${fourth[1]}”.`, `${third[0]} means “${second[1]}”.`,
       ], 0, '把题目中的中文意思和三个英文词义说明逐项核对。', `${fourth[0]} means “${fourth[1]}”.`)
       : difficulty === 'advanced'
-        ? taskIndex === 0
+        ? starterQuestion ?? (taskIndex === 0
           ? choose(`想用英文词卡介绍“${advancedGroup?.label ?? selected.categories[0]}”，哪组词都符合？`, [
             ...advancedOptions,
           ], 0, '逐个核对两个英文词是否都符合分类名称。', `${advancedPair.join(' and ')} 都属于“${advancedGroup?.label ?? selected.categories[0]}”。`)
-          : choose(`比较“${first[0]}”和“${second[0]}”两张词卡，哪种记录把词义配对正确？`, [
-            wordMeaningCheck,
-            `“${first[0]}”表示“${second[1]}”，“${second[0]}”表示“${first[1]}”。`,
-            `“${first[0]}”表示“${first[1]}”，“${second[0]}”也表示“${first[1]}”。`,
-          ], 0, '逐张核对英文单词和中文意思，再检查两张卡。', wordMeaningCheck)
-        : highQuestion,
+          : entry.profileKey === 'numbers'
+            ? choose('按数数的顺序接着填：one, two, three, __。', ['two', 'four', 'five'], 1,
+              '从 three 后面继续按顺序数。', 'one, two, three 后面接 four。')
+          : phrasePurposeQuestion(true))
+        : starterQuestion ?? (taskIndex === 0 ? highQuestion : phrasePurposeQuestion(false)),
   ];
   return varyChoicePositions(questions, courseSeed(entry, difficulty, taskIndex));
 }

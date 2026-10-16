@@ -61,7 +61,7 @@ const addedCourseEntries: AddedCourseEntry[] = [
     ['integrated-practice-01', '综合实践 · 数学乐园', null, '在游戏情境中综合运用数数、比较和简单运算', 'math-park', 'integrated-practice'],
   ]),
   ...book(1, 1, 'english', [
-    ['unit-01', '第一单元 · School', 1, 'Starter 校园问候、课堂物品和学校生活', 'school'],
+    ['unit-01', '第一单元 · School', 1, 'Starter 校园问候、课堂指令、学习用品和学校生活', 'school'],
     ['unit-02', '第二单元 · Face', 2, '眼、耳、鼻、口等面部词汇', 'face'],
     ['unit-03', '第三单元 · Animals', 3, '常见动物名称和简单描述', 'animals'],
     ['unit-04', '第四单元 · Numbers', 4, '1～10 数词和数量表达', 'numbers'],
@@ -119,7 +119,7 @@ const addedCourseEntries: AddedCourseEntry[] = [
     ['unit-05', '第五单元 · 倍的认识', 5, '倍的含义及简单倍数关系', 'multiples'],
     ['unit-06', '第六单元 · 多位数乘一位数', 6, '整十、整百和多位数乘一位数', 'multiply-1digit'],
     ['unit-07', '第七单元 · 长方形和正方形', 7, '周长、边长关系和图形周长计算', 'perimeter'],
-    ['unit-08', '第八单元 · 分数的初步认识', 8, '平均分、几分之一和简单比较', 'fractions'],
+    ['unit-08', '第八单元 · 分数的初步认识', 8, '平均分、几分之一、几分之几和简单比较', 'fractions'],
     ['unit-09', '第九单元 · 数学广角——集合', 9, '用集合图整理重复与不重复信息', 'sets'],
     ['unit-10', '第十单元 · 总复习', 10, '本册测量、运算、倍、周长、分数和集合复习', 'g3-math-review'],
     ['integrated-practice-01', '综合实践 · 数字编码', null, '用数字编码表达顺序、类别和校验信息', 'number-coding', 'integrated-practice'],

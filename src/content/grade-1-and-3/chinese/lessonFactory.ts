@@ -43,14 +43,23 @@ const profiles: Record<string, ChineseProfile> = {
   ),
   'pinyin-initials': profile(
     [['b', '发音时双唇闭合、气流较轻的声母'], ['p', '发音时双唇闭合、气流较强的声母'], ['m', '发音时双唇闭合、气流从鼻腔出来的声母'], ['f', '发音时上齿轻触下唇的声母']],
-    ['声母', '韵母'], [['b', 0], ['m', 0], ['a', 1], ['o', 1]],
-    ['看清声母字形', '读准声母发音', '找到相配的韵母', '合起来拼读音节'],
-    { prompt: '拼读 ba 时，先读哪个部分？', options: ['声母 b', '韵母 a', '先读句号'], correct: 0, explanation: '拼读音节时，先认清声母，再和韵母合起来读。' },
+    ['声母和字母 y、w', '单韵母'], [
+      ...['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 'sh', 'r', 'z', 'c', 's', 'y', 'w']
+        .map((letter) => [letter, 0] as const),
+      ...['a', 'o', 'e', 'i', 'u', 'ü'].map((letter) => [letter, 1] as const),
+    ],
+    ['先认清声母和韵母', '把声母和韵母合起来拼读', '确认音节要读的声调', '读完整音节并核对调号'],
+    { prompt: '音节 ba 标为第二声，哪一种写法正确？', options: ['bá', 'bǎ', 'bà'], correct: 0, explanation: '第二声用向上的调号，ba 标上第二声写作 bá。' },
   ),
   'pinyin-finals': profile(
     [['ai', '由 a 和 i 组成的复韵母'], ['an', '以 n 收尾的前鼻韵母'], ['ang', '以 ng 收尾的后鼻韵母'], ['zhi', '可以直接认读的整体认读音节']],
-    ['韵母', '整体认读音节'], [['ai', 0], ['an', 0], ['ang', 0], ['zhi', 1]],
-    ['看清音节中的字母', '按顺序读出字母音', '把声调标在正确位置', '连起来读完整音节'],
+    ['韵母', '整体认读音节'], [
+      ...['ai', 'ei', 'ui', 'ao', 'ou', 'iu', 'ie', 'üe', 'er', 'an', 'en', 'in', 'un', 'ün', 'ang', 'eng', 'ing', 'ong']
+        .map((syllable) => [syllable, 0] as const),
+      ...['zhi', 'chi', 'shi', 'ri', 'zi', 'ci', 'si', 'yi', 'wu', 'yu', 'ye', 'yue', 'yuan', 'yin', 'yun', 'ying']
+        .map((syllable) => [syllable, 1] as const),
+    ],
+    ['先判断韵母或整体认读音节', '按相应方法认读，不把整体音节拆开', '核对拼写和声调符号', '读准完整音节'],
     { prompt: '看到音节 zhi，应该怎样读？', options: ['作为整体认读音节直接认读', '拆成声母 z 和韵母 hi 再拼', '只读最后一个字母'], correct: 0, explanation: 'zhi 属于整体认读音节，直接整体认读。' },
   ),
   'g1-seasons': profile(
@@ -127,7 +136,7 @@ const profiles: Record<string, ChineseProfile> = {
   ),
   'g3-school': profile(
     [['阅读', '读懂文字并思考意思'], ['交流', '把自己的想法说给别人听'], ['标点', '帮助表达停顿和语气的符号'], ['段落', '围绕内容组成的一组句子']],
-    ['阅读方法', '表达形式'], [['阅读', 0], ['交流', 0], ['标点', 1], ['段落', 1]],
+    ['阅读方法', '表达形式'], [['阅读', 0], ['交流', 1], ['标点', 1], ['段落', 1]],
     ['读一遍文章', '圈出不明白的地方', '联系上下文想一想', '用完整句子交流发现'],
     { prompt: '读一段话时遇到不熟悉的词，怎样做更有帮助？', options: ['联系前后句和熟悉的词语推想，再核对', '不看上下文就随意确定意思', '跳过整段不再读'], correct: 0, explanation: '联系上下文推想，再核对，能帮助理解新词。' },
   ),
@@ -239,6 +248,26 @@ function rotated<T>(items: readonly T[], offset: number): T[] {
   return [...items.slice(offset % items.length), ...items.slice(0, offset % items.length)];
 }
 
+function splitClassifiedItems(items: ChineseProfile['classified'], chunkCount: number): ChineseProfile['classified'][] {
+  const groups = [0, 1].map((categoryIndex) => items.filter(([, itemCategory]) => itemCategory === categoryIndex));
+  const chunks = Array.from({ length: chunkCount }, () => [] as Array<ChineseProfile['classified'][number]>);
+  const categoryCounts = Array.from({ length: chunkCount }, () => [0, 0] as [number, number]);
+
+  for (const categoryIndex of [0, 1] as const) {
+    for (const item of groups[categoryIndex]!) {
+      const chunkIndex = chunks
+        .map((_, index) => index)
+        .sort((left, right) => categoryCounts[left]![categoryIndex] - categoryCounts[right]![categoryIndex]
+          || chunks[left]!.length - chunks[right]!.length
+          || left - right)[0]!;
+      chunks[chunkIndex]!.push(item);
+      categoryCounts[chunkIndex]![categoryIndex] += 1;
+    }
+  }
+
+  return chunks;
+}
+
 function varyChoicePositions(questions: readonly ChineseQuestionSpec[], seed: number): ChineseQuestionSpec[] {
   return questions.map((question, index) => {
     if (question.kind !== 'choice') return question;
@@ -271,57 +300,293 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
   const [, , scenarioWrongB] = selected.scenario.options;
   const scenarioWrongIndex = selected.scenario.options.findIndex((_, index) => index !== selected.scenario.correct);
   const scenarioOtherWrongIndex = selected.scenario.options.findIndex((_, index) => index !== selected.scenario.correct && index !== scenarioWrongIndex);
-  const scenarioRepair = taskIndex === 0
-    ? choose(selected.scenario.prompt, selected.scenario.options, selected.scenario.correct, '回想本组主题和观察、表达的要求。', selected.scenario.explanation)
-    : choose(`同学建议“${selected.scenario.options[scenarioWrongIndex]}”，但这可能无法解决“${selected.scenario.prompt}”中的问题。哪种做法更合适？`, [
-      selected.scenario.options[selected.scenario.correct]!,
-      selected.scenario.options[scenarioOtherWrongIndex]!,
-      '不再看问题，也不核对任何线索。',
-    ], 0, '回到问题要求，比较哪种办法能提供需要的信息。', selected.scenario.explanation);
-  const classificationQuestion = taskIndex === 0
-    ? sortInto(`把词语分到“${selected.categories[0]}”或“${selected.categories[1]}”一栏。`, selected.categories, selected.classified.map(([label, categoryIndex]) => [label, categoryIndex + 1] as const), '先看每个词语的意思，再按相同特点分类。', '分类时要用同一个标准检查每个词语。')
-    : (() => {
-      const [label, categoryIndex] = selected.classified[0]!;
-      return choose(`“${label}”应放在哪一栏？`, [selected.categories[categoryIndex]!, selected.categories[1 - categoryIndex]!, '两栏都不合适'], 0, '先读懂词语，再对照两栏的分类标准。', `“${label}”符合“${selected.categories[categoryIndex]}”这一栏的标准。`);
-    })();
-  const expressionOrderQuestion = taskIndex === 0
-    ? arrange('把主题学习卡按合适的先后顺序排好。', sequence, correctOrder, '先找开始的一步，再逐步检查后面的顺序。', `本次主题卡的顺序是：${correctOrder.map((index) => sequence[index]).join('，')}。`)
-    : arrange(`向同伴介绍“${first[0]}”和“${second[0]}”，按清楚的表达步骤排列。`, [
-      '先说清本组主题',
-      `解释“${first[0]}”的意思`,
-      `联系“${second[0]}”补充信息`,
-      '检查词义和表达是否清楚',
-    ], [0, 1, 2, 3], '先说明主题，再解释词语并检查表达。', `先介绍主题，再解释“${first[0]}”并联系“${second[0]}”，最后检查表达。`);
-  const themeApplicationQuestion = taskIndex === 0
-    ? choose('读主题词卡时，遇到不熟悉的词义，哪种办法更有帮助？', [
-      '联系本单元主题和实际线索，再核对词义。',
-      '只看字形猜意思。',
-      '跳过不看，也不核对。',
-    ], 0, '把词语放回主题情境中理解，再检查是否合适。', '联系主题和实际线索，再核对词义，有助于理解词语。')
-    : choose('向伙伴介绍本组内容，怎样让意思更清楚？', [
-      '先说主题，再用词卡或例子说明。',
-      '只读词语，不说意思。',
-      '随意替换词语的意思。',
-    ], 0, '先让伙伴知道主题，再用词语或例子解释。', '先说主题并举例说明，伙伴更容易听懂本组内容。');
+  const isPinyinProfile = entry.profileKey === 'pinyin-initials' || entry.profileKey === 'pinyin-finals';
+  const pinyinChunks = isPinyinProfile ? splitClassifiedItems(selected.classified, 4) : [];
+  const pinyinRemainder = taskIndex === 0
+    ? [...(pinyinChunks[0] ?? []).slice(8), ...(pinyinChunks[1] ?? []).slice(8)]
+    : [];
+  const pinyinClassification = (chunkIndex: number): ChineseQuestionSpec => {
+    const items = (pinyinChunks[chunkIndex] ?? []).slice(0, 8);
+    return sortInto(
+      `把第${chunkIndex + 1}组拼音卡按“${selected.categories[0]}”或“${selected.categories[1]}”分类。`,
+      selected.categories,
+      items.map(([label, categoryIndex]) => [label, categoryIndex + 1] as const),
+      '先认清字母或音节，再按拼音类别放卡片。',
+      entry.profileKey === 'pinyin-finals'
+        ? '每张卡只按拼音类别判断；整体认读音节要作为整体认读。'
+        : '每张卡按声母或单韵母类别分类；拼读音节时还要检查声调。',
+    );
+  };
+  const taskTwoScenarioRepair = isPinyinProfile
+    ? entry.profileKey === 'pinyin-initials'
+      ? difficulty === 'advanced'
+        ? choose('把音节 pa 标为第二声，哪种写法正确？', ['pá', 'pǎ', 'pà'], 0,
+          '按题目要求标第二声，检查调号的位置和方向。', 'pa 的第二声写作 pá。')
+        : choose('同伴把音节 ba 的第一声写成 bǎ，哪项检查后能改正？', ['bā', 'bá', 'bǎ'], 0,
+          '第一声标在韵母上方，调号平直。', 'ba 的第一声写作 bā；bǎ 是第三声。')
+      : difficulty === 'advanced'
+        ? choose('zhi 属于哪一类拼音卡？', ['整体认读音节', '后鼻韵母', '前鼻韵母'], 0,
+          '先判断 zhi 是一个完整音节还是韵母。', 'zhi 是整体认读音节，应作为整体认读。')
+        : choose('同伴想把 zhi 拆开拼读，哪条建议正确？', [
+          'zhi 是整体认读音节，应该作为整体认读。',
+          'zhi 是后鼻韵母，去掉声母后再读。',
+          '只读最后一个字母 i。',
+        ], 0, '核对它是否属于整体认读音节。', 'zhi 是整体认读音节，不拆开拼读。')
+    : entry.profileKey === 'g3-imagination'
+      ? difficulty === 'advanced'
+        ? choose('想象一种新奇事物并介绍给伙伴，哪种记录能让伙伴听懂？', [
+          '说清它是什么、有什么特点和用途。',
+          '只说“它很新奇”，不作说明。',
+          '把互相矛盾的特点放在一起，不作解释。',
+        ], 0, '先想清事物的特点和用途，再用完整句子介绍。', '说清事物的特点和用途，伙伴才能理解你的想象。')
+        : choose('同伴想象了一种新奇事物，怎样检查介绍是否前后一致？', [
+          '检查特点是否彼此相容，并且都能说明它的用途。',
+          '增加互相矛盾的特点，越多越好。',
+          '只写名字，不说明特点或用途。',
+        ], 0, '把每个特点和设定的用途放在一起核对。', '特点彼此相容并服务于用途，介绍才容易听懂。')
+      : difficulty === 'advanced'
+      ? choose(`解决“${selected.scenario.prompt}”后，哪种记录最便于伙伴核对你的判断？`, [
+        '写下观察到的具体线索，并说明它怎样支持结论。',
+        '只记录最后的答案，不写观察到什么。',
+        '改写问题，不核对结论和线索。',
+      ], 0, '记录可观察到的线索，并把线索和结论连起来。', '写下具体线索及其与结论的关系，伙伴才能复核判断。')
+      : choose(`同伴按“${selected.scenario.options[selected.scenario.correct]}”处理了“${selected.scenario.prompt}”，怎样检查结果是否可靠？`, [
+        '回看实际线索，并检查结果是否回应了问题。',
+        '只凭第一印象判断，不再查看线索。',
+        '不看结果是否符合问题要求。',
+      ], 0, '将处理结果与观察到的线索、问题要求逐项核对。', '回看线索并对照问题要求，才能判断处理结果是否可靠。');
+  const scenarioRepair = difficulty === 'basic'
+    ? taskIndex === 0
+      ? choose(selected.scenario.prompt, selected.scenario.options, selected.scenario.correct, '回想本组主题和观察、表达的要求。', selected.scenario.explanation)
+      : choose(`同学建议“${selected.scenario.options[scenarioWrongIndex]}”，但这可能无法解决“${selected.scenario.prompt}”中的问题。哪种做法更合适？`, [
+        selected.scenario.options[selected.scenario.correct]!,
+        selected.scenario.options[scenarioOtherWrongIndex]!,
+        '不再看问题，也不核对任何线索。',
+      ], 0, '回到问题要求，比较哪种办法能提供需要的信息。', selected.scenario.explanation)
+    : taskIndex === 1
+      ? taskTwoScenarioRepair
+      : difficulty === 'advanced'
+      ? choose(`为了解决“${selected.scenario.prompt}”中的问题，哪种做法能先提供需要的线索？`, [
+        selected.scenario.options[selected.scenario.correct]!,
+        selected.scenario.options[scenarioWrongIndex]!,
+        '不看问题要求，直接猜一个结论。',
+      ], 0, '先找出问题需要什么信息，再比较每种做法。', selected.scenario.explanation)
+      : choose(`同伴选了“${selected.scenario.options[scenarioWrongIndex]}”。要确认“${selected.scenario.prompt}”怎样处理才可靠，哪条依据最完整？`, [
+        selected.scenario.options[selected.scenario.correct]!,
+        selected.scenario.options[scenarioOtherWrongIndex]!,
+        '不核对观察、词义或题目条件。',
+      ], 0, '检查做法是否回应问题，并核对需要的线索。', selected.scenario.explanation);
+  const categoryGroups = [0, 1].map((categoryIndex) => ({
+    categoryIndex,
+    items: selected.classified.filter(([, itemCategory]) => itemCategory === categoryIndex).map(([label]) => label),
+  }));
+  const categoriesWithPairs = categoryGroups.filter(({ items }) => items.length >= 2);
+  const firstMainCategory = categoriesWithPairs[0] ?? categoryGroups[0]!;
+  const secondMainCategory = categoriesWithPairs.find(({ categoryIndex }) => categoryIndex !== firstMainCategory.categoryIndex);
+  const mainCategory = taskIndex === 1 && secondMainCategory ? secondMainCategory : firstMainCategory;
+  const otherCategory = categoryGroups[1 - mainCategory.categoryIndex]!;
+  const categoryPairStart = taskIndex === 1 && mainCategory.items.length > 2 ? 1 : 0;
+  const categoryPair = [mainCategory.items[categoryPairStart]!, mainCategory.items[categoryPairStart + 1]!];
+  const outsideCategoryItem = otherCategory.items[0] ?? selected.concepts[2]![0];
+  const alternativeCategoryQuestion = difficulty === 'advanced'
+    ? choose(`哪一个词不符合“${selected.categories[mainCategory.categoryIndex]}”这一类？`, [
+      outsideCategoryItem, categoryPair[0], categoryPair[1],
+    ], 0, '分别读出三个词的意思，再按同一条分类标准比较。',
+    `“${outsideCategoryItem}”符合“${selected.categories[otherCategory.categoryIndex]}”，不符合“${selected.categories[mainCategory.categoryIndex]}”。`)
+    : choose(`同伴把“${outsideCategoryItem}”放进“${selected.categories[mainCategory.categoryIndex]}”一栏，哪条理由能说明需要改正？`, [
+      `“${outsideCategoryItem}”符合“${selected.categories[otherCategory.categoryIndex]}”，不符合“${selected.categories[mainCategory.categoryIndex]}”。`,
+      `“${outsideCategoryItem}”同时符合两个类别，不需要查看词义。`,
+      '类别名称不重要，任何词都可以放进这一栏。',
+    ], 0, '把词语的意思与两类标准分别核对。',
+    `“${outsideCategoryItem}”的意思符合“${selected.categories[otherCategory.categoryIndex]}”，应从“${selected.categories[mainCategory.categoryIndex]}”一栏移出。`);
+  const classificationQuestion = isPinyinProfile
+    ? pinyinClassification(taskIndex * 2)
+    : difficulty === 'basic'
+      ? taskIndex === 0
+        ? sortInto(`把词语分到“${selected.categories[0]}”或“${selected.categories[1]}”一栏。`, selected.categories, selected.classified.map(([label, categoryIndex]) => [label, categoryIndex + 1] as const), '先看每个词语的意思，再按相同特点分类。', '分类时要用同一个标准检查每个词语。')
+        : (() => {
+          const [label, categoryIndex] = selected.classified[0]!;
+          return choose(`“${label}”应放在哪一栏？`, [selected.categories[categoryIndex]!, selected.categories[1 - categoryIndex]!, '两栏都不合适'], 0, '先读懂词语，再对照两栏的分类标准。', `“${label}”符合“${selected.categories[categoryIndex]}”这一栏的标准。`);
+        })()
+      : difficulty === 'advanced'
+        ? taskIndex === 1 && !secondMainCategory
+          ? alternativeCategoryQuestion
+          : choose(`下面哪两个词都符合“${selected.categories[mainCategory.categoryIndex]}”这一类？`, [
+            `${categoryPair[0]}、${categoryPair[1]}`,
+            `${categoryPair[0]}、${outsideCategoryItem}`,
+            `${outsideCategoryItem}、${categoryPair[1]}`,
+          ], 0, '逐个核对两个词的意思，再用同一条分类标准判断。', `“${categoryPair[0]}”和“${categoryPair[1]}”都符合“${selected.categories[mainCategory.categoryIndex]}”的标准。`)
+      : taskIndex === 1 && !secondMainCategory
+        ? alternativeCategoryQuestion
+        : choose(`同伴把“${outsideCategoryItem}”放进“${selected.categories[mainCategory.categoryIndex]}”一栏，哪条记录能按两类标准修正？`, [
+          `“${categoryPair[0]}”和“${categoryPair[1]}”属于“${selected.categories[mainCategory.categoryIndex]}”；“${outsideCategoryItem}”属于“${selected.categories[otherCategory.categoryIndex]}”。`,
+          `“${categoryPair[0]}”和“${categoryPair[1]}”属于“${selected.categories[otherCategory.categoryIndex]}”；“${outsideCategoryItem}”属于“${selected.categories[mainCategory.categoryIndex]}”。`,
+          '不核对词义，保留原来的分类。',
+        ], 0, '先核对两类的标准，再逐张检查词卡。', `“${outsideCategoryItem}”应放在“${selected.categories[otherCategory.categoryIndex]}”一栏。`);
+  const expressionOrderQuestion = isPinyinProfile
+    ? (() => {
+      const steps = difficulty === 'basic'
+        ? sequence
+        : entry.profileKey === 'pinyin-initials'
+          ? difficulty === 'advanced'
+            ? taskIndex === 0
+              ? ['认清音节 ba 的声母 b', '找到和它相拼的单韵母 a', '按题目要求给 a 标上第二声', '读出 bá 并核对调号']
+              : ['认清音节 pa 的声母 p', '找到和它相拼的单韵母 a', '按题目要求给 a 标上第四声', '读出 pà 并核对调号']
+            : taskIndex === 0
+              ? ['先确认题目要求读第二声', '找出音节 ba 中的韵母 a', '把第二声调号标在 a 上', '完整读出 bá 并检查声调']
+              : ['先确认题目要求读第四声', '找出音节 pa 中的韵母 a', '把第四声调号标在 a 上', '完整读出 pà 并检查声调']
+          : difficulty === 'advanced'
+            ? taskIndex === 0
+              ? ['先看清要认读的拼音形式', '判断它是韵母还是整体认读音节', '按类别选择拼读或整体认读', '核对声调后读完整音节']
+              : ['先读清前鼻韵母 an 和后鼻韵母 ang', '比较两张卡的韵尾', '找出分别以 n 和 ng 收尾的韵母', '读一遍并检查是否漏掉字母']
+            : taskIndex === 0
+              ? ['逐个核对拼音卡的类别', '复韵母或鼻韵母按拼写认读', '整体认读音节不拆开读', '检查声调并读准完整音节']
+              : ['并排写出前鼻韵母 an 和后鼻韵母 ang', '圈出 an 的韵尾 n', '圈出 ang 的韵尾 ng', '完整读出两张卡并检查拼写'];
+      const prompt = difficulty === 'basic'
+        ? '把拼音学习卡按合适的先后顺序排好。'
+        : entry.profileKey === 'pinyin-initials'
+          ? taskIndex === 0
+            ? '按要求拼读并核对音节 ba 的步骤排列。'
+            : '按要求拼读并核对音节 pa 的步骤排列。'
+          : taskIndex === 0
+            ? '按步骤判断并读准韵母或整体认读音节。'
+            : '按步骤比较前鼻韵母 an 和后鼻韵母 ang。';
+      return arrange(prompt, steps, [0, 1, 2, 3], '按题目要求先认清类别和拼音，再检查调号。', `正确顺序是：${steps.join('，')}。`);
+    })()
+    : taskIndex === 0 && difficulty === 'basic'
+      ? arrange('把主题学习卡按合适的先后顺序排好。', sequence, correctOrder, '先找开始的一步，再逐步检查后面的顺序。', `本次主题卡的顺序是：${correctOrder.map((index) => sequence[index]).join('，')}。`)
+      : taskIndex === 0
+        ? difficulty === 'advanced'
+          ? arrange('读到不熟悉的主题词时，按步骤理解并核对。', [
+            '读清词语和题目情境', '联系主题找到相关线索', '用线索推想词义或意思', '回看题目检查判断是否合适',
+          ], [0, 1, 2, 3], '先读清情境，再找线索并核对推想。', '读清词语、联系主题、推想意思，最后回看题目核对。')
+          : arrange('把本组观察发现介绍给伙伴，按“观点—线索—核对—表达”排序。', [
+            '说出本组发现', '找出支持发现的词语或观察线索', '检查线索是否与主题相符', '用完整句子介绍并说明依据',
+          ], [0, 1, 2, 3], '先说发现，再用线索说明，并检查是否对应主题。', '提出发现、给出线索、核对主题，最后完整表达。')
+        : difficulty === 'basic'
+          ? arrange(`向同伴介绍“${first[0]}”和“${second[0]}”，按清楚的表达步骤排列。`, [
+            '先说清本组主题', `解释“${first[0]}”的意思`, `联系“${second[0]}”补充信息`, '检查词义和表达是否清楚',
+          ], [0, 1, 2, 3], '先说明主题，再解释词语并检查表达。', `先介绍主题，再解释“${first[0]}”并联系“${second[0]}”，最后检查表达。`)
+          : difficulty === 'advanced'
+            ? arrange(`比较“${first[0]}”和“${second[0]}”后向伙伴说明发现。`, [
+              `分别读清“${first[0]}”和“${second[0]}”`, '用同一条主题线索比较', '找出两张词卡的相同或不同点', '用完整句子说明比较结果',
+            ], [0, 1, 2, 3], '比较前先读清两张卡，再用同一线索判断。', `先读两张卡，用同一线索比较，最后说明“${first[0]}”和“${second[0]}”的关系。`)
+            : arrange(`发现同伴把“${first[0]}”理解错后，按顺序帮助他改正。`, [
+              `先核对“${first[0]}”的词义`, '回到本组主题找相关线索', `比较“${first[0]}”与“${second[0]}”的不同`, '说明改正后的意思和理由',
+            ], [0, 1, 2, 3], '先核对词义，再找线索并解释改正理由。', `核对“${first[0]}”的词义、回到主题找证据，再比较并说明正确意思。`);
+  const firstCategory = selected.classified.find(([label]) => label === first[0])?.[1] ?? 0;
+  const secondCategory = selected.classified.find(([label]) => label === second[0])?.[1] ?? 1;
+  const classificationEvidence = firstCategory === secondCategory
+    ? `并逐项对照“${selected.categories[firstCategory]}”的标准。`
+    : `并分别对照“${selected.categories[firstCategory]}”和“${selected.categories[secondCategory]}”的标准。`;
+  const themeApplicationQuestion = isPinyinProfile
+    ? pinyinClassification(taskIndex * 2 + 1)
+    : difficulty === 'basic'
+      ? taskIndex === 0
+        ? choose('读主题词卡时，遇到不熟悉的词义，哪种办法更有帮助？', [
+          '联系本单元主题和实际线索，再核对词义。',
+          '只看字形猜意思。',
+          '跳过不看，也不核对。',
+        ], 0, '把词语放回主题情境中理解，再检查是否合适。', '联系主题和实际线索，再核对词义，有助于理解词语。')
+        : choose('向伙伴介绍本组内容，怎样让意思更清楚？', [
+          '先说主题，再用词卡或例子说明。',
+          '只读词语，不说意思。',
+          '随意替换词语的意思。',
+        ], 0, '先让伙伴知道主题，再用词语或例子解释。', '先说主题并举例说明，伙伴更容易听懂本组内容。')
+      : difficulty === 'advanced'
+        ? choose(`在新情境中判断“${first[0]}”的意思，哪条线索最有帮助？`, [
+          `先读懂“${first[0]}”的词义，再核对它与题目情境是否相符。`,
+          '只看字形，不读题目里的线索。',
+          '不看词义，直接猜一个意思。',
+        ], 0, '把词语意思和题目情境放在一起核对。', `“${first[0]}”表示“${first[1]}”；结合情境核对能减少误解。`)
+        : choose(`要向伙伴证明“${first[0]}”和“${second[0]}”的分类准确，哪条记录最完整？`, [
+          `写出两张卡的词义${classificationEvidence}`,
+          '只写两个词语，不说明意思或分类依据。',
+          '按自己喜欢的类别放置，不核对词义。',
+        ], 0, '说明词义，并用同一分类标准逐项核对。', `分别核对“${first[0]}”和“${second[0]}”的词义，再按相应类别标准判断。`);
   const nextStep = selected.sequence[Math.min(taskIndex + 1, selected.sequence.length - 1)];
   const previousStep = selected.sequence[taskIndex]!;
   const matchPairs = taskIndex === 0
     ? cards
     : cards.map(([word, meaning]) => [meaning, word] as const);
-  const firstCategory = selected.classified.find(([label]) => label === first[0])?.[1] ?? 0;
-  const secondCategory = selected.classified.find(([label]) => label === second[0])?.[1] ?? 1;
+  const correctPair = `“${first[0]}”表示“${first[1]}”；“${second[0]}”表示“${second[1]}”。`;
+  const swappedPair = `“${first[0]}”表示“${second[1]}”；“${second[0]}”表示“${first[1]}”。`;
+  const repeatedPair = `“${first[0]}”表示“${first[1]}”；“${second[0]}”也表示“${first[1]}”。`;
+  const pinyinRemainderPairs = pinyinRemainder.map(([label, categoryIndex]) => [label, selected.categories[categoryIndex]] as const);
+  const matchingQuestion = pinyinRemainderPairs.length > 0
+    ? pair('把补充拼音卡和类别连起来。', pinyinRemainderPairs,
+      '先读拼音卡，再按本单元的分类名称连线。', '补充卡片分别属于对应的拼音类别。')
+    : difficulty === 'basic'
+    ? pair(taskIndex === 0 ? '把词语和意思连起来。' : '根据意思找出相应的词语。', matchPairs, '先读清词语或意思，再逐个核对对应关系。', '每个词语都要和它自己的意思配对。')
+    : difficulty === 'advanced'
+      ? choose('比较两张词卡，哪组对应关系都正确？', [correctPair, swappedPair, repeatedPair], 0, '两张卡都要分别核对，不能只看其中一张。', correctPair)
+      : choose(`同伴把“${first[0]}”和“${second[0]}”的意思记混了，哪组词卡能同时改正？`, [correctPair, swappedPair, repeatedPair], 0, '逐张核对两张卡的意思，再检查是否都配对正确。', correctPair);
+  const pinyinChallengeQuestion = (): ChineseQuestionSpec => {
+    if (entry.profileKey === 'pinyin-initials') {
+      if (difficulty === 'advanced' && taskIndex === 0) {
+        return choose('把音节 ba 标成第二声时，声调符号应怎样标？', [
+          '把第二声调号标在韵母 a 上，读作 bá。',
+          '把第二声调号标在声母 b 上。',
+          '不标声调，仍然读作 ba。',
+        ], 0, '先找出韵母，再按题目要求标调。', 'ba 的第二声写作 bá，调号标在韵母 a 上。');
+      }
+      if (difficulty === 'advanced') {
+        return choose('声母 b 和 p 的发音主要有什么区别？', [
+          'b 发音时气流较轻，p 发音时气流较强。',
+          'b 发音时气流较强，p 发音时气流较轻。',
+          'b 和 p 都是整体认读音节。',
+        ], 0, '对照 b、p 的发音提示，留意气流强弱。', 'b 和 p 都是声母；b 发音时气流较轻，p 发音时气流较强。');
+      }
+      if (taskIndex === 0) {
+        return choose('拼读一个带调音节时，哪种做法完整？', [
+          '先认清声母和韵母，合起来拼读，再按要求读准声调。',
+          '把声母和韵母分开当成两个词，不再拼读。',
+          '只看声调符号，不认读音节。',
+        ], 0, '从辨认声母、韵母开始，再完整读音节。', '认清声母和韵母、合起来拼读并读准声调，才能读出完整音节。');
+      }
+      return choose('同伴把音节 pa 的第四声写成 pǎ，应该改成哪一种？', [
+        'pà', 'pá', 'pā',
+      ], 0, '第四声的调号向下，核对题目要求的声调。', 'pa 的第四声写作 pà；pǎ 是第三声，pá 是第二声，pā 是第一声。');
+    }
 
+    if (difficulty === 'advanced' && taskIndex === 0) {
+      return choose('哪一组拼音卡都是以 ng 收尾的后鼻韵母？', [
+        'ang、eng、ing、ong', 'an、en、in、un', 'ai、ei、ui、ao',
+      ], 0, '逐个检查韵尾是 n 还是 ng。', 'ang、eng、ing、ong 都以 ng 收尾，是后鼻韵母。');
+    }
+    if (difficulty === 'advanced') {
+      return choose('前鼻韵母 an 和后鼻韵母 ang 的拼写区别是什么？', [
+        'an 以 n 收尾，ang 以 ng 收尾。',
+        'an 以 ng 收尾，ang 以 n 收尾。',
+        'an 和 ang 的拼写完全相同。',
+      ], 0, '比较两个韵母最后的字母。', 'an 的韵尾是 n；ang 的韵尾是 ng。');
+    }
+    if (taskIndex === 0) {
+      return choose('遇到韵母卡和整体认读音节卡，哪种认读方法正确？', [
+        '先判断类别；整体认读音节作为整体认读，韵母按拼写认读。',
+        '把每个整体认读音节都拆开重新拼读。',
+        '只读每张卡的最后一个字母。',
+      ], 0, '先分辨拼音卡的类别，再选择认读方法。', '整体认读音节不拆开读；韵母按韵母的拼写认读。');
+    }
+    return choose('同伴把 ang 写成 an，哪项改正说明了两个韵母的区别？', [
+      'an 以 n 收尾，ang 以 ng 收尾。',
+      'an 和 ang 都以 n 收尾，后面的 g 不用读。',
+      'an 和 ang 都是整体认读音节。',
+    ], 0, '检查两个韵母的完整拼写，特别是韵尾。', 'an 以 n 收尾；ang 以 ng 收尾，不能漏掉 g。');
+  };
   const questions: ChineseQuestionSpec[] = [
     choose(`“${first[0]}”在本组词卡中表示什么？`, [first[1], distractorMeanings[0]!, distractorMeanings[1]!], 0, '先把词语和本组主题联系起来，再读一读三个意思。', `“${first[0]}”表示“${first[1]}”。`),
     choose(`哪一个词语表示“${second[1]}”？`, [distractorWords[0]!, second[0], distractorWords[1]!], 1, '逐个读词语，再和题目中的意思核对。', `“${second[0]}”表示“${second[1]}”。`),
-    pair(taskIndex === 0 ? '把词语和意思连起来。' : '根据意思找出相应的词语。', matchPairs, '先读清词语或意思，再逐个核对对应关系。', '每个词语都要和它自己的意思配对。'),
+    matchingQuestion,
     classificationQuestion,
     expressionOrderQuestion,
     scenarioRepair,
     themeApplicationQuestion,
     difficulty === 'basic'
       ? choose(`已完成“${previousStep}”，下一步可以先做什么？`, [selected.sequence[0], nextStep, scenarioWrongB], 1, '根据学习顺序，先想想紧接着的一步。', `完成“${previousStep}”后，接下来可以${nextStep}。`)
-      : difficulty === 'advanced'
+      : isPinyinProfile
+        ? pinyinChallengeQuestion()
+        : difficulty === 'advanced'
         ? taskIndex === 0
           ? choose(`把“${first[0]}”用在新的${selected.categories[firstCategory]}情境中，怎样判断用得合适？`, [
             '把词语意思和实际线索一起核对。',
