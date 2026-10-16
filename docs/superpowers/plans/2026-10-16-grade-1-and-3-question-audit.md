@@ -56,5 +56,5 @@
 ### Task 4：最终验证并更新 PR
 
 - [x] 运行 `npm run test:unit`、`npm run test:coverage`、`npm run test:e2e`、`npm run build` 与 `git diff --check`。
-- [ ] 检查 git 状态和精确差异，提交本任务文件并推送到 PR #4 分支，更新 PR 描述及相关 review 线程证据。
+- [x] 检查 git 状态和精确差异，提交本任务文件并推送到 PR #4 分支，更新 PR 描述及相关 review 线程证据。
 - [x] 不合并 PR；报告实际审校覆盖、修复、验证结果和仍未解决的风险。
