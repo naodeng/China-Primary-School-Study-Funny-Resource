@@ -506,13 +506,13 @@ function createQuestions(entry: AddedCourseEntry, difficulty: 'basic' | 'advance
   if (classificationChunks.length > classificationQuestionsPerTask * 2) {
     throw new Error(`分类词卡超过单元可拆分容量：${entry.id}（${selected.classified.length} 项）`);
   }
-  const taskClassificationChunkIndex = taskIndex * classificationQuestionsPerTask;
-  const primaryClassificationChunk = classificationChunks.length === 1
-    ? taskIndex === 0 ? classificationChunks[0] : undefined
-    : classificationChunks[taskClassificationChunkIndex];
-  const secondaryClassificationChunk = classificationChunks.length > 1
-    ? classificationChunks[taskClassificationChunkIndex + 1]
-    : undefined;
+  const firstTaskClassificationChunkCount = Math.max(1, Math.floor(classificationChunks.length / 2));
+  const taskClassificationChunkIndex = taskIndex === 0 ? 0 : firstTaskClassificationChunkCount;
+  const taskClassificationChunks = taskIndex === 0
+    ? classificationChunks.slice(0, firstTaskClassificationChunkCount)
+    : classificationChunks.slice(firstTaskClassificationChunkCount);
+  const primaryClassificationChunk = taskClassificationChunks[0];
+  const secondaryClassificationChunk = taskClassificationChunks[1];
   const classifyChunk = (items: EnglishProfile['classified'], chunkIndex: number): EnglishQuestionSpec => sortInto(
     classificationChunks.length > 1 ? `把第${chunkIndex + 1}组词卡放进合适的小组。` : '把词卡放进合适的小组。',
     selected.categories,

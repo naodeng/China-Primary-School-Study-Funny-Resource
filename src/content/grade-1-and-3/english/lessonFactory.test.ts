@@ -25,6 +25,13 @@ const alignmentCases: readonly EnglishAlignmentCase[] = [
     orderedSentences: ['I like cats.', 'It is a dog.'],
   },
   {
+    unitId: 'grade-1/term-1/english/unit-04',
+    matchedWords: ['one', 'two', 'three', 'four'],
+    categories: ['one to five', 'six to ten'],
+    classificationGroups: [['one', 'two', 'three', 'four', 'five'], ['six', 'seven', 'eight', 'nine', 'ten']],
+    orderedSentences: ['How many books?', 'I have three books.'],
+  },
+  {
     unitId: 'grade-1/term-2/english/unit-01',
     matchedWords: ['chair', 'desk', 'blackboard', 'under'],
     categories: ['教室物品', '位置词'],
@@ -195,6 +202,14 @@ describe('added English vocabulary and textbook alignment', () => {
     const unit = curriculum.units[alignment.unitId];
     if (!unit) throw new Error(`Missing curriculum unit: ${alignment.unitId}`);
     Object.values(unit.difficultyTracks).forEach((track) => {
+      const taskClassificationCounts = track.tasks.map(({ sessions }) => sessions
+        .flatMap(({ activities: sessionActivities }) => sessionActivities)
+        .reduce((count, activity) => count + (activity.kind === 'categorize' ? activity.items.length : 0), 0));
+      if (Object.keys(expectedCategoryByWord).length > maxClassificationItemsPerActivity) {
+        expect(taskClassificationCounts.every((count) => count > 0)).toBe(true);
+        expect(Math.max(...taskClassificationCounts) - Math.min(...taskClassificationCounts))
+          .toBeLessThanOrEqual(maxClassificationItemsPerActivity);
+      }
       const trackActivities = track.tasks
         .flatMap(({ sessions }) => sessions)
         .flatMap(({ activities: sessionActivities }) => sessionActivities);
